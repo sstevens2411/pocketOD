@@ -315,6 +315,14 @@
             border-right: 1px solid var(--border);
         }
 
+        /* − always red, + always green (only for +/− toggles, not 90/180) */
+        [id$="Neg"] {
+            color: #dc2626;
+        }
+        [id$="Pos"] {
+            color: #16a34a;
+        }
+
         .sign-toggle button.active-neg {
             background: #fef2f2;
             color: #dc2626;
@@ -1929,14 +1937,6 @@
             }
             .sign-toggle button:first-child {
                 border-right-color: #9ca3af;
-            }
-            /* + button always green */
-            .sign-toggle button:last-child {
-                color: #16a34a;
-            }
-            /* − button always red */
-            .sign-toggle button:first-child {
-                color: #dc2626;
             }
             .form-group input, .form-group select {
                 min-height: 44px;
