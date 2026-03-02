@@ -1916,16 +1916,26 @@
                 gap: 3px;
             }
 
-            /* Sign toggle — small to save space */
+            /* Sign toggle — small to save space, higher contrast */
+            .sign-toggle {
+                border-color: #9ca3af;
+            }
             .sign-toggle button {
                 width: 28px;
                 min-height: 40px;
                 font-size: 14px;
+                color: var(--ink-secondary);
+                background: #f0f1f3;
+            }
+            .sign-toggle button:first-child {
+                border-right-color: #9ca3af;
             }
             .form-group input, .form-group select {
                 min-height: 44px;
                 padding: 10px 8px;
                 min-width: 0;
+                border-color: #9ca3af;
+                background: #fff;
             }
 
             /* --- Steps bar --- */
