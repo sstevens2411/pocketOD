@@ -2163,31 +2163,18 @@
                 font-size: 12.5px;
             }
 
-            /* Filter chips — horizontal scroll, big tap targets */
+            /* Filter chips — wrap, touch-friendly */
             .med-filter-chips {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                padding-bottom: 6px;
-                margin-left: -12px;
-                margin-right: -12px;
-                padding-left: 12px;
-                padding-right: 12px;
+                flex-wrap: wrap;
                 gap: 8px;
             }
-            .med-filter-chips::-webkit-scrollbar {
-                display: none;
-            }
             .med-filter-chip {
-                padding: 10px 16px;
-                font-size: 13px;
-                white-space: nowrap;
-                flex-shrink: 0;
-                min-height: 44px;
+                padding: 8px 12px;
+                font-size: 12px;
+                min-height: 40px;
                 display: inline-flex;
                 align-items: center;
-                border-radius: 22px;
+                border-radius: 20px;
             }
             .med-filter-chip .dc-dot {
                 width: 12px;
