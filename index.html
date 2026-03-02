@@ -2703,6 +2703,7 @@
             modality: [],
             brands: [...BRANDS],
             selectedLens: null,
+            hasVisitedResults: false,
             troubleshoot: null,
             tsAdjustment: null,
             nonAdaptFrom: null,
@@ -4221,6 +4222,7 @@
                     modality: [],
                     brands: [...BRANDS],
                     selectedLens: null,
+                    hasVisitedResults: false,
                     troubleshoot: null,
                     tsAdjustment: null,
                     tsRotation: null,
@@ -4240,7 +4242,8 @@
                     if (state.brands.length === 0) state.brands = [...BRANDS];
                 }
                 state.step++;
-                if (state.step === 3) {
+                if (state.step === 3 && !state.hasVisitedResults) {
+                    state.hasVisitedResults = true;
                     const lenses = getCompatibleLenses();
                     if (lenses.length === 1) {
                         state.selectedLens = lenses[0].name;
@@ -4259,6 +4262,7 @@
                 modality: [],
                 brands: [...BRANDS],
                 selectedLens: null,
+                hasVisitedResults: false,
                 troubleshoot: null,
                 tsAdjustment: null,
                 tsRotation: null,
