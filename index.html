@@ -4270,6 +4270,10 @@
 
         function goToStep(i) {
             if (i <= state.step) {
+                state.selectedLens = null;
+                state.troubleshoot = null;
+                state.tsAdjustment = null;
+                state.tsRotation = null;
                 state.step = i;
                 render();
             }
