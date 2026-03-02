@@ -1167,7 +1167,7 @@
             }
             .form-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                gap: 8px;
             }
             .form-group label {
                 font-size: 9.5px;
@@ -1175,7 +1175,7 @@
             }
             .form-group input, .form-group select {
                 font-size: 16px;
-                padding: 12px 10px;
+                padding: 10px 8px;
             }
             .option-grid {
                 grid-template-columns: 1fr;
@@ -1913,14 +1913,19 @@
                 margin-bottom: 5px;
             }
             .form-group .input-row {
-                gap: 8px;
+                gap: 4px;
             }
 
-            /* Sign toggle — 48px tap targets */
+            /* Sign toggle — compact but tall tap targets */
             .sign-toggle button {
-                width: 48px;
-                min-height: 48px;
-                font-size: 17px;
+                width: 38px;
+                min-height: 44px;
+                font-size: 16px;
+            }
+            .form-group input, .form-group select {
+                min-height: 44px;
+                padding: 10px 8px;
+                min-width: 0;
             }
 
             /* --- Steps bar --- */
