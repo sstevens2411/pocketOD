@@ -1382,6 +1382,16 @@
             }
         }
 
+        /* Med condition grid */
+        .med-condition-grid {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        @media (max-width: 640px) {
+            .med-condition-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         /* ===== MEDICATIONS TAB ===== */
 
         /* Search */
@@ -4380,7 +4390,7 @@
                 }
             }
             html += `<div class="card" style="margin-bottom:16px"><div class="card-title">What are you looking for?</div><div class="card-desc">Select a condition to find appropriate medications.</div>`;
-            html += `<div class="option-grid" style="grid-template-columns: 1fr 1fr 1fr;">`;
+            html += `<div class="option-grid med-condition-grid">`;
             MED_CONDITION_GROUPS.forEach(g => {
                 const count = MEDS.filter(m => g.conditions.includes(m.condition)).length;
                 const active = medsState.selectedConditionGroup === g.id;
