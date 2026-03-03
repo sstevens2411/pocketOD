@@ -4,44 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f5f6f8;
-            --surface: #ffffff;
-            --ink: #0f1729;
-            --ink-secondary: #4a5568;
-            --ink-muted: #8b95a5;
-            --border: #e2e6ec;
-            --border-hover: #cbd0d8;
-            --accent: #5A42CA;
-            --accent-light: rgba(93,63,211,0.08);
-            --success: #0d7a3e;
-            --success-bg: #ecfdf3;
-            --success-border: #a7f3d0;
-            --danger: #c53030;
-            --danger-bg: #fff5f5;
+            --bg: #0f1117;
+            --surface: rgba(255,255,255,0.06);
+            --surface-solid: #181a23;
+            --ink: #f1f5f9;
+            --ink-secondary: #94a3b8;
+            --ink-muted: #64748b;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.16);
+            --accent: #06b6d4;
+            --accent-light: rgba(6,182,212,0.12);
+            --accent-glow: 0 0 20px rgba(6,182,212,0.15);
+            --success: #34d399;
+            --success-bg: rgba(52,211,153,0.1);
+            --success-border: rgba(52,211,153,0.25);
+            --danger: #f87171;
+            --danger-bg: rgba(248,113,113,0.1);
             --radius: 10px;
             --radius-lg: 14px;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
-            --shadow-lg: 0 4px 20px rgba(0,0,0,0.08), 0 0 1px rgba(0,0,0,0.1);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.05);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.05);
             --mono: 'IBM Plex Mono', 'SF Mono', monospace;
-            --sans: 'Inter', -apple-system, sans-serif;
-            --alcon: #0057B8;
-            --alcon-bg: #eaf2fc;
-            --bl: #E87722;
-            --bl-bg: #fef3e8;
-            --cv: #008B8B;
-            --cv-bg: #e6f4f4;
-            --jj: #7B2D8E;
-            --jj-bg: #f3e8f7;
+            --sans: 'DM Sans', -apple-system, sans-serif;
+            --alcon: #3b9eff;
+            --alcon-bg: rgba(59,158,255,0.1);
+            --bl: #f59e0b;
+            --bl-bg: rgba(245,158,11,0.1);
+            --cv: #2dd4bf;
+            --cv-bg: rgba(45,212,191,0.1);
+            --jj: #c084fc;
+            --jj-bg: rgba(192,132,252,0.1);
         }
 
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html, body {
+            color-scheme: dark;
         }
 
         body {
@@ -59,7 +65,8 @@
 
         /* HEADER */
         .header {
-            background: var(--accent);
+            background: linear-gradient(135deg, #0f1117 0%, #161926 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
             padding: 16px 20px 0;
             position: sticky;
             top: 0;
@@ -90,8 +97,8 @@
         }
 
         .subnav-item.active {
-            color: #fff;
-            border-bottom-color: #fff;
+            color: var(--accent);
+            border-bottom-color: var(--accent);
         }
 
         .header-inner {
@@ -128,6 +135,7 @@
             font-weight: 700;
             font-size: 26px;
             letter-spacing: 0.02em;
+            text-shadow: 0 0 30px rgba(6,182,212,0.3);
         }
 
         .logo-sub {
@@ -167,6 +175,8 @@
             border-radius: var(--radius);
             padding: 10px 12px;
             box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .step-item {
@@ -208,7 +218,7 @@
         .step-item.active .step-num {
             background: var(--accent);
             color: #fff;
-            box-shadow: 0 0 0 3px rgba(15,23,41,0.12);
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.25), var(--accent-glow);
         }
 
         .step-item.done .step-num {
@@ -247,6 +257,8 @@
             border-radius: var(--radius-lg);
             padding: 28px 24px;
             box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .card-title {
@@ -298,7 +310,7 @@
         .sign-toggle button {
             width: 36px;
             border: none;
-            background: #fafbfc;
+            background: var(--surface-solid);
             font-family: var(--mono);
             font-size: 15px;
             font-weight: 700;
@@ -317,34 +329,34 @@
 
         /* − always red, + always green (only for +/− toggles, not 90/180) */
         [id$="Neg"] {
-            color: #dc2626;
+            color: #f87171;
         }
         [id$="Pos"] {
-            color: #16a34a;
+            color: #4ade80;
         }
 
         .sign-toggle button.active-neg {
-            background: #fef2f2;
-            color: #dc2626;
+            background: rgba(220,38,38,0.15);
+            color: #f87171;
         }
 
         .sign-toggle button.active-pos {
-            background: #f0fdf4;
-            color: #16a34a;
+            background: rgba(22,163,74,0.15);
+            color: #4ade80;
         }
 
         .sign-toggle button.active-90 {
-            background: #eff6ff;
-            color: #2563eb;
+            background: rgba(37,99,235,0.15);
+            color: #60a5fa;
         }
 
         .sign-toggle button.active-180 {
-            background: #fff7ed;
-            color: #ea580c;
+            background: rgba(234,88,12,0.15);
+            color: #fb923c;
         }
 
         .sign-toggle button:not(.active-neg):not(.active-pos):not(.active-90):not(.active-180):hover {
-            background: #f3f4f6;
+            background: rgba(255,255,255,0.08);
         }
 
         .form-group input, .form-group select {
@@ -356,14 +368,14 @@
             font-family: var(--mono);
             font-weight: 500;
             color: var(--ink);
-            background: #fafbfc;
+            background: var(--surface-solid);
             transition: all 0.15s;
             -webkit-appearance: none;
             appearance: none;
         }
 
         .form-group select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23cbd5e1' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 12px center;
             padding-right: 32px;
@@ -373,8 +385,8 @@
         .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--accent);
-            background: #fff;
-            box-shadow: 0 0 0 3px var(--accent-light);
+            background: var(--surface-solid);
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
         }
 
         .form-group input::placeholder {
@@ -421,9 +433,9 @@
             width: 100%;
             padding: 8px 0;
             margin: 4px 0 12px;
-            border: 1.5px dashed rgba(90,66,202,0.3);
+            border: 1.5px dashed rgba(6,182,212,0.3);
             border-radius: var(--radius);
-            background: rgba(90,66,202,0.04);
+            background: rgba(6,182,212,0.04);
             color: var(--accent);
             font-family: var(--sans);
             font-size: 13px;
@@ -449,7 +461,7 @@
         .clear-rx-btn {
             margin-top: 16px;
             padding: 8px 18px;
-            border: 1.5px solid #d1d5db;
+            border: 1.5px solid var(--border);
             border-radius: var(--radius);
             background: transparent;
             color: var(--ink-secondary);
@@ -471,7 +483,7 @@
             padding: 10px 14px;
             border-radius: 8px;
             border: 2px solid var(--border);
-            background: #fafbfc;
+            background: var(--surface-solid);
             font-family: var(--mono);
             font-size: 12px;
             font-weight: 600;
@@ -485,15 +497,15 @@
         }
 
         .dom-toggle.active-left {
-            border-color: #7c3aed;
-            background: #f5f3ff;
-            color: #6d28d9;
+            border-color: #a78bfa;
+            background: rgba(124,58,237,0.12);
+            color: #c4b5fd;
         }
 
         .dom-toggle.active-right {
-            border-color: #b45309;
-            background: #fffbeb;
-            color: #a16207;
+            border-color: #f59e0b;
+            background: rgba(245,158,11,0.12);
+            color: #fbbf24;
         }
 
         /* VERTEX BOX */
@@ -575,6 +587,7 @@
         .option-btn.active {
             border-color: var(--accent);
             background: var(--accent-light);
+            box-shadow: var(--accent-glow);
         }
 
         .option-btn .icon {
@@ -652,21 +665,25 @@
         .brand-alcon.active {
             border-color: var(--alcon);
             background: var(--alcon-bg);
+            box-shadow: 0 0 20px rgba(59,158,255,0.15);
         }
 
         .brand-bl.active {
             border-color: var(--bl);
             background: var(--bl-bg);
+            box-shadow: 0 0 20px rgba(245,158,11,0.15);
         }
 
         .brand-cv.active {
             border-color: var(--cv);
             background: var(--cv-bg);
+            box-shadow: 0 0 20px rgba(45,212,191,0.15);
         }
 
         .brand-jj.active {
             border-color: var(--jj);
             background: var(--jj-bg);
+            box-shadow: 0 0 20px rgba(192,132,252,0.15);
         }
 
         /* SHOW ALL BTN */
@@ -761,6 +778,8 @@
             transition: all 0.15s;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .lens-card:hover {
@@ -804,31 +823,37 @@
         .badge-brand-alcon {
             background: var(--alcon-bg);
             color: var(--alcon);
+            border: 1px solid rgba(59,158,255,0.3);
         }
 
         .badge-brand-bl {
             background: var(--bl-bg);
             color: var(--bl);
+            border: 1px solid rgba(245,158,11,0.3);
         }
 
         .badge-brand-cv {
             background: var(--cv-bg);
             color: var(--cv);
+            border: 1px solid rgba(45,212,191,0.3);
         }
 
         .badge-brand-jj {
             background: var(--jj-bg);
             color: var(--jj);
+            border: 1px solid rgba(192,132,252,0.3);
         }
 
         .badge-modality {
-            background: #f3f4f6;
+            background: rgba(255,255,255,0.06);
             color: var(--ink-muted);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .badge-dk {
-            background: #fffbeb;
-            color: #92400e;
+            background: rgba(245,158,11,0.1);
+            color: #fbbf24;
+            border: 1px solid rgba(245,158,11,0.25);
         }
 
         .lens-name {
@@ -866,7 +891,7 @@
             flex-wrap: wrap;
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 1px solid #f3f4f6;
+            border-top: 1px solid var(--border);
         }
 
         .spec-item {}
@@ -907,7 +932,8 @@
         }
 
         .lens-select-btn:hover {
-            background: #1a2744;
+            background: #0891b2;
+            box-shadow: var(--accent-glow);
         }
 
         /* ORDER DETAIL VIEW */
@@ -933,7 +959,7 @@
         }
 
         .order-back-btn:hover {
-            background: #f9fafb;
+            background: rgba(255,255,255,0.06);
         }
 
         .order-lens-name {
@@ -974,7 +1000,7 @@
         }
 
         .order-param {
-            background: #fafbfc;
+            background: var(--surface-solid);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
@@ -1005,8 +1031,8 @@
         }
 
         .order-param.highlight {
-            background: #eff6ff;
-            border-color: #bfdbfe;
+            background: rgba(6,182,212,0.08);
+            border-color: rgba(6,182,212,0.25);
         }
 
         .order-param.highlight .order-param-value {
@@ -1014,19 +1040,19 @@
         }
 
         .order-note-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.2);
             border-radius: 6px;
             padding: 8px 10px;
             margin-bottom: 0;
             margin-top: 12px;
             font-size: 11px;
-            color: #92400e;
+            color: #fbbf24;
             line-height: 1.4;
         }
 
         .order-note-box strong {
-            color: #78350f;
+            color: #fcd34d;
         }
 
         .order-lens-info {
@@ -1060,7 +1086,7 @@
             text-align: center;
             background: var(--danger-bg);
             border-radius: var(--radius);
-            border: 1px solid #fecaca;
+            border: 1px solid rgba(248,113,113,0.25);
         }
 
         .empty-icon {
@@ -1071,12 +1097,12 @@
         .empty-title {
             font-size: 15px;
             font-weight: 700;
-            color: #991b1b;
+            color: #f87171;
         }
 
         .empty-desc {
             font-size: 12.5px;
-            color: #b91c1c;
+            color: #fca5a5;
             margin-top: 4px;
         }
 
@@ -1110,7 +1136,7 @@
         }
 
         .nav-btn-back:hover {
-            background: #f9fafb;
+            background: rgba(255,255,255,0.06);
         }
 
         .nav-btn-back:disabled {
@@ -1125,11 +1151,13 @@
         }
 
         .nav-btn-next:hover {
-            background: #1a2744;
+            background: #0891b2;
+            box-shadow: var(--accent-glow);
         }
 
         .nav-btn-next:disabled {
-            background: #d1d5db;
+            background: rgba(255,255,255,0.08);
+            color: var(--ink-muted);
             cursor: default;
         }
 
@@ -1403,15 +1431,15 @@
             font-family: var(--sans);
             font-weight: 500;
             color: var(--ink);
-            background: #fafbfc;
+            background: var(--surface-solid);
             transition: all 0.15s;
             -webkit-appearance: none;
         }
         .med-search-input:focus {
             outline: none;
             border-color: var(--accent);
-            background: #fff;
-            box-shadow: 0 0 0 3px var(--accent-light);
+            background: var(--surface-solid);
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
         }
         .med-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
         .med-search-icon {
@@ -1443,7 +1471,7 @@
             padding: 10px 14px;
             cursor: pointer;
             transition: background 0.1s;
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid var(--border);
         }
         .med-autocomplete-item:last-child { border-bottom: none; }
         .med-autocomplete-item:hover,
@@ -1472,6 +1500,8 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 8px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
         .med-card:hover {
             border-color: var(--border-hover);
@@ -1487,16 +1517,19 @@
         }
         /* Badges */
         .badge-condition {
-            background: #f3f4f6;
+            background: rgba(255,255,255,0.06);
             color: var(--ink-muted);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .badge-pf {
-            background: #eff6ff;
-            color: #1d4ed8;
+            background: rgba(59,130,246,0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(59,130,246,0.25);
         }
         .badge-generic {
             background: var(--success-bg);
             color: var(--success);
+            border: 1px solid var(--success-border);
         }
 
         /* Med card layout */
@@ -1546,7 +1579,7 @@
             gap: 12px;
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 1px solid #f3f4f6;
+            border-top: 1px solid var(--border);
             flex-wrap: wrap;
         }
         .med-price-col {
@@ -1617,23 +1650,23 @@
         }
         .med-notes-toggle:hover { text-decoration: underline; }
         .med-notes-content {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.2);
             border-radius: 8px;
             padding: 10px 14px;
             margin-top: 8px;
             font-size: 12.5px;
-            color: #92400e;
+            color: #fbbf24;
             line-height: 1.5;
         }
         .med-notes-list {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.2);
             border-radius: 8px;
             padding: 8px 14px 8px 30px;
             margin: 8px 0 0 0;
             font-size: 12.5px;
-            color: #92400e;
+            color: #fbbf24;
             line-height: 1.35;
             list-style: disc;
         }
@@ -1647,7 +1680,7 @@
             height: 32px;
             border-radius: 50%;
             border: none;
-            background: #f3f4f6;
+            background: rgba(255,255,255,0.06);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1656,9 +1689,9 @@
             transition: all 0.15s;
             flex-shrink: 0;
         }
-        .med-fav-btn:hover { background: #fef3c7; }
+        .med-fav-btn:hover { background: rgba(245,158,11,0.15); }
         .med-fav-btn.favorited {
-            background: #fef3c7;
+            background: rgba(245,158,11,0.15);
             color: #f59e0b;
         }
 
@@ -1711,7 +1744,7 @@
             cursor: pointer;
             transition: all 0.15s;
         }
-        .med-filter-chip:hover { border-color: var(--border-hover); background: #f9fafb; }
+        .med-filter-chip:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.04); }
         .med-filter-chip.active {
             border-color: var(--accent);
             background: var(--accent-light);
@@ -1735,13 +1768,13 @@
         .dc-dot-miotic { background: #16a34a; }
         .dc-dot-combo { background: #1e3a8a; }
         .dc-dot-rock { background: #6b7280; }
-        .med-filter-chip.dc-pga.active { background: #f0fdfa; border-color: #2dd4bf; color: #0f766e; }
-        .med-filter-chip.dc-beta.active { background: #fefce8; border-color: #eab308; color: #854d0e; }
-        .med-filter-chip.dc-cai.active { background: #fff7ed; border-color: #f97316; color: #c2410c; }
-        .med-filter-chip.dc-alpha.active { background: #faf5ff; border-color: #a855f7; color: #7e22ce; }
-        .med-filter-chip.dc-miotic.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
-        .med-filter-chip.dc-combo.active { background: #eff6ff; border-color: #1e3a8a; color: #1e3a8a; }
-        .med-filter-chip.dc-rock.active { background: #f3f4f6; border-color: #6b7280; color: #374151; }
+        .med-filter-chip.dc-pga.active { background: rgba(45,212,191,0.1); border-color: #2dd4bf; color: #2dd4bf; }
+        .med-filter-chip.dc-beta.active { background: rgba(250,204,21,0.1); border-color: #facc15; color: #facc15; }
+        .med-filter-chip.dc-cai.active { background: rgba(249,115,22,0.1); border-color: #f97316; color: #fb923c; }
+        .med-filter-chip.dc-alpha.active { background: rgba(168,85,247,0.1); border-color: #a855f7; color: #c084fc; }
+        .med-filter-chip.dc-miotic.active { background: rgba(22,163,74,0.1); border-color: #16a34a; color: #4ade80; }
+        .med-filter-chip.dc-combo.active { background: rgba(30,58,138,0.15); border-color: #3b82f6; color: #60a5fa; }
+        .med-filter-chip.dc-rock.active { background: rgba(107,114,128,0.15); border-color: #6b7280; color: #9ca3af; }
         .dc-dot-abx { background: #f43f5e; }
         .dc-dot-hist { background: #0ea5e9; }
         .dc-dot-steroid { background: #d97706; }
@@ -1751,15 +1784,15 @@
         .dc-dot-immuno { background: #059669; }
         .dc-dot-tear { background: #06b6d4; }
         .dc-dot-fungal { background: #65a30d; }
-        .med-filter-chip.dc-abx.active { background: #fff1f2; border-color: #f43f5e; color: #be123c; }
-        .med-filter-chip.dc-hist.active { background: #f0f9ff; border-color: #0ea5e9; color: #0369a1; }
-        .med-filter-chip.dc-steroid.active { background: #fffbeb; border-color: #d97706; color: #92400e; }
-        .med-filter-chip.dc-nsaid.active { background: #eef2ff; border-color: #6366f1; color: #4338ca; }
-        .med-filter-chip.dc-viral.active { background: #f8fafc; border-color: #64748b; color: #334155; }
-        .med-filter-chip.dc-vegf.active { background: #fdf4ff; border-color: #d946ef; color: #a21caf; }
-        .med-filter-chip.dc-immuno.active { background: #ecfdf5; border-color: #059669; color: #065f46; }
-        .med-filter-chip.dc-tear.active { background: #ecfeff; border-color: #06b6d4; color: #0e7490; }
-        .med-filter-chip.dc-fungal.active { background: #f7fee7; border-color: #65a30d; color: #3f6212; }
+        .med-filter-chip.dc-abx.active { background: rgba(244,63,94,0.1); border-color: #f43f5e; color: #fb7185; }
+        .med-filter-chip.dc-hist.active { background: rgba(14,165,233,0.1); border-color: #0ea5e9; color: #38bdf8; }
+        .med-filter-chip.dc-steroid.active { background: rgba(217,119,6,0.1); border-color: #d97706; color: #fbbf24; }
+        .med-filter-chip.dc-nsaid.active { background: rgba(99,102,241,0.1); border-color: #6366f1; color: #a5b4fc; }
+        .med-filter-chip.dc-viral.active { background: rgba(100,116,139,0.1); border-color: #64748b; color: #94a3b8; }
+        .med-filter-chip.dc-vegf.active { background: rgba(217,70,239,0.1); border-color: #d946ef; color: #e879f9; }
+        .med-filter-chip.dc-immuno.active { background: rgba(5,150,105,0.1); border-color: #059669; color: #34d399; }
+        .med-filter-chip.dc-tear.active { background: rgba(6,182,212,0.1); border-color: #06b6d4; color: #22d3ee; }
+        .med-filter-chip.dc-fungal.active { background: rgba(101,163,13,0.1); border-color: #65a30d; color: #a3e635; }
 
         /* Price slider */
         .med-price-filter {
@@ -1768,7 +1801,7 @@
             gap: 12px;
             margin-bottom: 16px;
             padding: 10px 14px;
-            background: #fafbfc;
+            background: var(--surface-solid);
             border-radius: 8px;
             border: 1px solid var(--border);
         }
@@ -1796,8 +1829,8 @@
             border-radius: 50%;
             background: var(--accent);
             cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            border: 2px solid var(--bg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
         }
         .med-price-filter .price-val {
             font-family: var(--mono);
@@ -1828,7 +1861,7 @@
             padding-bottom: 2px;
         }
         .med-subcondition-section + .med-subcondition-section {
-            border-top: 1px solid #f3f4f6;
+            border-top: 1px solid var(--border);
             padding-top: 14px;
         }
         .med-subcondition-label {
@@ -1843,11 +1876,11 @@
         .med-footer {
             margin-top: 24px;
             padding: 14px 16px;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.2);
             border-radius: 8px;
             font-size: 11px;
-            color: #92400e;
+            color: #fbbf24;
             line-height: 1.5;
             text-align: center;
         }
@@ -1943,24 +1976,24 @@
 
             /* Sign toggle — small to save space, higher contrast */
             .sign-toggle {
-                border-color: #9ca3af;
+                border-color: var(--border-hover);
             }
             .sign-toggle button {
                 width: 28px;
                 min-height: 40px;
                 font-size: 14px;
                 color: var(--ink-secondary);
-                background: #f0f1f3;
+                background: var(--surface-solid);
             }
             .sign-toggle button:first-child {
-                border-right-color: #9ca3af;
+                border-right-color: var(--border-hover);
             }
             .form-group input, .form-group select {
                 min-height: 44px;
                 padding: 10px 8px;
                 min-width: 0;
-                border: 2px solid #6b7280;
-                background: #fff;
+                border: 2px solid var(--border-hover);
+                background: var(--surface-solid);
             }
 
             /* --- Steps bar --- */
@@ -2365,6 +2398,21 @@
             .option-btn {
                 padding: 16px 14px;
             }
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
         }
 
     </style>
@@ -4554,7 +4602,7 @@
             // Names
             html += `<div class="med-brand-name">${escMedHtml(med.brand_name)}</div>`;
             const isCombo = /combination/i.test(med.drug_class) && !/antibiotic|steroid|cortico/i.test(med.drug_class);
-            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#6b7280;background:#f3f4f6;padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
+            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#94a3b8;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
             html += `<div class="med-drug-class">${escMedHtml(med.drug_class)}</div>`;
             html += `</div>`;
             // Prices (right side)
