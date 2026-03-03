@@ -4574,6 +4574,7 @@
                 const showPrescribe = clSubTab === 'prescribe';
                 document.querySelector('main.main').style.display = showPrescribe ? '' : 'none';
                 document.getElementById('browsePage').style.display = showPrescribe ? 'none' : '';
+                if (!showPrescribe) renderBrowse();
             } else {
                 document.querySelector('main.main').style.display = 'none';
                 document.getElementById('browsePage').style.display = 'none';
