@@ -102,6 +102,46 @@
             border-bottom-color: var(--accent);
         }
 
+        .cl-subtabs {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 8px 0 6px;
+            display: block;
+            text-align: left;
+        }
+        .cl-subtabs-inner {
+            display: inline-flex;
+            gap: 6px;
+            width: 50%;
+            justify-content: center;
+        }
+        @media (max-width: 600px) {
+            .cl-subtabs { text-align: center; }
+            .cl-subtabs-inner { width: auto; }
+            .cl-subtab { font-size: 10px; padding: 4px 12px; white-space: nowrap; }
+        }
+        .cl-subtab {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+            color: rgba(255,255,255,0.4);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.3px;
+        }
+        .cl-subtab:hover {
+            color: rgba(255,255,255,0.7);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .cl-subtab.active {
+            color: var(--accent);
+            background: rgba(6,182,212,0.1);
+            border-color: rgba(6,182,212,0.3);
+        }
+
         .header-inner {
             max-width: 760px;
             margin: 0 auto;
@@ -2026,6 +2066,7 @@
             .steps-bar {
                 padding: 6px 8px;
                 margin-bottom: 14px;
+                justify-content: center;
             }
             .step-item {
                 padding: 8px 4px;
@@ -2441,6 +2482,149 @@
             background: #4b5563;
         }
 
+        /* Browse All tab */
+        .browse-search-wrap {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .browse-search-input {
+            width: 100%;
+            padding: 10px 40px 10px 36px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            font-size: 14px;
+            font-family: var(--sans);
+            font-weight: 500;
+            color: var(--ink);
+            background: var(--surface-solid);
+            transition: all 0.15s;
+            -webkit-appearance: none;
+        }
+        .browse-search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+        }
+        .browse-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
+        .browse-search-icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-muted);
+        }
+        .browse-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+        }
+        .browse-table th {
+            position: sticky;
+            top: 0;
+            background: var(--surface-solid);
+            color: var(--ink-muted);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+            padding: 8px 10px;
+            border-bottom: 2px solid var(--border);
+            z-index: 1;
+        }
+        .browse-brand-row td {
+            padding: 10px 10px 6px;
+            font-weight: 700;
+            font-size: 14px;
+            border-left: 3px solid var(--accent);
+            border-bottom: none;
+        }
+        .browse-table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .browse-name {
+            font-weight: 500;
+        }
+        .browse-type {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: rgba(6,182,212,0.15);
+            color: var(--accent);
+            margin-left: 6px;
+            vertical-align: middle;
+            letter-spacing: 0.3px;
+        }
+        .browse-sched {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.06);
+            color: var(--ink-muted);
+            margin-left: 4px;
+            vertical-align: middle;
+            letter-spacing: 0.3px;
+        }
+        .browse-table .browse-muted {
+            color: var(--ink-muted);
+        }
+        .browse-empty {
+            text-align: center;
+            color: var(--ink-muted);
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+        .browse-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .browse-filter-btn {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--ink-muted);
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            line-height: 1.3;
+            transition: all 0.12s;
+            font-family: var(--sans);
+        }
+        .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: var(--ink-muted); border-color: rgba(255,255,255,0.2); }
+        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-all.active,
+        .browse-filter-btn.bf-mod:hover, .browse-filter-btn.bf-mod.active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); color: var(--ink); }
+        .browse-filter-btn.bf-sphere { color: #3b9eff; border-color: rgba(59,158,255,0.4); }
+        .browse-filter-btn.bf-sphere:hover, .browse-filter-btn.bf-sphere.active { background: rgba(59,158,255,0.15); border-color: #3b9eff; color: #3b9eff; }
+        .browse-filter-btn.bf-toric { color: #f59e0b; border-color: rgba(245,158,11,0.4); }
+        .browse-filter-btn.bf-toric:hover, .browse-filter-btn.bf-toric.active { background: rgba(245,158,11,0.15); border-color: #f59e0b; color: #f59e0b; }
+        .browse-filter-btn.bf-multifocal { color: #2dd4bf; border-color: rgba(45,212,191,0.4); }
+        .browse-filter-btn.bf-multifocal:hover, .browse-filter-btn.bf-multifocal.active { background: rgba(45,212,191,0.15); border-color: #2dd4bf; color: #2dd4bf; }
+        .browse-filter-btn.bf-mftoric { color: #c084fc; border-color: rgba(192,132,252,0.4); }
+        .browse-filter-btn.bf-mftoric:hover, .browse-filter-btn.bf-mftoric.active { background: rgba(192,132,252,0.15); border-color: #c084fc; color: #c084fc; }
+        .browse-table th.browse-th-active {
+            color: var(--accent);
+        }
+        .browse-scroll-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (max-width: 600px) {
+            .browse-table { font-size: 12px; min-width: 640px; }
+            .browse-table th { padding: 6px 6px; }
+            .browse-table td { padding: 5px 6px; }
+            .browse-type, .browse-sched { font-size: 8px; padding: 1px 3px; }
+        }
+
     </style>
 </head>
 <body>
@@ -2455,6 +2639,12 @@
         <div class="subnav">
             <div class="subnav-item active" id="subnavLenses" onclick="switchTab('lenses')">Contact Lenses</div>
             <div class="subnav-item" id="subnavMeds" onclick="switchTab('meds')">Medications</div>
+        </div>
+        <div class="cl-subtabs" id="clSubtabs">
+            <div class="cl-subtabs-inner">
+                <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">Calculator</div>
+                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">Browse All</div>
+            </div>
         </div>
     </header>
 
@@ -2478,6 +2668,9 @@
         <div id="medsContent"></div>
     </div>
 
+    <div id="browsePage" class="main" style="display:none">
+        <div id="browseContent"></div>
+    </div>
 
     <script>
         // LENS DATABASE
@@ -4352,6 +4545,9 @@
                 sortBy: "dk",
                 sortDir: "desc"
             };
+            clSubTab = 'prescribe';
+            document.getElementById('clSubPrescribe').classList.add('active');
+            document.getElementById('clSubBrowse').classList.remove('active');
             switchTab('lenses');
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -4368,21 +4564,37 @@
             }
         }
 
+        let clSubTab = 'prescribe';
+
         function switchTab(tab) {
             document.getElementById('subnavLenses').classList.toggle('active', tab === 'lenses');
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
+            document.getElementById('clSubtabs').style.display = tab === 'lenses' ? '' : 'none';
             if (tab === 'lenses') {
-                document.querySelector('.main').style.display = '';
-                document.getElementById('medsPage').style.display = 'none';
+                const showPrescribe = clSubTab === 'prescribe';
+                document.querySelector('main.main').style.display = showPrescribe ? '' : 'none';
+                document.getElementById('browsePage').style.display = showPrescribe ? 'none' : '';
             } else {
-                document.querySelector('.main').style.display = 'none';
-                document.getElementById('medsPage').style.display = '';
+                document.querySelector('main.main').style.display = 'none';
+                document.getElementById('browsePage').style.display = 'none';
+            }
+            document.getElementById('medsPage').style.display = tab === 'meds' ? '' : 'none';
+            if (tab === 'meds') {
                 medsState.paStep = 0;
                 medsState.selectedConditionGroup = null;
                 medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
                 medsState.categorySearch = "";
                 renderMeds();
             }
+        }
+
+        function switchClSub(sub) {
+            clSubTab = sub;
+            document.getElementById('clSubPrescribe').classList.toggle('active', sub === 'prescribe');
+            document.getElementById('clSubBrowse').classList.toggle('active', sub === 'browse');
+            document.querySelector('main.main').style.display = sub === 'prescribe' ? '' : 'none';
+            document.getElementById('browsePage').style.display = sub === 'browse' ? '' : 'none';
+            if (sub === 'browse') renderBrowse();
         }
 
         // ===== MEDICATIONS TAB =====
@@ -5020,6 +5232,149 @@
             ta.select();
             document.execCommand('copy');
             document.body.removeChild(ta);
+        }
+
+        // ===== BROWSE ALL TAB =====
+        const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null };
+
+        function toggleBrowseType(type) {
+            browseState.typeFilter = type;
+            renderBrowse();
+        }
+
+        function toggleBrowseModality(mod) {
+            browseState.modalityFilter = mod;
+            renderBrowse();
+        }
+
+        function toggleBrowseDkSort() {
+            if (!browseState.sortDk) browseState.sortDk = "desc";
+            else if (browseState.sortDk === "desc") browseState.sortDk = "asc";
+            else browseState.sortDk = null;
+            renderBrowse();
+        }
+
+        function renderBrowse() {
+            const el = document.getElementById('browseContent');
+            const search = browseState.search.toLowerCase().trim();
+            const tf = browseState.typeFilter;
+
+            const typeLabel = { sphere:"S", toric:"T", multifocal:"MF", "multifocal-toric":"MFT" };
+            const schedLabel = { daily:"1D", weekly:"1W", biweekly:"2W", monthly:"1M" };
+            const typeFilters = [
+                { key:"sphere", cls:"sphere", label:"SPH" },
+                { key:"toric", cls:"toric", label:"TORIC" },
+                { key:"multifocal", cls:"multifocal", label:"MF" },
+                { key:"multifocal-toric", cls:"mftoric", label:"MF TORIC" },
+            ];
+
+            function fmtSph(min, max) {
+                const fmt = v => (v > 0 ? "+" : "") + v.toFixed(2);
+                return fmt(min) + " to " + fmt(max);
+            }
+
+            let html = `<div class="browse-search-wrap">
+                <span class="browse-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
+                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search lenses…" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
+            </div>`;
+
+            const mf = browseState.modalityFilter;
+            const modFilters = [
+                { key: "daily", label: "1D" },
+                { key: "weekly", label: "1W" },
+                { key: "biweekly", label: "2W" },
+                { key: "monthly", label: "1M" },
+            ];
+            const modBtns = modFilters.map(m =>
+                `<button class="browse-filter-btn bf-mod${(mf === m.key) ? ' active' : ''}" onclick="toggleBrowseModality(${m.key ? "'" + m.key + "'" : 'null'})">${m.label}</button>`
+            ).join('');
+
+            const allActive = !tf && !mf;
+            const allBtn = `<button class="browse-filter-btn bf-all${allActive ? ' active' : ''}" onclick="browseState.typeFilter=null;browseState.modalityFilter=null;renderBrowse()">ALL</button>`;
+            const typeBtns = typeFilters.map(f =>
+                `<button class="browse-filter-btn bf-${f.cls}${tf === f.key ? ' active' : ''}" onclick="toggleBrowseType('${f.key}')">${f.label}</button>`
+            ).join('');
+
+            const divider = `<span style="width:1px;align-self:stretch;background:var(--border);margin:0 4px"></span>`;
+            html += `<div class="browse-filters" style="margin-bottom:10px">${allBtn}${typeBtns}${divider}${modBtns}</div>`;
+
+            const dkSort = browseState.sortDk;
+            const dkArrow = dkSort === "desc" ? " &#9660;" : dkSort === "asc" ? " &#9650;" : "";
+            const dkClass = dkSort ? ' class="browse-th-active"' : '';
+
+            html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
+                <th>Name</th><th${dkClass} style="cursor:pointer" onclick="toggleBrowseDkSort()">Dk${dkArrow}</th><th>BC</th><th>Dia</th><th>Sph Range</th><th>Cyl Range</th><th>Axes</th>
+            </tr></thead><tbody>`;
+
+            let totalShown = 0;
+            const brandColorMap = { Alcon:"var(--alcon)", "Bausch + Lomb":"var(--bl)", CooperVision:"var(--cv)", "J&J Acuvue":"var(--jj)" };
+
+            if (dkSort) {
+                // Flat list sorted by Dk
+                let allLenses = [...LENSES];
+                if (tf) allLenses = allLenses.filter(l => l.type === tf);
+                if (mf) allLenses = allLenses.filter(l => l.modality === mf);
+                if (search) allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search));
+                allLenses.sort((a, b) => dkSort === "desc" ? b.dk - a.dk : a.dk - b.dk);
+                allLenses.forEach(l => {
+                    const tb = typeLabel[l.type] || "";
+                    const sb = schedLabel[l.modality] || "";
+                    const hasCyl = l.cylMin !== 0 || l.cylMax !== 0;
+                    const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "\u2014";
+                    const axStr = l.axes || "\u2014";
+                    const brandColor = brandColorMap[l.brand] || "var(--accent)";
+                    html += `<tr>
+                        <td><span class="browse-name">${l.name}</span> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</td>
+                        <td style="font-weight:600">${l.dk}</td>
+                        <td class="browse-muted">${l.bc}</td>
+                        <td class="browse-muted">${l.diam}</td>
+                        <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
+                        <td class="browse-muted">${cylStr}</td>
+                        <td class="browse-muted">${axStr}</td>
+                    </tr>`;
+                    totalShown++;
+                });
+            } else {
+
+            BRANDS.forEach(brand => {
+                let lenses = LENSES.filter(l => l.brand === brand);
+                if (tf) lenses = lenses.filter(l => l.type === tf);
+                if (mf) lenses = lenses.filter(l => l.modality === mf);
+                if (search) lenses = lenses.filter(l => l.name.toLowerCase().includes(search));
+                if (lenses.length === 0) return;
+                lenses.sort((a, b) => a.name.localeCompare(b.name));
+                const color = brandColorMap[brand] || "var(--accent)";
+                html += `<tr class="browse-brand-row"><td colspan="7" style="border-left-color:${color};color:${color}">${brand}</td></tr>`;
+                lenses.forEach(l => {
+                    const tb = typeLabel[l.type] || "";
+                    const sb = schedLabel[l.modality] || "";
+                    const hasCyl = l.cylMin !== 0 || l.cylMax !== 0;
+                    const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "—";
+                    const axStr = l.axes || "—";
+                    html += `<tr>
+                        <td><span class="browse-name">${l.name}</span>${tb ? `<span class="browse-type">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</td>
+                        <td class="browse-muted">${l.dk}</td>
+                        <td class="browse-muted">${l.bc}</td>
+                        <td class="browse-muted">${l.diam}</td>
+                        <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
+                        <td class="browse-muted">${cylStr}</td>
+                        <td class="browse-muted">${axStr}</td>
+                    </tr>`;
+                    totalShown++;
+                });
+            });
+            } // end brand-grouped else
+
+            html += `</tbody></table></div>`;
+            if (totalShown === 0) {
+                html += `<div class="browse-empty">No lenses match your search.</div>`;
+            }
+
+            el.innerHTML = html;
+
+            // Restore focus to search input
+            const inp = document.getElementById('browseSearchInput');
+            if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
         }
 
         // INIT
