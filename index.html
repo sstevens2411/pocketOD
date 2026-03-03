@@ -4606,7 +4606,7 @@
             const activeId = document.activeElement ? document.activeElement.id : null;
             let html = '';
             html += renderMedPrescribingAid();
-            html += `<div class="med-footer">Pricing is approximate cash pricing without insurance. Always verify current pricing and clinical appropriateness before prescribing.</div>`;
+            html += `<div class="med-footer">Pricing is approximate, without insurance. Always verify dosage, allergies, contraindications, and clinical appropriateness before prescribing.</div>`;
             el.innerHTML = html;
             bindMedEvents();
             if (activeId) {
