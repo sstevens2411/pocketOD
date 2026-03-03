@@ -2584,13 +2584,13 @@
         .browse-filters {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
         }
         .browse-filter-btn {
-            font-size: 9px;
+            font-size: 12px;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 5px 12px;
+            border-radius: 6px;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--ink-muted);
@@ -2619,6 +2619,7 @@
             -webkit-overflow-scrolling: touch;
         }
         @media (max-width: 600px) {
+            .browse-filter-btn { font-size: 10px; padding: 4px 8px; border-radius: 5px; }
             .browse-table { font-size: 12px; min-width: 640px; }
             .browse-table th { padding: 6px 6px; }
             .browse-table td { padding: 5px 6px; }
