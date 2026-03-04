@@ -2518,11 +2518,18 @@
             border-collapse: separate;
             border-spacing: 0;
             font-size: 13px;
+            table-layout: auto;
+        }
+        .browse-table th:first-child,
+        .browse-table td:first-child {
+            width: 1%;
+            white-space: nowrap;
         }
         .browse-table th {
             position: sticky;
-            top: 0;
+            top: var(--header-h, 0px);
             background: var(--surface-solid);
+            z-index: 2;
             color: var(--ink-muted);
             font-size: 10px;
             font-weight: 700;
@@ -2543,6 +2550,7 @@
         .browse-table td {
             padding: 6px 10px;
             border-bottom: 1px solid var(--border);
+            white-space: nowrap;
             vertical-align: middle;
         }
         .browse-name {
@@ -2573,13 +2581,16 @@
             letter-spacing: 0.3px;
         }
         .browse-table .browse-muted {
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
         }
         .browse-empty {
             text-align: center;
             color: var(--ink-muted);
             padding: 40px 20px;
             font-size: 14px;
+        }
+        @media (min-width: 601px) {
+            .browse-main { max-width: 1100px; }
         }
         .browse-filters {
             display: flex;
@@ -2615,11 +2626,12 @@
             color: var(--accent);
         }
         .browse-scroll-wrap {
-            overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
         @media (max-width: 600px) {
-            .browse-filter-btn { font-size: 10px; padding: 4px 8px; border-radius: 5px; }
+            .browse-scroll-wrap { overflow-x: auto; }
+            .browse-filters { gap: 4px; }
+            .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; }
             .browse-table { font-size: 12px; min-width: 640px; }
             .browse-table th { padding: 6px 6px; }
             .browse-table td { padding: 5px 6px; }
@@ -2669,7 +2681,7 @@
         <div id="medsContent"></div>
     </div>
 
-    <div id="browsePage" class="main" style="display:none">
+    <div id="browsePage" class="main browse-main" style="display:none">
         <div id="browseContent"></div>
     </div>
 
@@ -5237,7 +5249,7 @@
         }
 
         // ===== BROWSE ALL TAB =====
-        const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null };
+        const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null, sortBc: null, sortDia: null };
 
         function toggleBrowseType(type) {
             browseState.typeFilter = type;
@@ -5249,19 +5261,26 @@
             renderBrowse();
         }
 
-        function toggleBrowseDkSort() {
-            if (!browseState.sortDk) browseState.sortDk = "desc";
-            else if (browseState.sortDk === "desc") browseState.sortDk = "asc";
-            else browseState.sortDk = null;
+        function toggleBrowseSort(key) {
+            const keys = ['sortDk', 'sortBc', 'sortDia'];
+            const stateKey = 'sort' + key;
+            if (!browseState[stateKey]) browseState[stateKey] = "desc";
+            else if (browseState[stateKey] === "desc") browseState[stateKey] = "asc";
+            else browseState[stateKey] = null;
+            keys.forEach(k => { if (k !== stateKey) browseState[k] = null; });
             renderBrowse();
         }
 
         function renderBrowse() {
+            const hdr = document.querySelector('.header');
+            if (hdr) document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px');
             const el = document.getElementById('browseContent');
             const search = browseState.search.toLowerCase().trim();
             const tf = browseState.typeFilter;
 
-            const typeLabel = { sphere:"S", toric:"T", multifocal:"MF", "multifocal-toric":"MFT" };
+            const typeLabel = { sphere:"SPH", toric:"TORIC", multifocal:"MF", "multifocal-toric":"MF TORIC" };
+            const typeColorMap = { sphere:"#3b9eff", toric:"#f59e0b", multifocal:"#2dd4bf", "multifocal-toric":"#c084fc" };
+            const typeBgMap = { sphere:"rgba(59,158,255,0.15)", toric:"rgba(245,158,11,0.15)", multifocal:"rgba(45,212,191,0.15)", "multifocal-toric":"rgba(192,132,252,0.15)" };
             const schedLabel = { daily:"1D", weekly:"1W", biweekly:"2W", monthly:"1M" };
             const typeFilters = [
                 { key:"sphere", cls:"sphere", label:"SPH" },
@@ -5300,24 +5319,26 @@
             const divider = `<span style="width:1px;align-self:stretch;background:var(--border);margin:0 4px"></span>`;
             html += `<div class="browse-filters" style="margin-bottom:10px">${allBtn}${typeBtns}${divider}${modBtns}</div>`;
 
-            const dkSort = browseState.sortDk;
-            const dkArrow = dkSort === "desc" ? " &#9660;" : dkSort === "asc" ? " &#9650;" : "";
-            const dkClass = dkSort ? ' class="browse-th-active"' : '';
+            const anySort = browseState.sortDk || browseState.sortBc || browseState.sortDia;
+            const mkArrow = (s) => s === "desc" ? " &#9660;" : s === "asc" ? " &#9650;" : "";
+            const mkClass = (s) => s ? ' class="browse-th-active"' : '';
 
             html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
-                <th>Name</th><th${dkClass} style="cursor:pointer" onclick="toggleBrowseDkSort()">Dk${dkArrow}</th><th>BC</th><th>Dia</th><th>Sph Range</th><th>Cyl Range</th><th>Axes</th>
+                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;renderBrowse()">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th>Sph Range</th><th>Cyl Range</th><th>Axes</th>
             </tr></thead><tbody>`;
 
             let totalShown = 0;
             const brandColorMap = { Alcon:"var(--alcon)", "Bausch + Lomb":"var(--bl)", CooperVision:"var(--cv)", "J&J Acuvue":"var(--jj)" };
 
-            if (dkSort) {
-                // Flat list sorted by Dk
+            if (anySort) {
+                // Flat list sorted by selected column
                 let allLenses = [...LENSES];
                 if (tf) allLenses = allLenses.filter(l => l.type === tf);
                 if (mf) allLenses = allLenses.filter(l => l.modality === mf);
                 if (search) allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search));
-                allLenses.sort((a, b) => dkSort === "desc" ? b.dk - a.dk : a.dk - b.dk);
+                if (browseState.sortDk) allLenses.sort((a, b) => browseState.sortDk === "desc" ? b.dk - a.dk : a.dk - b.dk);
+                else if (browseState.sortBc) allLenses.sort((a, b) => browseState.sortBc === "desc" ? parseFloat(b.bc) - parseFloat(a.bc) : parseFloat(a.bc) - parseFloat(b.bc));
+                else if (browseState.sortDia) allLenses.sort((a, b) => browseState.sortDia === "desc" ? parseFloat(b.diam) - parseFloat(a.diam) : parseFloat(a.diam) - parseFloat(b.diam));
                 allLenses.forEach(l => {
                     const tb = typeLabel[l.type] || "";
                     const sb = schedLabel[l.modality] || "";
@@ -5326,7 +5347,7 @@
                     const axStr = l.axes || "\u2014";
                     const brandColor = brandColorMap[l.brand] || "var(--accent)";
                     html += `<tr>
-                        <td><span class="browse-name">${l.name}</span> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</td>
+                        <td><span class="browse-name">${l.name}</span> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</td>
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -5354,7 +5375,7 @@
                     const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "—";
                     const axStr = l.axes || "—";
                     html += `<tr>
-                        <td><span class="browse-name">${l.name}</span>${tb ? `<span class="browse-type">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</td>
+                        <td><span class="browse-name">${l.name}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</td>
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -5374,9 +5395,9 @@
 
             el.innerHTML = html;
 
-            // Restore focus to search input
+            // Restore focus to search input only if user was already typing
             const inp = document.getElementById('browseSearchInput');
-            if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+            if (inp && browseState.search) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
         }
 
         // INIT
