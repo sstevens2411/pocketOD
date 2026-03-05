@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55' stroke='%2306b6d4' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M33 55 Q60 28 87 55 Q60 82 33 55Z' stroke='%2306b6d4' stroke-width='5' fill='rgba(6,182,212,0.1)' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='55' r='9' fill='%2306b6d4'/%3E%3Ccircle cx='63.5' cy='52.5' r='2.8' fill='%230a0b0f'/%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web@2"></script>
     <style>
@@ -2152,9 +2153,9 @@
                 gap: 6px;
             }
             .sort-btn {
-                padding: 9px 14px;
-                font-size: 11px;
-                min-height: 38px;
+                padding: 10px 18px;
+                font-size: 13px;
+                min-height: 40px;
                 border-radius: 8px;
             }
 
@@ -2660,6 +2661,12 @@
     <header class="header">
         <div class="header-inner">
             <div class="logo-group" onclick="resetAll()" style="cursor:pointer">
+                <svg width="54" height="54" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#06b6d4" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#06b6d4" stroke-width="5" fill="rgba(6,182,212,0.1)" stroke-linejoin="round"/>
+                    <circle cx="60" cy="55" r="9" fill="#06b6d4"/>
+                    <circle cx="63.5" cy="52.5" r="2.8" fill="#0a0b0f"/>
+                </svg>
                 <div>
                     <div class="logo-text">Pocket OD</div>
                 </div>
@@ -2995,10 +3002,10 @@
         // STATE
         const BRANDS = ["Alcon", "Bausch + Lomb", "CooperVision", "J&J Acuvue"];
         const MODALITIES = [
-            { id:"daily", label:"Daily", desc:"Fresh pair every day", icon:'<i class="ph-duotone ph-sun-horizon"></i>' },
-            { id:"weekly", label:"Weekly", desc:"Replace every 7 days", icon:'<i class="ph-duotone ph-calendar-dots"></i>' },
-            { id:"biweekly", label:"Bi-Weekly", desc:"Replace every 14 days", icon:'<i class="ph-duotone ph-arrows-clockwise"></i>' },
-            { id:"monthly", label:"Monthly", desc:"Replace every 30 days", icon:'<i class="ph-duotone ph-calendar"></i>' },
+            { id:"daily", label:"Daily", desc:"Fresh pair every day", icon:'<i class="ph-duotone ph-sun-horizon"></i>', color:"#f59e0b" },
+            { id:"weekly", label:"Weekly", desc:"Replace every 7 days", icon:'<i class="ph-duotone ph-calendar-dots"></i>', color:"#22c55e" },
+            { id:"biweekly", label:"Bi-Weekly", desc:"Replace every 14 days", icon:'<i class="ph-duotone ph-arrows-clockwise"></i>', color:"#8b5cf6" },
+            { id:"monthly", label:"Monthly", desc:"Replace every 30 days", icon:'<i class="ph-duotone ph-calendar"></i>', color:"#3b82f6" },
         ];
         const STEP_LABELS = ["Rx","Schedule","Brands","Results"];
 
@@ -3477,30 +3484,44 @@
                 const isActive = state.modality.includes(m.id);
                 const isZero = count === 0;
 
-                return `<div class="option-btn ${isActive ? "active" : ""} ${isZero ? "zero" : ""}" onclick="toggleModality('${m.id}')">
-                    <div class="icon">${m.icon}</div>
+                const activeStyle = isActive ? `border-color:${m.color};background:${m.color}15;box-shadow:0 0 12px ${m.color}30` : '';
+                return `<div class="option-btn ${isActive ? "active" : ""} ${isZero ? "zero" : ""}" onclick="toggleModality('${m.id}')" style="${activeStyle}">
+                    <div class="icon" ${isActive ? `style="color:${m.color}"` : ''}>${m.icon}</div>
                     <div class="title">${m.label}</div>
                     <div class="desc">${m.desc}</div>
                     <div class="count">${count} lens${count !== 1 ? "es" : ""}</div>
                 </div>`;
             }).join("");
 
+            const allSelected = state.modality.length === MODALITIES.length;
             return `<div class="fade-in">
-                <h2 class="card-title">Replacement Schedule</h2>
-                <p class="card-desc">How often should the lenses be replaced? Select one or show all.</p>
-                <div class="option-grid">${items}
-                    <div class="option-btn ${state.modality.length === 0 ? "active" : ""}" onclick="toggleModality(null)" style="position:relative">
-                        <div class="icon" style="position:absolute;top:10px;right:10px;margin:0"><i class="ph-duotone ph-check-circle"></i></div>
-                        <div class="title">Select All</div>
-                        <div class="desc">Show all schedules</div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                    <div>
+                        <h2 class="card-title" style="margin-bottom:2px">Replacement Schedule</h2>
+                        <p class="card-desc">How often should the lenses be replaced?</p>
                     </div>
+                    <button onclick="toggleModality(null)" style="
+                        flex-shrink:0;
+                        padding:6px 14px;
+                        border-radius:8px;
+                        border:1.5px solid ${allSelected ? 'var(--accent)' : 'var(--ink-muted)'};
+                        background:var(--surface);
+                        color:${allSelected ? 'var(--accent)' : 'var(--ink-muted)'};
+                        font-family:var(--sans);
+                        font-size:12px;
+                        font-weight:600;
+                        cursor:pointer;
+                        transition:all 0.15s;
+                        margin-top:2px;
+                    ">${allSelected ? 'Select None' : 'Select All'}</button>
                 </div>
+                <div class="option-grid">${items}</div>
             </div>`;
         }
 
         function toggleModality(id) {
             if (id === null) {
-                state.modality = [];
+                state.modality = state.modality.length === MODALITIES.length ? [] : MODALITIES.map(m => m.id);
             } else if (state.modality.includes(id)) {
                 state.modality = state.modality.filter(m => m !== id);
             } else {
@@ -3556,7 +3577,7 @@
             const metaParts = [
                 eyeMetaSummary(state.od, "OD"),
                 eyeMetaSummary(state.os, "OS"),
-                state.modality.length > 0 ? state.modality.join(", ") : "All schedules",
+                state.modality.length > 0 && state.modality.length < MODALITIES.length ? state.modality.join(", ") : "All schedules",
             ].join(" \u00B7 ");
 
             const sortBtns = ["dk","brand","name","price"].map(s => {
