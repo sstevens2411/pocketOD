@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55' stroke='%2306b6d4' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M33 55 Q60 28 87 55 Q60 82 33 55Z' stroke='%2306b6d4' stroke-width='5' fill='rgba(6,182,212,0.1)' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='55' r='9' fill='%2306b6d4'/%3E%3Ccircle cx='63.5' cy='52.5' r='2.8' fill='%230a0b0f'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=block&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web@2"></script>
     <style>
         :root {
@@ -1063,7 +1063,7 @@
         .order-param-note {
             font-family: var(--mono);
             font-size: 9px;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
             margin-top: 2px;
         }
 
@@ -1365,7 +1365,7 @@
 
         .ts-rationale {
             font-size: 12px;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
             margin-bottom: 10px;
         }
 
@@ -2727,6 +2727,23 @@
             { name:"Total30", brand:"Alcon", type:"sphere", modality:"monthly", dk:123, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$75 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)" },
             { name:"Total30 for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$85", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
             { name:"Total30 Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:123, bc:"8.4", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$110", wear:"DW", material:"Lehfilcon A (SiHy)" },
+            { name:"Total30 Multifocal for Astigmatism", brand:"Alcon", type:"multifocal-toric", modality:"monthly", dk:122, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:["Lo","Med","Hi"], qty:"6", price:"$150", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"Lo", dominant:"Lo", nonDominant:"Lo" },
+                    { specAddMin:1.50, specAddMax:2.00, clAdd:"Med", dominant:"Lo", nonDominant:"Med" },
+                    { specAddMin:2.25, specAddMax:2.50, clAdd:"Hi", dominant:"Med", nonDominant:"Hi" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"sphereAdj", eye:"dominant", amount:+0.25 },
+                        { action:"lowerAdd", eye:"dominant" }
+                    ],
+                    near: [
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 },
+                        { action:"raiseAdd", eye:"nonDominant" }
+                    ]
+                }
+            }},
             { name:"DAILIES AquaComfort Plus", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-15, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$90 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)" },
             { name:"DAILIES AquaComfort Plus Toric", brand:"Alcon", type:"toric", modality:"daily", dk:26, bc:"8.8", diam:"14.4", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:[], qty:"30, 90", price:"$115 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
             { name:"DAILIES AquaComfort Plus Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$130 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)" },
@@ -2746,7 +2763,17 @@
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.75, specAddMax:2.50, clAdd:"High", dominant:"Low", nonDominant:"High" },
-                ]
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"lowerAdd", eye:"dominant", dropTo:"Ultra for Astigmatism" },
+                        { action:"sphereAdj", eye:"dominant", amount:-0.25 }
+                    ],
+                    near: [
+                        { action:"raiseAdd", eye:"nonDominant" },
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 }
+                    ]
+                }
             }},
             { name:"Ultra One-Day", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:107, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$70\u2013115 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)" },
             { name:"PureVision2", brand:"Bausch + Lomb", type:"sphere", modality:"monthly", dk:91, bc:"8.6", diam:"14.0", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$71", wear:"EW", material:"Balafilcon A (SiHy)", note:"Call for availability" },
@@ -2764,7 +2791,19 @@
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"+1.50", dominant:"D", nonDominant:"D" },
                     { specAddMin:2.00, specAddMax:2.25, clAdd:"+2.00", dominant:"D", nonDominant:"N" },
                     { specAddMin:2.50, specAddMax:99,   clAdd:"+2.50", dominant:"D", nonDominant:"N" },
-                ]
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"sphereAdj", eye:"dominant", amount:-0.25 },
+                        { action:"lowerAdd", eye:"dominant" },
+                        { action:"designSwap", eye:"nonDominant", to:"D" }
+                    ],
+                    near: [
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 },
+                        { action:"raiseAdd", eye:"nonDominant" },
+                        { action:"designSwap", eye:"dominant", to:"N" }
+                    ]
+                }
             }},
             { name:"MyDay", brand:"CooperVision", type:"sphere", modality:"daily", dk:80, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90, 180", price:"$99 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", privateLabels:[{name:"Reveal 1 Day",retailer:"Vision Source"},{name:"Voyant 1 Day Premium",retailer:"Vision Source"},{name:"Ethos Aquell 1 Day",retailer:"Visionworks"},{name:"Sofmed Breathable Ultimate 1 Day",retailer:"America's Best"},{name:"LensCrafters One Day Premium",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Premium",retailer:"Pearle Vision"},{name:"Kirkland Signature Premium Daily",retailer:"Costco"},{name:"up & up 1 Day Performance",retailer:"Target"},{name:"Natural Eyes HydraWear Ultimate 1-Day",retailer:"Eyeglass World"},{name:"Oliver Peoples One Day",retailer:"Oliver Peoples"},] },
             { name:"MyDay Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:80, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"90", price:"$90\u2013113 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", privateLabels:[{name:"Reveal 1 Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Premium Toric",retailer:"Vision Source"},{name:"Ethos Aquell 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathable Ultimate 1 Day Toric",retailer:"America's Best"},{name:"LensCrafters One Day Premium for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Premium for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear Ultimate 1-Day for Astigmatism",retailer:"Eyeglass World"},{name:"Oliver Peoples One Day Toric",retailer:"Oliver Peoples"},] },
@@ -2786,7 +2825,16 @@
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
                     { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"Mid", nonDominant:"High" },
-                ]
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"lowerAdd", eye:"dominant", addConfigs:["Low/Low","Mid/Mid"] },
+                        { action:"lowerAdd", eye:"nonDominant", addConfigs:["Mid/High"], sphereCompensation:+0.25 }
+                    ],
+                    near: [
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 }
+                    ]
+                }
             }},
             { name:"Acuvue Oasys (2-Week)", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:147, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12, 24", price:"$47 (6pk)", wear:"EW", material:"Senofilcon A (SiHy)", therapeutic:true },
             { name:"Acuvue Oasys for Astigmatism (2-Week)", brand:"J&J Acuvue", type:"toric", modality:"biweekly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$61", wear:"EW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
@@ -3382,7 +3430,10 @@
             }
 
             return `<div class="fade-in">
-                <h2 class="card-title">Enter Prescription</h2>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <h2 class="card-title" style="margin:0">Enter Prescription</h2>
+                    <button onclick="resetAll()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:18px;line-height:1;transition:color 0.15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-muted)'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
+                </div>
                 <p class="card-desc">Enter the spectacle Rx \u2014 vertex conversion is automatic for powers over \u00B14.00D</p>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
@@ -3855,12 +3906,13 @@
                         const row = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
                         if (row && isDominant !== null) {
                             const design = isDominant ? row.dominant : row.nonDominant;
-                            const designDesc = design === 'D' ? 'Distance-center' : design === 'N' ? 'Near-center' : design;
-                            const addValue = design === 'D' || design === 'N' ? `${row.clAdd} ${design}` : design;
+                            const hasDesign = design === 'D' || design === 'N';
+                            const designDesc = design === 'D' ? 'Distance-center' : design === 'N' ? 'Near-center' : null;
+                            const addValue = hasDesign ? `${row.clAdd} ${design}` : design;
                             params.push({
                                 label: "Add",
                                 value: addValue,
-                                note: `${isDominant ? 'Dominant Eye' : 'Non-dominant Eye'} \u00B7 ${designDesc}`,
+                                note: designDesc ? `${isDominant ? 'Dominant Eye' : 'Non-dominant Eye'} \u00B7 ${designDesc}` : `${isDominant ? 'Dominant Eye' : 'Non-dominant Eye'}`,
                                 highlight: true
                             });
                         } else if (row) {
@@ -3898,7 +3950,7 @@
                         if (sphParam) {
                             const oldVal = parseFloat(sphParam.value);
                             const newVal = snapTo025(oldVal + adj.sphDelta);
-                            sphParam.note = (sphParam.note ? sphParam.note + "; " : "") + `Adjusted ${adj.sphDelta > 0 ? "+" : ""}${adj.sphDelta.toFixed(2)}`;
+                            sphParam.note = `Adjusted ${adj.sphDelta > 0 ? "+" : ""}${adj.sphDelta.toFixed(2)} from ${sphParam.value}`;
                             sphParam.value = `${newVal > 0 ? "+" : ""}${newVal.toFixed(2)}`;
                             sphParam.highlight = true;
                         }
@@ -3906,8 +3958,9 @@
                     if (adj.addOverride !== undefined) {
                         const addParam = params.find(p => p.label === "Add");
                         if (addParam) {
+                            const prevAdd = addParam.value;
                             addParam.value = adj.addOverride;
-                            addParam.note = (addParam.note ? addParam.note + "; " : "") + "Adjusted for troubleshoot";
+                            addParam.note = `Adjusted from ${prevAdd}`;
                             addParam.highlight = true;
                         }
                     }
@@ -3996,8 +4049,8 @@
                 { label: "Material", value: lens.material || "—" },
                 { label: "Wear", value: lens.wear },
                 { label: "Pack Sizes", value: lens.qty },
-                { label: "Price/Pack", value: "~" + lens.price },
-                ...(yearlyCost ? [{ label: "Annual Cost", value: `${yearlyCost}` }] : []),
+                { label: "Price/Pack", value: `<span style="color:#22c55e">~${lens.price}</span>` },
+                ...(yearlyCost ? [{ label: "Annual Cost", value: `<span style="color:#22c55e">${yearlyCost}</span>` }] : []),
                 ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#ec4899;font-weight:600">Therapeutic Use</span>` }] : []),
             ];
 
@@ -4024,7 +4077,37 @@
 
                 ${eyeSectionsHtml}
 
-                ${isAdjusted || isNonAdapt || lens.type === 'sphere' ? '' : `<button class="troubleshoot-btn" onclick="openTroubleshoot()"><i class="ph-duotone ph-wrench"></i> Troubleshoot Vision</button>`}
+                ${(() => {
+                    if (!isAdjusted) return '';
+                    const nextSug = computeNextTsStep();
+                    window._tsHasNextStep = !!nextSug;
+                    if (!nextSug) return '';
+                    window._tsNextSuggestion = nextSug;
+                    const stepNum = (state.tsAdjustment.stepNumber || 1) + 1;
+                    const changesHtml = nextSug.changes.map(c =>
+                        `<div class="ts-change">
+                            <span class="ts-change-eye">${c.eye}</span>
+                            <span class="ts-change-param">${c.param}:</span>
+                            <span class="ts-change-from">${c.from}</span>
+                            <span class="ts-change-arrow">\u2192</span>
+                            <span class="ts-change-to">${c.to}</span>
+                        </div>`
+                    ).join("");
+                    return `<div style="margin-top:20px">
+                        <div class="order-section-title">Still Not Clear? Next Step</div>
+                        <div class="troubleshoot-suggestion fade-in">
+                            <div class="ts-step">${stepNum}</div>
+                            <div class="ts-body">
+                                <div class="ts-title">${nextSug.title}</div>
+                                <div class="ts-rationale">${nextSug.rationale}</div>
+                                <div class="ts-changes">${changesHtml}</div>
+                                <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyNextTsStep()">View Adjusted Results \u2192</button>
+                            </div>
+                        </div>
+                    </div>`;
+                })()}
+
+                ${lens.type === 'sphere' ? '' : (isAdjusted && window._tsHasNextStep) ? '' : `<button class="troubleshoot-btn" onclick="openTroubleshoot()"><i class="ph-duotone ph-wrench"></i> ${isAdjusted ? 'Continue Troubleshooting' : 'Troubleshoot Vision'}</button>`}
 
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${sharedHtml}</div>
@@ -4053,8 +4136,161 @@
         function applyTsAdjustment(index) {
             const s = window._tsSuggestions[index];
             if (!s) return;
-            state.tsAdjustment = { title: s.title, overrides: s.adjustments, complaint: state.troubleshoot };
+            const merged = {};
+            if (state.tsAdjustment && state.tsAdjustment.overrides) {
+                for (const [eye, adj] of Object.entries(state.tsAdjustment.overrides)) {
+                    merged[eye] = { ...adj };
+                }
+            }
+            for (const [eye, adj] of Object.entries(s.adjustments)) {
+                if (!merged[eye]) merged[eye] = {};
+                if (adj.sphDelta !== undefined) merged[eye].sphDelta = (merged[eye].sphDelta || 0) + adj.sphDelta;
+                if (adj.addOverride !== undefined) merged[eye].addOverride = adj.addOverride;
+                if (adj.designOverride !== undefined) merged[eye].designOverride = adj.designOverride;
+                if (adj.axisOverride !== undefined) merged[eye].axisOverride = adj.axisOverride;
+            }
+            state.tsAdjustment = { title: s.title, overrides: merged, complaint: state.troubleshoot, tsStepIdx: s.tsStepIdx !== undefined ? s.tsStepIdx : null, stepNumber: 1 };
             state.troubleshoot = null;
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function computeNextTsStep() {
+            if (!state.tsAdjustment || state.tsAdjustment.tsStepIdx === null || state.tsAdjustment.tsStepIdx === undefined) return null;
+            const lens = LENSES.find(l => l.name === state.selectedLens);
+            if (!lens || !lens.fittingGuide || !lens.fittingGuide.troubleshootSteps) return null;
+
+            const complaint = state.tsAdjustment.complaint;
+            const isDistance = complaint === 'distance';
+            const tsSteps = isDistance ? lens.fittingGuide.troubleshootSteps.distance : lens.fittingGuide.troubleshootSteps.near;
+            const prevIdx = state.tsAdjustment.tsStepIdx;
+            const overrides = state.tsAdjustment.overrides;
+
+            const odDom = state.dominantEye === 'right' ? true : state.dominantEye === 'left' ? false : null;
+            const osDom = state.dominantEye === 'left' ? true : state.dominantEye === 'right' ? false : null;
+            const eyes = [];
+            if (state.od && state.od.sphere) eyes.push({ eye: state.od, label: "OD", isDominant: odDom });
+            if (state.os && state.os.sphere) eyes.push({ eye: state.os, label: "OS", isDominant: osDom });
+            const domEye = eyes.find(e => e.isDominant === true);
+            const nonDomEye = eyes.find(e => e.isDominant === false);
+
+            function getClSph(eye) {
+                const sph = parseFloat(eye.sphere) || 0;
+                const cyl = parseFloat(eye.cylinder) || 0;
+                let clSph = snapTo025(vertexConvert(sph));
+                if (cyl !== 0 && Math.abs(cyl) === 0.50) {
+                    clSph = snapTo025(clSph + cyl / 2);
+                } else if (lens.type === "toric" || lens.type === "multifocal-toric") {
+                    const clCyl = snapCyl(cyl, lens);
+                    const cylDiff = clCyl - cyl;
+                    if (Math.abs(cylDiff) > 0.01) clSph = snapTo025(clSph + snapTo025(-cylDiff / 2));
+                } else if (lens.type === "sphere" || lens.type === "multifocal") {
+                    clSph = snapTo025(clSph + cyl / 2);
+                }
+                return clSph;
+            }
+
+            function getAdjSph(eye, label) {
+                let sph = getClSph(eye);
+                if (overrides[label] && overrides[label].sphDelta !== undefined) sph = snapTo025(sph + overrides[label].sphDelta);
+                return sph;
+            }
+
+            function getAdjAdd(eye, isDominant, label) {
+                if (overrides[label] && overrides[label].addOverride !== undefined) return overrides[label].addOverride;
+                const addP = parseFloat(eye.add) || 0;
+                if (lens.fittingGuide && lens.fittingGuide.addTable) {
+                    const row = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                    if (row && isDominant !== null) return isDominant ? row.dominant : row.nonDominant;
+                    if (row) return row.clAdd;
+                }
+                return suggestAddType(addP, lens.addTypes);
+            }
+
+            const domAdd = domEye ? getAdjAdd(domEye.eye, true, domEye.label) : null;
+            const nonDomAdd = nonDomEye ? getAdjAdd(nonDomEye.eye, false, nonDomEye.label) : null;
+            const addConfig = (domAdd && nonDomAdd) ? `${domAdd}/${nonDomAdd}` : null;
+
+            for (let i = prevIdx + 1; i < tsSteps.length; i++) {
+                const step = tsSteps[i];
+                if (step.addConfigs && (!addConfig || !step.addConfigs.includes(addConfig))) continue;
+                const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
+                if (!targetEye) continue;
+                const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
+
+                switch (step.action) {
+                    case "sphereAdj": {
+                        const cur = getAdjSph(targetEye.eye, targetEye.label);
+                        const nxt = snapTo025(cur + step.amount);
+                        const lbl = step.amount > 0 ? `+${step.amount.toFixed(2)}` : step.amount.toFixed(2);
+                        return { title: `Add ${lbl}D to ${targetEye.label} sphere`, rationale: `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`, adjustments: { [targetEye.label]: { sphDelta: step.amount } }, changes: [{ eye: targetEye.label, param: "Sphere", from: `${cur > 0 ? "+" : ""}${cur.toFixed(2)}`, to: `${nxt > 0 ? "+" : ""}${nxt.toFixed(2)}` }], tsStepIdx: i };
+                    }
+                    case "lowerAdd": {
+                        const addTypes = lens.addTypes;
+                        const curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
+                        if (!curAdd) continue;
+                        const ci = addTypes.indexOf(curAdd);
+                        if (ci === -1) continue;
+                        if (ci > 0) {
+                            const nAdd = addTypes[ci - 1];
+                            const sug = { title: `Lower ${targetEye.label} add power`, rationale: `Reduce ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer distance`, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i };
+                            if (step.sphereCompensation) {
+                                const cS = getAdjSph(targetEye.eye, targetEye.label);
+                                const nS = snapTo025(cS + step.sphereCompensation);
+                                sug.adjustments[targetEye.label].sphDelta = step.sphereCompensation;
+                                sug.changes.push({ eye: targetEye.label, param: "Sphere", from: `${cS > 0 ? "+" : ""}${cS.toFixed(2)}`, to: `${nS > 0 ? "+" : ""}${nS.toFixed(2)}` });
+                                sug.rationale += ` (compensate sphere +${step.sphereCompensation.toFixed(2)})`;
+                            }
+                            return sug;
+                        } else if (step.dropTo) {
+                            return { title: `Consider ${step.dropTo}`, rationale: `Already at lowest add (${curAdd}) \u2014 consider ${step.dropTo} (toric-only) for clearer distance`, adjustments: {}, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: "None (toric only)" }], tsStepIdx: i };
+                        }
+                        continue;
+                    }
+                    case "raiseAdd": {
+                        const addTypes = lens.addTypes;
+                        const curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
+                        if (!curAdd) continue;
+                        const ci = addTypes.indexOf(curAdd);
+                        if (ci === -1 || ci >= addTypes.length - 1) continue;
+                        const nAdd = addTypes[ci + 1];
+                        return { title: `Increase ${targetEye.label} add power`, rationale: `Increase ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer near`, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i };
+                    }
+                    case "designSwap": {
+                        if (!lens.fittingGuide || !lens.fittingGuide.addTable) continue;
+                        let curDes;
+                        if (overrides[targetEye.label] && overrides[targetEye.label].designOverride !== undefined) {
+                            curDes = overrides[targetEye.label].designOverride;
+                        } else {
+                            const addP = parseFloat(targetEye.eye.add) || 0;
+                            const row = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                            if (!row) continue;
+                            curDes = targetEye.isDominant ? row.dominant : row.nonDominant;
+                        }
+                        if (curDes === step.to) continue;
+                        const fl = curDes === "D" ? "D (Distance-center)" : "N (Near-center)";
+                        const tl = step.to === "D" ? "D (Distance-center)" : "N (Near-center)";
+                        return { title: `Switch ${targetEye.label} to ${step.to === "D" ? "Distance" : "Near"} design`, rationale: `Change ${eyeLabel} eye from ${fl} to ${tl}`, adjustments: { [targetEye.label]: { designOverride: step.to } }, changes: [{ eye: targetEye.label, param: "Design", from: fl, to: tl }], tsStepIdx: i };
+                    }
+                }
+            }
+            return null;
+        }
+
+        function applyNextTsStep() {
+            const s = window._tsNextSuggestion;
+            if (!s) return;
+            const merged = {};
+            for (const [eye, adj] of Object.entries(state.tsAdjustment.overrides)) {
+                merged[eye] = { ...adj };
+            }
+            for (const [eye, adj] of Object.entries(s.adjustments)) {
+                if (!merged[eye]) merged[eye] = {};
+                if (adj.sphDelta !== undefined) merged[eye].sphDelta = (merged[eye].sphDelta || 0) + adj.sphDelta;
+                if (adj.addOverride !== undefined) merged[eye].addOverride = adj.addOverride;
+                if (adj.designOverride !== undefined) merged[eye].designOverride = adj.designOverride;
+            }
+            state.tsAdjustment = { title: s.title, overrides: merged, complaint: state.tsAdjustment.complaint, tsStepIdx: s.tsStepIdx, stepNumber: (state.tsAdjustment.stepNumber || 1) + 1 };
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -4186,6 +4422,8 @@
                         const seAdj = snapTo025(-cylDiff / 2);
                         clSph = snapTo025(clSph + seAdj);
                     }
+                } else if (lens.type === "sphere" || lens.type === "multifocal") {
+                    clSph = snapTo025(clSph + cyl / 2);
                 }
                 return clSph;
             }
@@ -4205,11 +4443,11 @@
 
             const isToric = lens.type === "toric" || lens.type === "multifocal-toric";
 
-            // Check if non-adapt option should show (toric lens, all compatible eyes cyl ≤ 1.25)
+            // Check if non-adapt option should show (any toric lens with cylinder)
             const odCylAbs = Math.abs(parseFloat(state.od.cylinder) || 0);
             const osCylAbs = Math.abs(parseFloat(state.os.cylinder) || 0);
             const maxCyl = Math.max(odOk ? odCylAbs : 0, osOk ? osCylAbs : 0);
-            const showNonAdapt = isToric && maxCyl > 0 && maxCyl <= 1.25;
+            const showNonAdapt = isToric && maxCyl > 0;
 
             // Complaint selection cards
             let complaintHtml = `
@@ -4249,6 +4487,123 @@
                 if (odOk) eyes.push({ eye: state.od, label: "OD", isDominant: odDominant });
                 if (osOk) eyes.push({ eye: state.os, label: "OS", isDominant: osDominant });
 
+                // Stepwise troubleshoot for MF-toric lenses with fitting guide steps
+                if (lens.fittingGuide && lens.fittingGuide.troubleshootSteps) {
+                    const tsSteps = isDistance ? lens.fittingGuide.troubleshootSteps.distance : lens.fittingGuide.troubleshootSteps.near;
+                    const domEye = eyes.find(e => e.isDominant === true);
+                    const nonDomEye = eyes.find(e => e.isDominant === false);
+                    const domAdd = domEye ? getCurrentAdd(domEye.eye, true) : null;
+                    const nonDomAdd = nonDomEye ? getCurrentAdd(nonDomEye.eye, false) : null;
+                    const currentAddConfig = (domAdd && nonDomAdd) ? `${domAdd}/${nonDomAdd}` : null;
+
+                    let firstStepDone = false;
+                    tsSteps.forEach((step, stepIdx) => {
+                        if (firstStepDone) return;
+                        if (step.addConfigs && (!currentAddConfig || !step.addConfigs.includes(currentAddConfig))) return;
+
+                        const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
+                        const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
+                        if (!targetEye) return;
+
+                        const prevLen = suggestions.length;
+                        switch (step.action) {
+                            case "sphereAdj": {
+                                const currentSph = getCurrentSph(targetEye.eye);
+                                const newSph = snapTo025(currentSph + step.amount);
+                                const label = step.amount > 0 ? `+${step.amount.toFixed(2)}` : step.amount.toFixed(2);
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: `Add ${label}D to ${targetEye.label} sphere`,
+                                    rationale: `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`,
+                                    adjustments: { [targetEye.label]: { sphDelta: step.amount } },
+                                    changes: [{
+                                        eye: targetEye.label, param: "Sphere",
+                                        from: `${currentSph > 0 ? "+" : ""}${currentSph.toFixed(2)}`,
+                                        to: `${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}`
+                                    }]
+                                });
+                                break;
+                            }
+                            case "lowerAdd": {
+                                const addTypes = lens.addTypes;
+                                const currentAdd = getCurrentAdd(targetEye.eye, targetEye.isDominant);
+                                if (!currentAdd) break;
+                                const currentIdx = addTypes.indexOf(currentAdd);
+                                if (currentIdx === -1) break;
+
+                                if (currentIdx > 0) {
+                                    const newAdd = addTypes[currentIdx - 1];
+                                    const suggestion = {
+                                        tsStepIdx: stepIdx,
+                                        title: `Lower ${targetEye.label} add power`,
+                                        rationale: `Reduce ${eyeLabel} eye add from ${currentAdd} to ${newAdd} for clearer distance`,
+                                        adjustments: { [targetEye.label]: { addOverride: newAdd } },
+                                        changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: newAdd }]
+                                    };
+                                    if (step.sphereCompensation) {
+                                        const cSph = getCurrentSph(targetEye.eye);
+                                        const nSph = snapTo025(cSph + step.sphereCompensation);
+                                        suggestion.adjustments[targetEye.label].sphDelta = step.sphereCompensation;
+                                        suggestion.changes.push({
+                                            eye: targetEye.label, param: "Sphere",
+                                            from: `${cSph > 0 ? "+" : ""}${cSph.toFixed(2)}`,
+                                            to: `${nSph > 0 ? "+" : ""}${nSph.toFixed(2)}`
+                                        });
+                                        suggestion.rationale += ` (compensate sphere +${step.sphereCompensation.toFixed(2)})`;
+                                    }
+                                    suggestions.push(suggestion);
+                                } else if (step.dropTo) {
+                                    suggestions.push({
+                                        tsStepIdx: stepIdx,
+                                        title: `Consider ${step.dropTo}`,
+                                        rationale: `Already at lowest add (${currentAdd}) \u2014 consider ${step.dropTo} (toric-only) for clearer distance`,
+                                        adjustments: {},
+                                        changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: "None (toric only)" }]
+                                    });
+                                }
+                                break;
+                            }
+                            case "raiseAdd": {
+                                const addTypes = lens.addTypes;
+                                const currentAdd = getCurrentAdd(targetEye.eye, targetEye.isDominant);
+                                if (!currentAdd) break;
+                                const currentIdx = addTypes.indexOf(currentAdd);
+                                if (currentIdx === -1 || currentIdx >= addTypes.length - 1) break;
+
+                                const newAdd = addTypes[currentIdx + 1];
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: `Increase ${targetEye.label} add power`,
+                                    rationale: `Increase ${eyeLabel} eye add from ${currentAdd} to ${newAdd} for clearer near`,
+                                    adjustments: { [targetEye.label]: { addOverride: newAdd } },
+                                    changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: newAdd }]
+                                });
+                                break;
+                            }
+                            case "designSwap": {
+                                if (!lens.fittingGuide || !lens.fittingGuide.addTable) break;
+                                const addP = parseFloat(targetEye.eye.add) || 0;
+                                const row = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                                if (!row) break;
+                                const currentDesign = targetEye.isDominant ? row.dominant : row.nonDominant;
+                                if (currentDesign === step.to) break;
+
+                                const fromLabel = currentDesign === "D" ? "D (Distance-center)" : "N (Near-center)";
+                                const toLabel = step.to === "D" ? "D (Distance-center)" : "N (Near-center)";
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: `Switch ${targetEye.label} to ${step.to === "D" ? "Distance" : "Near"} design`,
+                                    rationale: `Change ${eyeLabel} eye from ${fromLabel} to ${toLabel}`,
+                                    adjustments: { [targetEye.label]: { designOverride: step.to } },
+                                    changes: [{ eye: targetEye.label, param: "Design", from: fromLabel, to: toLabel }]
+                                });
+                                break;
+                            }
+                        }
+                        if (suggestions.length > prevLen) firstStepDone = true;
+                    });
+                } else {
+                // Generic fallback logic
                 const sphAdj = isDistance ? -0.25 : +0.25;
                 const sphAdjLabel = isDistance ? "\u22120.25D" : "+0.25D";
 
@@ -4370,6 +4725,7 @@
                         });
                     }
                 }
+                } // end generic fallback
 
                 // Build suggestions HTML
                 _tsSuggestions = suggestions;
@@ -4532,7 +4888,7 @@
             }
 
             return `<div class="order-detail">
-                <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> Back to Results</button>
+                <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> ${state.nonAdaptFrom ? 'Back to Order' : 'Back to Results'}</button>
                 <div class="order-lens-name">${lens.name}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${complaintHtml}
@@ -5349,8 +5705,8 @@
                 { label: "Material", value: lens.material || "\u2014" },
                 { label: "Wear", value: lens.wear },
                 { label: "Pack Sizes", value: lens.qty },
-                { label: "Price/Pack", value: "~" + lens.price },
-                ...(yearlyCost ? [{ label: "Annual Cost", value: yearlyCost }] : []),
+                { label: "Price/Pack", value: `<span style="color:#22c55e">~${lens.price}</span>` },
+                ...(yearlyCost ? [{ label: "Annual Cost", value: `<span style="color:#22c55e">${yearlyCost}</span>` }] : []),
                 ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#ec4899;font-weight:600">Therapeutic Use</span>` }] : []),
             ];
 
