@@ -113,7 +113,7 @@
         .cl-subtabs-inner {
             display: inline-flex;
             gap: 6px;
-            width: 50%;
+            width: calc(100% / 3);
             justify-content: center;
         }
         @media (max-width: 600px) {
@@ -2869,6 +2869,44 @@
             margin-top: 4px;
             font-family: var(--mono);
         }
+        /* Tools search bar */
+        .tools-search-wrap {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .tools-search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-muted);
+            pointer-events: none;
+            font-size: 18px;
+            line-height: 1;
+        }
+        .tools-search-input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            font-size: 15px;
+            font-family: var(--sans);
+            font-weight: 500;
+            color: var(--ink);
+            background: var(--surface-solid);
+            transition: all 0.15s;
+            -webkit-appearance: none;
+        }
+        .tools-search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+        }
+        .tools-search-input::placeholder {
+            color: var(--ink-muted);
+            font-weight: 400;
+        }
+
         /* Tools menu: bigger cards on desktop + hover glow */
         #toolsContent .option-btn {
             transition: all 0.25s ease;
@@ -2974,6 +3012,124 @@
             color: var(--ink-muted);
             margin-top: 2px;
         }
+        /* BV Tool */
+        .bv-norms-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .bv-norms-table th {
+            background: var(--surface-alt, rgba(255,255,255,0.04));
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--ink-muted);
+            border-bottom: 1px solid var(--rule);
+        }
+        .bv-norms-table td {
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--rule);
+            vertical-align: top;
+        }
+        .bv-norms-table tr:last-child td { border-bottom: none; }
+        .bv-norms-table .bv-cat-row td {
+            background: rgba(0,210,211,0.06);
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--accent);
+            padding: 8px 12px;
+        }
+        .bv-step-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .bv-step {
+            background: var(--surface);
+            border: 1px solid var(--rule);
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: border-color 0.2s;
+        }
+        .bv-step.active {
+            border-color: var(--accent);
+        }
+        .bv-step.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .bv-step-header {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .bv-step-num {
+            background: var(--accent);
+            color: var(--bg);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .bv-step-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .bv-opt-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            border: 1px solid var(--rule);
+            border-radius: 10px;
+            background: var(--surface);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s;
+        }
+        .bv-opt-btn:hover {
+            border-color: var(--accent);
+            background: rgba(0,210,211,0.06);
+        }
+        .bv-opt-btn.selected {
+            border-color: var(--accent);
+            background: rgba(0,210,211,0.12);
+            color: var(--accent);
+        }
+        .bv-result-box {
+            margin-top: 18px;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(0,210,211,0.08);
+            border: 1px solid var(--accent);
+            text-align: center;
+        }
+        .bv-result-muscle {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+        .bv-result-nerve {
+            font-size: 14px;
+            color: var(--ink-muted);
+        }
         @media (max-width: 600px) {
             .iop-form-grid { grid-template-columns: 1fr; }
             .iop-eye-row { grid-template-columns: 1fr; }
@@ -2981,6 +3137,7 @@
             .tools-card { padding: 20px 16px; }
             .myopia-chart { height: 260px; }
             .myopia-summary-grid { grid-template-columns: 1fr; }
+            .bv-opt-btn { min-width: 100px; font-size: 13px; padding: 10px 12px; }
         }
 
     </style>
@@ -5613,6 +5770,7 @@
             document.getElementById('toolsPage').style.display = tab === 'tools' ? '' : 'none';
             if (tab === 'tools') {
                 toolsActiveTool = null;
+                toolsSearchQuery = '';
                 renderTools();
             }
         }
@@ -5723,6 +5881,7 @@
 
         function toolsBack() {
             toolsActiveTool = null;
+            toolsSearchQuery = '';
             renderTools();
         }
 
@@ -5738,38 +5897,80 @@
                 renderPlaquenilTool(el);
             } else if (toolsActiveTool === 'myopia') {
                 renderMyopiaTool(el);
+            } else if (toolsActiveTool === 'bv') {
+                renderBvTool(el);
+            } else if (toolsActiveTool === 'parks') {
+                renderParksTool(el);
             }
         }
 
+        var toolsSearchQuery = '';
+
+        const TOOLS_REGISTRY = [
+            { id:'iop', icon:'ph-eye', title:'IOP Correction', desc:'Adjust tonometry for corneal thickness (CCT)',
+              keywords:'iop intraocular pressure tonometry cct corneal thickness pachymetry goldmann correction' },
+            { id:'glaucoma', icon:'ph-chart-line-up', title:'Glaucoma Risk', desc:'OHTS 5-year POAG risk estimator (points system)',
+              keywords:'glaucoma ohts poag risk ocular hypertension cup disc ratio visual field psd iop intraocular pressure cct corneal thickness' },
+            { id:'plaquenil', icon:'ph-pill', title:'Plaquenil Toxicity', desc:'HCQ toxicity risk calculator (AAO guidelines)',
+              keywords:'plaquenil hydroxychloroquine hcq toxicity retinopathy dosing aao screening tamoxifen renal' },
+            { id:'myopia', icon:'ph-trend-down', title:'Myopia Progression', desc:'Pediatric progression projection &amp; treatment comparison',
+              keywords:'myopia nearsighted progression pediatric child atropine ortho-k misight dims treatment control' },
+            { id:'bv', icon:'ph-binoculars', title:'Binocular Vision Norms', desc:'Morgan\u2019s expected values for BV testing',
+              keywords:'binocular vision bv norms morgan vergence phoria tropia npc nra pra accommodation facility' },
+            { id:'parks', icon:'ph-path', title:'Park\u2019s 3-Step Test', desc:'Identify paretic cyclovertical muscle',
+              keywords:'parks 3 step three step cranial nerve palsy strabismus hypertropia oblique rectus cn iv trochlear cyclovertical muscle' }
+        ];
+
+        function onToolsSearch(val) {
+            toolsSearchQuery = val;
+            var el = document.getElementById('toolsContent');
+            if (el && !toolsActiveTool) renderToolsMenu(el);
+        }
+
         function renderToolsMenu(el) {
-            el.innerHTML = `
-                <div style="margin-bottom:18px;">
-                    <div style="font-size:18px;font-weight:700;margin-bottom:4px;">Clinical Tools</div>
-                    <div style="font-size:13px;color:var(--ink-secondary);">Select a tool to get started.</div>
-                </div>
-                <div class="option-grid">
-                    <button class="option-btn" onclick="openTool('iop')">
-                        <div class="icon"><i class="ph-duotone ph-eye"></i></div>
-                        <div class="title">IOP Correction</div>
-                        <div class="desc">Adjust tonometry for corneal thickness (CCT)</div>
-                    </button>
-                    <button class="option-btn" onclick="openTool('glaucoma')">
-                        <div class="icon"><i class="ph-duotone ph-chart-line-up"></i></div>
-                        <div class="title">Glaucoma Risk</div>
-                        <div class="desc">OHTS 5-year POAG risk estimator (points system)</div>
-                    </button>
-                    <button class="option-btn" onclick="openTool('plaquenil')">
-                        <div class="icon"><i class="ph-duotone ph-pill"></i></div>
-                        <div class="title">Plaquenil Toxicity</div>
-                        <div class="desc">HCQ toxicity risk calculator (AAO guidelines)</div>
-                    </button>
-                    <button class="option-btn" onclick="openTool('myopia')">
-                        <div class="icon"><i class="ph-duotone ph-trend-down"></i></div>
-                        <div class="title">Myopia Progression</div>
-                        <div class="desc">Pediatric progression projection &amp; treatment comparison</div>
-                    </button>
-                </div>
-            `;
+            var q = toolsSearchQuery.trim().toLowerCase();
+            var filtered = TOOLS_REGISTRY;
+            if (q) {
+                filtered = TOOLS_REGISTRY.filter(function(t) {
+                    return t.title.toLowerCase().indexOf(q) !== -1 ||
+                           t.desc.toLowerCase().indexOf(q) !== -1 ||
+                           t.keywords.indexOf(q) !== -1;
+                });
+            }
+
+            var cards = '';
+            for (var i = 0; i < filtered.length; i++) {
+                var t = filtered[i];
+                cards += '<button class="option-btn" onclick="openTool(\'' + t.id + '\')">' +
+                    '<div class="icon"><i class="ph-duotone ' + t.icon + '"></i></div>' +
+                    '<div class="title">' + t.title + '</div>' +
+                    '<div class="desc">' + t.desc + '</div>' +
+                    '</button>';
+            }
+
+            if (filtered.length === 0) {
+                cards = '<div style="grid-column:1/-1;text-align:center;padding:24px 0;color:var(--ink-muted);font-size:13px;">' +
+                    '<i class="ph-duotone ph-magnifying-glass" style="font-size:24px;display:block;margin-bottom:8px;opacity:0.4;"></i>' +
+                    'No tools match \u201C' + q.replace(/</g,'&lt;') + '\u201D' +
+                    '</div>';
+            }
+
+            el.innerHTML =
+                '<div style="margin-bottom:18px;">' +
+                    '<div style="font-size:18px;font-weight:700;margin-bottom:4px;">Clinical Tools</div>' +
+                    '<div style="font-size:13px;color:var(--ink-secondary);">Select a tool to get started.</div>' +
+                '</div>' +
+                '<div class="tools-search-wrap">' +
+                    '<span class="tools-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>' +
+                    '<input type="text" class="tools-search-input" id="toolsSearchInput" placeholder="Search tools\u2026" value="' + (toolsSearchQuery || '').replace(/"/g,'&quot;') + '" oninput="onToolsSearch(this.value)" autocomplete="off">' +
+                '</div>' +
+                '<div class="option-grid">' + cards + '</div>';
+
+            // Restore focus to search input if user is typing
+            if (q) {
+                var inp = document.getElementById('toolsSearchInput');
+                if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+            }
         }
 
         function renderIopTool(el) {
@@ -6839,6 +7040,164 @@
                 </div>
             `;
             renderMyopResult();
+        }
+
+        /* ── Binocular Vision Tool ── */
+        var bvParks = { step1: null, step2: null, step3: null };
+
+        var BV_PARKS_MAP = {
+            'right|left|right': { muscle: 'Right Superior Oblique (RSO)', nerve: 'CN IV (Trochlear)' },
+            'right|left|left': { muscle: 'Left Superior Rectus (LSR)', nerve: 'CN III (Oculomotor)' },
+            'right|right|right': { muscle: 'Left Inferior Oblique (LIO)', nerve: 'CN III (Oculomotor)' },
+            'right|right|left': { muscle: 'Right Inferior Rectus (RIR)', nerve: 'CN III (Oculomotor)' },
+            'left|right|left': { muscle: 'Left Superior Oblique (LSO)', nerve: 'CN IV (Trochlear)' },
+            'left|right|right': { muscle: 'Right Superior Rectus (RSR)', nerve: 'CN III (Oculomotor)' },
+            'left|left|left': { muscle: 'Right Inferior Oblique (RIO)', nerve: 'CN III (Oculomotor)' },
+            'left|left|right': { muscle: 'Left Inferior Rectus (LIR)', nerve: 'CN III (Oculomotor)' }
+        };
+
+        function bvSelectStep(step, val) {
+            bvParks[step] = val;
+            if (step === 'step1') { bvParks.step2 = null; bvParks.step3 = null; }
+            if (step === 'step2') { bvParks.step3 = null; }
+            renderBvParks();
+        }
+
+        function bvResetParks() {
+            bvParks = { step1: null, step2: null, step3: null };
+            renderBvParks();
+        }
+
+        function renderBvParks() {
+            var el = document.getElementById('bvParksContent');
+            var s = bvParks;
+            var step1Class = 'bv-step active';
+            var step2Class = s.step1 ? 'bv-step active' : 'bv-step disabled';
+            var step3Class = (s.step1 && s.step2) ? 'bv-step active' : 'bv-step disabled';
+
+            var hyperLabel = s.step1 === 'right' ? 'RIGHT Hypertropia' : s.step1 === 'left' ? 'LEFT Hypertropia' : '';
+
+            var html = '';
+            html += '<div class="bv-step-wrap">';
+
+            /* Step 1 */
+            html += '<div class="' + step1Class + '">';
+            html += '<div class="bv-step-header"><span class="bv-step-num">1</span> Which eye is hypertropic in primary gaze?</div>';
+            html += '<div class="bv-step-options">';
+            html += '<button class="bv-opt-btn' + (s.step1 === 'right' ? ' selected' : '') + '" onclick="bvSelectStep(\'step1\',\'right\')">Right Eye Higher</button>';
+            html += '<button class="bv-opt-btn' + (s.step1 === 'left' ? ' selected' : '') + '" onclick="bvSelectStep(\'step1\',\'left\')">Left Eye Higher</button>';
+            html += '</div></div>';
+
+            /* Step 2 */
+            html += '<div class="' + step2Class + '">';
+            html += '<div class="bv-step-header"><span class="bv-step-num">2</span> ' + hyperLabel + ' worse in which horizontal gaze?</div>';
+            html += '<div class="bv-step-options">';
+            html += '<button class="bv-opt-btn' + (s.step2 === 'right' ? ' selected' : '') + '" onclick="bvSelectStep(\'step2\',\'right\')">Right Gaze</button>';
+            html += '<button class="bv-opt-btn' + (s.step2 === 'left' ? ' selected' : '') + '" onclick="bvSelectStep(\'step2\',\'left\')">Left Gaze</button>';
+            html += '</div></div>';
+
+            /* Step 3 */
+            html += '<div class="' + step3Class + '">';
+            html += '<div class="bv-step-header"><span class="bv-step-num">3</span> ' + hyperLabel + ' worse with which head tilt?</div>';
+            html += '<div class="bv-step-options">';
+            html += '<button class="bv-opt-btn' + (s.step3 === 'right' ? ' selected' : '') + '" onclick="bvSelectStep(\'step3\',\'right\')">Right Tilt</button>';
+            html += '<button class="bv-opt-btn' + (s.step3 === 'left' ? ' selected' : '') + '" onclick="bvSelectStep(\'step3\',\'left\')">Left Tilt</button>';
+            html += '</div></div>';
+
+            /* Result */
+            if (s.step1 && s.step2 && s.step3) {
+                var key = s.step1 + '|' + s.step2 + '|' + s.step3;
+                var result = BV_PARKS_MAP[key];
+                if (result) {
+                    html += '<div class="bv-result-box">';
+                    html += '<div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-muted);margin-bottom:6px;">Suspected Paretic Muscle</div>';
+                    html += '<div class="bv-result-muscle">' + result.muscle + '</div>';
+                    html += '<div class="bv-result-nerve">' + result.nerve + '</div>';
+                    html += '</div>';
+                }
+            }
+
+            html += '</div>';
+            html += '<div style="margin-top:14px;text-align:center;">';
+            html += '<button onclick="bvResetParks()" style="background:none;border:1px solid var(--rule);color:var(--ink-muted);padding:8px 18px;border-radius:8px;font-family:var(--sans);font-size:13px;cursor:pointer;">Reset</button>';
+            html += '</div>';
+
+            el.innerHTML = html;
+        }
+
+        function buildBvNormsTable() {
+            var rows = '';
+            function cat(label) {
+                return '<tr class="bv-cat-row"><td colspan="3">' + label + '</td></tr>';
+            }
+            function row(test, expected, sd) {
+                return '<tr><td style="font-weight:600;">' + test + '</td><td>' + expected + '</td><td>' + sd + '</td></tr>';
+            }
+
+            rows += cat('Phorias (Cover Test)');
+            rows += row('Distance Phoria', '1\u0394 exo', '\u00B11');
+            rows += row('Near Phoria', '3\u0394 exo', '\u00B13');
+
+            rows += cat('Vergence Ranges &mdash; Distance (Blur / Break / Recovery)');
+            rows += row('Base-In (NFV)', '\u2014 / 7 / 4', '\u2014 / \u00B13 / \u00B12');
+            rows += row('Base-Out (PFV)', '9 / 19 / 10', '\u00B14 / \u00B18 / \u00B14');
+
+            rows += cat('Vergence Ranges &mdash; Near (Blur / Break / Recovery)');
+            rows += row('Base-In (NFV)', '13 / 21 / 13', '\u00B14 / \u00B14 / \u00B15');
+            rows += row('Base-Out (PFV)', '17 / 21 / 11', '\u00B15 / \u00B16 / \u00B17');
+
+            rows += cat('Near Point of Convergence');
+            rows += row('NPC (Break / Recovery)', '5 cm / 7 cm', '\u00B12.5 / \u00B13');
+
+            rows += cat('Accommodation');
+            rows += row('Amplitude (Min.)', '15 \u2212 (\u00BCAge)', 'Hofstetter');
+            rows += row('Lag of Accommodation (MEM)', '+0.25 to +0.75 D', '\u2014');
+            rows += row('Accommodative Facility', '11 cpm (monocular)', '\u00B15');
+
+            rows += cat('Relative Accommodation');
+            rows += row('NRA', '+2.00 D', '\u00B10.50');
+            rows += row('PRA', '\u22122.37 D', '\u00B11.00');
+
+            rows += cat('Other');
+            rows += row('AC/A Ratio (Calc.)', '4:1', '\u00B12');
+            rows += row('Vergence Facility', '15 cpm (3\u0394 BI / 12\u0394 BO)', '\u00B13');
+            rows += row('Stereoacuity (Titmus)', '40 sec arc', '\u2014');
+
+            return rows;
+        }
+
+        function renderBvTool(el) {
+            var normsRows = buildBvNormsTable();
+            el.innerHTML = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>'
+                + '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-binoculars"></i> Binocular Vision Norms</div>'
+                + '<div class="tools-card-desc">Morgan\u2019s expected values for adult patients. All vergence values in prism diopters (\u0394).</div>'
+                + '<div style="overflow-x:auto;">'
+                + '<table class="bv-norms-table">'
+                + '<thead><tr><th>Test</th><th>Expected</th><th>\u00B1 SD</th></tr></thead>'
+                + '<tbody>' + normsRows + '</tbody>'
+                + '</table>'
+                + '</div>'
+                + '</div>';
+        }
+
+        function renderParksTool(el) {
+            el.innerHTML = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>'
+                + '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-path"></i> Park\u2019s 3-Step Test</div>'
+                + '<div class="tools-card-desc">Identify the paretic cyclovertical muscle in 3 steps. Used for isolated vertical deviations (cranial nerve palsies).</div>'
+                + '<div id="bvParksContent"></div>'
+                + '</div>';
+            bvParks = { step1: null, step2: null, step3: null };
+            renderBvParks();
         }
 
         function switchClSub(sub) {
