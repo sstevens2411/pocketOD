@@ -4399,9 +4399,14 @@
                     }
                     case "lowerAdd": {
                         const addTypes = lens.addTypes;
-                        const curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
+                        let curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
                         if (!curAdd) continue;
-                        const ci = addTypes.indexOf(curAdd);
+                        let ci = addTypes.indexOf(curAdd);
+                        if (ci === -1 && lens.fittingGuide && lens.fittingGuide.addTable) {
+                            const addP = parseFloat(targetEye.eye.add) || 0;
+                            const atRow = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                            if (atRow) { curAdd = atRow.clAdd; ci = addTypes.indexOf(curAdd); }
+                        }
                         if (ci === -1) continue;
                         if (ci > 0) {
                             const nAdd = addTypes[ci - 1];
@@ -4421,9 +4426,14 @@
                     }
                     case "raiseAdd": {
                         const addTypes = lens.addTypes;
-                        const curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
+                        let curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
                         if (!curAdd) continue;
-                        const ci = addTypes.indexOf(curAdd);
+                        let ci = addTypes.indexOf(curAdd);
+                        if (ci === -1 && lens.fittingGuide && lens.fittingGuide.addTable) {
+                            const addP = parseFloat(targetEye.eye.add) || 0;
+                            const atRow = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                            if (atRow) { curAdd = atRow.clAdd; ci = addTypes.indexOf(curAdd); }
+                        }
                         if (ci === -1 || ci >= addTypes.length - 1) continue;
                         const nAdd = addTypes[ci + 1];
                         return { title: `Increase ${targetEye.label} add power`, rationale: `Increase ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer near`, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i };
@@ -4743,9 +4753,14 @@
                             }
                             case "lowerAdd": {
                                 const addTypes = lens.addTypes;
-                                const currentAdd = getCurrentAdd(targetEye.eye, targetEye.isDominant);
+                                let currentAdd = getCurrentAdd(targetEye.eye, targetEye.isDominant);
                                 if (!currentAdd) break;
-                                const currentIdx = addTypes.indexOf(currentAdd);
+                                let currentIdx = addTypes.indexOf(currentAdd);
+                                if (currentIdx === -1 && lens.fittingGuide && lens.fittingGuide.addTable) {
+                                    const addP = parseFloat(targetEye.eye.add) || 0;
+                                    const atRow = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                                    if (atRow) { currentAdd = atRow.clAdd; currentIdx = addTypes.indexOf(currentAdd); }
+                                }
                                 if (currentIdx === -1) break;
 
                                 if (currentIdx > 0) {
@@ -4782,9 +4797,14 @@
                             }
                             case "raiseAdd": {
                                 const addTypes = lens.addTypes;
-                                const currentAdd = getCurrentAdd(targetEye.eye, targetEye.isDominant);
+                                let currentAdd = getCurrentAdd(targetEye.eye, targetEye.isDominant);
                                 if (!currentAdd) break;
-                                const currentIdx = addTypes.indexOf(currentAdd);
+                                let currentIdx = addTypes.indexOf(currentAdd);
+                                if (currentIdx === -1 && lens.fittingGuide && lens.fittingGuide.addTable) {
+                                    const addP = parseFloat(targetEye.eye.add) || 0;
+                                    const atRow = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                                    if (atRow) { currentAdd = atRow.clAdd; currentIdx = addTypes.indexOf(currentAdd); }
+                                }
                                 if (currentIdx === -1 || currentIdx >= addTypes.length - 1) break;
 
                                 const newAdd = addTypes[currentIdx + 1];
