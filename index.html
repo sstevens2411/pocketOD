@@ -1017,25 +1017,27 @@
 
         .order-section-title {
             font-family: var(--mono);
-            font-size: 10.5px;
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--ink-secondary);
+            color: var(--ink);
             margin-bottom: 10px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
+            padding: 8px 12px;
+            background: var(--surface-solid);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
         }
 
         .order-grid {
             display: flex;
-            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 24px;
         }
 
         .order-param {
+            flex: 1 1 0;
+            min-width: 0;
             background: var(--surface-solid);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -1305,7 +1307,11 @@
                 font-size: 17px;
             }
             .order-grid {
-                grid-template-columns: repeat(2, 1fr);
+                flex-wrap: wrap;
+            }
+            .order-param {
+                flex: 1 1 calc(50% - 10px);
+                min-width: calc(50% - 10px);
             }
             .order-param-value {
                 font-size: 15px;
@@ -2206,8 +2212,12 @@
                 font-size: 18px;
             }
             .order-grid {
-                grid-template-columns: repeat(2, 1fr);
+                flex-wrap: wrap;
                 gap: 8px;
+            }
+            .order-grid .order-param {
+                flex: 1 1 calc(50% - 8px);
+                min-width: calc(50% - 8px);
             }
             .order-param {
                 padding: 10px;
@@ -2781,8 +2791,10 @@
 
             // COOPERVISION
             { name:"Biofinity", brand:"CooperVision", type:"sphere", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-20, sphMax:15, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$58", wear:"EW", material:"Comfilcon A (SiHy)", note:"Includes XR power range", privateLabels:[{name:"Aquaclear",retailer:"Vision Source"},{name:"Voyant Monthly",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly",retailer:"Visionworks"},{name:"Sofmed Breathables XW",retailer:"America's Best"},{name:"LensCrafters Monthly",retailer:"LensCrafters"},{name:"Pearle Vision Monthly",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW",retailer:"Eyeglass World"},] },
-            { name:"Biofinity Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"3, 6", price:"$75 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", privateLabels:[{name:"Aquaclear Toric",retailer:"Vision Source"},{name:"Voyant Monthly Toric",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables XW Toric",retailer:"America's Best"},{name:"LensCrafters Monthly for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision Monthly for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW for Astigmatism",retailer:"Eyeglass World"},] },
-            { name:"Biofinity Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-20, sphMax:20, cylMin:-2.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$153", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range" },
+            { name:"Biofinity Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"3, 6", price:"$75 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Biofinity Toric XR", privateLabels:[{name:"Aquaclear Toric",retailer:"Vision Source"},{name:"Voyant Monthly Toric",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables XW Toric",retailer:"America's Best"},{name:"LensCrafters Monthly for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision Monthly for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW for Astigmatism",retailer:"Eyeglass World"},] },
+            { name:"Biofinity Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$153", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Biofinity Toric" },
+            { name:"Proclear Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-8, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$68 (6pk)", wear:"DW", material:"Omafilcon B", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Proclear Toric XR" },
+            { name:"Proclear Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$185 (6pk)", wear:"DW", material:"Omafilcon B", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Proclear Toric" },
             { name:"Biofinity Multifocal", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"3, 6", price:"$97 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", privateLabels:[{name:"Aquaclear Multifocal",retailer:"Vision Source"},{name:"Voyant Monthly Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathables XW Multifocal",retailer:"America's Best"},{name:"LensCrafters Monthly Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Multifocal",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW Multifocal",retailer:"Eyeglass World"},] },
             { name:"Biofinity Energys", brand:"CooperVision", type:"sphere", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$63", wear:"EW", material:"Comfilcon A (SiHy)", note:"Digital Zone Optics for screen use", privateLabels:[{name:"Aquaclear Premium",retailer:"Vision Source"},{name:"Voyant Monthly Premium",retailer:"Vision Source"},{name:"Ethos AquaTech Evolve Monthly",retailer:"Visionworks"},{name:"LensCrafters Monthly Modern Lifestyle",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Balance",retailer:"Pearle Vision"}] },
             { name:"Biofinity Toric Multifocal", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:116, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"6", price:"$155", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 steps)", fittingGuide: {
@@ -2812,6 +2824,8 @@
             { name:"Clariti 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-10, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$77 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day",retailer:"Vision Source"},{name:"Voyant 1 Day",retailer:"Vision Source"},{name:"Ethos 1 Day",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day",retailer:"America's Best"},{name:"Ray-Ban 1-Day",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear 1-Day",retailer:"Eyeglass World"}] },
             { name:"Clariti 1 Day Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:60, bc:"8.6", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$100 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"Fresh Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Toric",retailer:"Vision Source"},{name:"Ethos 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Toric",retailer:"America's Best"},{name:"Ray-Ban 1-Day for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day for Astigmatism",retailer:"Pearle Vision"},{name:"up & up 1 Day for Astigmatism",retailer:"Target"}] },
             { name:"Clariti 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}] },
+            { name:"Proclear 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90", price:"$77 (90pk)", wear:"DW", material:"Omafilcon A" },
+            { name:"Proclear 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Single profile"], qty:"90", price:"$91 (90pk)", wear:"DW", material:"Omafilcon A", note:"Single aspheric center-near design, up to +2.50 add" },
             { name:"Avaira Vitality", brand:"CooperVision", type:"sphere", modality:"biweekly", dk:90, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$43", wear:"DW", material:"Fanfilcon A (SiHy)", privateLabels:[{name:"Aquaclear 110",retailer:"Vision Source"},{name:"Ethos AquaTech 2 Week",retailer:"Visionworks"},{name:"Sofmed Breathables Advanced",retailer:"America's Best"},{name:"Pearle Vision 2 Week",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear",retailer:"Eyeglass World"},{name:"Serenity",retailer:"FYIdoctors"}] },
             { name:"Avaira Vitality Toric", brand:"CooperVision", type:"toric", modality:"biweekly", dk:90, bc:"8.5", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$49", wear:"DW", material:"Fanfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", privateLabels:[{name:"Aquaclear 110 Toric",retailer:"Vision Source"},{name:"Ethos AquaTech 2 Week for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables Advanced Toric",retailer:"America's Best"},{name:"Pearle Vision 2 Week for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear for Astigmatism",retailer:"Eyeglass World"},{name:"Serenity Toric",retailer:"FYIdoctors"}] },
             { name:"MiSight 1 day", brand:"CooperVision", type:"myopia-mgmt", modality:"daily", dk:27, bc:"8.7", diam:"14.2", sphMin:-7, sphMax:-0.5, cylMin:0, cylMax:0, addTypes:[], qty:"90, 180", price:"$155 (90pk)", wear:"DW", material:"Omafilcon A (Hydrogel)", note:"Myopia management for children 8\u201312" },
@@ -3178,13 +3192,48 @@
                 const odOk = isLensCompatibleWithEye(lens, state.od);
                 const osOk = isLensCompatibleWithEye(lens, state.os);
 
-                if (odOk || osOk) {
-                    results.push({ ...lens, forOD: odOk, forOS: osOk });
+                // Check companion lens for the missing eye
+                let companionForOD = null;
+                let companionForOS = null;
+                if (lens.companion) {
+                    if (!odOk) {
+                        const comp = LENSES.find(cl => cl.name === lens.companion);
+                        if (comp && isLensCompatibleWithEye(comp, state.od)) {
+                            companionForOD = lens.companion;
+                        }
+                    }
+                    if (!osOk) {
+                        const comp = LENSES.find(cl => cl.name === lens.companion);
+                        if (comp && isLensCompatibleWithEye(comp, state.os)) {
+                            companionForOS = lens.companion;
+                        }
+                    }
+                }
+
+                // Both eyes have Rx: require full coverage (direct or via companion)
+                const bothEyesHaveRx = (state.od.sphere || state.od.cylinder) && (state.os.sphere || state.os.cylinder);
+                if (bothEyesHaveRx) {
+                    const odCovered = odOk || !!companionForOD;
+                    const osCovered = osOk || !!companionForOS;
+                    if (odCovered && osCovered) {
+                        results.push({ ...lens, forOD: odOk, forOS: osOk, companionForOD, companionForOS });
+                    }
+                } else if (odOk || osOk) {
+                    results.push({ ...lens, forOD: odOk, forOS: osOk, companionForOD, companionForOS });
                 }
             });
 
+            // Suppress XR lenses that fit both eyes when their standard companion
+            // already appears as a mixed pair (avoids redundant, pricier recommendation)
+            const filtered = results.filter(r => {
+                if (!r.companion || !r.forOD || !r.forOS) return true;
+                // This lens covers both eyes directly; check if its companion
+                // is in results as a mixed pair that also covers both eyes
+                return !results.some(c => c.name === r.companion && (c.companionForOD || c.companionForOS));
+            });
+
             const dir = state.sortDir === "asc" ? 1 : -1;
-            return results.sort((a, b) => {
+            return filtered.sort((a, b) => {
                 if (state.sortBy === "dk") return (a.dk - b.dk) * dir;
                 if (state.sortBy === "brand") return a.brand.localeCompare(b.brand) * dir;
                 if (state.sortBy === "name") return a.name.localeCompare(b.name) * dir;
@@ -3199,12 +3248,30 @@
             });
         }
 
+        function isLensCoveredForBothEyes(lens) {
+            const odOk = isLensCompatibleWithEye(lens, state.od);
+            const osOk = isLensCompatibleWithEye(lens, state.os);
+            const bothEyesHaveRx = (state.od.sphere || state.od.cylinder) && (state.os.sphere || state.os.cylinder);
+            if (bothEyesHaveRx) {
+                let companionForOD = false, companionForOS = false;
+                if (lens.companion) {
+                    const comp = LENSES.find(cl => cl.name === lens.companion);
+                    if (comp) {
+                        if (!odOk && isLensCompatibleWithEye(comp, state.od)) companionForOD = true;
+                        if (!osOk && isLensCompatibleWithEye(comp, state.os)) companionForOS = true;
+                    }
+                }
+                return (odOk || companionForOD) && (osOk || companionForOS);
+            }
+            return odOk || osOk;
+        }
+
         function getBrandsWithResults() {
             return BRANDS.filter(brand => {
                 return LENSES.some(lens => {
                     if (state.modality.length > 0 && !state.modality.includes(lens.modality)) return false;
                     if (lens.brand !== brand) return false;
-                    return isLensCompatibleWithEye(lens, state.od) || isLensCompatibleWithEye(lens, state.os);
+                    return isLensCoveredForBothEyes(lens);
                 });
             });
         }
@@ -3212,9 +3279,7 @@
         function countByModality(mod) {
             return LENSES.filter(l => {
                 if (l.modality !== mod) return false;
-                const odOk = isLensCompatibleWithEye(l, state.od);
-                const osOk = isLensCompatibleWithEye(l, state.os);
-                return odOk || osOk;
+                return isLensCoveredForBothEyes(l);
             }).length;
         }
 
@@ -3590,7 +3655,7 @@
                 return `<div class="option-btn brand-btn brand-${bc} ${isActive ? "active" : ""}" onclick="toggleBrand('${brand}')">
                     <div class="check">${isActive ? "\u2713" : ""}</div>
                     <div class="title">${brand}</div>
-                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${LENSES.filter(l => l.brand === brand && (state.modality.length === 0 || state.modality.includes(l.modality)) && (isLensCompatibleWithEye(l, state.od) || isLensCompatibleWithEye(l, state.os))).length} compatible</div>
+                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${LENSES.filter(l => l.brand === brand && (state.modality.length === 0 || state.modality.includes(l.modality)) && isLensCoveredForBothEyes(l)).length} compatible</div>
                 </div>`;
             }).join("");
 
@@ -3688,11 +3753,13 @@
                 <div class="top-row">
                     <div style="flex:1;min-width:180px;padding-left:8px">
                         <div class="badges">
-                            <span class="badge badge-eye">${lens.forOD && lens.forOS ? 'OD OS' : lens.forOD ? 'OD' : 'OS'}</span>
+                            <span class="badge badge-eye">${(lens.forOD || lens.companionForOD) && (lens.forOS || lens.companionForOS) ? 'OD OS' : lens.forOD || lens.companionForOD ? 'OD' : 'OS'}</span>
+                            ${lens.companionForOD || lens.companionForOS ? '<span class="badge" style="background:var(--surface-hover);color:var(--text-muted);font-size:10px">Mixed Pair</span>' : ''}
                             <span class="badge badge-brand-${bc}">${lens.brand}</span>
                             <span class="badge badge-modality">${lens.modality}</span>
                             <span class="badge badge-dk">Dk ${lens.dk}</span>
                         </div>
+                        ${lens.companionForOD || lens.companionForOS ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.4">${lens.companionForOD ? `OD: <span style="color:${brandColor};font-weight:600">${lens.companionForOD}</span>` : `OD: <span style="font-weight:600">${lens.name}</span>`} · ${lens.companionForOS ? `OS: <span style="color:${brandColor};font-weight:600">${lens.companionForOS}</span>` : `OS: <span style="font-weight:600">${lens.name}</span>`}</div>` : ''}
                         <div class="lens-name">${lens.name}</div>
                         ${lens.note ? `<div class="lens-note">${lens.note}</div>` : ""}
                     </div>
@@ -3838,13 +3905,14 @@
             const brandColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[bc];
 
             // Build order params for one eye
-            function buildEyeParams(eye, isDominant, eyeLabel) {
+            function buildEyeParams(eye, isDominant, eyeLabel, lensOverride) {
+                const l = lensOverride || lens;
                 const sph = parseFloat(eye.sphere) || 0;
                 const cyl = parseFloat(eye.cylinder) || 0;
                 const addP = parseFloat(eye.add) || 0;
                 let clSph = snapTo025(vertexConvert(sph));
                 const vertexApplied = Math.abs(sph) >= 4;
-                const foldCyl = cyl !== 0 && (lens.type === "sphere" || lens.type === "multifocal");
+                const foldCyl = cyl !== 0 && (l.type === "sphere" || l.type === "multifocal");
 
                 // SE adjustment: fold cyl into sphere for non-toric lenses
                 if (foldCyl) {
@@ -3859,8 +3927,8 @@
                 let sphNote = notes.length > 0 ? notes.join("; ") : null;
                 let sphHighlight = vertexApplied || foldCyl;
 
-                if (lens.type === "toric" || lens.type === "multifocal-toric") {
-                    const clCyl = snapCyl(cyl, lens);
+                if (l.type === "toric" || l.type === "multifocal-toric") {
+                    const clCyl = snapCyl(cyl, l);
                     const cylDiff = clCyl - cyl;
                     if (Math.abs(cylDiff) > 0.01) {
                         const seAdj = snapTo025(-cylDiff / 2);
@@ -3880,8 +3948,8 @@
                     highlight: sphHighlight
                 });
 
-                if (lens.type === "toric" || lens.type === "multifocal-toric") {
-                    const clCyl = snapCyl(cyl, lens);
+                if (l.type === "toric" || l.type === "multifocal-toric") {
+                    const clCyl = snapCyl(cyl, l);
                     const cylChanged = clCyl !== cyl;
                     params.push({
                         label: "Cylinder (CYL)",
@@ -3891,7 +3959,7 @@
                     });
 
                     const rxAxis = eye.cylSign === '+' ? eye.transposedAxis : eye.axis;
-                    const clAxis = snapAxis(rxAxis, lens);
+                    const clAxis = snapAxis(rxAxis, l);
                     const axisChanged = clAxis !== (parseInt(rxAxis) || 180);
                     params.push({
                         label: "Axis",
@@ -3901,9 +3969,9 @@
                     });
                 }
 
-                if (lens.type === "multifocal" || lens.type === "multifocal-toric") {
-                    if (lens.fittingGuide && lens.fittingGuide.addTable) {
-                        const row = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
+                if (l.type === "multifocal" || l.type === "multifocal-toric") {
+                    if (l.fittingGuide && l.fittingGuide.addTable) {
+                        const row = l.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
                         if (row && isDominant !== null) {
                             const design = isDominant ? row.dominant : row.nonDominant;
                             const hasDesign = design === 'D' || design === 'N';
@@ -3923,7 +3991,7 @@
                                 highlight: true
                             });
                         } else {
-                            const addType = suggestAddType(addP, lens.addTypes);
+                            const addType = suggestAddType(addP, l.addTypes);
                             params.push({
                                 label: "Add",
                                 value: addType || `+${addP.toFixed(2)}`,
@@ -3932,7 +4000,7 @@
                             });
                         }
                     } else {
-                        const addType = suggestAddType(addP, lens.addTypes);
+                        const addType = suggestAddType(addP, l.addTypes);
                         params.push({
                             label: "Add",
                             value: addType || `+${addP.toFixed(2)}`,
@@ -3993,6 +4061,22 @@
             let eyeSectionsHtml = '';
             const notes = [];
 
+            // Track companion lens used (if any) for specs section
+            let companionLensUsed = null;
+
+            // Detect if this is a mixed-pair scenario (one eye needs companion)
+            let isMixedPair = false;
+            let odCompLens = null;
+            let osCompLens = null;
+            if (!odOk && lens.companion) {
+                const comp = LENSES.find(cl => cl.name === lens.companion);
+                if (comp && isLensCompatibleWithEye(comp, state.od)) { odCompLens = comp; isMixedPair = true; }
+            }
+            if (!osOk && lens.companion) {
+                const comp = LENSES.find(cl => cl.name === lens.companion);
+                if (comp && isLensCompatibleWithEye(comp, state.os)) { osCompLens = comp; isMixedPair = true; }
+            }
+
             if (odOk) {
                 const { params, vertexApplied } = buildEyeParams(state.od, odDominant, "OD");
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
@@ -4000,7 +4084,25 @@
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                eyeSectionsHtml += `<div class="order-section-title">OD (Right Eye) \u2014 Order Parameters</div>
+                const odTitle = isMixedPair
+                    ? `OD (Right Eye) \u2014 <span style="color:${brandColor};font-weight:600">${lens.name}</span>`
+                    : `OD (Right Eye) \u2014 Order Parameters`;
+                eyeSectionsHtml += `<div class="order-section-title">${odTitle}</div>
+                    <div class="order-grid">${html}</div>`;
+                if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
+            }
+
+            if (odCompLens) {
+                companionLensUsed = odCompLens;
+                const compBc = brandClass(odCompLens.brand);
+                const compColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[compBc];
+                const { params, vertexApplied } = buildEyeParams(state.od, odDominant, "OD", odCompLens);
+                const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
+                    <div class="order-param-label">${p.label}</div>
+                    <div class="order-param-value">${p.value}</div>
+                    ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
+                </div>`).join("");
+                eyeSectionsHtml += `<div class="order-section-title">OD (Right Eye) \u2014 <span style="color:${compColor};font-weight:600">${odCompLens.name}</span></div>
                     <div class="order-grid">${html}</div>`;
                 if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
             }
@@ -4012,7 +4114,25 @@
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                eyeSectionsHtml += `<div class="order-section-title">OS (Left Eye) \u2014 Order Parameters</div>
+                const osTitle = isMixedPair
+                    ? `OS (Left Eye) \u2014 <span style="color:${brandColor};font-weight:600">${lens.name}</span>`
+                    : `OS (Left Eye) \u2014 Order Parameters`;
+                eyeSectionsHtml += `<div class="order-section-title">${osTitle}</div>
+                    <div class="order-grid">${html}</div>`;
+                if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
+            }
+
+            if (osCompLens) {
+                companionLensUsed = osCompLens;
+                const compBc = brandClass(osCompLens.brand);
+                const compColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[compBc];
+                const { params, vertexApplied } = buildEyeParams(state.os, osDominant, "OS", osCompLens);
+                const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
+                    <div class="order-param-label">${p.label}</div>
+                    <div class="order-param-value">${p.value}</div>
+                    ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
+                </div>`).join("");
+                eyeSectionsHtml += `<div class="order-section-title">OS (Left Eye) \u2014 <span style="color:${compColor};font-weight:600">${osCompLens.name}</span></div>
                     <div class="order-grid">${html}</div>`;
                 if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
             }
@@ -4020,15 +4140,33 @@
             // Shared lens specs
             const bcs = lens.bc.split("/").map(s => s.trim());
             let sharedParams = [];
-            sharedParams.push({
-                label: "Base Curve",
-                value: bcs.length > 1 ? bcs[0] : lens.bc,
-                note: bcs.length > 1 ? `Also available: ${bcs[1]}` : null
-            });
-            sharedParams.push({
-                label: "Diameter",
-                value: lens.diam
-            });
+            if (companionLensUsed && (companionLensUsed.bc !== lens.bc || companionLensUsed.diam !== lens.diam)) {
+                // Different specs between primary and companion
+                sharedParams.push({
+                    label: "Base Curve",
+                    value: `${lens.bc} (${lens.name}) / ${companionLensUsed.bc} (${companionLensUsed.name})`,
+                    note: "BC differs between paired lenses",
+                    highlight: true
+                });
+                sharedParams.push({
+                    label: "Diameter",
+                    value: lens.diam !== companionLensUsed.diam
+                        ? `${lens.diam} (${lens.name}) / ${companionLensUsed.diam} (${companionLensUsed.name})`
+                        : lens.diam,
+                    note: lens.diam !== companionLensUsed.diam ? "Diameter differs between paired lenses" : null,
+                    highlight: lens.diam !== companionLensUsed.diam
+                });
+            } else {
+                sharedParams.push({
+                    label: "Base Curve",
+                    value: bcs.length > 1 ? bcs[0] : lens.bc,
+                    note: bcs.length > 1 ? `Also available: ${bcs[1]}` : null
+                });
+                sharedParams.push({
+                    label: "Diameter",
+                    value: lens.diam
+                });
+            }
             const sharedHtml = sharedParams.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                 <div class="order-param-label">${p.label}</div>
                 <div class="order-param-value">${p.value}</div>
@@ -4070,8 +4208,11 @@
                     : isAdjusted
                     ? `<button class="order-back-btn" onclick="backToTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> Back to Troubleshooting</button>`
                     : `<button class="order-back-btn" onclick="deselectLens()"><i class="ph-duotone ph-arrow-left"></i> Back to Results</button>`}
-                <div class="order-lens-name">${lens.name}</div>
-                <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
+                ${isMixedPair
+                    ? `<div class="order-lens-name" style="font-size:16px;line-height:1.5">OD: <span style="color:${brandColor}">${odCompLens ? odCompLens.name : lens.name}</span>, OS: <span style="color:${brandColor}">${osCompLens ? osCompLens.name : lens.name}</span></div>
+                    <div class="order-lens-brand" style="color:${brandColor}">${lens.brand} \u00B7 Mixed Pair</div>`
+                    : `<div class="order-lens-name">${lens.name}</div>
+                    <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`}
 
                 ${adjBanner}${nonAdaptBanner}
 
