@@ -8863,10 +8863,10 @@
                 <div class="results-count">${filtered.length} Medication${filtered.length!==1?'s':''}</div>
                 <div style="display:flex;gap:4px;">
                     <button class="med-sort-btn ${medsState.sortMode==='class'?'active':''}" onclick="toggleMedSort('class')" title="Sort by class">
-                        <i class="ph-duotone ph-list-numbers" style="font-size:13px;vertical-align:-1px;"></i> Class ${medsState.sortMode==='class' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
+                        <i class="ph-duotone ph-list-numbers" style="font-size:13px;vertical-align:-1px;"></i> Generation ${medsState.sortMode==='class' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
                     </button>
                     <button class="med-sort-btn ${medsState.sortMode==='price'?'active':''}" onclick="toggleMedSort('price')" title="Sort by generic price">
-                        <i class="ph-duotone ph-currency-dollar" style="font-size:13px;vertical-align:-1px;"></i> Generic $ ${medsState.sortMode==='price' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
+                        <i class="ph-duotone ph-currency-dollar" style="font-size:13px;vertical-align:-1px;"></i> Generic ${medsState.sortMode==='price' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
                     </button>
                 </div>
             </div>`;
