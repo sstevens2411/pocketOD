@@ -1425,9 +1425,9 @@
             width: fit-content;
             padding: 10px 20px;
             border-radius: 8px;
-            border: 2px solid var(--accent);
+            border: 2px solid #ff8c00;
             background: var(--surface);
-            color: var(--accent);
+            color: #ff8c00;
             font-family: var(--sans);
             font-size: 13px;
             font-weight: 600;
@@ -1436,7 +1436,7 @@
         }
 
         .troubleshoot-btn:hover {
-            background: var(--accent);
+            background: #ff8c00;
             color: #fff;
         }
 
@@ -1525,7 +1525,7 @@
         .option-btn .icon i[class*="ph-"] { font-size: 22px; color: var(--accent); }
         .option-btn.active .icon i[class*="ph-"] { color: var(--accent); }
         .med-filter-chip i[class*="ph-"], .med-subcondition-section i[class*="ph-"] { font-size: 14px; vertical-align: -2px; color: var(--accent); }
-        .troubleshoot-btn i[class*="ph-"] { font-size: 16px; vertical-align: -3px; color: var(--accent); }
+        .troubleshoot-btn i[class*="ph-"] { font-size: 16px; vertical-align: -3px; color: #ff8c00; }
         .order-back-btn i[class*="ph-"] { font-size: 16px; vertical-align: -3px; }
         .empty-icon i[class*="ph-"] { font-size: 36px; color: var(--accent); }
         .card-title i[class*="ph-"] { font-size: 20px; vertical-align: -3px; color: var(--accent); }
@@ -2753,7 +2753,7 @@
                         ]}
                     ],
                     near: [
-                        { action:"addTableSwap", label:"Enhanced near vision \u2014 Step A", sphereAdj: { eye:"nonDominant", amount:+0.50 }, table: [
+                        { action:"addTableSwap", label:"Enhanced near vision \u2014 Add +0.50 to non-dominant eye", sphereAdj: { eye:"nonDominant", amount:+0.50 }, table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" }
@@ -2807,7 +2807,26 @@
             { name:"Biofinity Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$153", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Biofinity Toric" },
             { name:"Proclear Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-8, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$68 (6pk)", wear:"DW", material:"Omafilcon B", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Proclear Toric XR" },
             { name:"Proclear Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$185 (6pk)", wear:"DW", material:"Omafilcon B", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Proclear Toric" },
-            { name:"Biofinity Multifocal", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"3, 6", price:"$97 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", privateLabels:[{name:"Aquaclear Multifocal",retailer:"Vision Source"},{name:"Voyant Monthly Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathables XW Multifocal",retailer:"America's Best"},{name:"LensCrafters Monthly Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Multifocal",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW Multifocal",retailer:"Eyeglass World"},] },
+            { name:"Biofinity Multifocal", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"3, 6", price:"$97 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", privateLabels:[{name:"Aquaclear Multifocal",retailer:"Vision Source"},{name:"Voyant Monthly Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathables XW Multifocal",retailer:"America's Best"},{name:"LensCrafters Monthly Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Multifocal",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW Multifocal",retailer:"Eyeglass World"},], fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"+1.00", dominant:"D", nonDominant:"D" },
+                    { specAddMin:1.50, specAddMax:1.75, clAdd:"+1.50", dominant:"D", nonDominant:"D" },
+                    { specAddMin:2.00, specAddMax:2.25, clAdd:"+2.00", dominant:"D", nonDominant:"N" },
+                    { specAddMin:2.50, specAddMax:99,   clAdd:"+2.50", dominant:"D", nonDominant:"N" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"sphereAdj", eye:"dominant", amount:-0.25 },
+                        { action:"lowerAdd", eye:"dominant" },
+                        { action:"designSwap", eye:"nonDominant", to:"D" }
+                    ],
+                    near: [
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 },
+                        { action:"raiseAdd", eye:"nonDominant" },
+                        { action:"designSwap", eye:"dominant", to:"N" }
+                    ]
+                }
+            }},
             { name:"Biofinity Energys", brand:"CooperVision", type:"sphere", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$63", wear:"EW", material:"Comfilcon A (SiHy)", note:"Digital Zone Optics for screen use", privateLabels:[{name:"Aquaclear Premium",retailer:"Vision Source"},{name:"Voyant Monthly Premium",retailer:"Vision Source"},{name:"Ethos AquaTech Evolve Monthly",retailer:"Visionworks"},{name:"LensCrafters Monthly Modern Lifestyle",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Balance",retailer:"Pearle Vision"}] },
             { name:"Biofinity Toric Multifocal", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:116, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"6", price:"$155", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 steps)", fittingGuide: {
                 addTable: [
@@ -4247,12 +4266,12 @@
                         </div>`
                     ).join("");
                     return `<div style="margin-top:20px">
-                        <div class="order-section-title">Still Not Clear? Next Step</div>
+                        <div class="order-section-title" style="color:#f5c542;font-style:italic">Still Not Clear? Next Step</div>
                         <div class="troubleshoot-suggestion fade-in">
                             <div class="ts-step">${stepNum}</div>
                             <div class="ts-body">
                                 <div class="ts-title">${nextSug.title}</div>
-                                <div class="ts-rationale">${nextSug.rationale}</div>
+                                ${nextSug.rationale ? `<div class="ts-rationale">${nextSug.rationale}</div>` : ''}
                                 <div class="ts-changes">${changesHtml}</div>
                                 <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyNextTsStep()">View Adjusted Results \u2192</button>
                             </div>
@@ -4450,7 +4469,7 @@
                         const tsComplaint = isDistance ? "distance" : "near";
                         return {
                             title: step.label || `Adjust add power for enhanced ${tsComplaint} vision`,
-                            rationale: `Modify add configuration per fitting guide for enhanced ${tsComplaint} vision`,
+                            rationale: null,
                             adjustments: tsAdj, changes: tsChanges, tsStepIdx: i
                         };
                     }
@@ -4820,7 +4839,7 @@
                                 suggestions.push({
                                     tsStepIdx: stepIdx,
                                     title: step.label || `Adjust add power for enhanced ${tsComplaint} vision`,
-                                    rationale: `Modify add configuration per fitting guide for enhanced ${tsComplaint} vision`,
+                                    rationale: null,
                                     adjustments: tsAdj, changes: tsChanges
                                 });
                                 break;
@@ -4991,7 +5010,7 @@
                             <div class="ts-step">${i + 1}</div>
                             <div class="ts-body">
                                 <div class="ts-title">${s.title}</div>
-                                <div class="ts-rationale">${s.rationale}</div>
+                                ${s.rationale ? `<div class="ts-rationale">${s.rationale}</div>` : ''}
                                 <div class="ts-changes">${changesHtml}</div>
                                 <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsAdjustment(${i})">View Adjusted Results \u2192</button>
                             </div>
