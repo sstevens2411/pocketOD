@@ -158,8 +158,8 @@
         }
 
         .logo-mark {
-            width: 76px;
-            height: 76px;
+            width: 100px;
+            height: 100px;
             border-radius: 9px;
             flex-shrink: 0;
             overflow: hidden;
@@ -2665,6 +2665,324 @@
             .browse-type, .browse-sched { font-size: 8px; padding: 1px 3px; }
         }
 
+        /* TOOLS / IOP CALCULATOR */
+        .tools-card {
+            background: var(--surface);
+            border: none;
+            border-left: 2px solid rgba(6,182,212,0.4);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin-bottom: 16px;
+        }
+        .tools-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tools-card-title i { color: var(--accent); font-size: 20px; }
+        .tools-card-desc {
+            font-size: 13px;
+            color: var(--ink-secondary);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .iop-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .iop-form-group { }
+        .iop-form-group.full-width { grid-column: 1 / -1; }
+        .iop-form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink-secondary);
+            margin-bottom: 6px;
+        }
+        .iop-form-group input,
+        .iop-form-group select {
+            width: 100%;
+            padding: 11px 13px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            font-size: 15px;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--ink);
+            background: var(--surface-solid);
+            transition: all 0.15s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .iop-form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23cbd5e1' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+            cursor: pointer;
+        }
+        .iop-form-group input:focus,
+        .iop-form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+        }
+        .iop-form-group input::placeholder {
+            color: var(--ink-muted);
+            font-weight: 400;
+        }
+        .iop-result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: var(--radius);
+            background: rgba(6,182,212,0.06);
+            border: 1px solid rgba(6,182,212,0.2);
+        }
+        .iop-result-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .iop-result-value {
+            font-family: var(--mono);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .iop-result-value .unit { font-size: 16px; font-weight: 500; color: var(--ink-secondary); }
+        .iop-result-detail {
+            font-size: 12.5px;
+            color: var(--ink-secondary);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+        .iop-result-detail span.adj-up { color: var(--danger); font-weight: 600; }
+        .iop-result-detail span.adj-down { color: var(--success); font-weight: 600; }
+        .iop-result-detail span.adj-none { color: var(--ink-muted); font-weight: 600; }
+        .iop-table-wrap {
+            margin-top: 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .iop-ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            font-family: var(--mono);
+        }
+        .iop-ref-table th {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            text-align: left;
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .iop-ref-table td {
+            padding: 5px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--ink);
+        }
+        .iop-ref-table tr.highlight td {
+            background: rgba(6,182,212,0.08);
+            font-weight: 600;
+        }
+        .iop-ref-table .adj-pos { color: var(--danger); }
+        .iop-ref-table .adj-neg { color: var(--success); }
+        .iop-ref-table .adj-zero { color: var(--ink-muted); }
+        .iop-disclaimer {
+            margin-top: 16px;
+            font-size: 11.5px;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+        .iop-eye-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 2px;
+        }
+        .iop-eye-block {
+            padding: 16px;
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+        }
+        .iop-eye-label {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .iop-eye-label .tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: rgba(6,182,212,0.12);
+            color: var(--accent);
+        }
+        .glauc-pts-badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(6,182,212,0.12);
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+        .glauc-risk-bar-wrap {
+            margin-top: 14px;
+        }
+        .glauc-risk-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+        .glauc-risk-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease, background 0.4s ease;
+        }
+        .glauc-risk-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--ink-muted);
+            margin-top: 4px;
+            font-family: var(--mono);
+        }
+        /* Tools menu: bigger cards on desktop + hover glow */
+        #toolsContent .option-btn {
+            transition: all 0.25s ease;
+        }
+        #toolsContent .option-btn .icon {
+            transition: all 0.25s ease;
+            transform-origin: left center;
+            display: inline-block;
+        }
+        #toolsContent .option-btn:hover {
+            border-color: rgba(6,182,212,0.4);
+            background: rgba(6,182,212,0.06);
+            box-shadow: 0 0 24px rgba(6,182,212,0.12), 0 0 0 1px rgba(6,182,212,0.1);
+            transform: translateY(-2px);
+        }
+        #toolsContent .option-btn:hover .icon {
+            color: var(--accent);
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 8px rgba(6,182,212,0.5));
+        }
+        #toolsContent .option-btn:hover .title {
+            color: #fff;
+        }
+        #toolsContent .option-btn:hover .desc {
+            color: var(--ink-secondary);
+        }
+        @media (min-width: 601px) {
+            #toolsContent .option-btn {
+                padding: 22px 20px;
+            }
+            #toolsContent .option-btn .icon {
+                font-size: 26px;
+                margin-bottom: 8px;
+            }
+            #toolsContent .option-btn .title {
+                font-size: 17px;
+            }
+            #toolsContent .option-btn .desc {
+                font-size: 13.5px;
+                margin-top: 4px;
+                color: var(--ink-secondary);
+            }
+        }
+
+        /* Myopia: desktop inputs, mobile selects */
+        .myop-mobile-only { display: none !important; }
+        .myop-desktop-only { display: block !important; }
+        @media (max-width: 600px) {
+            .myop-mobile-only { display: block !important; }
+            .myop-desktop-only { display: none !important; }
+        }
+
+        /* Myopia Progression Chart */
+        .myopia-chart {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            margin: 16px 0;
+            border-left: 2px solid var(--border);
+            border-bottom: 2px solid var(--border);
+        }
+        .myopia-chart svg { width: 100%; height: 100%; }
+        .myopia-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            font-size: 11.5px;
+            color: var(--ink-secondary);
+        }
+        .myopia-legend-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: -1px;
+        }
+        .myopia-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .myopia-summary-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid var(--border);
+        }
+        .myopia-summary-card .label {
+            font-size: 11px;
+            color: var(--ink-muted);
+            margin-bottom: 3px;
+        }
+        .myopia-summary-card .value {
+            font-family: var(--mono);
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .myopia-summary-card .sub {
+            font-size: 11px;
+            color: var(--ink-muted);
+            margin-top: 2px;
+        }
+        @media (max-width: 600px) {
+            .iop-form-grid { grid-template-columns: 1fr; }
+            .iop-eye-row { grid-template-columns: 1fr; }
+            .iop-result-value { font-size: 26px; }
+            .tools-card { padding: 20px 16px; }
+            .myopia-chart { height: 260px; }
+            .myopia-summary-grid { grid-template-columns: 1fr; }
+        }
+
     </style>
 </head>
 <body>
@@ -2685,6 +3003,7 @@
         <div class="subnav">
             <div class="subnav-item active" id="subnavLenses" onclick="switchTab('lenses')">Contact Lenses</div>
             <div class="subnav-item" id="subnavMeds" onclick="switchTab('meds')">Medications</div>
+            <div class="subnav-item" id="subnavTools" onclick="switchTab('tools')">Clinical Tools</div>
         </div>
         <div class="cl-subtabs" id="clSubtabs">
             <div class="cl-subtabs-inner">
@@ -2716,6 +3035,10 @@
 
     <div id="browsePage" class="main browse-main" style="display:none">
         <div id="browseContent"></div>
+    </div>
+
+    <div id="toolsPage" class="main" style="display:none">
+        <div id="toolsContent"></div>
     </div>
 
     <script>
@@ -5268,6 +5591,7 @@
         function switchTab(tab) {
             document.getElementById('subnavLenses').classList.toggle('active', tab === 'lenses');
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
+            document.getElementById('subnavTools').classList.toggle('active', tab === 'tools');
             document.getElementById('clSubtabs').style.display = tab === 'lenses' ? '' : 'none';
             if (tab === 'lenses') {
                 const showPrescribe = clSubTab === 'prescribe';
@@ -5286,6 +5610,1235 @@
                 medsState.categorySearch = "";
                 renderMeds();
             }
+            document.getElementById('toolsPage').style.display = tab === 'tools' ? '' : 'none';
+            if (tab === 'tools') {
+                toolsActiveTool = null;
+                renderTools();
+            }
+        }
+
+        function navigateToMed(medId) {
+            switchTab('meds');
+            var med = MEDS.find(function(m) { return m.id === medId; });
+            if (med) {
+                medsState.searchQuery = med.brand_name;
+                renderMeds();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // === Clinical Tools State ===
+        let toolsActiveTool = null; // null = menu, 'iop' = IOP calculator, etc.
+
+        // === IOP Calculator State ===
+        const iopState = {
+            tonometer: 'goldmann',
+            od: { iop: '', cct: '' },
+            os: { iop: '', cct: '' }
+        };
+
+        // CCT correction table (Goldmann, ref 545 µm, ~0.7 mmHg per 10 µm)
+        const IOP_CCT_TABLE = [
+            {cct:445,adj:7},{cct:455,adj:6},{cct:465,adj:6},{cct:475,adj:5},
+            {cct:485,adj:4},{cct:495,adj:4},{cct:505,adj:3},{cct:515,adj:2},
+            {cct:525,adj:1},{cct:535,adj:1},{cct:545,adj:0},{cct:555,adj:-1},
+            {cct:565,adj:-1},{cct:575,adj:-2},{cct:585,adj:-3},{cct:595,adj:-4},
+            {cct:605,adj:-4},{cct:615,adj:-5},{cct:625,adj:-6},{cct:635,adj:-6},
+            {cct:645,adj:-7}
+        ];
+
+        function iopGetAdj(cct) {
+            if (!cct || cct < 445 || cct > 645) return null;
+            // Linear interpolation between table entries
+            for (let i = 0; i < IOP_CCT_TABLE.length - 1; i++) {
+                const a = IOP_CCT_TABLE[i], b = IOP_CCT_TABLE[i + 1];
+                if (cct >= a.cct && cct <= b.cct) {
+                    const t = (cct - a.cct) / (b.cct - a.cct);
+                    return Math.round((a.adj + t * (b.adj - a.adj)) * 10) / 10;
+                }
+            }
+            return null;
+        }
+
+        function iopCalc(iop, cct) {
+            const adj = iopGetAdj(cct);
+            if (adj === null || !iop) return null;
+            return { corrected: Math.round((iop + adj) * 10) / 10, adj };
+        }
+
+        function onIopInput(eye, field, val) {
+            iopState[eye][field] = val;
+            renderIopResults();
+        }
+
+        function onIopTonometer(val) {
+            iopState.tonometer = val;
+            renderIopResults();
+        }
+
+        function renderIopResults() {
+            ['od', 'os'].forEach(eye => {
+                const el = document.getElementById('iopResult_' + eye);
+                const iop = parseFloat(iopState[eye].iop);
+                const cct = parseFloat(iopState[eye].cct);
+                if (!iop || !cct) {
+                    el.innerHTML = `<div style="color:var(--ink-muted);font-size:13px;">Enter IOP and CCT above</div>`;
+                    return;
+                }
+                if (cct < 445 || cct > 645) {
+                    el.innerHTML = `<div style="color:var(--danger);font-size:13px;">CCT must be between 445\u2013645 \u00B5m</div>`;
+                    return;
+                }
+                const r = iopCalc(iop, cct);
+                if (!r) return;
+                const adjStr = r.adj > 0 ? `+${r.adj}` : `${r.adj}`;
+                const adjClass = r.adj > 0 ? 'adj-up' : r.adj < 0 ? 'adj-down' : 'adj-none';
+                el.innerHTML = `
+                    <div class="iop-result-label">Corrected IOP</div>
+                    <div class="iop-result-value">${r.corrected.toFixed(1)} <span class="unit">mmHg</span></div>
+                    <div class="iop-result-detail">
+                        Measured ${iop.toFixed(1)} mmHg \u00B7 CCT ${Math.round(cct)} \u00B5m \u00B7 Adjustment: <span class="${adjClass}">${adjStr} mmHg</span>
+                    </div>
+                `;
+            });
+        }
+
+        function buildIopTableRows() {
+            var rows = '';
+            for (var i = 0; i < IOP_CCT_TABLE.length; i++) {
+                var r = IOP_CCT_TABLE[i];
+                var cls = r.adj > 0 ? 'adj-pos' : r.adj < 0 ? 'adj-neg' : 'adj-zero';
+                var sign = r.adj > 0 ? '+' : '';
+                var interp = r.adj > 0 ? 'True IOP likely higher' : r.adj < 0 ? 'True IOP likely lower' : 'No adjustment';
+                var hl = r.cct === 545 ? ' class="highlight"' : '';
+                rows += '<tr' + hl + '><td>' + r.cct + '</td><td class="' + cls + '">' + sign + r.adj + ' mmHg</td><td style="color:var(--ink-muted)">' + interp + '</td></tr>';
+            }
+            return rows;
+        }
+
+        function openTool(id) {
+            toolsActiveTool = id;
+            renderTools();
+        }
+
+        function toolsBack() {
+            toolsActiveTool = null;
+            renderTools();
+        }
+
+        function renderTools() {
+            var el = document.getElementById('toolsContent');
+            if (!toolsActiveTool) {
+                renderToolsMenu(el);
+            } else if (toolsActiveTool === 'iop') {
+                renderIopTool(el);
+            } else if (toolsActiveTool === 'glaucoma') {
+                renderGlaucomaTool(el);
+            } else if (toolsActiveTool === 'plaquenil') {
+                renderPlaquenilTool(el);
+            } else if (toolsActiveTool === 'myopia') {
+                renderMyopiaTool(el);
+            }
+        }
+
+        function renderToolsMenu(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:18px;">
+                    <div style="font-size:18px;font-weight:700;margin-bottom:4px;">Clinical Tools</div>
+                    <div style="font-size:13px;color:var(--ink-secondary);">Select a tool to get started.</div>
+                </div>
+                <div class="option-grid">
+                    <button class="option-btn" onclick="openTool('iop')">
+                        <div class="icon"><i class="ph-duotone ph-eye"></i></div>
+                        <div class="title">IOP Correction</div>
+                        <div class="desc">Adjust tonometry for corneal thickness (CCT)</div>
+                    </button>
+                    <button class="option-btn" onclick="openTool('glaucoma')">
+                        <div class="icon"><i class="ph-duotone ph-chart-line-up"></i></div>
+                        <div class="title">Glaucoma Risk</div>
+                        <div class="desc">OHTS 5-year POAG risk estimator (points system)</div>
+                    </button>
+                    <button class="option-btn" onclick="openTool('plaquenil')">
+                        <div class="icon"><i class="ph-duotone ph-pill"></i></div>
+                        <div class="title">Plaquenil Toxicity</div>
+                        <div class="desc">HCQ toxicity risk calculator (AAO guidelines)</div>
+                    </button>
+                    <button class="option-btn" onclick="openTool('myopia')">
+                        <div class="icon"><i class="ph-duotone ph-trend-down"></i></div>
+                        <div class="title">Myopia Progression</div>
+                        <div class="desc">Pediatric progression projection &amp; treatment comparison</div>
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderIopTool(el) {
+            var tableRows = buildIopTableRows();
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-eye"></i> IOP Correction Calculator</div>
+                    <div class="tools-card-desc">
+                        Adjusts Goldmann tonometry readings for central corneal thickness (CCT).
+                        Reference baseline: 545 \u00B5m. Correction \u2248 0.7 mmHg per 10 \u00B5m deviation.
+                    </div>
+
+                    <div class="iop-form-grid" style="margin-bottom:18px;">
+                        <div class="iop-form-group full-width">
+                            <label>Tonometer</label>
+                            <select id="iopTonometer" onchange="onIopTonometer(this.value)">
+                                <option value="goldmann" ${iopState.tonometer==='goldmann'?'selected':''}>Goldmann Applanation (GAT)</option>
+                                <option value="nct" ${iopState.tonometer==='nct'?'selected':''}>Non-Contact (Air Puff)</option>
+                                <option value="icare" ${iopState.tonometer==='icare'?'selected':''}>iCare / Rebound</option>
+                                <option value="tonopen" ${iopState.tonometer==='tonopen'?'selected':''}>Tono-Pen</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="iop-eye-row">
+                        <div class="iop-eye-block">
+                            <div class="iop-eye-label"><span class="tag">OD</span> Right Eye</div>
+                            <div class="iop-form-group" style="margin-bottom:12px;">
+                                <label>Measured IOP (mmHg)</label>
+                                <input type="number" id="iopIop_od" placeholder="e.g. 18" min="1" max="80" step="0.1"
+                                    value="${iopState.od.iop}"
+                                    oninput="onIopInput('od','iop',this.value)">
+                            </div>
+                            <div class="iop-form-group">
+                                <label>CCT (\u00B5m)</label>
+                                <input type="number" id="iopCct_od" placeholder="e.g. 530" min="400" max="700" step="1"
+                                    value="${iopState.od.cct}"
+                                    oninput="onIopInput('od','cct',this.value)">
+                            </div>
+                            <div class="iop-result-box" id="iopResult_od">
+                                <div style="color:var(--ink-muted);font-size:13px;">Enter IOP and CCT above</div>
+                            </div>
+                        </div>
+                        <div class="iop-eye-block">
+                            <div class="iop-eye-label"><span class="tag">OS</span> Left Eye</div>
+                            <div class="iop-form-group" style="margin-bottom:12px;">
+                                <label>Measured IOP (mmHg)</label>
+                                <input type="number" id="iopIop_os" placeholder="e.g. 18" min="1" max="80" step="0.1"
+                                    value="${iopState.os.iop}"
+                                    oninput="onIopInput('os','iop',this.value)">
+                            </div>
+                            <div class="iop-form-group">
+                                <label>CCT (\u00B5m)</label>
+                                <input type="number" id="iopCct_os" placeholder="e.g. 530" min="400" max="700" step="1"
+                                    value="${iopState.os.cct}"
+                                    oninput="onIopInput('os','cct',this.value)">
+                            </div>
+                            <div class="iop-result-box" id="iopResult_os">
+                                <div style="color:var(--ink-muted);font-size:13px;">Enter IOP and CCT above</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="iop-disclaimer">
+                        <strong>Note:</strong> CCT-based IOP adjustment is an estimate. Corneal biomechanics (e.g. post-LASIK, keratoconus, edema) can affect accuracy.
+                        Always interpret in clinical context. Based on the Ehlers correction model (ref. 545 \u00B5m).
+                    </div>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> CCT Correction Reference</div>
+                    <div class="tools-card-desc">Goldmann applanation tonometry adjustment table. Thinner corneas underestimate true IOP; thicker corneas overestimate.</div>
+                    <div class="iop-table-wrap">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>CCT (\u00B5m)</th><th>IOP Adjustment</th><th>Interpretation</th></tr></thead>
+                            <tbody>
+                            ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // === OHTS Glaucoma Risk Calculator ===
+        const glaucState = {
+            age: null,
+            iop: null,
+            cct: null,
+            vcdr: null,
+            vfType: 'psd', // 'psd' or 'olv'
+            vf: null
+        };
+
+        function glaucPoints(factor, val) {
+            if (val === null || val === undefined || val === '') return null;
+            var v = parseFloat(val);
+            if (isNaN(v)) return null;
+            if (factor === 'age') {
+                if (v < 45) return 0;
+                if (v < 55) return 1;
+                if (v < 65) return 2;
+                if (v < 75) return 3;
+                return 4;
+            }
+            if (factor === 'iop') {
+                if (v < 22) return 0;
+                if (v < 24) return 1;
+                if (v < 26) return 2;
+                if (v < 28) return 3;
+                return 4;
+            }
+            if (factor === 'cct') {
+                if (v >= 600) return 0;
+                if (v >= 576) return 1;
+                if (v >= 551) return 2;
+                if (v >= 526) return 3;
+                return 4;
+            }
+            if (factor === 'vcdr') {
+                if (v < 0.3) return 0;
+                if (v < 0.4) return 1;
+                if (v < 0.5) return 2;
+                if (v < 0.6) return 3;
+                return 4;
+            }
+            if (factor === 'psd') {
+                if (v < 1.8) return 0;
+                if (v < 2.0) return 1;
+                if (v < 2.4) return 2;
+                if (v < 2.8) return 3;
+                return 4;
+            }
+            if (factor === 'olv') {
+                if (v < 3.24) return 0;
+                if (v < 4.0) return 1;
+                if (v < 5.76) return 2;
+                if (v < 7.84) return 3;
+                return 4;
+            }
+            return null;
+        }
+
+        function glaucRisk(total) {
+            if (total <= 6) return '\u22644.0%';
+            if (total <= 8) return '10%';
+            if (total <= 10) return '15%';
+            if (total <= 12) return '20%';
+            return '\u226533%';
+        }
+
+        function glaucRiskClass(total) {
+            if (total <= 6) return 'low';
+            if (total <= 8) return 'mod';
+            if (total <= 10) return 'mod-high';
+            if (total <= 12) return 'high';
+            return 'very-high';
+        }
+
+        function onGlaucInput(field, val) {
+            glaucState[field] = val;
+            renderGlaucResult();
+        }
+
+        function onGlaucVfType(val) {
+            glaucState.vfType = val;
+            glaucState.vf = null;
+            var inp = document.getElementById('glaucVfInput');
+            if (inp) inp.value = '';
+            renderGlaucResult();
+        }
+
+        function renderGlaucResult() {
+            var el = document.getElementById('glaucResult');
+            if (!el) return;
+            var factors = ['age', 'iop', 'cct', 'vcdr'];
+            var pts = {};
+            var allFilled = true;
+            for (var i = 0; i < factors.length; i++) {
+                pts[factors[i]] = glaucPoints(factors[i], glaucState[factors[i]]);
+                if (pts[factors[i]] === null) allFilled = false;
+            }
+            var vfKey = glaucState.vfType;
+            pts.vf = glaucPoints(vfKey, glaucState.vf);
+            if (pts.vf === null) allFilled = false;
+
+            // Update inline point badges
+            var labels = {age:'age',iop:'iop',cct:'cct',vcdr:'vcdr',vf:'vf'};
+            for (var k in labels) {
+                var badge = document.getElementById('glaucPts_' + k);
+                if (badge) {
+                    var p = pts[k];
+                    badge.textContent = p !== null ? p + ' pt' + (p !== 1 ? 's' : '') : '';
+                    badge.style.display = p !== null ? '' : 'none';
+                }
+            }
+
+            if (!allFilled) {
+                el.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter all five factors above to estimate risk.</div>';
+                return;
+            }
+            var total = pts.age + pts.iop + pts.cct + pts.vcdr + pts.vf;
+            var risk = glaucRisk(total);
+            var riskCls = glaucRiskClass(total);
+            var colorMap = {
+                'low': 'var(--success)',
+                'mod': '#facc15',
+                'mod-high': '#fb923c',
+                'high': 'var(--danger)',
+                'very-high': '#ef4444'
+            };
+            var riskColor = colorMap[riskCls] || 'var(--ink)';
+            el.innerHTML =
+                '<div class="iop-result-label">Estimated 5-Year POAG Risk</div>' +
+                '<div class="iop-result-value" style="color:' + riskColor + ';">' + risk + '</div>' +
+                '<div class="iop-result-detail">' +
+                    'Total: <strong>' + total + ' / 20 points</strong> &mdash; ' +
+                    'Age ' + pts.age + ' + IOP ' + pts.iop + ' + CCT ' + pts.cct + ' + C/D ' + pts.vcdr + ' + VF ' + pts.vf +
+                '</div>' +
+                '<div class="glauc-risk-bar-wrap">' +
+                    '<div class="glauc-risk-bar">' +
+                        '<div class="glauc-risk-fill" style="width:' + Math.min(total / 20 * 100, 100) + '%;background:' + riskColor + ';"></div>' +
+                    '</div>' +
+                    '<div class="glauc-risk-labels"><span>\u22644%</span><span>10%</span><span>15%</span><span>20%</span><span>\u226533%</span></div>' +
+                '</div>';
+        }
+
+        function glaucReset() {
+            glaucState.age = null;
+            glaucState.iop = null;
+            glaucState.cct = null;
+            glaucState.vcdr = null;
+            glaucState.vf = null;
+            glaucState.vfType = 'psd';
+            renderGlaucomaTool(document.getElementById('toolsContent'));
+        }
+
+        function renderGlaucomaTool(el) {
+            var vfLabel = glaucState.vfType === 'psd' ? 'Humphrey PSD (dB)' : 'Octopus Loss Variance';
+            var vfPlace = glaucState.vfType === 'psd' ? 'e.g. 1.9' : 'e.g. 4.5';
+            var vfStep = glaucState.vfType === 'psd' ? '0.01' : '0.01';
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-chart-line-up"></i> OHTS Glaucoma Risk Calculator</div>
+                    <div class="tools-card-desc">
+                        Estimates 5-year risk of developing primary open-angle glaucoma (POAG) in ocular hypertensive patients using the OHTS-EGPS point system.
+                        Enter the <strong>mean of both eyes</strong> for each factor.
+                    </div>
+
+                    <div class="iop-form-grid">
+                        <div class="iop-form-group">
+                            <label>Age (years) <span class="glauc-pts-badge" id="glaucPts_age"></span></label>
+                            <input type="number" id="glaucAge" placeholder="e.g. 58" min="20" max="100" step="1"
+                                value="${glaucState.age || ''}"
+                                oninput="onGlaucInput('age',this.value)">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Mean IOP (mmHg) <span class="glauc-pts-badge" id="glaucPts_iop"></span></label>
+                            <input type="number" id="glaucIop" placeholder="e.g. 24" min="10" max="50" step="0.1"
+                                value="${glaucState.iop || ''}"
+                                oninput="onGlaucInput('iop',this.value)">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Mean CCT (\u00B5m) <span class="glauc-pts-badge" id="glaucPts_cct"></span></label>
+                            <input type="number" id="glaucCct" placeholder="e.g. 555" min="400" max="700" step="1"
+                                value="${glaucState.cct || ''}"
+                                oninput="onGlaucInput('cct',this.value)">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Mean Vertical C/D Ratio <span class="glauc-pts-badge" id="glaucPts_vcdr"></span></label>
+                            <input type="number" id="glaucVcdr" placeholder="e.g. 0.45" min="0" max="1" step="0.01"
+                                value="${glaucState.vcdr || ''}"
+                                oninput="onGlaucInput('vcdr',this.value)">
+                        </div>
+                        <div class="iop-form-group full-width">
+                            <label>Visual Field Type</label>
+                            <select id="glaucVfType" onchange="onGlaucVfType(this.value)">
+                                <option value="psd" ${glaucState.vfType==='psd'?'selected':''}>Humphrey Pattern Standard Deviation (PSD)</option>
+                                <option value="olv" ${glaucState.vfType==='olv'?'selected':''}>Octopus Loss Variance</option>
+                            </select>
+                        </div>
+                        <div class="iop-form-group full-width">
+                            <label>Mean ${vfLabel} <span class="glauc-pts-badge" id="glaucPts_vf"></span></label>
+                            <input type="number" id="glaucVfInput" placeholder="${vfPlace}" min="0" max="30" step="${vfStep}"
+                                value="${glaucState.vf || ''}"
+                                oninput="onGlaucInput('vf',this.value)">
+                        </div>
+                    </div>
+
+                    <div class="iop-result-box" id="glaucResult" style="margin-top:20px;">
+                        <div style="color:var(--ink-muted);font-size:13px;">Enter all five factors above to estimate risk.</div>
+                    </div>
+
+                    <div style="margin-top:14px;text-align:right;">
+                        <button onclick="glaucReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
+                    </div>
+
+                    <div class="iop-disclaimer">
+                        <strong>Reference:</strong> OHTS-EGPS Glaucoma Risk Point System Estimator. Gordon et al., <em>Ophthalmology</em> 2007.
+                        Predictions are designed to aid but not replace clinical judgment. Valid for ocular hypertensive patients (IOP 20\u201332 mmHg) without prior glaucoma.
+                    </div>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> OHTS Points Reference</div>
+                    <div class="tools-card-desc">Point values for each risk factor and corresponding 5-year POAG risk.</div>
+                    <div class="iop-table-wrap">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>Factor</th><th>0 pts</th><th>1 pt</th><th>2 pts</th><th>3 pts</th><th>4 pts</th></tr></thead>
+                            <tbody>
+                                <tr><td style="font-weight:600;">Age (yrs)</td><td>&lt;45</td><td>45\u2013&lt;55</td><td>55\u2013&lt;65</td><td>65\u2013&lt;75</td><td>\u226575</td></tr>
+                                <tr><td style="font-weight:600;">IOP (mmHg)</td><td>&lt;22</td><td>22\u2013&lt;24</td><td>24\u2013&lt;26</td><td>26\u2013&lt;28</td><td>\u226528</td></tr>
+                                <tr><td style="font-weight:600;">CCT (\u00B5m)</td><td>\u2265600</td><td>576\u2013600</td><td>551\u2013575</td><td>526\u2013550</td><td>\u2264525</td></tr>
+                                <tr><td style="font-weight:600;">C/D Ratio</td><td>&lt;0.3</td><td>0.3\u2013&lt;0.4</td><td>0.4\u2013&lt;0.5</td><td>0.5\u2013&lt;0.6</td><td>\u22650.6</td></tr>
+                                <tr><td style="font-weight:600;">PSD (dB)</td><td>&lt;1.8</td><td>1.8\u2013&lt;2.0</td><td>2.0\u2013&lt;2.4</td><td>2.4\u2013&lt;2.8</td><td>\u22652.8</td></tr>
+                                <tr><td style="font-weight:600;color:var(--ink-muted);">Octopus LV</td><td>&lt;3.24</td><td>3.24\u2013&lt;4.0</td><td>4.0\u2013&lt;5.76</td><td>5.78\u2013&lt;7.84</td><td>\u22657.84</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="iop-table-wrap" style="margin-top:14px;">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>Sum of Points</th><th>0\u20136</th><th>7\u20138</th><th>9\u201310</th><th>11\u201312</th><th>&gt;12</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight:600;">5-Year Risk</td>
+                                    <td class="adj-neg">\u22644.0%</td>
+                                    <td style="color:#facc15;">10%</td>
+                                    <td style="color:#fb923c;">15%</td>
+                                    <td class="adj-pos">20%</td>
+                                    <td class="adj-pos">\u226533%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            renderGlaucResult();
+        }
+
+        // === Plaquenil Toxicity Risk Calculator ===
+        const plaqState = {
+            weightVal: '',
+            weightUnit: 'lbs',
+            heightFt: '',
+            heightIn: '',
+            sex: '',
+            dailyDose: '',
+            duration: '',
+            renal: false,
+            tamoxifen: false
+        };
+
+        function plaqIBW(sex, heightIn) {
+            // Devine formula: IBW(kg) = base + 2.3 * (height_inches - 60)
+            if (!sex || !heightIn || heightIn < 58) return null;
+            var base = sex === 'male' ? 50 : 45.5;
+            return base + 2.3 * (heightIn - 60);
+        }
+
+        function plaqGetWeightKg() {
+            var w = parseFloat(plaqState.weightVal);
+            if (!w || w <= 0) return null;
+            return plaqState.weightUnit === 'lbs' ? w * 0.453592 : w;
+        }
+
+        function plaqGetHeightIn() {
+            var ft = parseInt(plaqState.heightFt) || 0;
+            var inc = parseInt(plaqState.heightIn) || 0;
+            var total = ft * 12 + inc;
+            return total >= 58 ? total : null;
+        }
+
+        function onPlaqInput(field, val) {
+            plaqState[field] = val;
+            renderPlaqResult();
+        }
+
+        function onPlaqCheck(field) {
+            plaqState[field] = !plaqState[field];
+            renderPlaqResult();
+        }
+
+        function plaqReset() {
+            plaqState.weightVal = '';
+            plaqState.weightUnit = 'lbs';
+            plaqState.heightFt = '';
+            plaqState.heightIn = '';
+            plaqState.sex = '';
+            plaqState.dailyDose = '';
+            plaqState.duration = '';
+            plaqState.renal = false;
+            plaqState.tamoxifen = false;
+            renderPlaquenilTool(document.getElementById('toolsContent'));
+        }
+
+        function renderPlaqResult() {
+            var el = document.getElementById('plaqResult');
+            if (!el) return;
+
+            var wKg = plaqGetWeightKg();
+            var dose = parseFloat(plaqState.dailyDose);
+            if (!wKg || !dose) {
+                el.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter weight and daily dose to check safety.</div>';
+                return;
+            }
+
+            var mgPerKg = dose / wKg;
+            var maxSafe = wKg * 5.0;
+
+            // IBW calculation if height+sex provided
+            var hIn = plaqGetHeightIn();
+            var ibw = (plaqState.sex && hIn) ? plaqIBW(plaqState.sex, hIn) : null;
+            var ibwMgKg = ibw ? dose / ibw : null;
+            var useWeight = (ibw && ibw < wKg) ? ibw : wKg;
+            var effectiveMgKg = dose / useWeight;
+            var effectiveMax = useWeight * 5.0;
+
+            var safe = effectiveMgKg <= 5.0;
+            var color = safe ? 'var(--success)' : 'var(--danger)';
+            var icon = safe ? '<i class="ph-duotone ph-check-circle" style="vertical-align:-2px;margin-right:4px;"></i>' : '<i class="ph-duotone ph-warning-circle" style="vertical-align:-2px;margin-right:4px;"></i>';
+            var verdict = safe ? 'Within AAO recommended limit' : 'Exceeds AAO recommended limit';
+
+            var html = '';
+            html += '<div class="iop-result-label">Dose Assessment</div>';
+            html += '<div style="font-size:22px;font-weight:700;color:' + color + ';margin-bottom:4px;">' + icon + verdict + '</div>';
+            html += '<div class="iop-result-detail" style="margin-bottom:12px;">';
+            html += '<strong>' + effectiveMgKg.toFixed(2) + ' mg/kg/day</strong>';
+            html += ' (limit: 5.0 mg/kg/day)';
+            html += '</div>';
+
+            // Details grid
+            html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">';
+            html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+            html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Actual Weight</div>';
+            html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;">' + wKg.toFixed(1) + ' kg</div>';
+            html += '</div>';
+            if (ibw) {
+                html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+                html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Ideal Body Weight</div>';
+                html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;">' + ibw.toFixed(1) + ' kg</div>';
+                html += '</div>';
+            }
+            html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+            html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Max Safe Dose</div>';
+            html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--accent);">' + effectiveMax.toFixed(0) + ' mg/day</div>';
+            html += '</div>';
+            html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+            html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Current Dose</div>';
+            html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;">' + dose + ' mg/day</div>';
+            html += '</div>';
+            html += '</div>';
+
+            if (ibw && ibw < wKg) {
+                html += '<div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:8px;"><i class="ph-duotone ph-info" style="color:var(--accent);vertical-align:-1px;margin-right:3px;"></i>Using ideal body weight (' + ibw.toFixed(1) + ' kg) because it is lower than actual weight \u2014 HCQ distributes in lean tissue.</div>';
+            }
+
+            // Risk factors
+            var riskFlags = [];
+            if (plaqState.renal) riskFlags.push('Renal impairment (~2\u00D7 risk)');
+            if (plaqState.tamoxifen) riskFlags.push('Concurrent tamoxifen (OR 4.59)');
+            if (effectiveMgKg > 5.0) riskFlags.push('Dose exceeds 5.0 mg/kg/day');
+            var dur = parseFloat(plaqState.duration);
+            if (dur > 5) riskFlags.push('Duration > 5 years');
+            if (dur > 10) riskFlags.push('Duration > 10 years \u2014 risk rises significantly');
+
+            if (riskFlags.length > 0) {
+                html += '<div style="background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:10px 12px;margin-bottom:10px;">';
+                html += '<div style="font-size:11px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Risk Factors Present</div>';
+                for (var i = 0; i < riskFlags.length; i++) {
+                    html += '<div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.6;">\u2022 ' + riskFlags[i] + '</div>';
+                }
+                html += '</div>';
+            }
+
+            // Screening recommendation
+            var screenRec = '';
+            if (dur && dur <= 5 && riskFlags.length === 0) {
+                screenRec = 'Baseline exam recommended. Annual screening may be deferred for first 5 years if no risk factors.';
+            } else {
+                screenRec = 'Annual screening with SD-OCT and wide-field FAF is recommended.';
+            }
+            html += '<div style="font-size:12px;color:var(--ink-secondary);margin-top:6px;"><i class="ph-duotone ph-calendar-check" style="color:var(--accent);vertical-align:-1px;margin-right:3px;"></i><strong>Screening:</strong> ' + screenRec + '</div>';
+
+            el.innerHTML = html;
+        }
+
+        function renderPlaquenilTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-pill"></i> Plaquenil Toxicity Risk Calculator</div>
+                    <div class="tools-card-desc">
+                        Check if a hydroxychloroquine dose is within the AAO-recommended \u22645.0 mg/kg/day limit
+                        and assess retinopathy risk factors. Uses lower of actual vs. ideal body weight.
+                    </div>
+
+                    <div class="iop-form-grid">
+                        <div class="iop-form-group">
+                            <label>Patient Weight</label>
+                            <div style="display:flex;gap:6px;">
+                                <input type="number" id="plaqWeight" placeholder="${plaqState.weightUnit === 'lbs' ? 'e.g. 150' : 'e.g. 68'}" min="30" max="500" step="0.1"
+                                    value="${plaqState.weightVal}"
+                                    oninput="onPlaqInput('weightVal',this.value)"
+                                    style="flex:1;">
+                                <select id="plaqWeightUnit" onchange="onPlaqInput('weightUnit',this.value)" style="width:88px;flex:none;">
+                                    <option value="lbs" ${plaqState.weightUnit==='lbs'?'selected':''}>lbs</option>
+                                    <option value="kg" ${plaqState.weightUnit==='kg'?'selected':''}>kg</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Daily HCQ Dose (mg)</label>
+                            <input type="number" id="plaqDose" placeholder="e.g. 400" min="50" max="800" step="1"
+                                value="${plaqState.dailyDose}"
+                                oninput="onPlaqInput('dailyDose',this.value)">
+                        </div>
+                    </div>
+
+                    <div style="margin:16px 0 6px;font-size:12px;font-weight:600;color:var(--ink-secondary);">Ideal Body Weight (optional, recommended)</div>
+                    <div class="iop-form-grid">
+                        <div class="iop-form-group">
+                            <label>Sex</label>
+                            <select id="plaqSex" onchange="onPlaqInput('sex',this.value)">
+                                <option value="" ${!plaqState.sex?'selected':''}>Select...</option>
+                                <option value="male" ${plaqState.sex==='male'?'selected':''}>Male</option>
+                                <option value="female" ${plaqState.sex==='female'?'selected':''}>Female</option>
+                            </select>
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Height</label>
+                            <div style="display:flex;gap:6px;align-items:center;">
+                                <input type="number" id="plaqHFt" placeholder="ft" min="4" max="7" step="1"
+                                    value="${plaqState.heightFt}"
+                                    oninput="onPlaqInput('heightFt',this.value)"
+                                    style="flex:1;">
+                                <span style="color:var(--ink-muted);font-size:13px;">ft</span>
+                                <input type="number" id="plaqHIn" placeholder="in" min="0" max="11" step="1"
+                                    value="${plaqState.heightIn}"
+                                    oninput="onPlaqInput('heightIn',this.value)"
+                                    style="flex:1;">
+                                <span style="color:var(--ink-muted);font-size:13px;">in</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin:16px 0 6px;font-size:12px;font-weight:600;color:var(--ink-secondary);">Risk Assessment</div>
+                    <div class="iop-form-grid">
+                        <div class="iop-form-group">
+                            <label>Duration of Use (years)</label>
+                            <input type="number" id="plaqDur" placeholder="e.g. 7" min="0" max="50" step="0.5"
+                                value="${plaqState.duration}"
+                                oninput="onPlaqInput('duration',this.value)">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Additional Risk Factors</label>
+                            <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;">
+                                    <input type="checkbox" id="plaqRenal" ${plaqState.renal?'checked':''}
+                                        onchange="onPlaqCheck('renal')"
+                                        style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">
+                                    Renal impairment
+                                </label>
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;">
+                                    <input type="checkbox" id="plaqTamox" ${plaqState.tamoxifen?'checked':''}
+                                        onchange="onPlaqCheck('tamoxifen')"
+                                        style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">
+                                    Concurrent tamoxifen
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="iop-result-box" id="plaqResult" style="margin-top:20px;">
+                        <div style="color:var(--ink-muted);font-size:13px;">Enter weight and daily dose to check safety.</div>
+                    </div>
+
+                    <div style="margin-top:14px;text-align:right;">
+                        <button onclick="plaqReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
+                    </div>
+
+                    <div class="iop-disclaimer">
+                        <strong>Reference:</strong> AAO Recommendations on Screening for HCQ Retinopathy (2016, revised 2025).
+                        Marmor et al., <em>Ophthalmology</em> 2016. Ideal body weight via Devine formula.
+                        This tool does not replace clinical judgment. Doses must be adjusted for renal insufficiency.
+                    </div>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Retinopathy Risk by Dose &amp; Duration</div>
+                    <div class="tools-card-desc">Approximate cumulative risk of HCQ retinopathy at recommended dosing (\u22645.0 mg/kg/day).</div>
+                    <div class="iop-table-wrap">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>Duration</th><th>\u22645 mg/kg/day</th><th>&gt;5 mg/kg/day</th></tr></thead>
+                            <tbody>
+                                <tr><td style="font-weight:600;">Within 5 years</td><td class="adj-neg">&lt;1%</td><td class="adj-pos">\u22482%</td></tr>
+                                <tr><td style="font-weight:600;">10 years</td><td style="color:#facc15;">&lt;2%</td><td class="adj-pos">\u224810%</td></tr>
+                                <tr><td style="font-weight:600;">20 years</td><td class="adj-pos">\u224820%</td><td class="adj-pos">\u224840%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="iop-table-wrap" style="margin-top:14px;">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>Screening Timeline</th><th>Recommendation</th></tr></thead>
+                            <tbody>
+                                <tr><td style="font-weight:600;">Baseline</td><td>Fundus, OCT, wide-field FAF soon after starting HCQ</td></tr>
+                                <tr><td style="font-weight:600;">First 5 years</td><td>Annual screening may be deferred if no risk factors</td></tr>
+                                <tr><td style="font-weight:600;">After 5 years</td><td>Annual SD-OCT + wide-field FAF recommended</td></tr>
+                                <tr><td style="font-weight:600;">Risk factors present</td><td>Annual screening from initiation</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            renderPlaqResult();
+        }
+
+        // === Myopia Progression Calculator ===
+        const myopState = {
+            age: '',
+            rx: '',
+            sex: '',
+            ethnicity: 'caucasian',
+            treatment: 'none'
+        };
+
+        // Annual base progression (D/yr) by current age — Caucasian male reference
+        // Derived from CLEERE (Mutti 2021) & Donovan 2012 meta-analysis
+        const MYOP_BASE = {
+            6:-0.65, 7:-0.58, 8:-0.51, 9:-0.44, 10:-0.37,
+            11:-0.30, 12:-0.23, 13:-0.18, 14:-0.13, 15:-0.09,
+            16:-0.05, 17:-0.03, 18:0
+        };
+
+        // Ethnicity multiplier (relative to Caucasian)
+        const MYOP_ETH = {
+            'east-asian': 1.49,
+            'south-asian': 1.30,
+            'hispanic': 1.06,
+            'caucasian': 1.00,
+            'black': 0.70,
+            'other': 1.00
+        };
+
+        // Treatment efficacy (% reduction in progression, from meta-analyses)
+        const MYOP_TX = {
+            'none':         { label:'No Treatment (SV)',         eff:0,    color:'#f87171' },
+            'atro-low':     { label:'Atropine 0.01%',            eff:0.30, color:'#a78bfa' },
+            'atro-mod':     { label:'Atropine 0.05%',            eff:0.50, color:'#818cf8' },
+            'ortho-k':      { label:'Orthokeratology',           eff:0.45, color:'#2dd4bf' },
+            'misight':      { label:'MiSight / Soft Multifocal CL', eff:0.50, color:'#38bdf8' },
+            'dims':         { label:'DIMS / Lenslet Spectacles', eff:0.40, color:'#fbbf24' },
+            'combo':        { label:'Ortho-K + Low-Dose Atropine', eff:0.55, color:'#34d399' }
+        };
+
+        function myopAnnualRate(age, ethnicity, sex) {
+            var a = Math.max(6, Math.min(18, Math.round(age)));
+            var base = MYOP_BASE[a] || 0;
+            var ethMult = MYOP_ETH[ethnicity] || 1.0;
+            var sexAdj = (sex === 'female') ? -0.09 : 0;
+            return base * ethMult + sexAdj;
+        }
+
+        function myopProject(startAge, startRx, sex, ethnicity, treatment) {
+            var endAge = 18;
+            var points = [];
+            var rx = startRx;
+            points.push({ age: startAge, rx: rx });
+            var eff = MYOP_TX[treatment] ? MYOP_TX[treatment].eff : 0;
+            for (var a = startAge; a < endAge; a++) {
+                var rate = myopAnnualRate(a, ethnicity, sex);
+                var adjusted = rate * (1 - eff);
+                rx = rx + adjusted;
+                rx = Math.round(rx * 4) / 4;
+                points.push({ age: a + 1, rx: rx });
+            }
+            return points;
+        }
+
+        function onMyopInput(field, val) {
+            myopState[field] = val;
+            renderMyopResult();
+        }
+
+        function myopReset() {
+            myopState.age = '';
+            myopState.rx = '';
+            myopState.sex = '';
+            myopState.ethnicity = 'caucasian';
+            myopState.treatment = 'none';
+            renderMyopiaTool(document.getElementById('toolsContent'));
+        }
+
+        // Store chart data for hover interaction
+        var _myopChartData = null;
+
+        function renderMyopResult() {
+            var el = document.getElementById('myopResult');
+            if (!el) return;
+
+            var age = parseInt(myopState.age);
+            var rx = parseFloat(myopState.rx);
+            var sex = myopState.sex;
+            var eth = myopState.ethnicity;
+            var tx = myopState.treatment;
+
+            if (!age || isNaN(rx) || !sex || age < 6 || age > 17) {
+                el.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter age (6\u201317), current Rx, and sex to see projection.</div>';
+                _myopChartData = null;
+                return;
+            }
+
+            var untreated = myopProject(age, rx, sex, eth, 'none');
+            var treated = myopProject(age, rx, sex, eth, tx);
+
+            var finalU = untreated[untreated.length - 1].rx;
+            var finalT = treated[treated.length - 1].rx;
+            var saved = Math.round((finalT - finalU) * 4) / 4;
+
+            var txInfo = MYOP_TX[tx];
+            var txColor = txInfo.color;
+            var noTxColor = '#f87171';
+
+            // Chart dimensions
+            var allRx = untreated.map(function(p){return p.rx;}).concat(treated.map(function(p){return p.rx;}));
+            var minRx = Math.min.apply(null, allRx);
+            var maxRx = Math.max(Math.max.apply(null, allRx), 0);
+            // Add padding to Rx range
+            var rxPad = (maxRx - minRx) * 0.08;
+            minRx -= rxPad;
+            maxRx += rxPad;
+            var rxRange = maxRx - minRx;
+            if (rxRange < 1) rxRange = 1;
+            var padTop = 24, padBot = 36, padLeft = 50, padRight = 20;
+            var w = 700, h = 340;
+            var plotW = w - padLeft - padRight;
+            var plotH = h - padTop - padBot;
+            var ageMin = age, ageMax = 18;
+            var ageRange = ageMax - ageMin || 1;
+
+            function sxF(a) { return padLeft + (a - ageMin) / ageRange * plotW; }
+            function syF(r) { return padTop + (maxRx - r) / rxRange * plotH; }
+
+            // Store for hover
+            _myopChartData = {
+                untreated: untreated, treated: treated, tx: tx,
+                noTxColor: noTxColor, txColor: txColor, txLabel: txInfo.label,
+                padLeft: padLeft, padRight: padRight, padTop: padTop, padBot: padBot,
+                w: w, h: h, plotW: plotW, plotH: plotH,
+                ageMin: ageMin, ageMax: ageMax, ageRange: ageRange,
+                minRx: minRx, maxRx: maxRx, rxRange: rxRange,
+                sx: sxF, sy: syF
+            };
+
+            var svg = '<svg id="myopSvg" viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">';
+
+            // Grid lines and Y labels
+            var step = rxRange <= 2 ? 0.5 : rxRange <= 5 ? 1 : 2;
+            var gridStart = Math.ceil(minRx / step) * step;
+            for (var g = gridStart; g <= maxRx; g += step) {
+                var gy = syF(g);
+                if (gy < padTop - 2 || gy > h - padBot + 2) continue;
+                svg += '<line x1="' + padLeft + '" y1="' + gy + '" x2="' + (w - padRight) + '" y2="' + gy + '" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>';
+                svg += '<text x="' + (padLeft - 8) + '" y="' + (gy + 4) + '" fill="#64748b" font-size="11" font-family="\'IBM Plex Mono\',monospace" text-anchor="end">' + g.toFixed(step < 1 ? 1 : 0) + '</text>';
+            }
+
+            // X labels + vertical tick lines
+            for (var xa = ageMin; xa <= ageMax; xa++) {
+                var xx = sxF(xa);
+                svg += '<line x1="' + xx + '" y1="' + padTop + '" x2="' + xx + '" y2="' + (h - padBot) + '" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>';
+                svg += '<text x="' + xx + '" y="' + (h - padBot + 18) + '" fill="#64748b" font-size="12" font-family="\'IBM Plex Mono\',monospace" text-anchor="middle">' + xa + '</text>';
+            }
+
+            // Untreated line + dots
+            var uPath = '';
+            for (var i = 0; i < untreated.length; i++) {
+                uPath += (i === 0 ? 'M' : 'L') + sxF(untreated[i].age) + ',' + syF(untreated[i].rx);
+            }
+            svg += '<path d="' + uPath + '" fill="none" stroke="' + noTxColor + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7,5" opacity="0.8"/>';
+            for (var i2 = 0; i2 < untreated.length; i2++) {
+                svg += '<circle cx="' + sxF(untreated[i2].age) + '" cy="' + syF(untreated[i2].rx) + '" r="4" fill="' + noTxColor + '" opacity="0.6"/>';
+            }
+
+            // Treated line + dots + area fill
+            if (tx !== 'none') {
+                var tPath = '';
+                for (var j = 0; j < treated.length; j++) {
+                    tPath += (j === 0 ? 'M' : 'L') + sxF(treated[j].age) + ',' + syF(treated[j].rx);
+                }
+                var areaPath = uPath;
+                for (var k = treated.length - 1; k >= 0; k--) {
+                    areaPath += 'L' + sxF(treated[k].age) + ',' + syF(treated[k].rx);
+                }
+                areaPath += 'Z';
+                svg += '<path d="' + areaPath + '" fill="' + txColor + '" fill-opacity="0.10"/>';
+                svg += '<path d="' + tPath + '" fill="none" stroke="' + txColor + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+                for (var j2 = 0; j2 < treated.length; j2++) {
+                    svg += '<circle cx="' + sxF(treated[j2].age) + '" cy="' + syF(treated[j2].rx) + '" r="4.5" fill="' + txColor + '"/>';
+                }
+            }
+
+            // Hover overlay elements (hidden by default)
+            svg += '<line id="myopHoverLine" x1="0" y1="' + padTop + '" x2="0" y2="' + (h - padBot) + '" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3,3" visibility="hidden"/>';
+            svg += '<circle id="myopHoverDotU" cx="0" cy="0" r="6" fill="' + noTxColor + '" stroke="#0f1117" stroke-width="2" visibility="hidden"/>';
+            if (tx !== 'none') {
+                svg += '<circle id="myopHoverDotT" cx="0" cy="0" r="6" fill="' + txColor + '" stroke="#0f1117" stroke-width="2" visibility="hidden"/>';
+            }
+
+            // Y axis label
+            svg += '<text x="14" y="' + (padTop + plotH / 2) + '" fill="#94a3b8" font-size="12" font-family="var(--sans)" font-weight="600" text-anchor="middle" transform="rotate(-90,14,' + (padTop + plotH / 2) + ')">Spherical Equivalent (D)</text>';
+            // X axis label
+            svg += '<text x="' + (padLeft + plotW / 2) + '" y="' + (h - 2) + '" fill="#94a3b8" font-size="12" font-family="var(--sans)" font-weight="600" text-anchor="middle">Age (years)</text>';
+
+            // Invisible hover rect to capture mouse
+            svg += '<rect id="myopHoverZone" x="' + padLeft + '" y="' + padTop + '" width="' + plotW + '" height="' + plotH + '" fill="transparent" style="cursor:crosshair;"/>';
+
+            svg += '</svg>';
+
+            // Tooltip div (positioned absolutely over chart)
+            var tooltip = '<div id="myopTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(15,17,23,0.95);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 12px;font-size:12px;z-index:10;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.5);"></div>';
+
+            var html = '';
+            html += '<div class="myopia-chart" id="myopChartWrap" style="position:relative;">' + svg + tooltip + '</div>';
+            html += '<div class="myopia-legend">';
+            html += '<span><span class="myopia-legend-dot" style="background:' + noTxColor + ';"></span>No treatment</span>';
+            if (tx !== 'none') {
+                html += '<span><span class="myopia-legend-dot" style="background:' + txColor + ';"></span>' + txInfo.label + ' (' + Math.round(txInfo.eff * 100) + '% reduction)</span>';
+            }
+            html += '<span style="color:var(--ink-muted);font-style:italic;margin-left:auto;">Hover or tap chart to inspect</span>';
+            html += '</div>';
+
+            // Summary cards
+            html += '<div class="myopia-summary-grid">';
+            html += '<div class="myopia-summary-card"><div class="label">Projected Rx at Age 18 (untreated)</div><div class="value" style="color:' + noTxColor + ';">' + finalU.toFixed(2) + ' D</div><div class="sub">From ' + rx.toFixed(2) + ' D at age ' + age + '</div></div>';
+            if (tx !== 'none') {
+                html += '<div class="myopia-summary-card"><div class="label">Projected Rx at Age 18 (with ' + txInfo.label + ')</div><div class="value" style="color:' + txColor + ';">' + finalT.toFixed(2) + ' D</div><div class="sub">' + saved.toFixed(2) + ' D less progression</div></div>';
+            }
+            var totalProgU = Math.round((finalU - rx) * 4) / 4;
+            html += '<div class="myopia-summary-card"><div class="label">Total Untreated Progression</div><div class="value" style="color:var(--ink);">' + totalProgU.toFixed(2) + ' D</div><div class="sub">Over ' + (18 - age) + ' years</div></div>';
+            if (tx !== 'none') {
+                var totalProgT = Math.round((finalT - rx) * 4) / 4;
+                html += '<div class="myopia-summary-card"><div class="label">Total Treated Progression</div><div class="value" style="color:' + txColor + ';">' + totalProgT.toFixed(2) + ' D</div><div class="sub">' + Math.round(txInfo.eff * 100) + '% slower</div></div>';
+            }
+            html += '</div>';
+
+            el.innerHTML = html;
+
+            // Attach hover listeners
+            var zone = document.getElementById('myopHoverZone');
+            var wrap = document.getElementById('myopChartWrap');
+            if (zone && wrap) {
+                zone.addEventListener('mousemove', myopChartHover);
+                zone.addEventListener('touchmove', function(e) { e.preventDefault(); myopChartHover(e); }, {passive:false});
+                zone.addEventListener('mouseleave', myopChartLeave);
+                zone.addEventListener('touchend', myopChartLeave);
+            }
+        }
+
+        function myopChartHover(e) {
+            var d = _myopChartData;
+            if (!d) return;
+            var svg = document.getElementById('myopSvg');
+            var wrap = document.getElementById('myopChartWrap');
+            if (!svg || !wrap) return;
+
+            var rect = svg.getBoundingClientRect();
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            var scaleX = d.w / rect.width;
+            var svgX = (clientX - rect.left) * scaleX;
+
+            // Snap to nearest integer age
+            var rawAge = d.ageMin + (svgX - d.padLeft) / d.plotW * d.ageRange;
+            var snapAge = Math.round(Math.max(d.ageMin, Math.min(d.ageMax, rawAge)));
+
+            // Find data points
+            var uPt = null, tPt = null;
+            for (var i = 0; i < d.untreated.length; i++) {
+                if (d.untreated[i].age === snapAge) { uPt = d.untreated[i]; break; }
+            }
+            if (d.tx !== 'none') {
+                for (var j = 0; j < d.treated.length; j++) {
+                    if (d.treated[j].age === snapAge) { tPt = d.treated[j]; break; }
+                }
+            }
+            if (!uPt) return;
+
+            var lineX = d.sx(snapAge);
+
+            // Position hover elements
+            var hLine = document.getElementById('myopHoverLine');
+            var hDotU = document.getElementById('myopHoverDotU');
+            var hDotT = document.getElementById('myopHoverDotT');
+            var tip = document.getElementById('myopTooltip');
+
+            if (hLine) { hLine.setAttribute('x1', lineX); hLine.setAttribute('x2', lineX); hLine.setAttribute('visibility', 'visible'); }
+            if (hDotU) { hDotU.setAttribute('cx', lineX); hDotU.setAttribute('cy', d.sy(uPt.rx)); hDotU.setAttribute('visibility', 'visible'); }
+            if (hDotT && tPt) { hDotT.setAttribute('cx', lineX); hDotT.setAttribute('cy', d.sy(tPt.rx)); hDotT.setAttribute('visibility', 'visible'); }
+
+            // Tooltip content
+            if (tip) {
+                var tipHtml = '<div style="font-weight:700;margin-bottom:4px;color:var(--ink);">Age ' + snapAge + '</div>';
+                tipHtml += '<div style="color:' + d.noTxColor + ';">No treatment: <strong>' + uPt.rx.toFixed(2) + ' D</strong></div>';
+                if (tPt) {
+                    tipHtml += '<div style="color:' + d.txColor + ';margin-top:2px;">' + d.txLabel + ': <strong>' + tPt.rx.toFixed(2) + ' D</strong></div>';
+                    var diff = Math.round((tPt.rx - uPt.rx) * 4) / 4;
+                    tipHtml += '<div style="color:var(--success);margin-top:3px;font-size:11px;">' + (diff >= 0 ? '+' : '') + diff.toFixed(2) + ' D saved</div>';
+                }
+                tip.innerHTML = tipHtml;
+                tip.style.display = 'block';
+
+                // Position tooltip relative to chart wrapper
+                var pctX = (lineX / d.w);
+                var tipLeft = pctX * wrap.offsetWidth;
+                // Flip tooltip side if near right edge
+                if (pctX > 0.7) {
+                    tip.style.left = (tipLeft - tip.offsetWidth - 12) + 'px';
+                } else {
+                    tip.style.left = (tipLeft + 12) + 'px';
+                }
+                tip.style.top = '30px';
+            }
+        }
+
+        function myopChartLeave() {
+            var hLine = document.getElementById('myopHoverLine');
+            var hDotU = document.getElementById('myopHoverDotU');
+            var hDotT = document.getElementById('myopHoverDotT');
+            var tip = document.getElementById('myopTooltip');
+            if (hLine) hLine.setAttribute('visibility', 'hidden');
+            if (hDotU) hDotU.setAttribute('visibility', 'hidden');
+            if (hDotT) hDotT.setAttribute('visibility', 'hidden');
+            if (tip) tip.style.display = 'none';
+        }
+
+        function buildMyopAgeOptions() {
+            var html = '<option value=""' + (!myopState.age ? ' selected' : '') + '>Select...</option>';
+            for (var a = 6; a <= 17; a++) {
+                html += '<option value="' + a + '"' + (myopState.age == a ? ' selected' : '') + '>' + a + ' years</option>';
+            }
+            return html;
+        }
+
+        function buildMyopRxOptions() {
+            var html = '<option value=""' + (!myopState.rx && myopState.rx !== 0 ? ' selected' : '') + '>Select...</option>';
+            for (var i = 0; i >= -40; i--) {
+                var d = (i * 0.25).toFixed(2);
+                html += '<option value="' + d + '"' + (myopState.rx == d ? ' selected' : '') + '>' + d + ' D</option>';
+            }
+            return html;
+        }
+
+        function buildMyopTxOptions() {
+            var html = '';
+            for (var key in MYOP_TX) {
+                var t = MYOP_TX[key];
+                var sel = myopState.treatment === key ? ' selected' : '';
+                var effLabel = t.eff > 0 ? ' (' + Math.round(t.eff * 100) + '% reduction)' : '';
+                html += '<option value="' + key + '"' + sel + '>' + t.label + effLabel + '</option>';
+            }
+            return html;
+        }
+
+        function renderMyopiaTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-trend-down"></i> Myopia Progression Calculator</div>
+                    <div class="tools-card-desc">
+                        Projects refractive error progression to age 18 and compares treatment strategies.
+                        Based on CLEERE study data (Mutti 2021) and Donovan meta-analysis.
+                    </div>
+
+                    <div class="iop-form-grid">
+                        <div class="iop-form-group">
+                            <label>Current Age</label>
+                            <input type="number" class="myop-desktop-only" id="myopAgeInput" placeholder="e.g. 9" min="6" max="17" step="1"
+                                value="${myopState.age}"
+                                oninput="onMyopInput('age',this.value)">
+                            <select class="myop-mobile-only" id="myopAgeSel" onchange="onMyopInput('age',this.value)">
+                                ${buildMyopAgeOptions()}
+                            </select>
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Current Rx \u2014 Spherical Equiv. (D)</label>
+                            <input type="number" class="myop-desktop-only" id="myopRxInput" placeholder="e.g. -1.50" min="-10" max="0" step="0.25"
+                                value="${myopState.rx}"
+                                oninput="onMyopInput('rx',this.value)">
+                            <select class="myop-mobile-only" id="myopRxSel" onchange="onMyopInput('rx',this.value)">
+                                ${buildMyopRxOptions()}
+                            </select>
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Sex</label>
+                            <select id="myopSex" onchange="onMyopInput('sex',this.value)">
+                                <option value="" ${!myopState.sex?'selected':''}>Select...</option>
+                                <option value="male" ${myopState.sex==='male'?'selected':''}>Male</option>
+                                <option value="female" ${myopState.sex==='female'?'selected':''}>Female</option>
+                            </select>
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Ethnicity</label>
+                            <select id="myopEth" onchange="onMyopInput('ethnicity',this.value)">
+                                <option value="east-asian" ${myopState.ethnicity==='east-asian'?'selected':''}>East / SE Asian</option>
+                                <option value="south-asian" ${myopState.ethnicity==='south-asian'?'selected':''}>South Asian</option>
+                                <option value="caucasian" ${myopState.ethnicity==='caucasian'?'selected':''}>Caucasian / White</option>
+                                <option value="hispanic" ${myopState.ethnicity==='hispanic'?'selected':''}>Hispanic / Latino</option>
+                                <option value="black" ${myopState.ethnicity==='black'?'selected':''}>Black / African Descent</option>
+                                <option value="other" ${myopState.ethnicity==='other'?'selected':''}>Other</option>
+                            </select>
+                        </div>
+                        <div class="iop-form-group full-width">
+                            <label>Treatment Strategy</label>
+                            <select id="myopTx" onchange="onMyopInput('treatment',this.value)">
+                                ${buildMyopTxOptions()}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="myopResult" style="margin-top:20px;">
+                        <div style="color:var(--ink-muted);font-size:13px;">Enter age (6\u201317), current Rx, and sex to see projection.</div>
+                    </div>
+
+                    <div style="margin-top:14px;text-align:right;">
+                        <button onclick="myopReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
+                    </div>
+
+                    <div class="iop-disclaimer">
+                        <strong>Note:</strong> Projections are population-based estimates and individual progression varies widely.
+                        Treatment efficacy from published meta-analyses; actual results depend on compliance, fitting, and individual response.
+                        Not a substitute for clinical assessment. References: Mutti et al., <em>IOVS</em> 2021; Donovan et al., <em>IOVS</em> 2012.
+                    </div>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Treatment Efficacy Reference</div>
+                    <div class="tools-card-desc">Approximate progression reduction from meta-analyzed clinical trials.</div>
+                    <div class="iop-table-wrap">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>Treatment</th><th>Efficacy</th><th>Source</th></tr></thead>
+                            <tbody>
+                                <tr onclick="navigateToMed('med_051')" style="cursor:pointer;" title="View in Medications"><td style="font-weight:600;color:var(--accent);">Atropine 0.01% <i class="ph-bold ph-arrow-square-out" style="font-size:10px;vertical-align:1px;opacity:0.6;"></i></td><td>~30%</td><td>ATOM2, LAMP</td></tr>
+                                <tr onclick="navigateToMed('med_051')" style="cursor:pointer;" title="View in Medications"><td style="font-weight:600;color:var(--accent);">Atropine 0.05% <i class="ph-bold ph-arrow-square-out" style="font-size:10px;vertical-align:1px;opacity:0.6;"></i></td><td>~50%</td><td>LAMP study</td></tr>
+                                <tr><td style="font-weight:600;">Orthokeratology</td><td>~45%</td><td>Multiple RCTs</td></tr>
+                                <tr><td style="font-weight:600;">MiSight / Soft Multifocal CL</td><td>~50%</td><td>Chamberlain 2019</td></tr>
+                                <tr><td style="font-weight:600;">DIMS / Lenslet Spectacles</td><td>~40%</td><td>Lam 2020</td></tr>
+                                <tr><td style="font-weight:600;">Ortho-K + Low-Dose Atropine</td><td>~55%</td><td>Kinoshita 2023</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            renderMyopResult();
         }
 
         function switchClSub(sub) {
