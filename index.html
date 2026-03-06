@@ -2746,11 +2746,23 @@
                 troubleshootSteps: {
                     distance: [
                         { action:"sphereAdj", eye:"dominant", amount:+0.25 },
-                        { action:"lowerAdd", eye:"dominant" }
+                        { action:"lowerAdd", eye:"dominant" },
+                        { action:"addTableSwap", label:"Enhanced distance vision", table: [
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
                     ],
                     near: [
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 },
-                        { action:"raiseAdd", eye:"nonDominant" }
+                        { action:"addTableSwap", label:"Enhanced near vision \u2014 Step A", sphereAdj: { eye:"nonDominant", amount:+0.50 }, table: [
+                            { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" }
+                        ]},
+                        { action:"addTableSwap", label:"Enhanced near vision \u2014 Step B", table: [
+                            { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
                     ]
                 }
             }},
@@ -4356,7 +4368,7 @@
                 const step = tsSteps[i];
                 if (step.addConfigs && (!addConfig || !step.addConfigs.includes(addConfig))) continue;
                 const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                if (!targetEye) continue;
+                if (step.action !== "addTableSwap" && !targetEye) continue;
                 const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
 
                 switch (step.action) {
@@ -4396,6 +4408,51 @@
                         if (ci === -1 || ci >= addTypes.length - 1) continue;
                         const nAdd = addTypes[ci + 1];
                         return { title: `Increase ${targetEye.label} add power`, rationale: `Increase ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer near`, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i };
+                    }
+                    case "addTableSwap": {
+                        const specAdd = domEye ? (parseFloat(domEye.eye.add) || 0) : (nonDomEye ? (parseFloat(nonDomEye.eye.add) || 0) : 0);
+                        if (!specAdd) continue;
+                        const tsRow = step.table.find(r => specAdd >= r.specAddMin && specAdd <= r.specAddMax);
+                        if (!tsRow) continue;
+                        const tsChanges = [];
+                        const tsAdj = {};
+                        let tsHasChange = false;
+                        if (step.sphereAdj) {
+                            const sTarget = step.sphereAdj.eye === "dominant" ? domEye : nonDomEye;
+                            if (sTarget) {
+                                const curSph = getAdjSph(sTarget.eye, sTarget.label);
+                                const nxtSph = snapTo025(curSph + step.sphereAdj.amount);
+                                if (!tsAdj[sTarget.label]) tsAdj[sTarget.label] = {};
+                                tsAdj[sTarget.label].sphDelta = step.sphereAdj.amount;
+                                tsChanges.push({ eye: sTarget.label, param: "Sphere", from: `${curSph > 0 ? "+" : ""}${curSph.toFixed(2)}`, to: `${nxtSph > 0 ? "+" : ""}${nxtSph.toFixed(2)}` });
+                                tsHasChange = true;
+                            }
+                        }
+                        if (domEye) {
+                            const curAdd = getAdjAdd(domEye.eye, true, domEye.label);
+                            if (curAdd !== tsRow.dominant) {
+                                if (!tsAdj[domEye.label]) tsAdj[domEye.label] = {};
+                                tsAdj[domEye.label].addOverride = tsRow.dominant;
+                                tsChanges.push({ eye: domEye.label, param: "Add", from: curAdd, to: tsRow.dominant });
+                                tsHasChange = true;
+                            }
+                        }
+                        if (nonDomEye) {
+                            const curAdd = getAdjAdd(nonDomEye.eye, false, nonDomEye.label);
+                            if (curAdd !== tsRow.nonDominant) {
+                                if (!tsAdj[nonDomEye.label]) tsAdj[nonDomEye.label] = {};
+                                tsAdj[nonDomEye.label].addOverride = tsRow.nonDominant;
+                                tsChanges.push({ eye: nonDomEye.label, param: "Add", from: curAdd, to: tsRow.nonDominant });
+                                tsHasChange = true;
+                            }
+                        }
+                        if (!tsHasChange) continue;
+                        const tsComplaint = isDistance ? "distance" : "near";
+                        return {
+                            title: step.label || `Adjust add power for enhanced ${tsComplaint} vision`,
+                            rationale: `Modify add configuration per fitting guide for enhanced ${tsComplaint} vision`,
+                            adjustments: tsAdj, changes: tsChanges, tsStepIdx: i
+                        };
                     }
                     case "designSwap": {
                         if (!lens.fittingGuide || !lens.fittingGuide.addTable) continue;
@@ -4644,7 +4701,7 @@
 
                         const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
                         const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                        if (!targetEye) return;
+                        if (step.action !== "addTableSwap" && !targetEye) return;
 
                         const prevLen = suggestions.length;
                         switch (step.action) {
@@ -4718,6 +4775,53 @@
                                     rationale: `Increase ${eyeLabel} eye add from ${currentAdd} to ${newAdd} for clearer near`,
                                     adjustments: { [targetEye.label]: { addOverride: newAdd } },
                                     changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: newAdd }]
+                                });
+                                break;
+                            }
+                            case "addTableSwap": {
+                                const specAdd = domEye ? (parseFloat(domEye.eye.add) || 0) : (nonDomEye ? (parseFloat(nonDomEye.eye.add) || 0) : 0);
+                                if (!specAdd) break;
+                                const tsRow = step.table.find(r => specAdd >= r.specAddMin && specAdd <= r.specAddMax);
+                                if (!tsRow) break;
+                                const tsChanges = [];
+                                const tsAdj = {};
+                                let tsHasChange = false;
+                                if (step.sphereAdj) {
+                                    const sTarget = step.sphereAdj.eye === "dominant" ? domEye : nonDomEye;
+                                    if (sTarget) {
+                                        const curSph = getCurrentSph(sTarget.eye);
+                                        const nxtSph = snapTo025(curSph + step.sphereAdj.amount);
+                                        if (!tsAdj[sTarget.label]) tsAdj[sTarget.label] = {};
+                                        tsAdj[sTarget.label].sphDelta = step.sphereAdj.amount;
+                                        tsChanges.push({ eye: sTarget.label, param: "Sphere", from: `${curSph > 0 ? "+" : ""}${curSph.toFixed(2)}`, to: `${nxtSph > 0 ? "+" : ""}${nxtSph.toFixed(2)}` });
+                                        tsHasChange = true;
+                                    }
+                                }
+                                if (domEye) {
+                                    const curAdd = getCurrentAdd(domEye.eye, true);
+                                    if (curAdd !== tsRow.dominant) {
+                                        if (!tsAdj[domEye.label]) tsAdj[domEye.label] = {};
+                                        tsAdj[domEye.label].addOverride = tsRow.dominant;
+                                        tsChanges.push({ eye: domEye.label, param: "Add", from: curAdd, to: tsRow.dominant });
+                                        tsHasChange = true;
+                                    }
+                                }
+                                if (nonDomEye) {
+                                    const curAdd = getCurrentAdd(nonDomEye.eye, false);
+                                    if (curAdd !== tsRow.nonDominant) {
+                                        if (!tsAdj[nonDomEye.label]) tsAdj[nonDomEye.label] = {};
+                                        tsAdj[nonDomEye.label].addOverride = tsRow.nonDominant;
+                                        tsChanges.push({ eye: nonDomEye.label, param: "Add", from: curAdd, to: tsRow.nonDominant });
+                                        tsHasChange = true;
+                                    }
+                                }
+                                if (!tsHasChange) break;
+                                const tsComplaint = isDistance ? "distance" : "near";
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: step.label || `Adjust add power for enhanced ${tsComplaint} vision`,
+                                    rationale: `Modify add configuration per fitting guide for enhanced ${tsComplaint} vision`,
+                                    adjustments: tsAdj, changes: tsChanges
                                 });
                                 break;
                             }
