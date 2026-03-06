@@ -7068,6 +7068,72 @@
             renderBvParks();
         }
 
+        function buildParksEyeSvg(hyper, gaze, tilt, step) {
+            var CYAN = '#00d2d3', DIM = '#555', OL = '#aaa';
+            var hid = 'ph' + step;
+            var rCx = 70, lCx = 210, rCy = 55, lCy = 55;
+            var rIy = 0, lIy = 0;
+            if (hyper === 'right') rIy = -6;
+            if (hyper === 'left') lIy = -6;
+            var ps = (step >= 2 && gaze) ? (gaze === 'left' ? 6 : -6) : 0;
+            var rot = (step >= 3 && tilt) ? (tilt === 'right' ? -8 : 8) : 0;
+
+            var cands;
+            if (hyper === 'right') {
+                cands = ['RIR','RSO','LSR','LIO'];
+                if (step >= 2) cands = gaze === 'left' ? ['RSO','LSR'] : ['RIR','LIO'];
+            } else {
+                cands = ['LIR','LSO','RSR','RIO'];
+                if (step >= 2) cands = gaze === 'right' ? ['LSO','RSR'] : ['LIR','RIO'];
+            }
+            if (step >= 3 && tilt) {
+                var pk = hyper + '|' + gaze + '|' + tilt;
+                var pr = BV_PARKS_MAP[pk];
+                if (pr) { var pm = pr.muscle.match(/\((\w+)\)/); if (pm) cands = [pm[1]]; }
+            }
+
+            function mc(n) { return cands.indexOf(n) >= 0 ? CYAN : DIM; }
+            function ep(cx, cy) {
+                return 'M'+(cx-30)+','+cy+' Q'+cx+','+(cy-24)+' '+(cx+30)+','+cy+' Q'+cx+','+(cy+24)+' '+(cx-30)+','+cy+'Z';
+            }
+            function ml(x, y, fill, lbl) {
+                return '<text x="'+x+'" y="'+y+'" text-anchor="middle" fill="'+fill+'" font-size="9" font-family="sans-serif" font-weight="700">'+lbl+'</text>';
+            }
+
+            var o = '<svg viewBox="0 0 280 110" xmlns="http://www.w3.org/2000/svg" style="max-width:300px;width:100%">';
+            o += '<defs><pattern id="'+hid+'" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">';
+            o += '<line x1="0" y1="0" x2="0" y2="4" stroke="rgba(255,255,255,0.22)" stroke-width="1"/></pattern>';
+            o += '<clipPath id="rc'+step+'"><path d="'+ep(rCx,rCy)+'"/></clipPath>';
+            o += '<clipPath id="lc'+step+'"><path d="'+ep(lCx,lCy)+'"/></clipPath>';
+            o += '</defs>';
+            o += '<g transform="rotate('+rot+',140,55)">';
+
+            o += '<text x="'+rCx+'" y="'+(rCy-36)+'" text-anchor="middle" fill="'+OL+'" font-size="11" font-family="sans-serif" font-weight="600">R</text>';
+            o += '<path d="'+ep(rCx,rCy)+'" stroke="'+OL+'" stroke-width="1.5" fill="none"/>';
+            o += '<g clip-path="url(#rc'+step+')">';
+            o += '<circle cx="'+(rCx+ps)+'" cy="'+(rCy+rIy)+'" r="11" fill="url(#'+hid+')" stroke="'+OL+'" stroke-width="1"/>';
+            o += '<circle cx="'+(rCx+ps)+'" cy="'+(rCy+rIy)+'" r="4" fill="#222"/>';
+            o += '</g>';
+            o += ml(rCx-24, rCy-23, mc('RSR'), 'SR');
+            o += ml(rCx+24, rCy-23, mc('RIO'), 'IO');
+            o += ml(rCx-24, rCy+31, mc('RIR'), 'IR');
+            o += ml(rCx+24, rCy+31, mc('RSO'), 'SO');
+
+            o += '<text x="'+lCx+'" y="'+(lCy-36)+'" text-anchor="middle" fill="'+OL+'" font-size="11" font-family="sans-serif" font-weight="600">L</text>';
+            o += '<path d="'+ep(lCx,lCy)+'" stroke="'+OL+'" stroke-width="1.5" fill="none"/>';
+            o += '<g clip-path="url(#lc'+step+')">';
+            o += '<circle cx="'+(lCx+ps)+'" cy="'+(lCy+lIy)+'" r="11" fill="url(#'+hid+')" stroke="'+OL+'" stroke-width="1"/>';
+            o += '<circle cx="'+(lCx+ps)+'" cy="'+(lCy+lIy)+'" r="4" fill="#222"/>';
+            o += '</g>';
+            o += ml(lCx-24, lCy-23, mc('LIO'), 'IO');
+            o += ml(lCx+24, lCy-23, mc('LSR'), 'SR');
+            o += ml(lCx-24, lCy+31, mc('LSO'), 'SO');
+            o += ml(lCx+24, lCy+31, mc('LIR'), 'IR');
+
+            o += '</g></svg>';
+            return o;
+        }
+
         function renderBvParks() {
             var el = document.getElementById('bvParksContent');
             var s = bvParks;
@@ -7086,7 +7152,9 @@
             html += '<div class="bv-step-options">';
             html += '<button class="bv-opt-btn' + (s.step1 === 'right' ? ' selected' : '') + '" onclick="bvSelectStep(\'step1\',\'right\')">Right Eye Higher</button>';
             html += '<button class="bv-opt-btn' + (s.step1 === 'left' ? ' selected' : '') + '" onclick="bvSelectStep(\'step1\',\'left\')">Left Eye Higher</button>';
-            html += '</div></div>';
+            html += '</div>';
+            if (s.step1) html += '<div style="text-align:center;margin:14px 0 4px;">' + buildParksEyeSvg(s.step1, null, null, 1) + '<div style="color:#666;font-size:12px;font-style:italic;margin-top:2px;">Looking at patient</div></div>';
+            html += '</div>';
 
             /* Step 2 */
             html += '<div class="' + step2Class + '">';
@@ -7094,7 +7162,9 @@
             html += '<div class="bv-step-options">';
             html += '<button class="bv-opt-btn' + (s.step2 === 'right' ? ' selected' : '') + '" onclick="bvSelectStep(\'step2\',\'right\')">Right Gaze</button>';
             html += '<button class="bv-opt-btn' + (s.step2 === 'left' ? ' selected' : '') + '" onclick="bvSelectStep(\'step2\',\'left\')">Left Gaze</button>';
-            html += '</div></div>';
+            html += '</div>';
+            if (s.step1 && s.step2) html += '<div style="text-align:center;margin:14px 0 4px;">' + buildParksEyeSvg(s.step1, s.step2, null, 2) + '<div style="color:#666;font-size:12px;font-style:italic;margin-top:2px;">Looking at patient</div></div>';
+            html += '</div>';
 
             /* Step 3 */
             html += '<div class="' + step3Class + '">';
@@ -7102,7 +7172,9 @@
             html += '<div class="bv-step-options">';
             html += '<button class="bv-opt-btn' + (s.step3 === 'right' ? ' selected' : '') + '" onclick="bvSelectStep(\'step3\',\'right\')">Right Tilt</button>';
             html += '<button class="bv-opt-btn' + (s.step3 === 'left' ? ' selected' : '') + '" onclick="bvSelectStep(\'step3\',\'left\')">Left Tilt</button>';
-            html += '</div></div>';
+            html += '</div>';
+            if (s.step1 && s.step2 && s.step3) html += '<div style="text-align:center;margin:14px 0 4px;">' + buildParksEyeSvg(s.step1, s.step2, s.step3, 3) + '<div style="color:#666;font-size:12px;font-style:italic;margin-top:2px;">Looking at patient</div></div>';
+            html += '</div>';
 
             /* Result */
             if (s.step1 && s.step2 && s.step3) {
