@@ -1609,6 +1609,14 @@
             color: var(--success);
             border: 1px solid var(--success-border);
         }
+        .med-card .badge {
+            cursor: pointer;
+            transition: transform 0.15s, filter 0.15s;
+        }
+        .med-card .badge:hover {
+            transform: scale(1.12);
+            filter: brightness(1.3);
+        }
 
         /* Med card layout */
         .med-card .med-top-row {
@@ -1829,6 +1837,16 @@
             background: var(--accent-light);
             color: var(--accent);
             font-weight: 600;
+        }
+        .med-sort-btn {
+            padding: 4px 10px; border-radius: 14px; border: 1.5px solid var(--border);
+            background: var(--surface); font-family: var(--sans); font-size: 11px;
+            font-weight: 500; color: var(--ink-secondary); cursor: pointer; transition: all 0.15s;
+        }
+        .med-sort-btn:hover { border-color: var(--border-hover); }
+        .med-sort-btn.active {
+            border-color: var(--accent); background: var(--accent-light);
+            color: var(--accent); font-weight: 600;
         }
         /* Bottle-top color coded drug class chips */
         .med-filter-chip .dc-dot {
@@ -2908,43 +2926,53 @@
         }
 
         /* Tools menu: bigger cards on desktop + hover glow */
-        #toolsContent .option-btn {
+        #toolsContent .option-btn,
+        #medsContent .option-btn {
             transition: all 0.25s ease;
         }
-        #toolsContent .option-btn .icon {
+        #toolsContent .option-btn .icon,
+        #medsContent .option-btn .icon {
             transition: all 0.25s ease;
             transform-origin: left center;
             display: inline-block;
         }
-        #toolsContent .option-btn:hover {
+        #toolsContent .option-btn:hover,
+        #medsContent .option-btn:hover {
             border-color: rgba(6,182,212,0.4);
             background: rgba(6,182,212,0.06);
             box-shadow: 0 0 24px rgba(6,182,212,0.12), 0 0 0 1px rgba(6,182,212,0.1);
             transform: translateY(-2px);
         }
-        #toolsContent .option-btn:hover .icon {
+        #toolsContent .option-btn:hover .icon,
+        #medsContent .option-btn:hover .icon {
             color: var(--accent);
             transform: scale(1.2);
             filter: drop-shadow(0 0 8px rgba(6,182,212,0.5));
         }
-        #toolsContent .option-btn:hover .title {
+        #toolsContent .option-btn:hover .title,
+        #medsContent .option-btn:hover .title {
             color: #fff;
         }
-        #toolsContent .option-btn:hover .desc {
+        #toolsContent .option-btn:hover .desc,
+        #medsContent .option-btn:hover .desc {
             color: var(--ink-secondary);
         }
         @media (min-width: 601px) {
-            #toolsContent .option-btn {
+            #toolsContent .option-btn,
+            #medsContent .option-btn {
                 padding: 22px 20px;
             }
-            #toolsContent .option-btn .icon {
+            #toolsContent .option-btn .icon,
+            #medsContent .option-btn .icon {
                 font-size: 26px;
                 margin-bottom: 8px;
             }
-            #toolsContent .option-btn .title {
+            #toolsContent .option-btn .title,
+            #medsContent .option-btn .title {
                 font-size: 17px;
             }
-            #toolsContent .option-btn .desc {
+            #toolsContent .option-btn .desc,
+            #medsContent .option-btn .desc {
                 font-size: 13.5px;
                 margin-top: 4px;
                 color: var(--ink-secondary);
@@ -3130,6 +3158,64 @@
             font-size: 14px;
             color: var(--ink-muted);
         }
+        /* Dry Eye Reference Tool */
+        .de-section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 14px 0;
+            user-select: none;
+        }
+        .de-section-header:hover { opacity: 0.8; }
+        .de-chevron {
+            font-size: 14px;
+            transition: transform 0.2s;
+            color: var(--ink-muted);
+        }
+        .de-chevron.expanded { transform: rotate(90deg); }
+        .de-section-icon { font-size: 20px; color: var(--accent); }
+        .de-section-title { font-weight: 700; font-size: 15px; flex: 1; }
+        .de-section-summary { font-size: 12px; color: var(--ink-muted); }
+        .de-section-body { padding: 0 0 10px 0; }
+        .de-normal { color: #34d399; font-weight: 600; }
+        .de-mild { color: #facc15; font-weight: 600; }
+        .de-moderate { color: #fb923c; font-weight: 600; }
+        .de-severe { color: #f87171; font-weight: 600; }
+        .de-subsection { margin: 12px 0 6px 0; font-weight: 700; font-size: 13px; color: var(--accent); }
+        .de-note { font-size: 12px; color: var(--ink-muted); margin: 6px 0; line-height: 1.5; }
+        .de-expand-btns { display: flex; gap: 8px; margin-top: 6px; }
+        .de-expand-btns button {
+            background: none; border: 1px solid var(--rule); border-radius: 8px;
+            color: var(--accent); font-family: var(--sans); font-size: 12px;
+            font-weight: 600; padding: 5px 12px; cursor: pointer;
+        }
+        .de-expand-btns button:hover { background: rgba(0,210,211,0.06); }
+
+        /* Gonioscopy hotspot tooltips */
+        .gonio-img-wrap { position: relative; display: block; width: 100%; }
+        .gonio-hotspot {
+            position: absolute; width: 22px; height: 22px; border-radius: 50%;
+            transform: translate(-50%, -50%); cursor: pointer; z-index: 2;
+            background: rgba(6,182,212,0.08); border: 1.5px solid transparent;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .gonio-hotspot:hover, .gonio-hotspot.active {
+            background: rgba(6,182,212,0.25); border-color: var(--accent);
+        }
+        .gonio-hotspot::after {
+            content: attr(data-label); position: absolute; bottom: calc(100% + 6px);
+            left: 50%; transform: translateX(-50%);
+            background: #1a1a2e; border: 1px solid #06b6d4; border-radius: 8px;
+            padding: 5px 10px; font-size: 11px; font-weight: 600; white-space: nowrap;
+            opacity: 0; pointer-events: none; transition: opacity 0.15s;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4); color: #fff; line-height: 1.4;
+            z-index: 10;
+        }
+        .gonio-hotspot:hover::after, .gonio-hotspot.active::after { opacity: 1; }
+        .gonio-hotspot.tip-right::after { left: 0; transform: none; }
+        .gonio-hotspot.tip-below::after { bottom: auto; top: calc(100% + 6px); }
+
         @media (max-width: 600px) {
             .iop-form-grid { grid-template-columns: 1fr; }
             .iop-eye-row { grid-template-columns: 1fr; }
@@ -3146,7 +3232,7 @@
     <header class="header">
         <div class="header-inner">
             <div class="logo-group" onclick="resetAll()" style="cursor:pointer">
-                <svg width="54" height="54" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="66" height="66" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#06b6d4" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#06b6d4" stroke-width="5" fill="rgba(6,182,212,0.1)" stroke-linejoin="round"/>
                     <circle cx="60" cy="55" r="9" fill="#06b6d4"/>
@@ -3570,6 +3656,8 @@
             categorySearch: "",
             favorites: JSON.parse(localStorage.getItem('medFavorites') || '[]'),
             showFavoritesOnly: false,
+            sortMode: 'class',
+            sortAsc: true,
         };
 
         // STATE
@@ -4553,10 +4641,30 @@
                             addParam.highlight = true;
                         }
                     }
+                    if (adj.sphOverride !== undefined) {
+                        const sphParam = params.find(p => p.label === "Sphere (SPH)");
+                        if (sphParam) {
+                            const oldVal = sphParam.value;
+                            sphParam.value = `${adj.sphOverride > 0 ? "+" : ""}${adj.sphOverride.toFixed(2)}`;
+                            sphParam.note = `Cross-cyl adjusted from ${oldVal}`;
+                            sphParam.highlight = true;
+                        }
+                    }
+                    if (adj.cylOverride !== undefined) {
+                        const cylParam = params.find(p => p.label === "Cylinder (CYL)");
+                        if (cylParam) {
+                            const oldVal = cylParam.value;
+                            cylParam.value = adj.cylOverride.toFixed(2);
+                            cylParam.note = `Cross-cyl adjusted from ${oldVal}`;
+                            cylParam.highlight = true;
+                        }
+                    }
                     if (adj.axisOverride !== undefined) {
                         const axisParam = params.find(p => p.label === "Axis");
                         if (axisParam) {
-                            axisParam.note = `Rotation compensated from ${axisParam.value}`;
+                            axisParam.note = adj.sphOverride !== undefined
+                                ? `Cross-cyl adjusted from ${axisParam.value}`
+                                : `Rotation compensated from ${axisParam.value}`;
                             axisParam.value = `${adj.axisOverride}\u00B0`;
                             axisParam.highlight = true;
                         }
@@ -4782,6 +4890,8 @@
         function backFromTroubleshoot() {
             state.troubleshoot = null;
             state.tsRotation = null;
+            state.overRefraction = null;
+            state.orRotation = null;
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -5014,6 +5124,17 @@
         function setTroubleshoot(complaint) {
             state.troubleshoot = state.troubleshoot === complaint ? "select" : complaint;
             state.tsRotation = null;
+            if (state.troubleshoot === 'overcyl') {
+                if (!state.overRefraction) {
+                    state.overRefraction = {
+                        OD: { sphSign: '\u2212', sphAbs: '0.00', cylAbs: '0.00', axis: '' },
+                        OS: { sphSign: '\u2212', sphAbs: '0.00', cylAbs: '0.00', axis: '' }
+                    };
+                }
+            } else {
+                state.overRefraction = null;
+                state.orRotation = null;
+            }
             render();
         }
 
@@ -5034,6 +5155,68 @@
             state.tsAdjustment = { ...window._tsRotationAdj, complaint: state.troubleshoot };
             state.troubleshoot = null;
             state.tsRotation = null;
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function setOrValue(eye, param, val) {
+            if (!state.overRefraction || !state.overRefraction[eye]) return;
+            state.overRefraction[eye][param] = val;
+            render();
+        }
+
+        function setOrSign(eye, param, sign) {
+            if (!state.overRefraction || !state.overRefraction[eye]) return;
+            state.overRefraction[eye][param] = sign;
+            render();
+        }
+
+        function setOrRotationDir(eyeLabel, dir) {
+            if (!state.orRotation || !state.orRotation[eyeLabel]) return;
+            state.orRotation[eyeLabel].dir = state.orRotation[eyeLabel].dir === dir ? null : dir;
+            render();
+        }
+
+        function setOrRotationDeg(eyeLabel, deg) {
+            if (!state.orRotation || !state.orRotation[eyeLabel]) return;
+            state.orRotation[eyeLabel].deg = state.orRotation[eyeLabel].deg === deg ? null : deg;
+            render();
+        }
+
+        function crossCylinderCalc(clSph, clCyl, clAxis, orSph, orCyl, orAxis) {
+            const deg2rad = Math.PI / 180;
+            // Convert CL Rx to Thibos power vectors
+            const clM = clSph + clCyl / 2;
+            const clJ0 = -(clCyl / 2) * Math.cos(2 * clAxis * deg2rad);
+            const clJ45 = -(clCyl / 2) * Math.sin(2 * clAxis * deg2rad);
+            // Convert OR to power vectors
+            const orM = orSph + orCyl / 2;
+            const orJ0 = -(orCyl / 2) * Math.cos(2 * orAxis * deg2rad);
+            const orJ45 = -(orCyl / 2) * Math.sin(2 * orAxis * deg2rad);
+            // Sum components
+            const totalM = clM + orM;
+            const totalJ0 = clJ0 + orJ0;
+            const totalJ45 = clJ45 + orJ45;
+            // Convert back to minus-cyl form
+            const absCyl = 2 * Math.sqrt(totalJ0 * totalJ0 + totalJ45 * totalJ45);
+            let axis = 180;
+            if (absCyl > 0.01) {
+                axis = (0.5 * Math.atan2(totalJ45, totalJ0)) * (180 / Math.PI);
+                axis = Math.round(axis);
+                while (axis <= 0) axis += 180;
+                while (axis > 180) axis -= 180;
+            }
+            const cyl = snapTo025(-absCyl);
+            const sph = snapTo025(totalM + absCyl / 2);
+            return { sph, cyl, axis };
+        }
+
+        function applyOverCylAdjustment() {
+            if (!window._tsOverCylAdj) return;
+            state.tsAdjustment = { ...window._tsOverCylAdj, complaint: state.troubleshoot };
+            state.troubleshoot = null;
+            state.overRefraction = null;
+            state.orRotation = null;
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -5176,6 +5359,11 @@
                             <div class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></div>
                             <div class="title">Lens Rotation</div>
                             <div class="desc">Toric lens rotating on eye</div>
+                        </div>` : ''}
+                        ${isToric ? `<div class="option-btn ${state.troubleshoot === 'overcyl' ? 'active' : ''}" onclick="setTroubleshoot('overcyl')">
+                            <div class="icon"><i class="ph-duotone ph-crosshair"></i></div>
+                            <div class="title">Input Over-Refraction</div>
+                            <div class="desc">Cross-cylinder calculation</div>
                         </div>` : ''}
                         ${showNonAdapt ? `<div class="option-btn ${state.troubleshoot === 'nonadapt' ? 'active' : ''}" onclick="setTroubleshoot('nonadapt')">
                             <div class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></div>
@@ -5615,6 +5803,209 @@
                 suggestionsHtml = rotationHtml + viewBtnHtml;
             }
 
+            // CROSS-CYLINDER OVER-REFRACTION
+            if (state.troubleshoot === 'overcyl' && isToric) {
+                if (!state.overRefraction) {
+                    state.overRefraction = {
+                        OD: { sphSign: '\u2212', sphAbs: '0.00', cylAbs: '0.00', axis: '' },
+                        OS: { sphSign: '\u2212', sphAbs: '0.00', cylAbs: '0.00', axis: '' }
+                    };
+                }
+                if (!state.orRotation) {
+                    state.orRotation = {};
+                    if (odOk) state.orRotation.OD = { dir: null, deg: null };
+                    if (osOk) state.orRotation.OS = { dir: null, deg: null };
+                }
+
+                function normalizeAxisOC(ax) {
+                    ax = ax % 180;
+                    if (ax <= 0) ax += 180;
+                    return ax;
+                }
+
+                // Helper to compute signed OR values from sign + abs state
+                function getOrSigned(or) {
+                    const sphAbs = parseFloat(or.sphAbs) || 0;
+                    const orSph = or.sphSign === '+' ? sphAbs : -sphAbs;
+                    const orCyl = -(parseFloat(or.cylAbs) || 0);
+                    const orAxis = or.axis !== '' ? parseInt(or.axis) : NaN;
+                    const hasCyl = orCyl !== 0;
+                    const hasOR = !isNaN(orSph) && (hasCyl ? (!isNaN(orAxis) && orAxis >= 1 && orAxis <= 180) : true);
+                    const effectiveOrAxis = hasCyl ? orAxis : 180;
+                    return { orSph, orCyl, orAxis, effectiveOrAxis, hasOR, hasCyl };
+                }
+
+                let overCylHtml = '';
+                const ocEyeEntries = [];
+                if (odOk) ocEyeEntries.push({ eye: state.od, label: "OD", name: "OD (Right Eye)" });
+                if (osOk) ocEyeEntries.push({ eye: state.os, label: "OS", name: "OS (Left Eye)" });
+
+                let allHaveOR = true;
+
+                ocEyeEntries.forEach(e => {
+                    const or = state.overRefraction[e.label];
+                    const rot = state.orRotation[e.label];
+
+                    // Current CL Rx
+                    const cyl = parseFloat(e.eye.cylinder) || 0;
+                    const clSph = getCurrentSph(e.eye);
+                    const clCyl = snapCyl(cyl, lens);
+                    const rxAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
+                    let clAxis = snapAxis(rxAxis, lens);
+
+                    // Apply optional rotation to CL axis
+                    let effectiveAxis = clAxis;
+                    if (rot && rot.dir && rot.deg) {
+                        const delta = rot.dir === 'left' ? rot.deg : -rot.deg;
+                        effectiveAxis = normalizeAxisOC(clAxis + delta);
+                    }
+
+                    const clSphStr = `${clSph > 0 ? "+" : ""}${clSph.toFixed(2)}`;
+                    const clCylStr = clCyl.toFixed(2);
+
+                    // Parse OR values
+                    const { orSph, orCyl, orAxis: parsedOrAxis, effectiveOrAxis, hasOR, hasCyl } = getOrSigned(or);
+
+                    if (!hasOR) allHaveOR = false;
+
+                    // Live result preview
+                    let resultHtml = '';
+                    if (hasOR) {
+                        const ideal = crossCylinderCalc(clSph, clCyl, effectiveAxis, orSph, orCyl, effectiveOrAxis);
+                        const snappedCyl = snapCyl(ideal.cyl, lens);
+                        const cylDiff = snappedCyl - ideal.cyl;
+                        let snappedSph = ideal.sph;
+                        if (Math.abs(cylDiff) > 0.01) {
+                            snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
+                        }
+                        snappedSph = snapTo025(snappedSph);
+                        snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
+                        const snappedAxis = snapAxis(ideal.axis, lens);
+
+                        const idealStr = `${ideal.sph > 0 ? "+" : ""}${ideal.sph.toFixed(2)} ${ideal.cyl.toFixed(2)} x ${ideal.axis}`;
+                        const snappedStr = `${snappedSph > 0 ? "+" : ""}${snappedSph.toFixed(2)} ${snappedCyl.toFixed(2)} x ${snappedAxis}`;
+
+                        resultHtml = `<div class="vertex-box fade-in" style="margin-top:12px">
+                            <div class="vertex-label">Ideal Combined Rx</div>
+                            <div style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink)">${idealStr}</div>
+                            <div class="vertex-label" style="margin-top:10px">Lens-Snapped Values</div>
+                            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)">${snappedStr}</div>
+                        </div>`;
+                    }
+
+                    // Optional rotation controls
+                    let rotHtml = '';
+                    if (rot) {
+                        rotHtml = `
+                            <div class="form-group" style="grid-column:1/-1;margin-top:4px">
+                                <label>Observed Rotation (optional)</label>
+                                <div style="display:flex;gap:6px">
+                                    <button type="button" class="dom-toggle ${rot.dir === 'left' ? 'active-left' : ''}" style="flex:1" onclick="setOrRotationDir('${e.label}','left')"><i class="ph-duotone ph-arrow-left"></i> Left</button>
+                                    <button type="button" class="dom-toggle ${rot.dir === 'right' ? 'active-right' : ''}" style="flex:1" onclick="setOrRotationDir('${e.label}','right')">Right <i class="ph-duotone ph-arrow-right"></i></button>
+                                </div>
+                            </div>
+                            ${rot.dir ? `<div class="form-group" style="grid-column:1/-1">
+                                <div style="display:flex;gap:6px">
+                                    <button type="button" class="dom-toggle ${rot.deg === 10 ? 'active-left' : ''}" style="flex:1" onclick="setOrRotationDeg('${e.label}',10)">10\u00B0</button>
+                                    <button type="button" class="dom-toggle ${rot.deg === 20 ? 'active-left' : ''}" style="flex:1" onclick="setOrRotationDeg('${e.label}',20)">20\u00B0</button>
+                                    <button type="button" class="dom-toggle ${rot.deg === 30 ? 'active-left' : ''}" style="flex:1" onclick="setOrRotationDeg('${e.label}',30)">30\u00B0</button>
+                                </div>
+                            </div>` : ''}`;
+                    }
+
+                    overCylHtml += `
+                        <div class="eye-section">
+                            <div class="eye-header">${e.name}</div>
+                            <div class="vertex-box" style="margin-bottom:12px">
+                                <div class="vertex-label">Current CL Rx</div>
+                                <div style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink)">${clSphStr} ${clCylStr} x ${effectiveAxis}</div>
+                                ${rot && rot.dir && rot.deg ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:2px">Effective axis after ${rot.deg}\u00B0 ${rot.dir} rotation</div>` : ''}
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>OR Sphere</label>
+                                    <div class="input-row">
+                                        <div class="sign-toggle">
+                                            <button type="button" class="${or.sphSign === '+' ? '' : 'active-neg'}" onclick="setOrSign('${e.label}','sphSign','\u2212')">\u2212</button>
+                                            <button type="button" class="${or.sphSign === '+' ? 'active-pos' : ''}" onclick="setOrSign('${e.label}','sphSign','+')">+</button>
+                                        </div>
+                                        <select onchange="setOrValue('${e.label}','sphAbs',this.value)">${buildPowerOptions(4, or.sphAbs || "0.00")}</select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>OR Cylinder</label>
+                                    <div class="input-row">
+                                        <div class="sign-toggle">
+                                            <button type="button" class="active-neg">\u2212</button>
+                                        </div>
+                                        <select onchange="setOrValue('${e.label}','cylAbs',this.value)">${buildPowerOptions(4, or.cylAbs || "0.00")}</select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Axis</label>
+                                    <div class="input-row">
+                                        <div class="sign-toggle">
+                                            <button type="button" class="${or.axis === '90' ? 'active-90' : ''}" ${!hasCyl ? 'disabled' : ''} onclick="setOrValue('${e.label}','axis','90')">90</button>
+                                            <button type="button" class="${or.axis === '180' ? 'active-180' : ''}" ${!hasCyl ? 'disabled' : ''} onclick="setOrValue('${e.label}','axis','180')">180</button>
+                                        </div>
+                                        <input type="text" inputmode="numeric" value="${or.axis}" placeholder="180" ${!hasCyl ? 'disabled' : ''} onblur="let v=parseInt(this.value.replace(/[^0-9]/g,''));setOrValue('${e.label}','axis',isNaN(v)||v<1?'':String(Math.min(180,v)))" onkeydown="if(event.key==='Enter'){let v=parseInt(this.value.replace(/[^0-9]/g,''));setOrValue('${e.label}','axis',isNaN(v)||v<1?'':String(Math.min(180,v)))}">
+                                    </div>
+                                </div>
+                                ${rotHtml}
+                            </div>
+                            ${resultHtml}
+                        </div>`;
+                });
+
+                // View Adjusted Results button
+                let ocViewBtnHtml = '';
+                if (allHaveOR && ocEyeEntries.length > 0) {
+                    const overrides = {};
+                    const parts = [];
+                    ocEyeEntries.forEach(e => {
+                        const or = state.overRefraction[e.label];
+                        const rot = state.orRotation[e.label];
+                        const cyl = parseFloat(e.eye.cylinder) || 0;
+                        const clSph = getCurrentSph(e.eye);
+                        const clCyl = snapCyl(cyl, lens);
+                        const rxAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
+                        let clAxis = snapAxis(rxAxis, lens);
+
+                        if (rot && rot.dir && rot.deg) {
+                            const delta = rot.dir === 'left' ? rot.deg : -rot.deg;
+                            clAxis = normalizeAxisOC(clAxis + delta);
+                        }
+
+                        const { orSph, orCyl, effectiveOrAxis } = getOrSigned(or);
+
+                        const ideal = crossCylinderCalc(clSph, clCyl, clAxis, orSph, orCyl, effectiveOrAxis);
+                        const snappedCyl = snapCyl(ideal.cyl, lens);
+                        const cylDiff = snappedCyl - ideal.cyl;
+                        let snappedSph = ideal.sph;
+                        if (Math.abs(cylDiff) > 0.01) {
+                            snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
+                        }
+                        snappedSph = snapTo025(snappedSph);
+                        snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
+                        const snappedAxis = snapAxis(ideal.axis, lens);
+
+                        overrides[e.label] = {
+                            sphOverride: snappedSph,
+                            cylOverride: snappedCyl,
+                            axisOverride: snappedAxis
+                        };
+
+                        const orStr = `${orSph > 0 ? "+" : ""}${orSph.toFixed(2)} ${orCyl.toFixed(2)} x ${effectiveOrAxis}`;
+                        parts.push(`${e.label} OR: ${orStr}`);
+                    });
+
+                    window._tsOverCylAdj = { title: `Cross-cylinder: ${parts.join(', ')}`, overrides };
+                    ocViewBtnHtml = `<button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyOverCylAdjustment()">View Adjusted Results \u2192</button>`;
+                }
+
+                suggestionsHtml = overCylHtml + ocViewBtnHtml;
+            }
+
             // NON-ADAPT TO TORIC
             if (state.troubleshoot === 'nonadapt') {
                 const eyeEntries = [];
@@ -5668,6 +6059,8 @@
                 state.troubleshoot = null;
                 state.tsAdjustment = null;
                 state.tsRotation = null;
+                state.overRefraction = null;
+                state.orRotation = null;
                 state.step--;
                 render();
             }
@@ -5765,6 +6158,8 @@
                 medsState.selectedConditionGroup = null;
                 medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
                 medsState.categorySearch = "";
+                medsState.sortMode = 'class';
+                medsState.sortAsc = true;
                 renderMeds();
             }
             document.getElementById('toolsPage').style.display = tab === 'tools' ? '' : 'none';
@@ -5901,14 +6296,19 @@
                 renderBvTool(el);
             } else if (toolsActiveTool === 'parks') {
                 renderParksTool(el);
+            } else if (toolsActiveTool === 'dryeye') {
+                renderDryEyeTool(el);
+            } else if (toolsActiveTool === 'gonio') {
+                renderGonioTool(el);
             }
         }
 
         var toolsSearchQuery = '';
 
         const TOOLS_REGISTRY = [
-            { id:'iop', icon:'ph-eye', title:'IOP Correction', desc:'Adjust tonometry for corneal thickness (CCT)',
-              keywords:'iop intraocular pressure tonometry cct corneal thickness pachymetry goldmann correction' },
+            { id:'iop', icon:'iop-svg', title:'IOP Correction', desc:'Adjust tonometry for corneal thickness (CCT)',
+              keywords:'iop intraocular pressure tonometry cct corneal thickness pachymetry goldmann correction',
+              svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M240,120H215.63A88.13,88.13,0,0,0,136,40.37V16a8,8,0,0,0-16,0V40.37A88.13,88.13,0,0,0,40.37,120H16a8,8,0,0,0,0,16H40.37A88.13,88.13,0,0,0,120,215.63V240a8,8,0,0,0,16,0V215.63A88.13,88.13,0,0,0,215.63,136H240a8,8,0,0,0,0-16ZM128,200a72,72,0,1,1,72-72A72.08,72.08,0,0,1,128,200Zm0-112a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Z"></path></svg>' },
             { id:'glaucoma', icon:'ph-chart-line-up', title:'Glaucoma Risk', desc:'OHTS 5-year POAG risk estimator (points system)',
               keywords:'glaucoma ohts poag risk ocular hypertension cup disc ratio visual field psd iop intraocular pressure cct corneal thickness' },
             { id:'plaquenil', icon:'ph-pill', title:'Plaquenil Toxicity', desc:'HCQ toxicity risk calculator (AAO guidelines)',
@@ -5918,7 +6318,12 @@
             { id:'bv', icon:'ph-binoculars', title:'Binocular Vision Norms', desc:'Morgan\u2019s expected values for BV testing',
               keywords:'binocular vision bv norms morgan vergence phoria tropia npc nra pra accommodation facility' },
             { id:'parks', icon:'ph-path', title:'Park\u2019s 3-Step Test', desc:'Identify paretic cyclovertical muscle',
-              keywords:'parks 3 step three step cranial nerve palsy strabismus hypertropia oblique rectus cn iv trochlear cyclovertical muscle' }
+              keywords:'parks 3 step three step cranial nerve palsy strabismus hypertropia oblique rectus cn iv trochlear cyclovertical muscle' },
+            { id:'dryeye', icon:'ph-drop-half', title:'Dry Eye Reference', desc:'Testing norms, grading scales & DEWS II classification',
+              keywords:'dry eye schirmer tbut phenol red osmolarity meibomian osdi speed deq mmp inflammadry staining oxford nei dews mgd tear meniscus lid wiper blink' },
+            { id:'gonio', icon:'gonio-svg', title:'Gonioscopy', desc:'Shaffer angle grading reference',
+              keywords:'gonioscopy angle shaffer grading anterior chamber closure narrow open trabecular meshwork scleral spur',
+              svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M96,72a8,8,0,0,1,8-8A104.11,104.11,0,0,1,208,168a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88A8,8,0,0,1,96,72ZM240,192H80V32a8,8,0,0,0-16,0V64H32a8,8,0,0,0,0,16H64V200a8,8,0,0,0,8,8H240a8,8,0,0,0,0-16Z"></path></svg>' }
         ];
 
         function onToolsSearch(val) {
@@ -5941,8 +6346,11 @@
             var cards = '';
             for (var i = 0; i < filtered.length; i++) {
                 var t = filtered[i];
+                var iconHtml = t.svgIcon
+                    ? '<div class="icon" style="font-size:inherit;">' + t.svgIcon + '</div>'
+                    : '<div class="icon"><i class="ph-duotone ' + t.icon + '"></i></div>';
                 cards += '<button class="option-btn" onclick="openTool(\'' + t.id + '\')">' +
-                    '<div class="icon"><i class="ph-duotone ' + t.icon + '"></i></div>' +
+                    iconHtml +
                     '<div class="title">' + t.title + '</div>' +
                     '<div class="desc">' + t.desc + '</div>' +
                     '</button>';
@@ -7073,9 +7481,14 @@
             var hid = 'ph' + step;
             var rCx = 70, lCx = 210, rCy = 55, lCy = 55;
             var rIy = 0, lIy = 0;
-            if (hyper === 'right') rIy = -6;
-            if (hyper === 'left') lIy = -6;
-            var ps = (step >= 2 && gaze) ? (gaze === 'left' ? 6 : -6) : 0;
+            if (step <= 2) {
+                if (hyper === 'right') rIy = -6;
+                if (hyper === 'left') lIy = -6;
+            } else if (step === 3 && tilt) {
+                if (tilt === 'right') rIy = -6;
+                if (tilt === 'left') lIy = -6;
+            }
+            var ps = (step === 2 && gaze) ? (gaze === 'left' ? 6 : -6) : 0;
             var rot = (step >= 3 && tilt) ? (tilt === 'right' ? -8 : 8) : 0;
 
             var cands;
@@ -7100,12 +7513,23 @@
                 return '<text x="'+x+'" y="'+y+'" text-anchor="middle" fill="'+fill+'" font-size="9" font-family="sans-serif" font-weight="700">'+lbl+'</text>';
             }
 
-            var o = '<svg viewBox="0 0 280 110" xmlns="http://www.w3.org/2000/svg" style="max-width:300px;width:100%">';
+            var o = '<svg viewBox="0 0 280 112" xmlns="http://www.w3.org/2000/svg" style="max-width:300px;width:100%">';
             o += '<defs><pattern id="'+hid+'" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">';
             o += '<line x1="0" y1="0" x2="0" y2="4" stroke="rgba(255,255,255,0.22)" stroke-width="1"/></pattern>';
             o += '<clipPath id="rc'+step+'"><path d="'+ep(rCx,rCy)+'"/></clipPath>';
             o += '<clipPath id="lc'+step+'"><path d="'+ep(lCx,lCy)+'"/></clipPath>';
             o += '</defs>';
+            if (step === 1 && hyper === 'left') {
+                o += '<g transform="translate(244,42) scale(0.1)">';
+                o += '<path d="M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z" fill="'+OL+'"/>';
+                o += '</g>';
+            }
+            if (step === 1 && hyper === 'right') {
+                o += '<g transform="translate(10,42) scale(0.1)">';
+                o += '<path d="M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z" fill="'+OL+'"/>';
+                o += '</g>';
+            }
+
             o += '<g transform="rotate('+rot+',140,55)">';
 
             o += '<text x="'+rCx+'" y="'+(rCy-36)+'" text-anchor="middle" fill="'+OL+'" font-size="11" font-family="sans-serif" font-weight="600">R</text>';
@@ -7130,7 +7554,33 @@
             o += ml(lCx-24, lCy+31, mc('LSO'), 'SO');
             o += ml(lCx+24, lCy+31, mc('LIR'), 'IR');
 
-            o += '</g></svg>';
+            o += '</g>';
+
+            if (step === 2 && gaze) {
+                if (gaze === 'right') {
+                    o += '<g transform="translate(127,82) scale(0.1)">';
+                    o += '<path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z" fill="'+OL+'"/>';
+                    o += '</g>';
+                } else {
+                    o += '<g transform="translate(127,82) scale(0.1)">';
+                    o += '<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" fill="'+OL+'"/>';
+                    o += '</g>';
+                }
+            }
+
+            if (step === 3 && tilt) {
+                if (tilt === 'right') {
+                    o += '<g transform="translate(127,82) scale(0.1)">';
+                    o += '<path d="M232,184a8,8,0,0,1-16,0A88,88,0,0,0,65.78,121.78L43.4,144H88a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V88a8,8,0,0,1,16,0v44.77l22.48-22.33A104,104,0,0,1,232,184Z" fill="'+OL+'"/>';
+                    o += '</g>';
+                } else {
+                    o += '<g transform="translate(127,82) scale(0.1)">';
+                    o += '<path d="M240,88v64a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h44.6l-22.36-22.21A88,88,0,0,0,40,184a8,8,0,0,1-16,0,104,104,0,0,1,177.54-73.54L224,132.77V88a8,8,0,0,1,16,0Z" fill="'+OL+'"/>';
+                    o += '</g>';
+                }
+            }
+
+            o += '</svg>';
             return o;
         }
 
@@ -7270,6 +7720,344 @@
                 + '</div>';
             bvParks = { step1: null, step2: null, step3: null };
             renderBvParks();
+        }
+
+        // ===== DRY EYE REFERENCE TOOL =====
+
+        var dryEyeExpanded = { tearQty:false, tearStab:false, staining:false, meibomian:false, inflammatory:false, symptoms:false, dews:false, lidBlink:false };
+
+        function toggleDryEyeSection(key) {
+            dryEyeExpanded[key] = !dryEyeExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderDryEyeTool(el);
+        }
+        function dryEyeExpandAll() {
+            for (var k in dryEyeExpanded) dryEyeExpanded[k] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderDryEyeTool(el);
+        }
+        function dryEyeCollapseAll() {
+            for (var k in dryEyeExpanded) dryEyeExpanded[k] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderDryEyeTool(el);
+        }
+
+        function buildDeSection(id, icon, title, summary, content) {
+            var exp = dryEyeExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleDryEyeSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function deTable(headers, rows) {
+            var h = '<tr>';
+            for (var i = 0; i < headers.length; i++) h += '<th>' + headers[i] + '</th>';
+            h += '</tr>';
+            var r = '';
+            for (var j = 0; j < rows.length; j++) {
+                r += '<tr>';
+                for (var k = 0; k < rows[j].length; k++) r += '<td>' + rows[j][k] + '</td>';
+                r += '</tr>';
+            }
+            return '<div style="overflow-x:auto;"><table class="bv-norms-table"><thead>' + h + '</thead><tbody>' + r + '</tbody></table></div>';
+        }
+
+        function renderDryEyeTool(el) {
+            var html = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>'
+                + '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-drop-half"></i> Dry Eye Reference</div>'
+                + '<div class="tools-card-desc">Comprehensive testing norms, grading scales, and DEWS II classification for dry eye disease workup.</div>'
+                + '<div class="de-expand-btns"><button onclick="dryEyeExpandAll()">Expand All</button><button onclick="dryEyeCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+
+            // 1. Tear Quantity
+            html += buildDeSection('tearQty', 'ph-drop', 'Tear Quantity', 'Schirmer, Phenol Red Thread, Tear Meniscus Height',
+                deTable(['Test','<span class="de-normal">Normal</span>','<span class="de-mild">Mild</span>','<span class="de-moderate">Moderate</span>','<span class="de-severe">Severe</span>'], [
+                    ['Schirmer I (no anesthesia)','<span class="de-normal">&gt;10 mm/5min</span>','<span class="de-mild">6\u201310</span>','<span class="de-moderate">3\u20135</span>','<span class="de-severe">&lt;3</span>'],
+                    ['Schirmer II (with anesthesia)','<span class="de-normal">&gt;10 mm/5min</span>','<span class="de-mild">6\u201310</span>','<span class="de-moderate">3\u20135</span>','<span class="de-severe">&lt;3</span>'],
+                    ['Phenol Red Thread','<span class="de-normal">&gt;20 mm/15sec</span>','<span class="de-mild">10\u201320</span>','<span class="de-moderate">&lt;10</span>','<span class="de-severe">\u2014</span>'],
+                    ['Tear Meniscus Height','<span class="de-normal">\u22650.25 mm</span>','<span class="de-mild">0.20\u20130.25</span>','<span class="de-moderate">&lt;0.20</span>','<span class="de-severe">&lt;0.10</span>']
+                ])
+                + '<div class="de-note">Schirmer I measures total (reflex + basal) tear production. Schirmer II (with topical anesthesia) isolates basal secretion.</div>'
+            );
+
+            // 2. Tear Stability & Quality
+            html += buildDeSection('tearStab', 'ph-timer', 'Tear Stability & Quality', 'TBUT, NIBUT, Osmolarity, Lipid Layer',
+                deTable(['Test','<span class="de-normal">Normal</span>','<span class="de-mild">Mild</span>','<span class="de-moderate">Moderate</span>','<span class="de-severe">Severe</span>'], [
+                    ['TBUT (fluorescein)','<span class="de-normal">&gt;10 sec</span>','<span class="de-mild">7\u201310</span>','<span class="de-moderate">3\u20136</span>','<span class="de-severe">&lt;3</span>'],
+                    ['NIBUT (non-invasive)','<span class="de-normal">&gt;10 sec</span>','<span class="de-mild">5\u201310</span>','<span class="de-moderate">&lt;5</span>','<span class="de-severe">\u2014</span>'],
+                    ['Tear Osmolarity','<span class="de-normal">&lt;308 mOsm/L</span>','<span class="de-mild">308\u2013315</span>','<span class="de-moderate">316\u2013336</span>','<span class="de-severe">&gt;336</span>'],
+                    ['Lipid Layer (LipiView)','<span class="de-normal">\u226575 nm</span>','<span class="de-mild">60\u201375</span>','<span class="de-moderate">25\u201359</span>','<span class="de-severe">&lt;25</span>']
+                ])
+                + '<div class="de-note">Inter-eye osmolarity difference &gt;8 mOsm/L is also considered a positive marker for dry eye disease.</div>'
+            );
+
+            // 3. Ocular Surface Staining
+            var stainingContent = '<div class="de-subsection">Oxford Scale</div>'
+                + deTable(['Grade','Description'], [
+                    ['0','No staining'],
+                    ['I','Minimal \u2014 scattered dots'],
+                    ['II','Mild \u2014 easily countable dots'],
+                    ['III','Moderate \u2014 dots too numerous to count, some confluent'],
+                    ['IV','Marked \u2014 confluent staining with raised features'],
+                    ['V','Severe \u2014 dense confluent staining with filaments']
+                ])
+                + '<div class="de-subsection">NEI/Industry Scale</div>'
+                + '<div class="de-note">5 corneal zones + 6 conjunctival zones, each scored 0\u20133. Maximum score = 33.</div>'
+                + deTable(['Score','Severity'], [
+                    ['0','No staining'],
+                    ['1','Occasional/rare punctate'],
+                    ['2','Countable punctate, some confluent'],
+                    ['3','Dense confluent staining']
+                ])
+                + '<div class="de-subsection">van Bijsterveld Scale</div>'
+                + '<div class="de-note">3 zones (nasal conjunctiva, cornea, temporal conjunctiva), each scored 0\u20133. Max = 9. Abnormal \u22653.</div>'
+                + '<div class="de-subsection">SICCA OSS (Ocular Staining Score)</div>'
+                + '<div class="de-note">Cornea 0\u20136 + conjunctiva 0\u20136 = max 12/eye. Score \u22655 meets Sj\u00f6gren\u2019s criteria (per ACR).</div>';
+            html += buildDeSection('staining', 'ph-grid-four', 'Ocular Surface Staining', 'Oxford, NEI/Industry, van Bijsterveld, SICCA OSS', stainingContent);
+
+            // 4. Meibomian Gland Assessment
+            var mgContent = '<div class="de-subsection">Gland Expressibility</div>'
+                + deTable(['Grade','Description'], [
+                    ['0','All glands expressible (clear meibum)'],
+                    ['1','3\u20134 glands expressible with light pressure'],
+                    ['2','1\u20132 glands expressible with moderate pressure'],
+                    ['3','No glands expressible']
+                ])
+                + '<div class="de-subsection">Meibum Quality</div>'
+                + '<div class="de-note">Grade each of 8 central lower lid glands 0\u20133. Total score 0\u201324.</div>'
+                + deTable(['Grade','Appearance'], [
+                    ['0','Clear, transparent'],
+                    ['1','Cloudy'],
+                    ['2','Granular, particulate'],
+                    ['3','Inspissated, toothpaste-like']
+                ])
+                + '<div class="de-subsection">Meibography / Meiboscore</div>'
+                + deTable(['Grade','Gland Loss'], [
+                    ['0','No loss'],
+                    ['1','&lt;33% loss'],
+                    ['2','33\u201366% loss'],
+                    ['3','&gt;66% loss']
+                ])
+                + '<div class="de-subsection">Lid Margin Abnormalities</div>'
+                + '<div class="de-note">Score 0\u20134 based on presence of: irregular lid margin, vascular engorgement, plugged meibomian gland orifices, anterior/posterior displacement of mucocutaneous junction (1 point each).</div>';
+            html += buildDeSection('meibomian', 'ph-eyedropper', 'Meibomian Gland Assessment', 'Expressibility, meibum quality, meibography, lid margin', mgContent);
+
+            // 5. Inflammatory Markers
+            var inflammContent = '<div class="de-subsection">MMP-9 (InflammaDry)</div>'
+                + '<div class="de-note"><span class="de-severe">\u226540 ng/mL = Positive</span> \u2014 indicates clinically significant ocular surface inflammation.</div>'
+                + '<div class="de-subsection">Tear Osmolarity</div>'
+                + deTable(['Marker','Threshold'], [
+                    ['Single eye','<span class="de-moderate">\u2265308 mOsm/L</span> = abnormal'],
+                    ['Inter-eye difference','<span class="de-moderate">&gt;8 mOsm/L</span> = positive marker']
+                ])
+                + '<div class="de-subsection">Lactoferrin</div>'
+                + '<div class="de-note"><span class="de-moderate">&lt;1.0 mg/mL</span> = aqueous deficiency suspected. Normal \u22651.1 mg/mL.</div>';
+            html += buildDeSection('inflammatory', 'ph-flame', 'Inflammatory Markers', 'MMP-9, osmolarity thresholds, lactoferrin', inflammContent);
+
+            // 6. Symptom Questionnaires
+            var sxContent = '<div class="de-subsection">OSDI (Ocular Surface Disease Index)</div>'
+                + deTable(['Score Range','Severity'], [
+                    ['0\u201312','<span class="de-normal">Normal</span>'],
+                    ['13\u201322','<span class="de-mild">Mild</span>'],
+                    ['23\u201332','<span class="de-moderate">Moderate</span>'],
+                    ['33\u2013100','<span class="de-severe">Severe</span>']
+                ])
+                + '<div class="de-subsection">SPEED Questionnaire</div>'
+                + deTable(['Score Range','Severity'], [
+                    ['0\u20134','<span class="de-normal">Normal</span>'],
+                    ['5\u20137','<span class="de-mild">Mild</span>'],
+                    ['8\u201314','<span class="de-moderate">Moderate</span>'],
+                    ['15\u201328','<span class="de-severe">Severe</span>']
+                ])
+                + '<div class="de-subsection">DEQ-5 (Dry Eye Questionnaire)</div>'
+                + deTable(['Score','Interpretation'], [
+                    ['&lt;6','<span class="de-normal">Non\u2013dry eye</span>'],
+                    ['6\u201311','<span class="de-moderate">Dry eye</span>'],
+                    ['\u226512','<span class="de-severe">Sj\u00f6gren\u2019s suspect</span>']
+                ])
+                + '<div class="de-subsection">McMonnies Questionnaire</div>'
+                + deTable(['Score','Interpretation'], [
+                    ['&lt;10','<span class="de-normal">Normal</span>'],
+                    ['10\u201320','<span class="de-mild">Borderline</span>'],
+                    ['&gt;20','<span class="de-severe">Dry eye</span>']
+                ]);
+            html += buildDeSection('symptoms', 'ph-clipboard-text', 'Symptom Questionnaires', 'OSDI, SPEED, DEQ-5, McMonnies', sxContent);
+
+            // 7. DEWS II Classification
+            var dewsContent = '<div class="de-subsection">Severity Matrix</div>'
+                + deTable(['Parameter','<span class="de-mild">Level 1</span>','<span class="de-moderate">Level 2</span>','<span class="de-severe">Level 3</span>','<span class="de-severe">Level 4</span>'], [
+                    ['Discomfort','Mild/episodic under stress','Moderate, episodic/chronic','Severe, frequent/constant','Severe &amp; disabling, constant'],
+                    ['Visual symptoms','None or mild fatigue','Annoying, limiting activity','Constant, limiting activity','Constant, possibly disabling'],
+                    ['Conjunctival staining','None to mild','Variable','Moderate to marked','Severe'],
+                    ['Corneal staining','None to mild','Variable','Marked central','Severe erosions'],
+                    ['Tear signs (TBUT)','Variable','\u226410 sec','\u22645 sec','Immediate'],
+                    ['Schirmer','Variable','\u226410 mm','\u22645 mm','\u22642 mm']
+                ])
+                + '<div class="de-subsection">Diagnostic Algorithm</div>'
+                + '<div class="de-note" style="line-height:1.8;">'
+                + '<strong>Step 1:</strong> Screening questionnaire (OSDI \u226513 or DEQ-5 \u22656)<br>'
+                + '<strong>Step 2:</strong> Homeostasis markers \u2014 at least one positive:<br>'
+                + '&nbsp;&nbsp;&bull; NIBUT &lt;10 sec or FBUT &lt;10 sec<br>'
+                + '&nbsp;&nbsp;&bull; Osmolarity \u2265308 mOsm/L or inter-eye diff &gt;8<br>'
+                + '&nbsp;&nbsp;&bull; Ocular surface staining (Oxford &gt;Grade I, or NEI corneal &gt;5, or conjunctival &gt;9 with lid wiper \u2265Grade 2)<br>'
+                + '<strong>Step 3:</strong> Subtype classification:<br>'
+                + '&nbsp;&nbsp;&bull; <strong>Aqueous deficient</strong> \u2014 Low Schirmer, reduced meniscus height<br>'
+                + '&nbsp;&nbsp;&bull; <strong>Evaporative</strong> \u2014 MGD, reduced lipid layer, blink abnormalities<br>'
+                + '&nbsp;&nbsp;&bull; <strong>Mixed</strong> \u2014 Features of both subtypes'
+                + '</div>';
+            html += buildDeSection('dews', 'ph-chart-bar', 'DEWS II Classification', 'Severity matrix, diagnostic algorithm, subtypes', dewsContent);
+
+            // 8. Lid & Blink Assessment
+            var lidContent = deTable(['Finding','<span class="de-normal">Normal</span>','Abnormal'], [
+                    ['Blink rate','<span class="de-normal">15\u201320/min</span>','<span class="de-moderate">&lt;15 or &gt;20/min</span>'],
+                    ['Incomplete blink rate','<span class="de-normal">&lt;20%</span>','<span class="de-severe">&gt;40% = significant</span>']
+                ])
+                + '<div class="de-subsection">Lid Wiper Epitheliopathy (LWE)</div>'
+                + deTable(['Grade','Description'], [
+                    ['0','No staining'],
+                    ['1','&lt;25% lid wiper length, &lt;2 mm width'],
+                    ['2','25\u201350% length or 2\u20134 mm width'],
+                    ['3','&gt;50% length or &gt;4 mm width']
+                ])
+                + '<div class="de-subsection">LIPCOF (Lid-Parallel Conjunctival Folds)</div>'
+                + deTable(['Grade','Description'], [
+                    ['0','No folds'],
+                    ['1','Single small fold'],
+                    ['2','Two or more folds, below tear meniscus height'],
+                    ['3','Multiple folds, above tear meniscus height']
+                ])
+                + '<div class="de-subsection">Demodex</div>'
+                + '<div class="de-note"><span class="de-moderate">\u22652 cylindrical dandruff (collarettes) per lid = positive.</span> Consider tea tree oil or ivermectin-based treatment.</div>';
+            html += buildDeSection('lidBlink', 'ph-eye', 'Lid & Blink Assessment', 'Blink rate, LWE, LIPCOF, Demodex', lidContent);
+
+            el.innerHTML = html;
+        }
+
+        // ===== GONIOSCOPY TOOL =====
+        var gonioExpanded = { anatomy: true, shaffer: true };
+
+        function toggleGonioSection(key) {
+            gonioExpanded[key] = !gonioExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderGonioTool(el);
+        }
+
+        function buildGonioSection(id, icon, title, summary, content) {
+            var exp = gonioExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleGonioSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function toggleGonioHotspot(ev) {
+            var el = ev.currentTarget;
+            var wasActive = el.classList.contains('active');
+            var all = document.querySelectorAll('.gonio-hotspot');
+            for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+            if (!wasActive) el.classList.add('active');
+            ev.stopPropagation();
+        }
+
+        function gonioHotspot(left, top, label, cls) {
+            return '<div class="gonio-hotspot' + (cls ? ' ' + cls : '') + '" data-label="' + label + '" style="left:' + left + '%;top:' + top + '%;" onclick="toggleGonioHotspot(event)"></div>';
+        }
+
+        function renderGonioTool(el) {
+            var html = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>';
+
+            // Section A — Angle Anatomy
+            var anatomyContent = '<figure style="margin:0;">'
+                + '<div class="gonio-img-wrap" onclick="var all=this.querySelectorAll(\'.gonio-hotspot\');for(var i=0;i<all.length;i++)all[i].classList.remove(\'active\');">'
+                + '<img src="https://cdn.ncbi.nlm.nih.gov/pmc/blobs/7d37/8862628/6f2a95b49697/jceh_34_112_040_f01.jpg" alt="Gonioscopy angle structures" style="width:100%;border-radius:8px;display:block;">'
+                // Panel A (top-left clinical photo)
+                + gonioHotspot(20.7, 13.6, "1 \u2013 Schwalbe\u2019s line", '')
+                + gonioHotspot(26.1, 14.7, "2 \u2013 Non-pigmented TM", '')
+                + gonioHotspot(33.2, 17, "3 \u2013 Pigmented TM", '')
+                + gonioHotspot(15.6, 18.8, "4 \u2013 Scleral spur", 'tip-right')
+                + gonioHotspot(12.4, 20.1, "5 \u2013 Ciliary body band", 'tip-right')
+                // Panel B (top-right clinical photo)
+                + gonioHotspot(57.3, 17.6, "1 \u2013 Schwalbe\u2019s line", '')
+                + gonioHotspot(63.1, 18.8, "2 \u2013 Non-pigmented TM", '')
+                + gonioHotspot(71.1, 19.7, "3 \u2013 Pigmented TM", '')
+                + gonioHotspot(76.5, 21.9, "4 \u2013 Scleral spur", '')
+                + gonioHotspot(75.1, 26, "5 \u2013 Ciliary body band", '')
+                + gonioHotspot(67.2, 28.7, "6 \u2013 Iris", '')
+                // Panel C (bottom-left diagram)
+                + gonioHotspot(27.4, 58.8, "1 \u2013 Schwalbe\u2019s line", 'tip-right')
+                + gonioHotspot(23.6, 62.4, "2 \u2013 Non-pigmented TM", 'tip-right')
+                + gonioHotspot(19.4, 66.7, "3 \u2013 Pigmented TM", 'tip-right')
+                + gonioHotspot(16.5, 70.1, "4 \u2013 Scleral spur", 'tip-right tip-below')
+                + gonioHotspot(14.4, 73.3, "5 \u2013 Ciliary body band", 'tip-right tip-below')
+                + '</div>'
+                + '<figcaption style="font-size:11px;color:var(--ink-muted);margin-top:4px;font-style:italic;line-height:1.4;">Angle structures seen on gonioscopy. Top: clinical photographs. Bottom: corresponding cross-section diagram showing Schwalbe\'s line (SL), trabecular meshwork (TM), scleral spur (SS), and ciliary body band (CB). <strong style="color:var(--accent);">Hover or tap numbers for labels.</strong></figcaption>'
+                + '</figure>'
+                + '<div style="margin-top:14px;font-weight:700;font-size:13px;color:var(--accent);">Structures (anterior \u2192 posterior)</div>'
+                + '<div style="margin-top:8px;font-size:13px;line-height:2;color:var(--ink);">'
+                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">1.</span> <strong>Schwalbe\u2019s line (SL)</strong> \u2014 Junction of corneal endothelium &amp; TM</div>'
+                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">2.</span> <strong>Non-pigmented TM</strong> \u2014 Anterior, less pigmented meshwork</div>'
+                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">3.</span> <strong>Pigmented TM</strong> \u2014 Posterior, overlies Schlemm\u2019s canal</div>'
+                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">4.</span> <strong>Scleral spur (SS)</strong> \u2014 White line between TM &amp; ciliary body</div>'
+                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">5.</span> <strong>Ciliary body band (CB)</strong> \u2014 Most posterior; brown/gray band</div>'
+                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">6.</span> <strong>Iris root</strong> \u2014 Peripheral iris insertion</div>'
+                + '</div>';
+            html += buildGonioSection('anatomy', 'ph-eye', 'Angle Anatomy', 'Gonioscopic landmarks from anterior to posterior', anatomyContent);
+
+            // Section B — Shaffer Grading System
+            var grades = [
+                { num: '4', angle: '35\u201345\u00b0 (wide open)', structures: 'CB, SS, TM, SL', significance: 'No risk of closure', color: '#34d399' },
+                { num: '3', angle: '25\u201335\u00b0 (open)', structures: 'SS, TM, SL', significance: 'No risk of closure', color: '#34d399' },
+                { num: '2', angle: '20\u00b0 (narrow)', structures: 'TM, SL', significance: 'Possible closure', color: '#facc15' },
+                { num: '1', angle: '\u226410\u00b0 (very narrow)', structures: 'SL only', significance: 'High risk of closure', color: '#fb923c' },
+                { num: '0', angle: '0\u00b0 (closed)', structures: 'None (iridocorneal contact)', significance: 'Closed / appositional closure', color: '#f87171' }
+            ];
+
+            var shafferContent = '<figure style="margin:0;">'
+                + '<img src="https://cdn.ncbi.nlm.nih.gov/pmc/blobs/7d37/8862628/e0e7e7382d4a/jceh_34_112_040_f05.jpg" alt="Shaffer grading system" style="width:100%;border-radius:8px;margin:8px 0;">'
+                + '<figcaption style="font-size:11px;color:var(--ink-muted);margin-top:4px;font-style:italic;line-height:1.4;">Shaffer grading system for anterior chamber angle width.</figcaption>'
+                + '</figure>'
+                + '<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px;">';
+
+            for (var i = 0; i < grades.length; i++) {
+                var g = grades[i];
+                shafferContent += '<div style="display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:10px;background:var(--card-bg);border:1px solid var(--rule);">'
+                    + '<span style="background:' + g.color + ';color:#fff;min-width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;">' + g.num + '</span>'
+                    + '<div style="flex:1;font-size:13px;line-height:1.5;">'
+                    + '<div style="font-weight:700;">' + g.angle + '</div>'
+                    + '<div style="color:var(--ink-muted);margin-top:2px;"><strong>Visible:</strong> ' + g.structures + '</div>'
+                    + '<div style="margin-top:2px;"><span style="color:' + g.color + ';font-weight:600;">' + g.significance + '</span></div>'
+                    + '</div></div>';
+            }
+            shafferContent += '</div>';
+            html += buildGonioSection('shaffer', 'ph-chart-bar', 'Shaffer Grading System', 'Angle width grades 0\u20134 with clinical significance', shafferContent);
+
+            // Section C — Citation
+            html += '<div class="tools-card" style="font-size:11px;color:var(--ink-muted);line-height:1.6;">'
+                + '<strong>Citation:</strong> Nolan W, Onakoya A. Gonioscopy skills and techniques. <em>Community Eye Health.</em> 2022;34(112):40-42.'
+                + '<br>Images reproduced under Creative Commons Attribution Non-Commercial License (CC BY-NC 4.0).'
+                + '</div>';
+
+            el.innerHTML = html;
         }
 
         function switchClSub(sub) {
@@ -7449,7 +8237,17 @@
 
             // Medication list
             const filtered = getMedFilteredResults();
-            html += `<div class="results-header" style="margin-top:16px"><div><div class="results-count">${filtered.length} Medication${filtered.length!==1?'s':''}</div></div></div>`;
+            html += `<div class="results-header" style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;">
+                <div class="results-count">${filtered.length} Medication${filtered.length!==1?'s':''}</div>
+                <div style="display:flex;gap:4px;">
+                    <button class="med-sort-btn ${medsState.sortMode==='class'?'active':''}" onclick="toggleMedSort('class')" title="Sort by class">
+                        <i class="ph-duotone ph-list-numbers" style="font-size:13px;vertical-align:-1px;"></i> Class ${medsState.sortMode==='class' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
+                    </button>
+                    <button class="med-sort-btn ${medsState.sortMode==='price'?'active':''}" onclick="toggleMedSort('price')" title="Sort by generic price">
+                        <i class="ph-duotone ph-currency-dollar" style="font-size:13px;vertical-align:-1px;"></i> Generic $ ${medsState.sortMode==='price' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
+                    </button>
+                </div>
+            </div>`;
             if (filtered.length === 0) {
                 html += `<div class="empty"><div class="empty-icon"><i class="ph-duotone ph-pill"></i></div><div class="empty-title">No medications match</div><div class="empty-desc">Try adjusting your filters</div></div>`;
             } else {
@@ -7458,6 +8256,21 @@
                 html += `</div>`;
             }
             return html;
+        }
+
+        function getMedGeneration(dc) {
+            var m = dc.match(/(\d+)(?:st|nd|rd|th)\s+generation/i);
+            return m ? parseInt(m[1], 10) : 0;
+        }
+
+        function toggleMedSort(mode) {
+            if (medsState.sortMode === mode) {
+                medsState.sortAsc = !medsState.sortAsc;
+            } else {
+                medsState.sortMode = mode;
+                medsState.sortAsc = true;
+            }
+            renderMeds();
         }
 
         function getMedFilteredResults() {
@@ -7487,12 +8300,31 @@
             if (medsState.filters.route) {
                 results = results.filter(m => (m.route || 'topical') === medsState.filters.route);
             }
-            // Sort by cheapest effective price
-            results.sort((a, b) => {
-                const pa = a.avg_generic_price || a.avg_brand_price;
-                const pb = b.avg_generic_price || b.avg_brand_price;
-                return pa - pb;
-            });
+            var dir = medsState.sortAsc ? 1 : -1;
+            if (medsState.sortMode === 'price') {
+                // Sort by generic price (nulls always last)
+                results.sort((a, b) => {
+                    const pa = a.avg_generic_price;
+                    const pb = b.avg_generic_price;
+                    if (pa == null && pb == null) return 0;
+                    if (pa == null) return 1;
+                    if (pb == null) return -1;
+                    return (pa - pb) * dir;
+                });
+            } else {
+                // Sort by generation (high→low default), then class order, then price
+                results.sort((a, b) => {
+                    const ga = getMedGeneration(a.drug_class);
+                    const gb = getMedGeneration(b.drug_class);
+                    if (ga !== gb) return (gb - ga) * dir;
+                    const oa = getDrugClassColor(a.drug_class).order;
+                    const ob = getDrugClassColor(b.drug_class).order;
+                    if (oa !== ob) return (oa - ob) * dir;
+                    const pa = a.avg_generic_price || a.avg_brand_price;
+                    const pb = b.avg_generic_price || b.avg_brand_price;
+                    return (pa - pb) * dir;
+                });
+            }
             return results;
         }
 
@@ -8143,5 +8975,11 @@
         // INIT
         render();
     </script>
+    <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#555;">
+        <div style="margin-bottom:4px;font-style:italic;color:#06b6d4;">Built by an Optometrist, For Optometrists.</div>
+        <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
+        <div>&copy; 2026 Pocket OD</div>
+        <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
+    </footer>
 </body>
 </html>
