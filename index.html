@@ -6272,6 +6272,9 @@
         function openTool(id) {
             toolsActiveTool = id;
             renderTools();
+            var tp = document.getElementById('toolsPage');
+            if (tp) tp.scrollTop = 0;
+            window.scrollTo(0, 0);
         }
 
         function toolsBack() {
@@ -6300,6 +6303,12 @@
                 renderDryEyeTool(el);
             } else if (toolsActiveTool === 'gonio') {
                 renderGonioTool(el);
+            } else if (toolsActiveTool === 'colorvision') {
+                renderColorVisionTool(el);
+            } else if (toolsActiveTool === 'amd') {
+                renderAmdTool(el);
+            } else if (toolsActiveTool === 'dr') {
+                renderDrTool(el);
             }
         }
 
@@ -6323,7 +6332,13 @@
               keywords:'dry eye schirmer tbut phenol red osmolarity meibomian osdi speed deq mmp inflammadry staining oxford nei dews mgd tear meniscus lid wiper blink' },
             { id:'gonio', icon:'gonio-svg', title:'Gonioscopy', desc:'Shaffer angle grading reference',
               keywords:'gonioscopy angle shaffer grading anterior chamber closure narrow open trabecular meshwork scleral spur',
-              svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M96,72a8,8,0,0,1,8-8A104.11,104.11,0,0,1,208,168a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88A8,8,0,0,1,96,72ZM240,192H80V32a8,8,0,0,0-16,0V64H32a8,8,0,0,0,0,16H64V200a8,8,0,0,0,8,8H240a8,8,0,0,0,0-16Z"></path></svg>' }
+              svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M96,72a8,8,0,0,1,8-8A104.11,104.11,0,0,1,208,168a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88A8,8,0,0,1,96,72ZM240,192H80V32a8,8,0,0,0-16,0V64H32a8,8,0,0,0,0,16H64V200a8,8,0,0,0,8,8H240a8,8,0,0,0,0-16Z"></path></svg>' },
+            { id:'colorvision', icon:'ph-palette', title:'Color Vision', desc:'Expected results by deficiency type',
+              keywords:'color vision ishihara hrr d-15 d15 farnsworth protan deutan tritan cvd red green blue cone deficiency anomalous acquired optic neuropathy' },
+            { id:'amd', icon:'ph-eye', title:'AMD Staging', desc:'AREDS severity scale & interactive risk calculator',
+              keywords:'amd age related macular degeneration drusen geographic atrophy ga cnv choroidal neovascular beckman areds pigment rpe dry wet staging grading' },
+            { id:'dr', icon:'ph-drop', title:'Diabetic Retinopathy', desc:'Interactive DR grading by clinical findings',
+              keywords:'diabetic retinopathy dr npdr pdr mild moderate severe proliferative microaneurysm hemorrhage cotton wool spot venous beading irma neovascularization 4-2-1 grading' }
         ];
 
         function onToolsSearch(val) {
@@ -7769,15 +7784,11 @@
         }
 
         function renderDryEyeTool(el) {
-            var html = '<div style="margin-bottom:14px;">'
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
                 + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
                 + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
                 + '</button>'
-                + '</div>'
-                + '<div class="tools-card">'
-                + '<div class="tools-card-title"><i class="ph-duotone ph-drop-half"></i> Dry Eye Reference</div>'
-                + '<div class="tools-card-desc">Comprehensive testing norms, grading scales, and DEWS II classification for dry eye disease workup.</div>'
-                + '<div class="de-expand-btns"><button onclick="dryEyeExpandAll()">Expand All</button><button onclick="dryEyeCollapseAll()">Collapse All</button></div>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="dryEyeExpandAll()">Expand All</button><button onclick="dryEyeCollapseAll()">Collapse All</button></div>'
                 + '</div>';
 
             // 1. Tear Quantity
@@ -7953,6 +7964,18 @@
             if (el) renderGonioTool(el);
         }
 
+        function gonioExpandAll() {
+            for (var k in gonioExpanded) gonioExpanded[k] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderGonioTool(el);
+        }
+
+        function gonioCollapseAll() {
+            for (var k in gonioExpanded) gonioExpanded[k] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderGonioTool(el);
+        }
+
         function buildGonioSection(id, icon, title, summary, content) {
             var exp = gonioExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
@@ -7980,10 +8003,11 @@
         }
 
         function renderGonioTool(el) {
-            var html = '<div style="margin-bottom:14px;">'
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
                 + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
                 + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
                 + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="gonioExpandAll()">Expand All</button><button onclick="gonioCollapseAll()">Collapse All</button></div>'
                 + '</div>';
 
             // Section A — Angle Anatomy
@@ -8058,6 +8082,604 @@
                 + '</div>';
 
             el.innerHTML = html;
+        }
+
+        // --- Color Vision Deficiency Tool ---
+        var cvExpanded = { overview: true, ishihara: true, hrr: true, d15: true, acquired: false };
+
+        function toggleCvSection(key) {
+            cvExpanded[key] = !cvExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderColorVisionTool(el);
+        }
+
+        function cvExpandAll() {
+            for (var k in cvExpanded) cvExpanded[k] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderColorVisionTool(el);
+        }
+
+        function cvCollapseAll() {
+            for (var k in cvExpanded) cvExpanded[k] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderColorVisionTool(el);
+        }
+
+        function buildCvSection(id, icon, title, summary, content) {
+            var exp = cvExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleCvSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function renderColorVisionTool(el) {
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="cvExpandAll()">Expand All</button><button onclick="cvCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+
+            // Section A — Overview
+            var overviewContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Color vision deficiencies classified by which cone type is affected.</p>'
+                + deTable(
+                    ['Type', 'Cone Affected', 'Inheritance', 'Prevalence'],
+                    [
+                        ['Protanomaly', 'L-cone (<span style="color:#f87171;">red</span>) reduced', 'X-linked', '~1% males'],
+                        ['Protanopia', 'L-cone (<span style="color:#f87171;">red</span>) absent', 'X-linked', '~1% males'],
+                        ['Deuteranomaly', 'M-cone (<span style="color:#34d399;">green</span>) reduced', 'X-linked', '~5% males'],
+                        ['Deuteranopia', 'M-cone (<span style="color:#34d399;">green</span>) absent', 'X-linked', '~1% males'],
+                        ['Tritanomaly', 'S-cone (<span style="color:#60a5fa;">blue</span>) reduced', 'Autosomal dominant', 'Very rare'],
+                        ['Tritanopia', 'S-cone (<span style="color:#60a5fa;">blue</span>) absent', 'Autosomal dominant', '~0.001%']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;"><span style="color:#f87171;">Red</span>-<span style="color:#34d399;">green</span> deficiencies (protan/deutan) affect ~8% of males, &lt;0.5% of females.</div>';
+            html += buildCvSection('overview', 'ph-info', 'Overview', 'Classification of congenital color vision deficiencies', overviewContent);
+
+            // Section B — Ishihara Plates
+            var ishiharaContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Screening test available in 38- or 24-plate editions. Detects <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span> deficiencies only.</p>'
+                + deTable(
+                    ['Finding', 'Normal', 'Protan', 'Deutan'],
+                    [
+                        ['Screening plates (1\u201321)', '\u226517/21 correct', 'Multiple errors', 'Multiple errors'],
+                        ['Protan diagnostic plates', 'Reads correctly', '<span class="de-severe">Specific errors / cannot read</span>', 'Reads correctly or different errors'],
+                        ['Deutan diagnostic plates', 'Reads correctly', 'Reads correctly or different errors', '<span class="de-severe">Specific errors / cannot read</span>'],
+                        ['Hidden digit plates', 'Cannot see digit', 'May trace digit', 'May trace digit']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;"><strong>Note:</strong> Ishihara does NOT detect tritan defects. Use HRR or D-15 for <span style="color:#60a5fa;">blue</span>-<span style="color:#facc15;">yellow</span> screening.</div>';
+            html += buildCvSection('ishihara', 'ph-circles-three', 'Ishihara Plates', 'Red-green screening test \u2014 38 or 24 plate editions', ishiharaContent);
+
+            // Section C — HRR (Hardy-Rand-Rittler)
+            var hrrContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Detects and classifies protan, deutan, AND tritan defects. Grades severity by number of diagnostic plates missed.</p>'
+                + deTable(
+                    ['Finding', 'Normal', 'Protan', 'Deutan', 'Tritan'],
+                    [
+                        ['Screening plates', '<span class="de-normal">All correct</span>', 'Errors on <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span>', 'Errors on <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span>', 'Errors on <span style="color:#60a5fa;">blue</span>-<span style="color:#facc15;">yellow</span>'],
+                        ['Diagnostic: Red-Green', 'No errors', '<span class="de-severe">Protan axis errors</span>', '<span class="de-severe">Deutan axis errors</span>', 'No errors'],
+                        ['Diagnostic: Blue-Yellow', 'No errors', 'No errors', 'No errors', '<span class="de-severe">Tritan axis errors</span>'],
+                        ['Severity grading', '\u2014', '<span class="de-mild">Mild</span> / <span class="de-moderate">Medium</span> / <span class="de-severe">Strong</span>', '<span class="de-mild">Mild</span> / <span class="de-moderate">Medium</span> / <span class="de-severe">Strong</span>', '<span class="de-mild">Mild</span> / <span class="de-moderate">Medium</span> / <span class="de-severe">Strong</span>']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;">Severity is based on number of diagnostic plates missed.</div>';
+            html += buildCvSection('hrr', 'ph-chart-scatter', 'HRR (Hardy-Rand-Rittler)', 'Detects protan, deutan & tritan; grades severity', hrrContent);
+
+            // Section D — Farnsworth D-15
+            var d15Content = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Arrangement test that detects moderate-to-severe defects. Does NOT detect mild anomalous trichromacy.</p>'
+                + deTable(
+                    ['Result', 'Interpretation'],
+                    [
+                        ['No crossings', '<span class="de-normal">Normal (or mild anomaly)</span>'],
+                        ['Crossings parallel to protan axis', '<span class="de-severe">Protan defect</span>'],
+                        ['Crossings parallel to deutan axis', '<span class="de-severe">Deutan defect</span>'],
+                        ['Crossings parallel to tritan axis', '<span class="de-severe">Tritan defect</span>'],
+                        ['Random / disordered', '<span class="de-severe">Severe deficiency or achromatopsia</span>']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;"><strong>Axis confusion lines:</strong> Plot cap order on D-15 diagram. Crossings (transpositions) that align parallel to a confusion axis indicate that deficiency type.</div>'
+                + '<div class="de-note"><strong>Note:</strong> D-15 desaturated version (Lanthony) can detect milder deficiencies.</div>';
+            html += buildCvSection('d15', 'ph-sort-ascending', 'Farnsworth D-15', 'Arrangement test for moderate-to-severe defects', d15Content);
+
+            // Section E — Acquired Color Vision Loss
+            var acquiredContent = deTable(
+                    ['Condition', 'Typical Pattern', 'Tests Affected'],
+                    [
+                        ['Optic neuropathy (MS, NAION)', '<span style="color:#f87171;">Red</span> desaturation; acquired <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span> or mixed', 'Ishihara, HRR, D-15'],
+                        ['Macular disease (AMD, CSR)', 'Acquired tritan (<span style="color:#60a5fa;">blue</span>-<span style="color:#facc15;">yellow</span>)', 'HRR, D-15'],
+                        ['Glaucoma', 'Acquired tritan \u2192 mixed (late)', 'D-15, HRR'],
+                        ['Medications (ethambutol, Plaquenil)', '<span style="color:#f87171;">Red</span>-<span style="color:#34d399;">green</span> or mixed', 'Ishihara, HRR'],
+                        ['Media opacities (cataract)', 'Pseudo-tritan (<span style="color:#60a5fa;">blue</span> absorption)', 'D-15']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;"><strong>Note:</strong> Acquired defects are typically asymmetric between eyes (unlike congenital). Always test monocularly and compare.</div>';
+            html += buildCvSection('acquired', 'ph-warning-circle', 'Acquired Color Vision Loss', 'Conditions causing non-congenital defects', acquiredContent);
+
+            // Section F — Clinical Pearl
+            html += '<div class="tools-card">'
+                + '<div class="de-note" style="font-size:13px;line-height:1.7;margin:0;color:var(--ink);"><strong style="color:var(--accent);">Clinical Pearl:</strong> '
+                + 'Screen with Ishihara for <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span> defects. If abnormal or tritan suspected, confirm with HRR for type and severity. '
+                + 'D-15 differentiates moderate/severe from mild. Always test monocularly for acquired defects.</div>'
+                + '</div>';
+
+            el.innerHTML = html;
+        }
+
+        // --- AMD Staging Tool ---
+        var amdExpanded = { calculator: true, drusen: true, beckman: true, late: false, biomarkers: false };
+        var amdState = { od_drusen: false, od_pigment: false, os_drusen: false, os_pigment: false, rpd: false };
+
+        function toggleAmdSection(key) {
+            amdExpanded[key] = !amdExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderAmdTool(el);
+        }
+
+        function buildAmdSection(id, icon, title, summary, content) {
+            var exp = amdExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleAmdSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function amdExpandAll() {
+            for (var k in amdExpanded) amdExpanded[k] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderAmdTool(el);
+        }
+
+        function amdCollapseAll() {
+            for (var k in amdExpanded) amdExpanded[k] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderAmdTool(el);
+        }
+
+        function toggleAmdFactor(key) {
+            amdState[key] = !amdState[key];
+            updateAmdResult();
+        }
+
+        function updateAmdResult() {
+            var score = (amdState.od_drusen ? 1 : 0) + (amdState.od_pigment ? 1 : 0)
+                      + (amdState.os_drusen ? 1 : 0) + (amdState.os_pigment ? 1 : 0);
+            var riskMap = [0.3, 4, 12, 27, 50];
+            var rpdRiskMap = [3, 8, 29, 59, 72];
+            var risk = riskMap[score];
+            var rpdRisk = rpdRiskMap[score];
+            var useRpd = amdState.rpd;
+
+            var colorClass = 'de-normal';
+            var displayRisk = useRpd ? rpdRisk : risk;
+            if (displayRisk >= 25) colorClass = 'de-severe';
+            else if (displayRisk >= 10) colorClass = 'de-moderate';
+            else if (displayRisk >= 3) colorClass = 'de-mild';
+
+            var el = document.getElementById('amdResult');
+            if (!el) return;
+            el.innerHTML = '<div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;">Risk Score: ' + score + ' / 4</div>'
+                + '<div style="font-size:14px;color:var(--ink);">5-Year Progression Risk: <span class="' + colorClass + '" style="font-size:16px;">' + displayRisk + '%</span></div>'
+                + (useRpd ? '<div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">RPD-adjusted risk shown (baseline: ' + risk + '%)</div>' : '');
+        }
+
+        function amdReset() {
+            amdState = { od_drusen: false, od_pigment: false, os_drusen: false, os_pigment: false, rpd: false };
+            var el = document.getElementById('toolsContent');
+            if (el) renderAmdTool(el);
+        }
+
+        function renderAmdTool(el) {
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="amdExpandAll()">Expand All</button><button onclick="amdCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+
+            // Section A — AREDS Risk Calculator
+            var calcContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Score 1 point for each risk factor present in each eye. Maximum 4 points total.</p>';
+
+            // OD checkboxes
+            calcContent += '<div style="border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;">'
+                + '<div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:10px;"><i class="ph-duotone ph-eye" style="color:var(--accent);margin-right:4px;"></i> Right Eye (OD)</div>'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0 0 8px 0;">'
+                + '<input type="checkbox" ' + (amdState.od_drusen ? 'checked' : '') + ' onchange="toggleAmdFactor(\'od_drusen\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + 'Large drusen (\u2265125 \u00b5m) <span style="margin-left:auto;font-weight:600;color:var(--accent);">+1</span></label>'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;">'
+                + '<input type="checkbox" ' + (amdState.od_pigment ? 'checked' : '') + ' onchange="toggleAmdFactor(\'od_pigment\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + 'Pigmentary abnormalities <span style="margin-left:auto;font-weight:600;color:var(--accent);">+1</span></label>'
+                + '</div>';
+
+            // OS checkboxes
+            calcContent += '<div style="border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;">'
+                + '<div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:10px;"><i class="ph-duotone ph-eye" style="color:var(--accent);margin-right:4px;"></i> Left Eye (OS)</div>'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0 0 8px 0;">'
+                + '<input type="checkbox" ' + (amdState.os_drusen ? 'checked' : '') + ' onchange="toggleAmdFactor(\'os_drusen\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + 'Large drusen (\u2265125 \u00b5m) <span style="margin-left:auto;font-weight:600;color:var(--accent);">+1</span></label>'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;">'
+                + '<input type="checkbox" ' + (amdState.os_pigment ? 'checked' : '') + ' onchange="toggleAmdFactor(\'os_pigment\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + 'Pigmentary abnormalities <span style="margin-left:auto;font-weight:600;color:var(--accent);">+1</span></label>'
+                + '</div>';
+
+            // RPD checkbox
+            calcContent += '<div style="border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;background:var(--surface-raised);">'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;">'
+                + '<input type="checkbox" ' + (amdState.rpd ? 'checked' : '') + ' onchange="toggleAmdFactor(\'rpd\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + 'Reticular pseudodrusen (RPD) present <span style="font-size:11px;color:var(--ink-muted);margin-left:4px;">\u2014 elevates risk at all stages</span></label>'
+                + '</div>';
+
+            // Result box
+            calcContent += '<div class="iop-result-box" id="amdResult">'
+                + '<div style="color:var(--ink-muted);font-size:13px;">Check risk factors above to calculate score.</div>'
+                + '</div>';
+
+            // Reset button
+            calcContent += '<div style="margin-top:14px;text-align:right;">'
+                + '<button onclick="amdReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>'
+                + '</div>';
+
+            // 5-Year Risk Reference Table
+            calcContent += '<div class="de-subsection" style="margin-top:16px;">5-Year Risk Reference</div>'
+                + deTable(
+                    ['Risk Factors', '5-Year Risk', 'With RPD'],
+                    [
+                        ['0', '<span class="de-normal">0.3%</span>', '<span class="de-mild">3%</span>'],
+                        ['1', '<span class="de-mild">4%</span>', '<span class="de-moderate">8%</span>'],
+                        ['2', '<span class="de-moderate">12%</span>', '<span class="de-severe">29%</span>'],
+                        ['3', '<span class="de-severe">27%</span>', '<span class="de-severe">59%</span>'],
+                        ['4', '<span class="de-severe">50%</span>', '<span class="de-severe">72%</span>']
+                    ]
+                );
+
+            html += buildAmdSection('calculator', 'ph-calculator', 'AREDS Risk Calculator', 'Interactive 5-year AMD progression risk scoring', calcContent);
+
+            // Section B — Drusen Size Reference
+            var drusenContent = '<div style="margin:8px 0 14px 0;text-align:center;">'
+                + '<img src="https://eyewiki-images.s3.us-east-va.perf.cloud.ovh.us/a/a5/Drusen_with_corresponding_OCT.JPG" alt="Drusen fundus photo with corresponding OCT" style="max-width:100%;border-radius:8px;border:1px solid var(--border);" loading="lazy">'
+                + '<div class="de-note" style="text-align:center;margin-top:6px;">Drusen on color fundus photography with corresponding OCT cross-section.<br>'
+                + '<em>Image courtesy EyeWiki (AAO). CC BY-SA 3.0.</em></div>'
+                + '</div>'
+                + deTable(
+                    ['Category', 'Size', 'Clinical Reference', 'Significance'],
+                    [
+                        ['Small (drupelets)', '&lt;63 \u00b5m', '~venule width', '<span class="de-normal">Normal aging</span>'],
+                        ['Medium (intermediate)', '63\u2013124 \u00b5m', 'Between venule &amp; vein', '<span class="de-mild">Early AMD</span>'],
+                        ['Large', '\u2265125 \u00b5m', '\u2265large vein at disc', '<span class="de-severe">AREDS risk factor (+1 pt)</span>']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;"><strong>Reticular pseudodrusen (RPD):</strong> Subretinal drusenoid deposits located above the RPE. Identified on OCT as hyperreflective material between the RPE and ellipsoid zone. RPD substantially elevates progression risk at every AREDS stage and is an independent risk factor for both GA and neovascular AMD.</div>';
+
+            html += buildAmdSection('drusen', 'ph-circles-three', 'Drusen Size Reference', 'AREDS grading circles with clinical correlation', drusenContent);
+
+            // Section C — Beckman Classification
+            var beckmanContent = deTable(
+                ['Stage', 'Findings (within 2 DD of fovea, age &gt;55)'],
+                [
+                    ['<span class="de-normal">Normal Aging</span>', 'No drusen or small drusen (&lt;63 \u00b5m) only'],
+                    ['<span class="de-mild">Early AMD</span>', 'Medium drusen (63\u2013124 \u00b5m), no pigmentary changes'],
+                    ['<span class="de-moderate">Intermediate AMD</span>', 'Large drusen (\u2265125 \u00b5m) OR pigmentary abnormalities with \u2265medium drusen'],
+                    ['<span class="de-severe">Late AMD \u2014 GA</span>', 'Geographic atrophy'],
+                    ['<span class="de-severe">Late AMD \u2014 Neovascular</span>', 'Macular neovascularization \u00b1 exudation']
+                ]
+            );
+
+            html += buildAmdSection('beckman', 'ph-list-checks', 'Beckman Classification', 'Standardized AMD staging system', beckmanContent);
+
+            // Section D — Late AMD: GA & Neovascular
+            var lateContent = '<div style="margin:8px 0 14px 0;">'
+                + '<div style="display:flex;gap:12px;flex-wrap:wrap;">'
+                + '<div style="flex:1;min-width:140px;text-align:center;">'
+                + '<img src="https://cdn.ncbi.nlm.nih.gov/pmc/blobs/5dd3/11938193/54f9c09862c7/jceh_37_125_007_f05.jpg" alt="Geographic atrophy" style="max-width:100%;border-radius:8px;border:1px solid var(--border);" loading="lazy">'
+                + '<div class="de-note" style="text-align:center;">Atrophy (pale area) in dry AMD</div>'
+                + '</div>'
+                + '<div style="flex:1;min-width:140px;text-align:center;">'
+                + '<img src="https://cdn.ncbi.nlm.nih.gov/pmc/blobs/5dd3/11938193/2c2e4404288f/jceh_37_125_007_f07.jpg" alt="Neovascular AMD" style="max-width:100%;border-radius:8px;border:1px solid var(--border);" loading="lazy">'
+                + '<div class="de-note" style="text-align:center;">Submacular haemorrhage in advanced neovascular AMD</div>'
+                + '</div>'
+                + '</div>'
+                + '<div class="de-note"><em>Community Eye Health 2024;37(125). CC BY-NC-SA 4.0. PMC11938193.</em></div>'
+                + '</div>';
+
+            // GA subsection
+            lateContent += '<div class="de-subsection">Geographic Atrophy (GA)</div>'
+                + '<p style="font-size:13px;line-height:1.6;margin:4px 0 10px 0;color:var(--ink);">Well-demarcated area(s) of RPE and photoreceptor loss. Pigmentary changes at the margin of existing atrophy are a strong predictor of GA enlargement. Approximately 20% of late AMD presents as GA.</p>';
+
+            // MNV types
+            lateContent += '<div class="de-subsection">Macular Neovascularization (MNV) Types</div>'
+                + deTable(
+                    ['Type', 'Location', 'Features'],
+                    [
+                        ['Type 1', 'Sub-RPE', 'PED; may be nonexudative'],
+                        ['Type 2', 'Subretinal (above RPE)', 'Classic CNV; subretinal fluid/hemorrhage'],
+                        ['Type 3 / RAP', 'Intraretinal', 'Arises within retina']
+                    ]
+                );
+
+            html += buildAmdSection('late', 'ph-warning-circle', 'Late AMD: GA & Neovascular', 'Geographic atrophy and macular neovascularization subtypes', lateContent);
+
+            // Section E — OCT Biomarkers
+            var biomarkersContent = deTable(
+                ['Biomarker', 'Description', 'Significance'],
+                [
+                    ['Hyperreflective foci', '&lt;30 \u00b5m, any layer', 'Risk of neovascular conversion (24 mo)'],
+                    ['Drusen ooze', 'Drusenoid material into outer retina', '20\u00d7 risk of atrophy'],
+                    ['Drusen regression', 'Decrease in volume', 'May herald atrophy'],
+                    ['RPD', 'Subretinal deposits above RPE', 'Elevates risk at every stage']
+                ]
+            )
+            + '<div class="de-note" style="margin-top:8px;"><strong>Note:</strong> Anti-VEGF is NOT indicated for drusen ooze alone.</div>';
+
+            html += buildAmdSection('biomarkers', 'ph-scan', 'OCT Biomarkers', 'Key structural markers for AMD progression monitoring', biomarkersContent);
+
+            // Section F — Clinical Pearl
+            html += '<div class="tools-card">'
+                + '<div class="de-note" style="font-size:13px;line-height:1.7;">'
+                + '<strong style="color:var(--accent);"><i class="ph-duotone ph-lightbulb" style="margin-right:4px;"></i>Clinical Pearl:</strong> '
+                + 'Stage AMD with Beckman classification. Score AREDS risk factors bilaterally (large drusen + pigmentary changes, 1 pt each, max 4). '
+                + 'RPD substantially elevates progression risk. Monitor intermediate AMD with OCT q6\u201312 months and Amsler grid.'
+                + '</div></div>';
+
+            // Section G — Citations
+            html += '<div class="tools-card" style="font-size:11px;color:var(--ink-muted);line-height:1.6;">'
+                + '<strong>Citations:</strong><br>'
+                + 'Ferris FL 3rd et al. Clinical classification of age-related macular degeneration. <em>Ophthalmology.</em> 2013;120(4):844\u2013851. PMC11551519.<br>'
+                + 'Drusen image courtesy EyeWiki, American Academy of Ophthalmology. CC BY-SA 3.0.<br>'
+                + 'Community Eye Health. 2024;37(125). CC BY-NC-SA 4.0. PMC11938193.'
+                + '</div>';
+
+            el.innerHTML = html;
+
+            // Update result if any factors are checked
+            var anyChecked = amdState.od_drusen || amdState.od_pigment || amdState.os_drusen || amdState.os_pigment;
+            if (anyChecked) updateAmdResult();
+        }
+
+        // --- Diabetic Retinopathy Grading Tool ---
+        var drExpanded = { grader: true, reference: true, dme: false };
+        var drState = {
+            ma: false,
+            hemorrhages: false, hem_quads: 0,
+            hard_exudates: false,
+            cws: false,
+            venous_beading: false, vb_quads: 0,
+            irma: false,
+            nv: false,
+            vit_hem: false
+        };
+
+        function toggleDrSection(key) {
+            drExpanded[key] = !drExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderDrTool(el);
+        }
+
+        function buildDrSection(id, icon, title, summary, content) {
+            var exp = drExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleDrSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function drExpandAll() {
+            for (var k in drExpanded) drExpanded[k] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderDrTool(el);
+        }
+
+        function drCollapseAll() {
+            for (var k in drExpanded) drExpanded[k] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderDrTool(el);
+        }
+
+        function toggleDrFinding(key) {
+            drState[key] = !drState[key];
+            if (!drState[key]) {
+                if (key === 'hemorrhages') drState.hem_quads = 0;
+                if (key === 'venous_beading') drState.vb_quads = 0;
+            }
+            var el = document.getElementById('toolsContent');
+            if (el) renderDrTool(el);
+        }
+
+        function setDrQuads(key, val) {
+            drState[key] = drState[key] === val ? 0 : val;
+            var el = document.getElementById('toolsContent');
+            if (el) renderDrTool(el);
+        }
+
+        function getDrGrade() {
+            var s = drState;
+            // PDR takes priority
+            if (s.nv || s.vit_hem) return { grade: 'PDR', desc: 'Proliferative Diabetic Retinopathy', color: '#ef4444' };
+            // Severe NPDR — 4-2-1 rule
+            var severeCount = 0;
+            if (s.hemorrhages && s.hem_quads >= 4) severeCount++;
+            if (s.venous_beading && s.vb_quads >= 2) severeCount++;
+            if (s.irma) severeCount++;
+            if (severeCount >= 1) return { grade: 'Severe NPDR', desc: 'Severe Non-Proliferative DR (4-2-1 rule met)', color: '#f87171' };
+            // Moderate NPDR
+            if (s.ma && (s.hemorrhages || s.hard_exudates || s.cws || s.venous_beading))
+                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#fb923c' };
+            if ((s.hemorrhages || s.hard_exudates || s.cws || s.venous_beading))
+                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#fb923c' };
+            // Mild NPDR
+            if (s.ma) return { grade: 'Mild NPDR', desc: 'Microaneurysms only', color: '#facc15' };
+            return null;
+        }
+
+        function updateDrResult() {
+            var el = document.getElementById('drResult');
+            if (!el) return;
+            var result = getDrGrade();
+            if (!result) {
+                el.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Select findings above to determine DR grade.</div>';
+                return;
+            }
+            el.innerHTML = '<div style="font-size:18px;font-weight:700;color:' + result.color + ';margin-bottom:4px;">' + result.grade + '</div>'
+                + '<div style="font-size:13px;color:var(--ink);">' + result.desc + '</div>';
+        }
+
+        function drReset() {
+            drState = { ma: false, hemorrhages: false, hem_quads: 0, hard_exudates: false, cws: false, venous_beading: false, vb_quads: 0, irma: false, nv: false, vit_hem: false };
+            var el = document.getElementById('toolsContent');
+            if (el) renderDrTool(el);
+        }
+
+        function drQuadBtn(stateKey, val, label) {
+            var active = drState[stateKey] === val;
+            return '<button onclick="setDrQuads(\'' + stateKey + '\',' + val + ')" style="padding:4px 10px;font-size:12px;font-family:var(--sans);border-radius:5px;cursor:pointer;border:1px solid ' + (active ? 'var(--accent)' : 'var(--border)') + ';background:' + (active ? 'var(--accent)' : 'var(--surface)') + ';color:' + (active ? '#fff' : 'var(--ink-secondary)') + ';font-weight:' + (active ? '700' : '500') + ';transition:all 0.15s;">' + label + '</button>';
+        }
+
+        function renderDrTool(el) {
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="drExpandAll()">Expand All</button><button onclick="drCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+
+            // Section A — Interactive Grader
+            var graderContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Select all clinical findings present. The tool will determine the DR severity grade automatically.</p>';
+
+            // Checkbox helper
+            function drCheck(key, label, extra) {
+                return '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0 0 10px 0;">'
+                    + '<input type="checkbox" ' + (drState[key] ? 'checked' : '') + ' onchange="toggleDrFinding(\'' + key + '\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                    + label + '</label>' + (extra || '');
+            }
+
+            // NPDR Findings group
+            graderContent += '<div style="font-weight:700;font-size:12px;color:var(--ink-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">NPDR Findings</div>'
+                + '<div style="border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;">';
+
+            graderContent += drCheck('ma', 'Microaneurysms (MAs)');
+
+            // Hemorrhages with quadrant selector
+            graderContent += '<div style="display:flex;align-items:center;gap:8px;margin:0 0 10px 0;flex-wrap:wrap;">'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;white-space:nowrap;">'
+                + '<input type="checkbox" ' + (drState.hemorrhages ? 'checked' : '') + ' onchange="toggleDrFinding(\'hemorrhages\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + '&gt;20 Intraretinal hemorrhages</label>'
+                + (drState.hemorrhages ? '<div style="display:flex;gap:4px;align-items:center;">'
+                    + '<span style="font-size:11px;color:var(--ink-muted);margin-right:2px;">Quads:</span>'
+                    + drQuadBtn('hem_quads', 1, '1') + drQuadBtn('hem_quads', 2, '2') + drQuadBtn('hem_quads', 3, '3') + drQuadBtn('hem_quads', 4, '4')
+                    + '</div>' : '')
+                + '</div>'
+                + (drState.hemorrhages && drState.hem_quads === 4 ? '<div style="font-size:11px;color:#f87171;margin:-4px 0 10px 24px;font-weight:600;">4 quadrants \u2192 meets severe NPDR criterion (4-2-1)</div>' : '');
+
+            graderContent += drCheck('hard_exudates', 'Hard exudates');
+            graderContent += drCheck('cws', 'Cotton wool spots');
+
+            // Venous beading with quadrant selector
+            graderContent += '<div style="display:flex;align-items:center;gap:8px;margin:0 0 10px 0;flex-wrap:wrap;">'
+                + '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);margin:0;white-space:nowrap;">'
+                + '<input type="checkbox" ' + (drState.venous_beading ? 'checked' : '') + ' onchange="toggleDrFinding(\'venous_beading\')" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer;">'
+                + 'Venous beading</label>'
+                + (drState.venous_beading ? '<div style="display:flex;gap:4px;align-items:center;">'
+                    + '<span style="font-size:11px;color:var(--ink-muted);margin-right:2px;">Quads:</span>'
+                    + drQuadBtn('vb_quads', 1, '1') + drQuadBtn('vb_quads', 2, '\u22652')
+                    + '</div>' : '')
+                + '</div>'
+                + (drState.venous_beading && drState.vb_quads >= 2 ? '<div style="font-size:11px;color:#f87171;margin:-4px 0 10px 24px;font-weight:600;">\u22652 quadrants \u2192 meets severe NPDR criterion (4-2-1)</div>' : '');
+
+            graderContent += drCheck('irma', 'IRMA (intraretinal microvascular abnormality)');
+            graderContent += '</div>';
+
+            // PDR Findings group
+            graderContent += '<div style="font-weight:700;font-size:12px;color:var(--ink-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">PDR Findings</div>'
+                + '<div style="border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;">';
+            graderContent += drCheck('nv', 'Neovascularization (NVD / NVE)');
+            graderContent += drCheck('vit_hem', 'Vitreous / preretinal hemorrhage');
+            graderContent += '</div>';
+
+            // Result box
+            graderContent += '<div class="iop-result-box" id="drResult">'
+                + '<div style="color:var(--ink-muted);font-size:13px;">Select findings above to determine DR grade.</div>'
+                + '</div>';
+
+            // Reset
+            graderContent += '<div style="margin-top:14px;text-align:right;">'
+                + '<button onclick="drReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>'
+                + '</div>';
+
+            html += buildDrSection('grader', 'ph-check-square', 'Diabetic Retinopathy (DR) Grading Tool', 'Check observed findings to auto-grade NPDR/PDR severity using the 4-2-1 rule', graderContent);
+
+            // Section B — Reference Table
+            var refContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Based on the International Clinical Diabetic Retinopathy Severity Scale and the ETDRS 4-2-1 rule for severe NPDR.</p>'
+                + deTable(
+                    ['Grade', 'Findings'],
+                    [
+                        ['<span class="de-mild">Mild NPDR</span>', 'Microaneurysms only'],
+                        ['<span class="de-moderate">Moderate NPDR</span>', 'More than MAs: retinal hemorrhages, hard exudates, cotton wool spots, and/or venous beading'],
+                        ['<span class="de-severe">Severe NPDR</span>', '<strong>4-2-1 rule</strong> (any one of):<br>\u2022 Hemorrhages in all <strong>4</strong> quadrants<br>\u2022 Venous beading in \u2265<strong>2</strong> quadrants<br>\u2022 IRMA in \u2265<strong>1</strong> quadrant'],
+                        ['<span style="color:#ef4444;font-weight:600;">PDR</span>', 'Neovascularization (NVD/NVE) OR vitreous/preretinal hemorrhage']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;"><strong>4-2-1 rule:</strong> Meeting any <strong>one</strong> criterion = severe NPDR. Meeting <strong>two or more</strong> criteria = very severe NPDR (some classifications). If signs of neovascularization are present, classify as PDR regardless.</div>';
+
+            html += buildDrSection('reference', 'ph-table', 'Grading Reference', 'International Clinical DR Severity Scale with 4-2-1 rule', refContent);
+
+            // Section C — DME
+            var dmeContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Diabetic macular edema (DME) is graded independently of DR severity and can occur at any stage.</p>'
+                + '<div class="de-subsection">OCT-Based Classification</div>'
+                + deTable(
+                    ['Classification', 'Definition'],
+                    [
+                        ['Non\u2013center-involving', 'Retinal thickening or hard exudates within 1 DD of fovea but NOT involving the central subfield'],
+                        ['Center-involving (CI-DME)', 'Retinal thickening involving the central subfield (central 1 mm on OCT)']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;">CI-DME is the primary indication for anti-VEGF therapy. Non\u2013center-involving DME may be observed or treated with focal laser.</div>'
+                + '<div class="de-subsection" style="margin-top:16px;">Clinically Significant Macular Edema (CSME) \u2014 ETDRS</div>'
+                + '<p style="font-size:13px;line-height:1.6;margin:4px 0 10px 0;color:var(--ink);">Any one of the following on clinical (slit-lamp) exam:</p>'
+                + deTable(
+                    ['Criterion', 'Definition'],
+                    [
+                        ['1', 'Retinal edema located at or within 500 \u00b5m of the center of the macula'],
+                        ['2', 'Hard exudates at or within 500 \u00b5m of the center if associated with thickening of adjacent retina'],
+                        ['3', 'A zone of thickening larger than 1 disc area if located within 1 disc diameter of the center of the macula']
+                    ]
+                )
+                + '<div class="de-note" style="margin-top:10px;">CSME is a clinical (biomicroscopic) diagnosis from the ETDRS. Modern practice uses OCT-based CI-DME classification to guide anti-VEGF treatment decisions, but CSME criteria remain relevant for clinical exam and focal laser indications.</div>';
+
+            html += buildDrSection('dme', 'ph-drop-half', 'Diabetic Macular Edema', 'DME classification (independent of DR grade)', dmeContent);
+
+            // Clinical Pearl
+            html += '<div class="tools-card">'
+                + '<div class="de-note" style="font-size:13px;line-height:1.7;">'
+                + '<strong style="color:var(--accent);"><i class="ph-duotone ph-lightbulb" style="margin-right:4px;"></i>Clinical Pearl:</strong> '
+                + 'Grade DR severity using the 4-2-1 rule for severe NPDR. Always assess for DME independently \u2014 it can occur at any DR stage and is the most common cause of vision loss in diabetic eye disease. '
+                + 'Refer severe NPDR and PDR promptly for retinal evaluation.'
+                + '</div></div>';
+
+            // Citation
+            html += '<div class="tools-card" style="font-size:11px;color:var(--ink-muted);line-height:1.6;">'
+                + '<strong>Citations:</strong><br>'
+                + 'Wilkinson CP et al. Proposed international clinical diabetic retinopathy and diabetic macular edema disease severity scales. <em>Ophthalmology.</em> 2003;110(9):1677\u20131682.<br>'
+                + 'Early Treatment Diabetic Retinopathy Study Research Group. ETDRS Report No. 12. <em>Ophthalmology.</em> 1991;98(5 Suppl):823\u2013833.'
+                + '</div>';
+
+            el.innerHTML = html;
+
+            // Update result if anything is checked
+            var anyChecked = drState.ma || drState.hemorrhages || drState.hard_exudates || drState.cws || drState.venous_beading || drState.irma || drState.nv || drState.vit_hem;
+            if (anyChecked) updateDrResult();
         }
 
         function switchClSub(sub) {
