@@ -3206,7 +3206,8 @@
                 const absCyl = Math.abs(cyl);
                 const absMin = Math.abs(lens.cylMin);
                 const absMax = Math.abs(lens.cylMax);
-                if (absCyl < absMin || absCyl > absMax) return false;
+                // Allow cyl up to 0.25 beyond max (will snap down to nearest available step)
+                if (absCyl < absMin || absCyl > absMax + 0.25) return false;
             }
 
             return true;
