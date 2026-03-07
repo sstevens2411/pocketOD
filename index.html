@@ -2657,16 +2657,20 @@
             font-family: var(--sans);
         }
         .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: var(--ink-muted); border-color: rgba(255,255,255,0.2); }
-        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-all.active,
-        .browse-filter-btn.bf-mod:hover, .browse-filter-btn.bf-mod.active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); color: var(--ink); }
+        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-mod:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); color: var(--ink); }
+        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); color: #fff; font-weight: 800; box-shadow: 0 0 8px rgba(255,255,255,0.15); }
         .browse-filter-btn.bf-sphere { color: #3b9eff; border-color: rgba(59,158,255,0.4); }
-        .browse-filter-btn.bf-sphere:hover, .browse-filter-btn.bf-sphere.active { background: rgba(59,158,255,0.15); border-color: #3b9eff; color: #3b9eff; }
+        .browse-filter-btn.bf-sphere:hover { background: rgba(59,158,255,0.15); border-color: #3b9eff; color: #3b9eff; }
+        .browse-filter-btn.bf-sphere.active { background: rgba(59,158,255,0.25); border-color: #3b9eff; color: #3b9eff; font-weight: 800; box-shadow: 0 0 10px rgba(59,158,255,0.3); }
         .browse-filter-btn.bf-toric { color: #f59e0b; border-color: rgba(245,158,11,0.4); }
-        .browse-filter-btn.bf-toric:hover, .browse-filter-btn.bf-toric.active { background: rgba(245,158,11,0.15); border-color: #f59e0b; color: #f59e0b; }
+        .browse-filter-btn.bf-toric:hover { background: rgba(245,158,11,0.15); border-color: #f59e0b; color: #f59e0b; }
+        .browse-filter-btn.bf-toric.active { background: rgba(245,158,11,0.25); border-color: #f59e0b; color: #f59e0b; font-weight: 800; box-shadow: 0 0 10px rgba(245,158,11,0.3); }
         .browse-filter-btn.bf-multifocal { color: #2dd4bf; border-color: rgba(45,212,191,0.4); }
-        .browse-filter-btn.bf-multifocal:hover, .browse-filter-btn.bf-multifocal.active { background: rgba(45,212,191,0.15); border-color: #2dd4bf; color: #2dd4bf; }
+        .browse-filter-btn.bf-multifocal:hover { background: rgba(45,212,191,0.15); border-color: #2dd4bf; color: #2dd4bf; }
+        .browse-filter-btn.bf-multifocal.active { background: rgba(45,212,191,0.25); border-color: #2dd4bf; color: #2dd4bf; font-weight: 800; box-shadow: 0 0 10px rgba(45,212,191,0.3); }
         .browse-filter-btn.bf-mftoric { color: #c084fc; border-color: rgba(192,132,252,0.4); }
-        .browse-filter-btn.bf-mftoric:hover, .browse-filter-btn.bf-mftoric.active { background: rgba(192,132,252,0.15); border-color: #c084fc; color: #c084fc; }
+        .browse-filter-btn.bf-mftoric:hover { background: rgba(192,132,252,0.15); border-color: #c084fc; color: #c084fc; }
+        .browse-filter-btn.bf-mftoric.active { background: rgba(192,132,252,0.25); border-color: #c084fc; color: #c084fc; font-weight: 800; box-shadow: 0 0 10px rgba(192,132,252,0.3); }
         .browse-table th.browse-th-active {
             color: var(--accent);
         }
@@ -2825,6 +2829,21 @@
             color: var(--ink-muted);
             line-height: 1.5;
         }
+        .ref-toggle-wrap { margin-top: 14px; }
+        .ref-toggle-btn {
+            background: none; border: 1px solid var(--border); border-radius: 6px;
+            color: var(--ink-muted); cursor: pointer; font-size: 12px; font-weight: 600;
+            padding: 6px 14px; font-family: var(--sans); display: inline-flex;
+            align-items: center; gap: 6px; transition: all 0.15s;
+        }
+        .ref-toggle-btn:hover { border-color: var(--ink-muted); }
+        .ref-toggle-btn .ph-caret-right { transition: transform 0.2s; font-size: 14px; }
+        .ref-toggle-wrap.ref-open .ref-toggle-btn .ph-caret-right { transform: rotate(90deg); }
+        .ref-toggle-content {
+            display: none; margin-top: 10px; font-size: 11px;
+            color: var(--ink-muted); line-height: 1.6;
+        }
+        .ref-toggle-wrap.ref-open .ref-toggle-content { display: block; }
         .iop-eye-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -3216,6 +3235,62 @@
         .gonio-hotspot.tip-right::after { left: 0; transform: none; }
         .gonio-hotspot.tip-below::after { bottom: auto; top: calc(100% + 6px); }
 
+        /* Neuro Visual Field Index */
+        .vf-layout { display: flex; gap: 24px; align-items: flex-start; }
+        .vf-pathway-col { flex: 1; min-width: 0; }
+        .vf-defects-col { flex: 0 0 220px; }
+        .vf-pathway-svg { width: 100%; height: auto; display: block; }
+        .vf-lesion-btn {
+            cursor: pointer; transition: opacity 0.15s;
+        }
+        .vf-lesion-btn:hover .vf-lesion-ring { stroke-width: 3; stroke: var(--accent); }
+        .vf-lesion-btn.active .vf-lesion-num { fill: var(--bg); }
+        .vf-lesion-btn.active .vf-lesion-ring { fill: var(--accent); stroke: var(--accent); }
+        .vf-defect-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 10px; cursor: pointer;
+            border: 1.5px solid transparent; transition: all 0.15s;
+            margin-bottom: 6px;
+        }
+        .vf-defect-row:hover { background: rgba(255,255,255,0.04); }
+        .vf-defect-row.active {
+            background: rgba(6,182,212,0.08);
+            border-color: rgba(6,182,212,0.35);
+        }
+        .vf-defect-label {
+            font-size: 12px; font-weight: 600; color: var(--ink-secondary);
+            line-height: 1.3; flex: 1;
+        }
+        .vf-defect-row.active .vf-defect-label { color: var(--accent); }
+        .vf-defect-num {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: rgba(255,255,255,0.08); color: var(--ink-muted);
+            font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .vf-defect-row.active .vf-defect-num { background: var(--accent); color: var(--bg); }
+        .vf-eye-pair { display: flex; gap: 4px; flex-shrink: 0; }
+        .vf-eye-pair svg { width: 32px; height: 32px; }
+        .vf-info-panel {
+            margin-top: 16px; padding: 16px 20px; border-radius: 10px;
+            border: 1px solid var(--border); background: var(--surface);
+            font-size: 13px; line-height: 1.6; color: var(--ink);
+        }
+        .vf-info-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--accent); }
+        .vf-info-detail { color: var(--ink-secondary); font-size: 12px; margin-top: 4px; }
+        .vf-info-detail strong { color: var(--ink); }
+        .vf-pathway-wrap {
+            position: relative; background: rgba(255,255,255,0.03);
+            border-radius: 12px; padding: 12px; border: 1px solid var(--border);
+        }
+        @media (max-width: 700px) {
+            .vf-layout { flex-direction: column; }
+            .vf-defects-col { flex: none; width: 100%; }
+            .vf-defect-row { padding: 8px 10px; }
+            .vf-eye-pair svg { width: 28px; height: 28px; }
+        }
+
         @media (max-width: 600px) {
             .iop-form-grid { grid-template-columns: 1fr; }
             .iop-eye-row { grid-template-columns: 1fr; }
@@ -3285,6 +3360,10 @@
     </div>
 
     <script>
+        // Force scroll to top on page load/refresh
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+
         // LENS DATABASE
         const LENSES = [
             // ALCON
@@ -6309,6 +6388,8 @@
                 renderAmdTool(el);
             } else if (toolsActiveTool === 'dr') {
                 renderDrTool(el);
+            } else if (toolsActiveTool === 'vfindex') {
+                renderVfIndexTool(el);
             }
         }
 
@@ -6337,8 +6418,11 @@
               keywords:'color vision ishihara hrr d-15 d15 farnsworth protan deutan tritan cvd red green blue cone deficiency anomalous acquired optic neuropathy' },
             { id:'amd', icon:'ph-eye', title:'AMD Staging', desc:'AREDS severity scale & interactive risk calculator',
               keywords:'amd age related macular degeneration drusen geographic atrophy ga cnv choroidal neovascular beckman areds pigment rpe dry wet staging grading' },
-            { id:'dr', icon:'ph-drop', title:'Diabetic Retinopathy', desc:'Interactive DR grading by clinical findings',
-              keywords:'diabetic retinopathy dr npdr pdr mild moderate severe proliferative microaneurysm hemorrhage cotton wool spot venous beading irma neovascularization 4-2-1 grading' }
+            { id:'dr', icon:'dr-svg', title:'Diabetic Retinopathy', desc:'Interactive DR grading by clinical findings',
+              keywords:'diabetic retinopathy dr npdr pdr mild moderate severe proliferative microaneurysm hemorrhage cotton wool spot venous beading irma neovascularization 4-2-1 grading',
+              svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path></svg>' },
+            { id:'vfindex', icon:'ph-brain', title:'Neuro Visual Field Index', desc:'Interactive visual pathway lesion localizer',
+              keywords:'visual field defect hemianopia hemianopsia quadrantanopia scotoma bitemporal homonymous optic chiasm tract radiation cortex lesion neurological pathway macular sparing meyer loop parietal temporal occipital lgn lateral geniculate' }
         ];
 
         function onToolsSearch(val) {
@@ -6462,9 +6546,12 @@
                         </div>
                     </div>
 
-                    <div class="iop-disclaimer">
-                        <strong>Note:</strong> CCT-based IOP adjustment is an estimate. Corneal biomechanics (e.g. post-LASIK, keratoconus, edema) can affect accuracy.
-                        Always interpret in clinical context. Based on the Ehlers correction model (ref. 545 \u00B5m).
+                    <div class="ref-toggle-wrap">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Note:</strong> CCT-based IOP adjustment is an estimate. Corneal biomechanics (e.g. post-LASIK, keratoconus, edema) can affect accuracy.
+                            Always interpret in clinical context. Based on the Ehlers correction model (ref. 545 \u00B5m).
+                        </div>
                     </div>
                 </div>
 
@@ -6558,9 +6645,29 @@
             return 'very-high';
         }
 
+        var glaucFieldOrder = ['glaucAge', 'glaucIop', 'glaucCct', 'glaucVcdr', 'glaucVfInput'];
+        var glaucFieldKeys = { glaucAge:'age', glaucIop:'iop', glaucCct:'cct', glaucVcdr:'vcdr', glaucVfInput:'vf' };
+        // Min digits to auto-advance (age=2, iop=2, cct=3, vcdr needs decimal so skip, vf needs decimal so skip)
+        var glaucAutoLen = { glaucAge:2, glaucIop:2, glaucCct:3 };
+
         function onGlaucInput(field, val) {
             glaucState[field] = val;
             renderGlaucResult();
+
+            // Auto-advance: find which input ID corresponds to this field
+            var inputEl = document.activeElement;
+            if (!inputEl || !inputEl.id) return;
+            var curId = inputEl.id;
+            var minLen = glaucAutoLen[curId];
+            if (minLen && val && val.length >= minLen) {
+                var idx = glaucFieldOrder.indexOf(curId);
+                if (idx >= 0 && idx < glaucFieldOrder.length - 1) {
+                    var nextEl = document.getElementById(glaucFieldOrder[idx + 1]);
+                    if (nextEl && !nextEl.value) {
+                        setTimeout(function() { nextEl.focus(); }, 50);
+                    }
+                }
+            }
         }
 
         function onGlaucVfType(val) {
@@ -6701,9 +6808,12 @@
                         <button onclick="glaucReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
                     </div>
 
-                    <div class="iop-disclaimer">
-                        <strong>Reference:</strong> OHTS-EGPS Glaucoma Risk Point System Estimator. Gordon et al., <em>Ophthalmology</em> 2007.
-                        Predictions are designed to aid but not replace clinical judgment. Valid for ocular hypertensive patients (IOP 20\u201332 mmHg) without prior glaucoma.
+                    <div class="ref-toggle-wrap">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Reference:</strong> OHTS-EGPS Glaucoma Risk Point System Estimator. Gordon et al., <em>Ophthalmology</em> 2007.
+                            Predictions are designed to aid but not replace clinical judgment. Valid for ocular hypertensive patients (IOP 20\u201332 mmHg) without prior glaucoma.
+                        </div>
                     </div>
                 </div>
 
@@ -6776,9 +6886,35 @@
             return total >= 58 ? total : null;
         }
 
+        var plaqFieldOrder = ['plaqWeight', 'plaqDose', 'plaqSex', 'plaqHFt', 'plaqHIn', 'plaqDur'];
+        var plaqAutoLen = { plaqWeight: 3, plaqDose: 3, plaqHFt: 1, plaqHIn: 1 };
+
         function onPlaqInput(field, val) {
             plaqState[field] = val;
             renderPlaqResult();
+
+            var inputEl = document.activeElement;
+            if (!inputEl || !inputEl.id) return;
+            var curId = inputEl.id;
+            // Skip auto-advance for weight unit toggle
+            if (curId === 'plaqWeightUnit') return;
+            var idx = plaqFieldOrder.indexOf(curId);
+            if (idx < 0 || idx >= plaqFieldOrder.length - 1) return;
+
+            var shouldAdvance = false;
+            var minLen = plaqAutoLen[curId];
+            if (minLen) {
+                if (val && val.length >= minLen) shouldAdvance = true;
+            } else if (inputEl.tagName === 'SELECT' && val) {
+                shouldAdvance = true;
+            }
+
+            if (shouldAdvance) {
+                var nextEl = document.getElementById(plaqFieldOrder[idx + 1]);
+                if (nextEl) {
+                    setTimeout(function() { nextEl.focus(); }, 50);
+                }
+            }
         }
 
         function onPlaqCheck(field) {
@@ -6988,10 +7124,13 @@
                         <button onclick="plaqReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
                     </div>
 
-                    <div class="iop-disclaimer">
-                        <strong>Reference:</strong> AAO Recommendations on Screening for HCQ Retinopathy (2016, revised 2025).
-                        Marmor et al., <em>Ophthalmology</em> 2016. Ideal body weight via Devine formula.
-                        This tool does not replace clinical judgment. Doses must be adjusted for renal insufficiency.
+                    <div class="ref-toggle-wrap">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Reference:</strong> AAO Recommendations on Screening for HCQ Retinopathy (2016, revised 2025).
+                            Marmor et al., <em>Ophthalmology</em> 2016. Ideal body weight via Devine formula.
+                            This tool does not replace clinical judgment. Doses must be adjusted for renal insufficiency.
+                        </div>
                     </div>
                 </div>
 
@@ -7086,9 +7225,35 @@
             return points;
         }
 
+        var myopDesktopOrder = ['myopAgeInput', 'myopRxInput', 'myopSex', 'myopEth', 'myopTx'];
+        var myopMobileOrder = ['myopAgeSel', 'myopRxSel', 'myopSex', 'myopEth', 'myopTx'];
+        var myopAutoLen = { myopAgeInput: 2 };
+
         function onMyopInput(field, val) {
             myopState[field] = val;
             renderMyopResult();
+
+            var inputEl = document.activeElement;
+            if (!inputEl || !inputEl.id) return;
+            var curId = inputEl.id;
+            var order = myopDesktopOrder.indexOf(curId) >= 0 ? myopDesktopOrder : myopMobileOrder;
+            var idx = order.indexOf(curId);
+            if (idx < 0 || idx >= order.length - 1) return;
+
+            var shouldAdvance = false;
+            var minLen = myopAutoLen[curId];
+            if (minLen) {
+                if (val && val.length >= minLen) shouldAdvance = true;
+            } else if (inputEl.tagName === 'SELECT' && val) {
+                shouldAdvance = true;
+            }
+
+            if (shouldAdvance) {
+                var nextEl = document.getElementById(order[idx + 1]);
+                if (nextEl) {
+                    setTimeout(function() { nextEl.focus(); }, 50);
+                }
+            }
         }
 
         function myopReset() {
@@ -7437,10 +7602,13 @@
                         <button onclick="myopReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
                     </div>
 
-                    <div class="iop-disclaimer">
-                        <strong>Note:</strong> Projections are population-based estimates and individual progression varies widely.
-                        Treatment efficacy from published meta-analyses; actual results depend on compliance, fitting, and individual response.
-                        Not a substitute for clinical assessment. References: Mutti et al., <em>IOVS</em> 2021; Donovan et al., <em>IOVS</em> 2012.
+                    <div class="ref-toggle-wrap">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Note:</strong> Projections are population-based estimates and individual progression varies widely.
+                            Treatment efficacy from published meta-analyses; actual results depend on compliance, fitting, and individual response.
+                            Not a substitute for clinical assessment. References: Mutti et al., <em>IOVS</em> 2021; Donovan et al., <em>IOVS</em> 2012.
+                        </div>
                     </div>
                 </div>
 
@@ -8076,10 +8244,12 @@
             html += buildGonioSection('shaffer', 'ph-chart-bar', 'Shaffer Grading System', 'Angle width grades 0\u20134 with clinical significance', shafferContent);
 
             // Section C — Citation
-            html += '<div class="tools-card" style="font-size:11px;color:var(--ink-muted);line-height:1.6;">'
+            html += '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
                 + '<strong>Citation:</strong> Nolan W, Onakoya A. Gonioscopy skills and techniques. <em>Community Eye Health.</em> 2022;34(112):40-42.'
                 + '<br>Images reproduced under Creative Commons Attribution Non-Commercial License (CC BY-NC 4.0).'
-                + '</div>';
+                + '</div></div>';
 
             el.innerHTML = html;
         }
@@ -8430,12 +8600,13 @@
                 + '</div></div>';
 
             // Section G — Citations
-            html += '<div class="tools-card" style="font-size:11px;color:var(--ink-muted);line-height:1.6;">'
-                + '<strong>Citations:</strong><br>'
+            html += '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
                 + 'Ferris FL 3rd et al. Clinical classification of age-related macular degeneration. <em>Ophthalmology.</em> 2013;120(4):844\u2013851. PMC11551519.<br>'
                 + 'Drusen image courtesy EyeWiki, American Academy of Ophthalmology. CC BY-SA 3.0.<br>'
                 + 'Community Eye Health. 2024;37(125). CC BY-NC-SA 4.0. PMC11938193.'
-                + '</div>';
+                + '</div></div>';
 
             el.innerHTML = html;
 
@@ -8669,11 +8840,12 @@
                 + '</div></div>';
 
             // Citation
-            html += '<div class="tools-card" style="font-size:11px;color:var(--ink-muted);line-height:1.6;">'
-                + '<strong>Citations:</strong><br>'
+            html += '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
                 + 'Wilkinson CP et al. Proposed international clinical diabetic retinopathy and diabetic macular edema disease severity scales. <em>Ophthalmology.</em> 2003;110(9):1677\u20131682.<br>'
                 + 'Early Treatment Diabetic Retinopathy Study Research Group. ETDRS Report No. 12. <em>Ophthalmology.</em> 1991;98(5 Suppl):823\u2013833.'
-                + '</div>';
+                + '</div></div>';
 
             el.innerHTML = html;
 
@@ -8689,6 +8861,515 @@
             document.querySelector('main.main').style.display = sub === 'prescribe' ? '' : 'none';
             document.getElementById('browsePage').style.display = sub === 'browse' ? '' : 'none';
             if (sub === 'browse') renderBrowse();
+        }
+
+        // ===== NEURO VISUAL FIELD INDEX TOOL =====
+
+        var vfActiveDefect = null;
+        var vfDebugMode = false;
+        var vfDebugPositions = {}; // overrides keyed by label: { A:{x,y}, B:{x,y}, ... }
+
+        function selectVfDefect(idx) {
+            if (vfDebugMode) return; // disable selection clicks while dragging
+            vfActiveDefect = (vfActiveDefect === idx) ? null : idx;
+            var el = document.getElementById('toolsContent');
+            if (el) renderVfIndexTool(el);
+        }
+
+        function toggleVfDebug() {
+            vfDebugMode = !vfDebugMode;
+            var el = document.getElementById('toolsContent');
+            if (el) renderVfIndexTool(el);
+        }
+
+        function vfLogPositions() {
+            var svgEl = document.querySelector('.vf-pathway-svg');
+            if (!svgEl) return;
+            var groups = svgEl.querySelectorAll('[data-lesion-id]');
+            var lines = ['var lesions = ['];
+            groups.forEach(function(g) {
+                var label = g.getAttribute('data-lesion-id');
+                var circle = g.querySelector('circle');
+                var x = Math.round(parseFloat(circle.getAttribute('cx')));
+                var y = Math.round(parseFloat(circle.getAttribute('cy')));
+                var def = null;
+                for (var i = 0; i < VF_DEFECTS.length; i++) {
+                    if (VF_DEFECTS[i].num === label) { def = VF_DEFECTS[i]; break; }
+                }
+                var comment = def ? def.label : '';
+                lines.push('    { id: ' + (label.charCodeAt(0) - 65) + ', x: ' + x + ', y: ' + y + ', label: \'' + label + '\' },  // ' + comment);
+            });
+            lines.push('];');
+            var output = lines.join('\n');
+            console.log('%c[VF Debug] Copy this into buildVfPathwaySvg:', 'color:#06b6d4;font-weight:bold');
+            console.log(output);
+        }
+
+        function initVfDebugDrag() {
+            var svgEl = document.querySelector('.vf-pathway-svg');
+            if (!svgEl) return;
+
+            // Create floating tooltip
+            var tip = document.getElementById('vfDebugTip');
+            if (!tip) {
+                tip = document.createElement('div');
+                tip.id = 'vfDebugTip';
+                tip.style.cssText = 'position:fixed;background:#000;color:#0f0;font-family:monospace;font-size:12px;padding:4px 8px;border-radius:4px;border:1px solid #0f0;pointer-events:none;display:none;z-index:9999;white-space:nowrap;';
+                document.body.appendChild(tip);
+            }
+
+            var dragging = null;
+
+            function svgCoords(e) {
+                var pt = svgEl.createSVGPoint();
+                var touch = e.touches ? e.touches[0] : e;
+                pt.x = touch.clientX;
+                pt.y = touch.clientY;
+                return pt.matrixTransform(svgEl.getScreenCTM().inverse());
+            }
+
+            function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+            var groups = svgEl.querySelectorAll('[data-lesion-id]');
+            groups.forEach(function(g) {
+                function onStart(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var circle = g.querySelector('circle');
+                    var text = g.querySelector('text');
+                    dragging = { id: g.getAttribute('data-lesion-id'), g: g, circle: circle, text: text };
+                    g.style.cursor = 'grabbing';
+                }
+                g.addEventListener('mousedown', onStart);
+                g.addEventListener('touchstart', onStart, { passive: false });
+            });
+
+            function onMove(e) {
+                if (!dragging) return;
+                e.preventDefault();
+                var p = svgCoords(e);
+                var x = clamp(p.x, 12, 368);
+                var y = clamp(p.y, 12, 608);
+
+                dragging.circle.setAttribute('cx', x);
+                dragging.circle.setAttribute('cy', y);
+                dragging.text.setAttribute('x', x);
+                dragging.text.setAttribute('y', y + 4);
+                vfDebugPositions[dragging.id] = { x: Math.round(x), y: Math.round(y) };
+
+                var touch = e.touches ? e.touches[0] : e;
+                tip.style.display = 'block';
+                tip.style.left = (touch.clientX + 18) + 'px';
+                tip.style.top = (touch.clientY - 14) + 'px';
+                tip.textContent = dragging.id + ': x=' + Math.round(x) + '  y=' + Math.round(y);
+            }
+
+            function onEnd() {
+                if (!dragging) {
+                    return;
+                }
+                dragging.g.style.cursor = 'grab';
+                dragging = null;
+                tip.style.display = 'none';
+            }
+
+            svgEl.addEventListener('mousemove', onMove);
+            svgEl.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('mouseup', onEnd);
+            document.addEventListener('touchend', onEnd);
+        }
+
+        // Shift+D keyboard shortcut
+        document.addEventListener('keydown', function(e) {
+            if (e.shiftKey && e.key === 'D' && toolsActiveTool === 'vfindex') {
+                e.preventDefault();
+                toggleVfDebug();
+            }
+        });
+
+        var VF_DEFECTS = [
+            {
+                num: 'A', label: 'Central Scotoma',
+                os: { type:'central' }, od: { type:'central' },
+                location: 'Optic nerve head / macular fibers',
+                etiology: 'Optic neuritis, macular disease, toxic/nutritional optic neuropathy',
+                notes: 'Central scotoma in the affected eye. Relative afferent pupillary defect (RAPD) typically present. May be unilateral or bilateral depending on etiology.'
+            },
+            {
+                num: 'B', label: 'Monocular Vision Loss',
+                os: { type:'clear' }, od: { type:'full' },
+                location: 'Optic nerve (pre-chiasmal)',
+                etiology: 'Optic neuritis, ischemic optic neuropathy (AION/NAION), optic nerve compression, traumatic optic neuropathy',
+                notes: 'Complete loss in the ipsilateral eye. RAPD present. Contralateral eye has a normal visual field. Optic disc may show edema acutely or pallor chronically.'
+            },
+            {
+                num: 'C', label: 'Bitemporal Hemianopia',
+                os: { type:'hemi-right' }, od: { type:'hemi-left' },
+                location: 'Optic chiasm (central crossing fibers)',
+                etiology: 'Pituitary adenoma (most common), craniopharyngioma, meningioma, aneurysm, demyelination',
+                notes: 'Loss of temporal fields bilaterally. Nasal retinal fibers cross at the chiasm; compression affects these decussating fibers. May start as superior bitemporal defects (from inferior chiasmal compression by a pituitary tumor pushing upward).'
+            },
+            {
+                num: 'D', label: 'Contralateral Homonymous Hemianopia',
+                os: { type:'hemi-left' }, od: { type:'hemi-left' },
+                location: 'Optic tract (post-chiasmal)',
+                etiology: 'Stroke, trauma, tumor, demyelination',
+                notes: 'Loss of the contralateral visual field in both eyes. Tract lesions may produce an incongruous defect (unequal in the two eyes) and may have a relative afferent pupillary defect in the contralateral eye (due to more crossed fibers being affected).'
+            },
+            {
+                num: 'E', label: 'Contralateral Superior Quadrantanopia',
+                os: { type:'quad-upper-left' }, od: { type:'quad-upper-left' },
+                location: 'Temporal lobe \u2014 Meyer\u2019s loop (inferior optic radiations)',
+                etiology: 'MCA stroke, temporal lobe tumor, surgery (temporal lobectomy), herpes encephalitis',
+                notes: '\u201CPie in the sky\u201D \u2014 contralateral superior quadrant loss. Meyer\u2019s loop carries inferior retinal fibers (superior visual field) and sweeps forward into the temporal lobe before turning posteriorly.'
+            },
+            {
+                num: 'F', label: 'Contralateral Inferior Quadrantanopia',
+                os: { type:'quad-lower-left' }, od: { type:'quad-lower-left' },
+                location: 'Parietal lobe (superior optic radiations)',
+                etiology: 'MCA stroke, parietal lobe tumor, trauma',
+                notes: '\u201CPie on the floor\u201D \u2014 contralateral inferior quadrant loss. Superior optic radiations traverse the parietal lobe carrying superior retinal fibers (inferior visual field).'
+            },
+            {
+                num: 'G', label: 'Contralateral Homonymous Hemianopia',
+                os: { type:'hemi-left' }, od: { type:'hemi-left' },
+                location: 'Complete optic radiations or lateral geniculate nucleus (LGN)',
+                etiology: 'PCA stroke, LGN infarct, tumor',
+                notes: 'Complete homonymous hemianopia. LGN lesions can produce unique sectoral patterns. Complete radiation lesions produce a congruous defect (equal in both eyes).'
+            },
+            {
+                num: 'H', label: 'Homonymous Hemianopia with Macular Sparing',
+                os: { type:'hemi-left-macular' }, od: { type:'hemi-left-macular' },
+                location: 'Occipital cortex (primary visual cortex, V1)',
+                etiology: 'PCA stroke (most common), occipital tumor, trauma',
+                notes: 'Contralateral homonymous hemianopia with macular sparing. The occipital pole (macular representation) often has dual blood supply from PCA and MCA, so PCA occlusion may spare central vision. Highly congruous defects.'
+            }
+        ];
+
+        function vfEyeSvg(defect) {
+            var r = 14, cx = 16, cy = 16;
+            var cSee = 'rgba(200,200,210,0.85)';  // light grey = intact vision
+            var cLoss = 'rgba(10,10,15,0.9)';     // black = vision loss
+            var svg = '<svg width="32" height="32" viewBox="0 0 32 32">';
+
+            // Fill entire circle with "intact" grey first, then paint defect black on top
+            svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + cSee + '"/>';
+
+            if (defect.type === 'full') {
+                svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + cLoss + '"/>';
+            } else if (defect.type === 'clear') {
+                // normal — all grey, no defect
+            } else if (defect.type === 'central') {
+                svg += '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="' + cLoss + '"/>';
+            } else if (defect.type === 'hemi-left') {
+                svg += '<path d="M' + cx + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 0 0 ' + cx + ' ' + (cy + r) + ' Z" fill="' + cLoss + '"/>';
+            } else if (defect.type === 'hemi-right') {
+                svg += '<path d="M' + cx + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 0 1 ' + cx + ' ' + (cy + r) + ' Z" fill="' + cLoss + '"/>';
+            } else if (defect.type === 'quad-upper-left') {
+                svg += '<path d="M' + cx + ' ' + cy + ' L' + cx + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 0 0 ' + (cx - r) + ' ' + cy + ' Z" fill="' + cLoss + '"/>';
+            } else if (defect.type === 'quad-lower-left') {
+                svg += '<path d="M' + cx + ' ' + cy + ' L' + (cx - r) + ' ' + cy + ' A' + r + ' ' + r + ' 0 0 0 ' + cx + ' ' + (cy + r) + ' Z" fill="' + cLoss + '"/>';
+            } else if (defect.type === 'hemi-left-macular') {
+                svg += '<path d="M' + cx + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 0 0 ' + cx + ' ' + (cy + r) + ' Z" fill="' + cLoss + '"/>';
+                // macular sparing — small grey circle at center
+                svg += '<circle cx="' + (cx - 1) + '" cy="' + cy + '" r="4" fill="' + cSee + '"/>';
+            }
+
+            // Outline
+            svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>';
+
+            svg += '</svg>';
+            return svg;
+        }
+
+        function buildVfPathwaySvg(activeIdx) {
+            // ─── Color palette (matching reference illustration) ───
+            var cP = '#8b5cf6';      // purple — nasal fibers (crossing)
+            var cR = '#f5b731';      // yellow — temporal fibers (uncrossed)
+            var cGold = '#b5985a';   // eye outlines
+            var cFlesh = 'rgba(200,155,120,0.3)'; // eyelid arcs
+            var cBrain = 'rgba(255,255,255,0.055)'; // brain silhouette
+            var cLabel = 'rgba(255,255,255,0.5)';
+            var cAccent = '#06b6d4';
+
+            var w = 380, h = 620;
+            var svg = '<svg class="vf-pathway-svg" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">';
+
+            // Defs
+            svg += '<defs>'
+                + '<marker id="vf-arrow" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">'
+                + '<path d="M0,0 L6,2 L0,4 Z" fill="'+cLabel+'"/></marker>'
+                + '</defs>';
+
+            // ─── Key Y-coordinates ───
+            var eyeY = 58, eyeR = 32;
+            var leX = 130, reX = 250;
+            var nerveTop = eyeY + eyeR;        // 90
+            var chiasmY = 205;
+            var lgnY = 320;
+            var cortexY = 555;
+
+            // ══════════════════════════════════════════
+            // 1. BRAIN SILHOUETTE  (drawn first — behind everything)
+            // ══════════════════════════════════════════
+            svg += '<path d="'
+                + 'M100,300 C82,312 65,340 62,370 C59,400 70,420 64,450 '
+                + 'C58,478 68,505 90,530 C106,548 128,562 155,572 '
+                + 'Q190,582 225,572 C252,562 274,548 290,530 '
+                + 'C312,505 322,478 316,450 C310,420 321,400 318,370 '
+                + 'C315,340 298,312 280,300 '
+                + 'C268,293 255,290 242,292 Q190,298 138,292 '
+                + 'C125,290 112,293 100,300 Z'
+                + '" fill="'+cBrain+'"/>';
+
+            // Right LGN bulge (prominent teardrop on right side)
+            svg += '<path d="'
+                + 'M248,298 C275,295 302,315 302,345 '
+                + 'C302,370 280,382 258,375 C242,370 235,350 238,328 Z'
+                + '" fill="'+cBrain+'"/>';
+
+            // Brain fold/sulcus hints
+            svg += '<path d="M105,495 C118,478 132,474 142,482" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="3"/>';
+            svg += '<path d="M275,495 C262,478 248,474 238,482" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="3"/>';
+            svg += '<path d="M155,570 Q175,555 190,558 Q205,555 225,570" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="2.5"/>';
+            svg += '<path d="M82,430 C90,418 100,416 108,422" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="2.5"/>';
+            svg += '<path d="M298,430 C290,418 280,416 272,422" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="2.5"/>';
+
+            // ══════════════════════════════════════════
+            // 2. OPTIC RADIATIONS  (thin fan-out lines)
+            // ══════════════════════════════════════════
+            // Left radiations (yellow) — 2 pairs with gap
+            // Outer pair (Meyer's loop — sweeps laterally)
+            svg += '<path d="M135,'+lgnY+' C115,'+(lgnY+50)+' 82,'+(lgnY+78)+' 90,'+(lgnY+118)+' S125,'+(cortexY-45)+' 138,'+cortexY+'" fill="none" stroke="'+cR+'" stroke-width="2.8" stroke-linecap="round" opacity="0.55"/>';
+            svg += '<path d="M135,'+lgnY+' C118,'+(lgnY+48)+' 88,'+(lgnY+74)+' 96,'+(lgnY+114)+' S130,'+(cortexY-42)+' 145,'+cortexY+'" fill="none" stroke="'+cR+'" stroke-width="2.8" stroke-linecap="round" opacity="0.5"/>';
+            // Inner pair (parietal — more direct)
+            svg += '<path d="M135,'+lgnY+' C132,'+(lgnY+35)+' 118,'+(lgnY+62)+' 120,'+(lgnY+95)+' S148,'+(cortexY-35)+' 162,'+cortexY+'" fill="none" stroke="'+cR+'" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>';
+            svg += '<path d="M135,'+lgnY+' C134,'+(lgnY+32)+' 122,'+(lgnY+58)+' 125,'+(lgnY+90)+' S152,'+(cortexY-32)+' 168,'+cortexY+'" fill="none" stroke="'+cR+'" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>';
+
+            // Right radiations (purple) — 2 pairs with gap
+            // Outer pair (Meyer's loop — sweeps laterally)
+            svg += '<path d="M252,'+lgnY+' C275,'+(lgnY+48)+' 295,'+(lgnY+75)+' 288,'+(lgnY+115)+' S252,'+(cortexY-42)+' 242,'+cortexY+'" fill="none" stroke="'+cP+'" stroke-width="2.8" stroke-linecap="round" opacity="0.55"/>';
+            svg += '<path d="M252,'+lgnY+' C272,'+(lgnY+45)+' 290,'+(lgnY+70)+' 282,'+(lgnY+110)+' S248,'+(cortexY-40)+' 235,'+cortexY+'" fill="none" stroke="'+cP+'" stroke-width="2.8" stroke-linecap="round" opacity="0.5"/>';
+            // Inner pair (parietal — more direct)
+            svg += '<path d="M252,'+lgnY+' C255,'+(lgnY+32)+' 262,'+(lgnY+55)+' 258,'+(lgnY+92)+' S228,'+(cortexY-32)+' 218,'+cortexY+'" fill="none" stroke="'+cP+'" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>';
+            svg += '<path d="M252,'+lgnY+' C253,'+(lgnY+28)+' 258,'+(lgnY+50)+' 254,'+(lgnY+86)+' S224,'+(cortexY-28)+' 212,'+cortexY+'" fill="none" stroke="'+cP+'" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>';
+
+            // Radiation crossings at bottom (calcarine area)
+            svg += '<path d="M168,'+cortexY+' C178,'+(cortexY+12)+' 202,'+(cortexY+12)+' 212,'+cortexY+'" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>';
+
+            // ══════════════════════════════════════════
+            // 3. OPTIC TRACTS  (thick fibers, chiasm to LGN)
+            // ══════════════════════════════════════════
+            // Left tract — pure red
+            svg += '<path d="M165,'+chiasmY+' C155,'+(chiasmY+30)+' 140,'+(lgnY-40)+' 135,'+lgnY+'" fill="none" stroke="'+cR+'" stroke-width="12" stroke-linecap="round" opacity="0.75"/>';
+
+            // Right tract — pure purple (thicker, with bulge toward right LGN)
+            svg += '<path d="M215,'+chiasmY+' C228,'+(chiasmY+30)+' 245,'+(lgnY-40)+' 252,'+lgnY+'" fill="none" stroke="'+cP+'" stroke-width="14" stroke-linecap="round" opacity="0.8"/>';
+
+            // ══════════════════════════════════════════
+            // 4. LGN MARKERS
+            // ══════════════════════════════════════════
+            // Left LGN — small open circle
+            svg += '<circle cx="135" cy="'+lgnY+'" r="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>';
+            svg += '<circle cx="135" cy="'+lgnY+'" r="2" fill="rgba(255,255,255,0.15)"/>';
+
+            // ══════════════════════════════════════════
+            // 5. OPTIC CHIASM  (X-crossing of nasal fibers)
+            // ══════════════════════════════════════════
+            // Left nasal → right side (crossing over)
+            svg += '<path d="M175,'+chiasmY+' C182,'+(chiasmY+8)+' 198,'+(chiasmY+8)+' 215,'+chiasmY+'" fill="none" stroke="'+cP+'" stroke-width="11" stroke-linecap="round" opacity="0.7"/>';
+            // Right nasal → left side (crossing under)
+            svg += '<path d="M205,'+chiasmY+' C198,'+(chiasmY-8)+' 182,'+(chiasmY-8)+' 165,'+chiasmY+'" fill="none" stroke="'+cP+'" stroke-width="11" stroke-linecap="round" opacity="0.7"/>';
+
+            // Small circle at chiasm center
+            svg += '<circle cx="190" cy="'+chiasmY+'" r="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>';
+
+            // ══════════════════════════════════════════
+            // 6. OPTIC NERVES  (thick intertwined fibers)
+            // ══════════════════════════════════════════
+            // Left optic nerve — two thick intertwined strands
+            // Red (temporal, outer/left fiber)
+            svg += '<path d="M'+leX+','+nerveTop+' C'+(leX-2)+','+(nerveTop+30)+' '+(leX+12)+','+(chiasmY-45)+' 160,'+(chiasmY-5)+'" fill="none" stroke="'+cR+'" stroke-width="12" stroke-linecap="round" opacity="0.75"/>';
+            // Purple (nasal, inner/right fiber) — slightly offset for intertwine effect
+            svg += '<path d="M'+leX+','+nerveTop+' C'+(leX+5)+','+(nerveTop+25)+' '+(leX+22)+','+(chiasmY-40)+' 175,'+(chiasmY-5)+'" fill="none" stroke="'+cP+'" stroke-width="12" stroke-linecap="round" opacity="0.75"/>';
+
+            // Right optic nerve — two thick intertwined strands
+            // Purple (nasal, outer/right fiber)
+            svg += '<path d="M'+reX+','+nerveTop+' C'+(reX+2)+','+(nerveTop+30)+' '+(reX-12)+','+(chiasmY-45)+' 220,'+(chiasmY-5)+'" fill="none" stroke="'+cP+'" stroke-width="12" stroke-linecap="round" opacity="0.75"/>';
+            // Red (temporal, inner/left fiber)
+            svg += '<path d="M'+reX+','+nerveTop+' C'+(reX-5)+','+(nerveTop+25)+' '+(reX-22)+','+(chiasmY-40)+' 205,'+(chiasmY-5)+'" fill="none" stroke="'+cR+'" stroke-width="12" stroke-linecap="round" opacity="0.75"/>';
+
+            // ══════════════════════════════════════════
+            // 7. EYEBALLS  (gold outlines + eyelid arcs)
+            // ══════════════════════════════════════════
+            // Left eyelid arc
+            svg += '<path d="M'+(leX-26)+','+(eyeY-12)+' Q'+leX+','+(eyeY-42)+' '+(leX+26)+','+(eyeY-12)+'" fill="none" stroke="'+cFlesh+'" stroke-width="8" stroke-linecap="round"/>';
+            // Right eyelid arc
+            svg += '<path d="M'+(reX-26)+','+(eyeY-12)+' Q'+reX+','+(eyeY-42)+' '+(reX+26)+','+(eyeY-12)+'" fill="none" stroke="'+cFlesh+'" stroke-width="8" stroke-linecap="round"/>';
+
+            // Eye circles (gold)
+            svg += '<circle cx="'+leX+'" cy="'+eyeY+'" r="'+eyeR+'" fill="none" stroke="'+cGold+'" stroke-width="2.5"/>';
+            svg += '<circle cx="'+reX+'" cy="'+eyeY+'" r="'+eyeR+'" fill="none" stroke="'+cGold+'" stroke-width="2.5"/>';
+
+            // Retinal fiber hints inside eyes
+            // Left eye: red on left, purple on right
+            svg += '<path d="M'+(leX-16)+','+(eyeY-20)+' Q'+(leX-30)+','+eyeY+' '+(leX-16)+','+(eyeY+20)+'" fill="none" stroke="'+cR+'" stroke-width="2.5" opacity="0.75"/>';
+            svg += '<path d="M'+(leX+16)+','+(eyeY-20)+' Q'+(leX+30)+','+eyeY+' '+(leX+16)+','+(eyeY+20)+'" fill="none" stroke="'+cP+'" stroke-width="2.5" opacity="0.75"/>';
+            // Visual field division line
+            svg += '<line x1="'+leX+'" y1="'+(eyeY-eyeR+6)+'" x2="'+leX+'" y2="'+(eyeY+eyeR-6)+'" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>';
+
+            // Right eye: red on left, purple on right
+            svg += '<path d="M'+(reX-16)+','+(eyeY-20)+' Q'+(reX-30)+','+eyeY+' '+(reX-16)+','+(eyeY+20)+'" fill="none" stroke="'+cR+'" stroke-width="2.5" opacity="0.75"/>';
+            svg += '<path d="M'+(reX+16)+','+(eyeY-20)+' Q'+(reX+30)+','+eyeY+' '+(reX+16)+','+(eyeY+20)+'" fill="none" stroke="'+cP+'" stroke-width="2.5" opacity="0.75"/>';
+            svg += '<line x1="'+reX+'" y1="'+(eyeY-eyeR+6)+'" x2="'+reX+'" y2="'+(eyeY+eyeR-6)+'" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>';
+
+            // Eye labels
+            svg += '<text x="'+leX+'" y="18" text-anchor="middle" fill="'+cLabel+'" font-size="10" font-weight="600" font-family="var(--sans)">LEFT EYE</text>';
+            svg += '<text x="'+reX+'" y="18" text-anchor="middle" fill="'+cLabel+'" font-size="10" font-weight="600" font-family="var(--sans)">RIGHT EYE</text>';
+
+            // ══════════════════════════════════════════
+            // 8. STRUCTURE LABELS
+            // ══════════════════════════════════════════
+            var ls = ' fill="'+cLabel+'" font-size="9.5" font-family="var(--sans)" font-weight="600"';
+
+            // Optic Chiasm
+            svg += '<text x="8" y="'+(chiasmY-2)+'"'+ls+'>OPTIC</text>';
+            svg += '<text x="8" y="'+(chiasmY+10)+'"'+ls+'>CHIASM</text>';
+            svg += '<line x1="52" y1="'+(chiasmY+3)+'" x2="155" y2="'+chiasmY+'" stroke="'+cLabel+'" stroke-width="0.5" marker-end="url(#vf-arrow)"/>';
+
+            // LGN
+            svg += '<text x="8" y="'+(lgnY-12)+'"'+ls+'>LATERAL</text>';
+            svg += '<text x="8" y="'+(lgnY)+'"'+ls+'>GENICULATE</text>';
+            svg += '<text x="8" y="'+(lgnY+12)+'"'+ls+'>NUCLEUS</text>';
+            svg += '<line x1="68" y1="'+(lgnY-1)+'" x2="128" y2="'+lgnY+'" stroke="'+cLabel+'" stroke-width="0.5" marker-end="url(#vf-arrow)"/>';
+
+            // Optic Radiations
+            svg += '<text x="8" y="405"'+ls+'>OPTIC</text>';
+            svg += '<text x="8" y="417"'+ls+'>RADIATIONS</text>';
+            svg += '<line x1="68" y1="409" x2="98" y2="400" stroke="'+cLabel+'" stroke-width="0.5" marker-end="url(#vf-arrow)"/>';
+
+            // Visual Cortex
+            svg += '<text x="190" y="'+(cortexY+40)+'"'+ls+' text-anchor="middle">VISUAL CORTEX (V1)</text>';
+
+            // ── Fiber legend (top-left) ──
+            var lgY = 8;
+            svg += '<rect x="8" y="'+lgY+'" width="116" height="40" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>';
+            svg += '<line x1="16" y1="'+(lgY+14)+'" x2="36" y2="'+(lgY+14)+'" stroke="'+cR+'" stroke-width="4" stroke-linecap="round" opacity="0.8"/>';
+            svg += '<text x="42" y="'+(lgY+17)+'"'+ls+'>Temporal</text>';
+            svg += '<line x1="16" y1="'+(lgY+30)+'" x2="36" y2="'+(lgY+30)+'" stroke="'+cP+'" stroke-width="4" stroke-linecap="round" opacity="0.8"/>';
+            svg += '<text x="42" y="'+(lgY+33)+'"'+ls+'>Nasal</text>';
+
+            // ══════════════════════════════════════════
+            // 9. LESION MARKERS  (A–H)
+            // ══════════════════════════════════════════
+            var lesions = [
+                { id: 0, x: 130, y: 65,   label: 'A' },  // Central Scotoma
+                { id: 1, x: 238, y: 148,  label: 'B' },  // Monocular Vision Loss
+                { id: 2, x: 188, y: 205,  label: 'C' },  // Bitemporal Hemianopia
+                { id: 3, x: 236, y: 255,  label: 'D' },  // Contralateral Homonymous Hemianopia
+                { id: 4, x: 284, y: 395,  label: 'E' },  // Contralateral Superior Quadrantanopia
+                { id: 5, x: 246, y: 448,  label: 'F' },  // Contralateral Inferior Quadrantanopia
+                { id: 6, x: 238, y: 520,  label: 'G' },  // Contralateral Homonymous Hemianopia
+                { id: 7, x: 219, y: 561,  label: 'H' }   // Homonymous Hemianopia with Macular Sparing
+            ];
+
+            for (var i = 0; i < lesions.length; i++) {
+                var l = lesions[i];
+                var lx = (vfDebugPositions[l.label] ? vfDebugPositions[l.label].x : l.x);
+                var ly = (vfDebugPositions[l.label] ? vfDebugPositions[l.label].y : l.y);
+                var isActive = activeIdx === l.id;
+                var btnClass = 'vf-lesion-btn' + (isActive ? ' active' : '');
+                var isDebug = vfDebugMode;
+
+                svg += '<g class="' + btnClass + '" data-lesion-id="' + l.label + '"'
+                    + (isDebug ? ' style="cursor:grab;"' : ' onclick="selectVfDefect(' + l.id + ')" style="cursor:pointer;"')
+                    + '>'
+                    + '<circle class="vf-lesion-ring" cx="' + lx + '" cy="' + ly + '" r="13" fill="' + (isActive ? cAccent : isDebug ? 'rgba(6,182,212,0.15)' : 'rgba(255,255,255,0.08)') + '" stroke="' + (isActive ? cAccent : isDebug ? 'rgba(6,182,212,0.5)' : 'rgba(255,255,255,0.22)') + '" stroke-width="1.5"/>'
+                    + '<text class="vf-lesion-num" x="' + lx + '" y="' + (ly + 4) + '" text-anchor="middle" fill="' + (isActive ? '#0f1117' : isDebug ? cAccent : 'rgba(255,255,255,0.65)') + '" font-size="12" font-weight="700" font-family="var(--sans)">' + l.label + '</text>'
+                    + '</g>';
+            }
+
+            svg += '</svg>';
+            return svg;
+        }
+
+        function renderVfIndexTool(el) {
+            var html = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>';
+
+            // Debug mode banner
+            if (vfDebugMode) {
+                html += '<div style="margin-bottom:12px;padding:10px 14px;border-radius:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">'
+                    + '<div style="display:flex;align-items:center;gap:8px;">'
+                    + '<span style="background:var(--accent);color:#0f1117;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:0.5px;">DEBUG</span>'
+                    + '<span style="font-size:12px;color:var(--accent);font-weight:600;">Drag markers to reposition. Coordinates shown on hover.</span>'
+                    + '</div>'
+                    + '<div style="display:flex;gap:6px;">'
+                    + '<button onclick="vfLogPositions()" style="background:var(--accent);color:#0f1117;border:none;font-family:var(--sans);font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;cursor:pointer;">Log Positions</button>'
+                    + '<button onclick="vfDebugPositions={};toggleVfDebug()" style="background:rgba(255,255,255,0.1);color:var(--ink);border:none;font-family:var(--sans);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;">Reset &amp; Exit</button>'
+                    + '<button onclick="toggleVfDebug()" style="background:rgba(255,255,255,0.1);color:var(--ink);border:none;font-family:var(--sans);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;">Exit Debug</button>'
+                    + '</div></div>';
+            }
+
+            html += '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-brain"></i> Neuro Visual Field Index</div>'
+                + '<div class="tools-card-desc">Tap a lesion site on the visual pathway to see the resulting visual field defect.</div>';
+
+            // --- Layout ---
+            html += '<div class="vf-layout">';
+
+            // Left column — pathway diagram
+            html += '<div class="vf-pathway-col">'
+                + '<div class="vf-pathway-wrap">'
+                + buildVfPathwaySvg(vfActiveDefect)
+                + '</div>'
+                + '</div>';
+
+            // Right column — defect list
+            html += '<div class="vf-defects-col">';
+            html += '<div style="font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Visual Field Defect</div>';
+
+            for (var i = 0; i < VF_DEFECTS.length; i++) {
+                var d = VF_DEFECTS[i];
+                var isActive = vfActiveDefect === i;
+                html += '<div class="vf-defect-row' + (isActive ? ' active' : '') + '" onclick="selectVfDefect(' + i + ')">'
+                    + '<div class="vf-defect-num">' + d.num + '</div>'
+                    + '<div class="vf-defect-label">' + d.label + '</div>'
+                    + '<div class="vf-eye-pair">'
+                    + '<div>' + vfEyeSvg(d.os) + '</div>'
+                    + '<div>' + vfEyeSvg(d.od) + '</div>'
+                    + '</div>'
+                    + '</div>';
+            }
+            html += '</div>'; // defects col
+            html += '</div>'; // layout
+
+            // --- Info panel ---
+            if (vfActiveDefect !== null) {
+                var d = VF_DEFECTS[vfActiveDefect];
+                html += '<div class="vf-info-panel">'
+                    + '<div class="vf-info-title">' + d.num + '. ' + d.label + '</div>'
+                    + '<div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">'
+                    + '<div style="display:flex;gap:6px;align-items:center;">'
+                    + '<span style="font-size:11px;color:var(--ink-muted);font-weight:600;">OS</span>' + vfEyeSvg(d.os)
+                    + '<span style="font-size:11px;color:var(--ink-muted);font-weight:600;margin-left:8px;">OD</span>' + vfEyeSvg(d.od)
+                    + '</div></div>'
+                    + '<div class="vf-info-detail"><strong>Lesion site:</strong> ' + d.location + '</div>'
+                    + '<div class="vf-info-detail"><strong>Common etiologies:</strong> ' + d.etiology + '</div>'
+                    + '<div class="vf-info-detail" style="margin-top:8px;">' + d.notes + '</div>'
+                    + '</div>';
+            }
+
+            html += '</div>'; // tools-card
+            el.innerHTML = html;
+
+            // Initialize debug drag handlers after DOM update
+            if (vfDebugMode) {
+                setTimeout(initVfDebugDrag, 0);
+            }
         }
 
         // ===== MEDICATIONS TAB =====
