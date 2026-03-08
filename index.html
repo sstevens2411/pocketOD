@@ -339,13 +339,13 @@
         }
 
         .sign-toggle button.active-90 {
-            background: rgba(37,99,235,0.08);
-            color: #2563eb;
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         .sign-toggle button.active-180 {
-            background: rgba(234,88,12,0.08);
-            color: #ea580c;
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         .sign-toggle button:not(.active-neg):not(.active-pos):not(.active-90):not(.active-180):hover {
@@ -3814,8 +3814,8 @@
                 const absCyl = Math.abs(cyl);
                 const absMin = Math.abs(lens.cylMin);
                 const absMax = Math.abs(lens.cylMax);
-                // Allow cyl up to 0.25 beyond max (will snap down to nearest available step)
-                if (absCyl < absMin || absCyl > absMax + 0.25) return false;
+                // Allow cyl up to 0.75 beyond max (snap down and compensate sphere)
+                if (absCyl < absMin || absCyl > absMax + 0.75) return false;
             }
 
             return true;
@@ -5910,7 +5910,7 @@
 
                         const idealStr = `${ideal.sph > 0 ? "+" : ""}${ideal.sph.toFixed(2)} ${ideal.cyl.toFixed(2)} x ${ideal.axis}`;
 
-                        if (idealAbsCyl > lensAbsMax + 0.25) {
+                        if (idealAbsCyl > lensAbsMax + 0.75) {
                             resultHtml = `<div class="vertex-box fade-in" style="margin-top:12px">
                                 <div class="vertex-label">Ideal Combined Rx</div>
                                 <div style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink)">${idealStr}</div>
@@ -6031,7 +6031,7 @@
                         const idealAbsCyl = Math.abs(ideal.cyl);
                         const lensAbsMax = Math.abs(lens.cylMax);
 
-                        if (idealAbsCyl > lensAbsMax + 0.25) {
+                        if (idealAbsCyl > lensAbsMax + 0.75) {
                             overrides[e.label] = { exceedsLens: true, idealCyl: ideal.cyl, lensCylMax: lens.cylMax };
                         } else {
                             const snappedCyl = snapCyl(ideal.cyl, lens);
