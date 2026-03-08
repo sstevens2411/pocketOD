@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55' stroke='%230d9488' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M33 55 Q60 28 87 55 Q60 82 33 55Z' stroke='%230d9488' stroke-width='5' fill='rgba(13,148,136,0.1)' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='55' r='9' fill='%230d9488'/%3E%3Ccircle cx='63.5' cy='52.5' r='2.8' fill='%231a2332'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=block&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web@2"></script>
     <style>
         :root {
@@ -68,125 +68,112 @@
 
         /* HEADER */
         .header {
-            background: linear-gradient(135deg, #1a2332 0%, #1e293b 100%);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding: 16px 20px 0;
+            background: #1a2332;
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-
-        .subnav {
-            max-width: 760px;
-            margin: 12px auto 0;
-            display: flex;
-            gap: 0;
-        }
-
-        .subnav-item {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
-            color: rgba(255,255,255,0.5);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .subnav-item:hover {
-            color: rgba(255,255,255,0.8);
-        }
-
-        .subnav-item.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-
-        .cl-subtabs {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 8px 0 6px;
-            display: block;
-            text-align: left;
-        }
-        .cl-subtabs-inner {
-            display: inline-flex;
-            gap: 6px;
-            width: calc(100% / 3);
-            justify-content: center;
-        }
-        @media (max-width: 600px) {
-            .cl-subtabs { text-align: center; }
-            .cl-subtabs-inner { width: auto; }
-            .cl-subtab { font-size: 10px; padding: 4px 12px; white-space: nowrap; }
-        }
-        .cl-subtab {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 14px;
-            border-radius: 20px;
-            color: rgba(255,255,255,0.4);
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: all 0.15s;
-            letter-spacing: 0.3px;
-        }
-        .cl-subtab:hover {
-            color: rgba(255,255,255,0.7);
-            border-color: rgba(255,255,255,0.2);
-        }
-        .cl-subtab.active {
-            color: #5eead4;
-            background: rgba(13,148,136,0.15);
-            border-color: rgba(13,148,136,0.4);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
 
         .header-inner {
-            max-width: 760px;
+            max-width: 960px;
             margin: 0 auto;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 56px;
         }
 
         .logo-group {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .logo-mark {
-            width: 100px;
-            height: 100px;
-            border-radius: 9px;
             flex-shrink: 0;
-            overflow: hidden;
         }
 
-        .logo-mark img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        @keyframes blink {
+            0%, 30% { transform: scaleY(1); }
+            40% { transform: scaleY(0.05); }
+            50% { transform: scaleY(1); }
+            70% { transform: scaleY(0.05); }
+            80%, 100% { transform: scaleY(1); }
+        }
+        .logo-group:hover .logo-eye-blink {
+            animation: blink 0.6s ease-in-out;
         }
 
         .logo-text {
             color: #fff;
-            font-family: 'Bungee', sans-serif;
+            font-family: 'Michroma', sans-serif;
             font-weight: 700;
-            font-size: 26px;
+            font-size: 24px;
             letter-spacing: 0.02em;
-            text-shadow: 0 0 30px rgba(13,148,136,0.3);
+            text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(13,148,136,0.5), 0 0 24px rgba(13,148,136,0.25);
         }
 
-        .logo-sub {
-            color: rgba(255,255,255,0.45);
+        .subnav {
+            display: flex;
+            gap: 0;
+            align-items: stretch;
+            height: 56px;
+        }
 
-            font-size: 10px;
-            letter-spacing: 0.03em;
-            margin-top: 1px;
+        .subnav-item {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s;
+        }
+
+        .subnav-item:hover {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .subnav-item.active {
+            color: #fff;
+            border-bottom-color: var(--accent);
+        }
+
+        /* CL sub-tabs — rendered in content area */
+        .cl-subtabs {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .cl-subtabs-left, .cl-subtabs-right {
+            display: inline-flex;
+            gap: 4px;
+        }
+        .cl-subtab {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 20px;
+            color: var(--ink-secondary);
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.3px;
+            font-family: var(--sans);
+        }
+        .cl-subtab:hover {
+            border-color: var(--border-hover);
+            color: var(--ink);
+        }
+        .cl-subtab.active {
+            color: var(--accent);
+            background: var(--accent-light);
+            border-color: var(--accent);
         }
 
 
@@ -194,7 +181,7 @@
         .main {
             max-width: 760px;
             margin: 0 auto;
-            padding: 24px 16px 80px;
+            padding: 12px 16px 80px;
         }
 
         /* STEPS */
@@ -202,11 +189,11 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin-bottom: 24px;
+            margin-bottom: 10px;
             background: transparent;
             border: none;
             border-radius: var(--radius);
-            padding: 8px 0;
+            padding: 4px 0;
             box-shadow: none;
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
@@ -234,49 +221,25 @@
         }
 
         .step-num {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0;
-            background: var(--border);
-            color: var(--ink-muted);
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .step-item.active .step-num {
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 0 8px rgba(13,148,136,0.4);
-        }
-
-        .step-item.done .step-num {
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            color: #fff;
+            display: none;
         }
 
         .step-label {
             font-family: var(--sans);
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
             color: var(--ink-muted);
             letter-spacing: 0.02em;
             transition: color 0.2s;
         }
 
         .step-item.active .step-label {
-            color: var(--ink);
+            color: var(--accent);
+            font-weight: 700;
         }
 
         .step-item.done .step-label {
-            color: var(--success);
+            color: var(--ink-secondary);
         }
 
         .step-line {
@@ -291,7 +254,6 @@
         .card {
             background: #ffffff;
             border: none;
-            border-left: 3px solid rgba(13,148,136,0.4);
             border-radius: 12px;
             padding: 32px 28px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -387,7 +349,8 @@
         }
 
         .sign-toggle button:not(.active-neg):not(.active-pos):not(.active-90):not(.active-180):hover {
-            background: rgba(0,0,0,0.04);
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         .form-group input, .form-group select {
@@ -607,33 +570,38 @@
         .option-btn {
             padding: 16px 14px;
             border-radius: var(--radius);
-            border: 2px solid var(--border);
-            background: var(--surface);
+            border: none;
+            background: #ffffff;
             cursor: pointer;
             text-align: left;
             transition: all 0.15s;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .option-btn:hover {
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         }
 
         .option-btn.active {
-            border-color: var(--accent);
             background: var(--accent-light);
-            box-shadow: var(--accent-glow);
+            box-shadow: 0 2px 8px rgba(13,148,136,0.15);
+            outline: 2px solid var(--accent);
         }
 
         .option-btn .icon {
             font-size: 20px;
-            margin-bottom: 6px;
+            flex-shrink: 0;
+        }
+
+        .option-btn .title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .option-btn .title {
-
             font-size: 14px;
             font-weight: 700;
             color: var(--ink);
@@ -642,15 +610,14 @@
         .option-btn .desc {
             font-size: 11.5px;
             color: var(--ink-muted);
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         .option-btn .count {
-
             font-size: 10px;
             font-weight: 600;
             color: var(--ink-muted);
-            margin-top: 8px;
+            margin-top: 6px;
             letter-spacing: 0.03em;
         }
 
@@ -701,27 +668,27 @@
         }
 
         .brand-alcon.active {
-            border-color: var(--alcon);
             background: var(--alcon-bg);
-            box-shadow: 0 0 20px rgba(37,99,235,0.12);
+            outline: 2px solid var(--alcon);
+            box-shadow: 0 2px 8px rgba(37,99,235,0.12);
         }
 
         .brand-bl.active {
-            border-color: var(--bl);
             background: var(--bl-bg);
-            box-shadow: 0 0 20px rgba(217,119,6,0.12);
+            outline: 2px solid var(--bl);
+            box-shadow: 0 2px 8px rgba(217,119,6,0.12);
         }
 
         .brand-cv.active {
-            border-color: var(--cv);
             background: var(--cv-bg);
-            box-shadow: 0 0 20px rgba(13,148,136,0.12);
+            outline: 2px solid var(--cv);
+            box-shadow: 0 2px 8px rgba(13,148,136,0.12);
         }
 
         .brand-jj.active {
-            border-color: var(--jj);
             background: var(--jj-bg);
-            box-shadow: 0 0 20px rgba(124,58,237,0.12);
+            outline: 2px solid var(--jj);
+            box-shadow: 0 2px 8px rgba(124,58,237,0.12);
         }
 
         /* SHOW ALL BTN */
@@ -1027,8 +994,7 @@
             color: var(--ink);
             margin-bottom: 10px;
             padding: 8px 12px;
-            background: var(--surface-solid);
-            border-left: 3px solid var(--accent);
+            background: rgba(0,0,0,0.02);
             border-radius: 0 6px 6px 0;
         }
 
@@ -1285,9 +1251,6 @@
             .lens-price, .lens-qty {
                 text-align: right;
             }
-            .header-inner {
-                padding: 0 12px;
-            }
             .logo-text {
                 font-size: 17px;
             }
@@ -1473,20 +1436,20 @@
             width: 100%;
             padding: 12px 48px 12px 40px;
             border-radius: 12px;
-            border: 2px solid var(--border);
+            border: 2px solid transparent;
             font-size: 15px;
             font-family: var(--sans);
             font-weight: 500;
             color: var(--ink);
-            background: var(--surface-solid);
+            background: #f1f0ee;
             transition: all 0.15s;
             -webkit-appearance: none;
         }
         .med-search-input:focus {
             outline: none;
             border-color: var(--accent);
-            background: var(--surface-solid);
-            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
+            background: #ffffff;
+            box-shadow: none;
         }
         .med-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
         .med-search-icon {
@@ -1526,7 +1489,7 @@
         i[class*="ph-duotone"] {
             --ph-duotone-opacity: 0.2;
         }
-        .option-btn .icon i[class*="ph-"] { font-size: 22px; color: var(--accent); }
+        .option-btn .icon i[class*="ph-"] { font-size: 20px; color: var(--accent); }
         .option-btn.active .icon i[class*="ph-"] { color: var(--accent); }
         .med-filter-chip i[class*="ph-"], .med-subcondition-section i[class*="ph-"] { font-size: 14px; vertical-align: -2px; color: var(--accent); }
         .troubleshoot-btn i[class*="ph-"] { font-size: 16px; vertical-align: -3px; color: #ff8c00; }
@@ -2000,40 +1963,31 @@
             }
 
             /* --- Header --- */
-            .header {
-                padding: 20px 16px 0;
-            }
             .header-inner {
-                padding: 0;
                 flex-direction: column;
-                align-items: center;
-                gap: 8px;
+                align-items: stretch;
+                height: auto;
+                padding: 10px 10px 0;
+                gap: 0;
             }
             .logo-group {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            .logo-mark {
-                width: 100px;
-                height: 100px;
-                border-radius: 16px;
+                justify-content: flex-start;
+                margin-bottom: 6px;
             }
             .logo-text {
-                font-size: 44px;
-                text-align: left;
-                align-self: flex-start;
+                font-size: 20px;
             }
-            /* Subnav tabs — 48px tap targets */
             .subnav {
-                margin: 8px auto 0;
+                justify-content: center;
+                gap: 0;
+                width: 100%;
+                height: auto;
             }
             .subnav-item {
-                padding: 14px 0;
-                font-size: 14px;
-                min-height: 48px;
-                display: flex;
-                align-items: center;
+                flex: 1;
+                padding: 10px 0;
+                font-size: 13px;
+                min-height: 40px;
                 justify-content: center;
             }
 
@@ -2451,22 +2405,14 @@
 
         /* ===== EXTRA-SMALL PHONES ===== */
         @media (max-width: 380px) {
-            .header {
-                padding: 16px 10px 0;
-            }
-            .logo-mark {
-                width: 84px;
-                height: 84px;
-                border-radius: 14px;
+            .header-inner {
+                padding: 10px 10px 0;
             }
             .logo-text {
-                font-size: 36px;
-            }
-            .logo-group {
-                gap: 8px;
+                font-size: 18px;
             }
             .subnav-item {
-                font-size: 13px;
+                font-size: 12px;
             }
             .main {
                 padding: 10px 8px 70px;
@@ -2523,19 +2469,20 @@
             width: 100%;
             padding: 10px 40px 10px 36px;
             border-radius: 10px;
-            border: 2px solid var(--border);
+            border: 2px solid transparent;
             font-size: 14px;
             font-family: var(--sans);
             font-weight: 500;
             color: var(--ink);
-            background: var(--surface-solid);
+            background: #f1f0ee;
             transition: all 0.15s;
             -webkit-appearance: none;
         }
         .browse-search-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
+            background: #ffffff;
+            box-shadow: none;
         }
         .browse-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
         .browse-search-icon {
@@ -2693,7 +2640,6 @@
         .tools-card {
             background: #ffffff;
             border: none;
-            border-left: 3px solid rgba(13,148,136,0.4);
             border-radius: 12px;
             padding: 28px 24px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -2927,19 +2873,20 @@
             width: 100%;
             padding: 12px 16px 12px 40px;
             border-radius: 12px;
-            border: 2px solid var(--border);
+            border: 2px solid transparent;
             font-size: 15px;
             font-family: var(--sans);
             font-weight: 500;
             color: var(--ink);
-            background: var(--surface-solid);
+            background: #f1f0ee;
             transition: all 0.15s;
             -webkit-appearance: none;
         }
         .tools-search-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
+            background: #ffffff;
+            box-shadow: none;
         }
         .tools-search-input::placeholder {
             color: var(--ink-muted);
@@ -2959,9 +2906,8 @@
         }
         #toolsContent .option-btn:hover,
         #medsContent .option-btn:hover {
-            border-color: rgba(13,148,136,0.5);
-            background: rgba(13,148,136,0.1);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            background: rgba(13,148,136,0.06);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transform: translateY(-2px);
         }
         #toolsContent .option-btn:hover .icon,
@@ -2985,8 +2931,7 @@
             }
             #toolsContent .option-btn .icon,
             #medsContent .option-btn .icon {
-                font-size: 26px;
-                margin-bottom: 8px;
+                font-size: 20px;
             }
             #toolsContent .option-btn .title,
             #medsContent .option-btn .title {
@@ -3309,52 +3254,66 @@
     <header class="header">
         <div class="header-inner">
             <div class="logo-group" onclick="resetAll()" style="cursor:pointer">
-                <svg width="66" height="66" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="logo-eye-svg" width="52" height="52" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#0d9488" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#0d9488" stroke-width="5" fill="rgba(13,148,136,0.1)" stroke-linejoin="round"/>
-                    <circle cx="60" cy="55" r="9" fill="#0d9488"/>
-                    <circle cx="63.5" cy="52.5" r="2.8" fill="#1a2332"/>
+                    <g class="logo-eye-blink" style="transform-origin:60px 55px">
+                        <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#0d9488" stroke-width="5" fill="rgba(13,148,136,0.1)" stroke-linejoin="round"/>
+                        <circle cx="60" cy="55" r="9" fill="#0d9488"/>
+                        <circle cx="63.5" cy="52.5" r="2.8" fill="#1a2332"/>
+                    </g>
                 </svg>
-                <div>
-                    <div class="logo-text">Pocket OD</div>
-                </div>
+                <div class="logo-text">Pocket OD</div>
             </div>
-        </div>
-        <div class="subnav">
-            <div class="subnav-item active" id="subnavLenses" onclick="switchTab('lenses')">Contact Lenses</div>
-            <div class="subnav-item" id="subnavMeds" onclick="switchTab('meds')">Medications</div>
-            <div class="subnav-item" id="subnavTools" onclick="switchTab('tools')">Clinical Tools</div>
-        </div>
-        <div class="cl-subtabs" id="clSubtabs">
-            <div class="cl-subtabs-inner">
-                <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">Calculator</div>
-                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">Browse All</div>
-            </div>
+            <nav class="subnav">
+                <div class="subnav-item active" id="subnavLenses" onclick="switchTab('lenses')">Contact Lenses</div>
+                <div class="subnav-item" id="subnavMeds" onclick="switchTab('meds')">Medications</div>
+                <div class="subnav-item" id="subnavTools" onclick="switchTab('tools')">Clinical Tools</div>
+            </nav>
         </div>
     </header>
 
     <main class="main">
-        <div class="steps-bar" id="stepsBar"></div>
-        <div class="card">
-            <div id="stepContent"></div>
+        <div class="cl-subtabs" id="clSubtabs">
+            <div class="cl-subtabs-left">
+                <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">Calculator</div>
+                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">Browse All</div>
+            </div>
+            <div class="cl-subtabs-right">
+                <div class="cl-subtab" id="clSubVertex" onclick="switchClSub('vertex')">Vertex Chart</div>
+                <div class="cl-subtab" id="clSubRadius" onclick="switchClSub('radius')">Radius Conversion</div>
+            </div>
         </div>
-        <div class="nav-row">
-            <button class="nav-btn nav-btn-back" id="btnBack" onclick="goBack()">&larr; Back</button>
-            <button class="nav-btn nav-btn-next" id="btnNext" onclick="goNext()">Next &rarr;</button>
+        <div id="lensesContent">
+            <div class="steps-bar" id="stepsBar"></div>
+            <div class="card">
+                <div id="stepContent"></div>
+            </div>
+            <div class="nav-row">
+                <button class="nav-btn nav-btn-back" id="btnBack" onclick="goBack()">&larr; Back</button>
+                <button class="nav-btn nav-btn-next" id="btnNext" onclick="goNext()">Next &rarr;</button>
+            </div>
+            <footer class="footer">
+                Data sourced from manufacturer catalogs &middot; Always verify parameters before prescribing<br>
+                Vertex conversion applied at 12mm for powers &ge; &plusmn;4.00D<br>
+                Prices are estimates based on averages across major retailers and may vary by location
+            </footer>
         </div>
-        <footer class="footer">
-            Data sourced from manufacturer catalogs &middot; Always verify parameters before prescribing<br>
-            Vertex conversion applied at 12mm for powers &ge; &plusmn;4.00D<br>
-            Prices are estimates based on averages across major retailers and may vary by location
-        </footer>
     </main>
+
+    <div id="browsePage" class="main browse-main" style="display:none; padding-top:0;">
+        <div id="browseContent"></div>
+    </div>
+
+    <div id="vertexPage" class="main" style="display:none; padding-top:0;">
+        <div id="vertexContent"></div>
+    </div>
+
+    <div id="radiusPage" class="main" style="display:none; padding-top:0;">
+        <div id="radiusContent"></div>
+    </div>
 
     <div id="medsPage" class="main" style="display:none">
         <div id="medsContent"></div>
-    </div>
-
-    <div id="browsePage" class="main browse-main" style="display:none">
-        <div id="browseContent"></div>
     </div>
 
     <div id="toolsPage" class="main" style="display:none">
@@ -4180,7 +4139,6 @@
                     <h2 class="card-title" style="margin:0">Enter Prescription</h2>
                     <button onclick="resetAll()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:18px;line-height:1;transition:color 0.15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-muted)'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
                 </div>
-                <p class="card-desc">Enter the spectacle Rx \u2014 vertex conversion is automatic for powers over \u00B14.00D</p>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
                 <button type="button" class="copy-od-btn" id="copyOdToOs">&#x2193; Copy OD to OS</button>
@@ -4281,10 +4239,9 @@
                 const isActive = state.modality.includes(m.id);
                 const isZero = count === 0;
 
-                const activeStyle = isActive ? `border-color:${m.color};background:${m.color}15;box-shadow:0 0 12px ${m.color}30` : '';
+                const activeStyle = isActive ? `outline:2px solid ${m.color};background:${m.color}10;box-shadow:0 2px 8px ${m.color}20` : '';
                 return `<div class="option-btn ${isActive ? "active" : ""} ${isZero ? "zero" : ""}" onclick="toggleModality('${m.id}')" style="${activeStyle}">
-                    <div class="icon" ${isActive ? `style="color:${m.color}"` : ''}>${m.icon}</div>
-                    <div class="title">${m.label}</div>
+                    <div class="title-row"><span class="icon" ${isActive ? `style="color:${m.color}"` : ''}>${m.icon}</span><span class="title">${m.label}</span></div>
                     <div class="desc">${m.desc}</div>
                     <div class="count">${count} lens${count !== 1 ? "es" : ""}</div>
                 </div>`;
@@ -5427,28 +5384,23 @@
                     <div class="order-section-title">Select Vision Complaint</div>
                     <div class="option-grid">
                         <div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
-                            <div class="icon"><i class="ph-duotone ph-eye"></i></div>
-                            <div class="title">Blurry at Distance</div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
                             <div class="desc">Difficulty seeing far away</div>
                         </div>
                         <div class="option-btn ${state.troubleshoot === 'near' ? 'active' : ''}" onclick="setTroubleshoot('near')">
-                            <div class="icon"><i class="ph-duotone ph-book-open"></i></div>
-                            <div class="title">Blurry at Near</div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Blurry at Near</span></div>
                             <div class="desc">Difficulty reading or close work</div>
                         </div>
                         ${isToric ? `<div class="option-btn ${state.troubleshoot === 'rotation' ? 'active' : ''}" onclick="setTroubleshoot('rotation')">
-                            <div class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></div>
-                            <div class="title">Lens Rotation</div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></span><span class="title">Lens Rotation</span></div>
                             <div class="desc">Toric lens rotating on eye</div>
                         </div>` : ''}
                         ${isToric ? `<div class="option-btn ${state.troubleshoot === 'overcyl' ? 'active' : ''}" onclick="setTroubleshoot('overcyl')">
-                            <div class="icon"><i class="ph-duotone ph-crosshair"></i></div>
-                            <div class="title">Input Over-Refraction</div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-crosshair"></i></span><span class="title">Input Over-Refraction</span></div>
                             <div class="desc">Cross-cylinder calculation</div>
                         </div>` : ''}
                         ${showNonAdapt ? `<div class="option-btn ${state.troubleshoot === 'nonadapt' ? 'active' : ''}" onclick="setTroubleshoot('nonadapt')">
-                            <div class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></div>
-                            <div class="title">Non-Adapt to Toric</div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></span><span class="title">Non-Adapt to Toric</span></div>
                             <div class="desc">Convert to spherical equivalent</div>
                         </div>` : ''}
                     </div>
@@ -5953,25 +5905,41 @@
                     let resultHtml = '';
                     if (hasOR) {
                         const ideal = crossCylinderCalc(clSph, clCyl, effectiveAxis, orSph, orCyl, effectiveOrAxis);
-                        const snappedCyl = snapCyl(ideal.cyl, lens);
-                        const cylDiff = snappedCyl - ideal.cyl;
-                        let snappedSph = ideal.sph;
-                        if (Math.abs(cylDiff) > 0.01) {
-                            snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
-                        }
-                        snappedSph = snapTo025(snappedSph);
-                        snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
-                        const snappedAxis = snapAxis(ideal.axis, lens);
+                        const idealAbsCyl = Math.abs(ideal.cyl);
+                        const lensAbsMax = Math.abs(lens.cylMax);
 
                         const idealStr = `${ideal.sph > 0 ? "+" : ""}${ideal.sph.toFixed(2)} ${ideal.cyl.toFixed(2)} x ${ideal.axis}`;
-                        const snappedStr = `${snappedSph > 0 ? "+" : ""}${snappedSph.toFixed(2)} ${snappedCyl.toFixed(2)} x ${snappedAxis}`;
 
-                        resultHtml = `<div class="vertex-box fade-in" style="margin-top:12px">
-                            <div class="vertex-label">Ideal Combined Rx</div>
-                            <div style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink)">${idealStr}</div>
-                            <div class="vertex-label" style="margin-top:10px">Lens-Snapped Values</div>
-                            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)">${snappedStr}</div>
-                        </div>`;
+                        if (idealAbsCyl > lensAbsMax + 0.25) {
+                            resultHtml = `<div class="vertex-box fade-in" style="margin-top:12px">
+                                <div class="vertex-label">Ideal Combined Rx</div>
+                                <div style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink)">${idealStr}</div>
+                                <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border-radius:8px;font-size:13px;color:#dc2626;font-weight:600">
+                                    Cylinder ${ideal.cyl.toFixed(2)} D exceeds this lens's max (${lens.cylMax.toFixed(2)} D).
+                                </div>
+                                <button onclick="state.step=2;state.selectedLens=null;state.troubleshoot=null;state.overRefraction=null;state.orRotation=null;render()" style="margin-top:10px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans)">
+                                    <i class="ph-duotone ph-arrows-counter-clockwise"></i>&nbsp; Back to Compatible Lenses
+                                </button>
+                            </div>`;
+                        } else {
+                            const snappedCyl = snapCyl(ideal.cyl, lens);
+                            const cylDiff = snappedCyl - ideal.cyl;
+                            let snappedSph = ideal.sph;
+                            if (Math.abs(cylDiff) > 0.01) {
+                                snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
+                            }
+                            snappedSph = snapTo025(snappedSph);
+                            snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
+                            const snappedAxis = snapAxis(ideal.axis, lens);
+                            const snappedStr = `${snappedSph > 0 ? "+" : ""}${snappedSph.toFixed(2)} ${snappedCyl.toFixed(2)} x ${snappedAxis}`;
+
+                            resultHtml = `<div class="vertex-box fade-in" style="margin-top:12px">
+                                <div class="vertex-label">Ideal Combined Rx</div>
+                                <div style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink)">${idealStr}</div>
+                                <div class="vertex-label" style="margin-top:10px">Lens-Snapped Values</div>
+                                <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)">${snappedStr}</div>
+                            </div>`;
+                        }
                     }
 
                     // Optional rotation controls
@@ -6060,28 +6028,46 @@
                         const { orSph, orCyl, effectiveOrAxis } = getOrSigned(or);
 
                         const ideal = crossCylinderCalc(clSph, clCyl, clAxis, orSph, orCyl, effectiveOrAxis);
-                        const snappedCyl = snapCyl(ideal.cyl, lens);
-                        const cylDiff = snappedCyl - ideal.cyl;
-                        let snappedSph = ideal.sph;
-                        if (Math.abs(cylDiff) > 0.01) {
-                            snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
-                        }
-                        snappedSph = snapTo025(snappedSph);
-                        snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
-                        const snappedAxis = snapAxis(ideal.axis, lens);
+                        const idealAbsCyl = Math.abs(ideal.cyl);
+                        const lensAbsMax = Math.abs(lens.cylMax);
 
-                        overrides[e.label] = {
-                            sphOverride: snappedSph,
-                            cylOverride: snappedCyl,
-                            axisOverride: snappedAxis
-                        };
+                        if (idealAbsCyl > lensAbsMax + 0.25) {
+                            overrides[e.label] = { exceedsLens: true, idealCyl: ideal.cyl, lensCylMax: lens.cylMax };
+                        } else {
+                            const snappedCyl = snapCyl(ideal.cyl, lens);
+                            const cylDiff = snappedCyl - ideal.cyl;
+                            let snappedSph = ideal.sph;
+                            if (Math.abs(cylDiff) > 0.01) {
+                                snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
+                            }
+                            snappedSph = snapTo025(snappedSph);
+                            snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
+                            const snappedAxis = snapAxis(ideal.axis, lens);
+
+                            overrides[e.label] = {
+                                sphOverride: snappedSph,
+                                cylOverride: snappedCyl,
+                                axisOverride: snappedAxis
+                            };
+                        }
 
                         const orStr = `${orSph > 0 ? "+" : ""}${orSph.toFixed(2)} ${orCyl.toFixed(2)} x ${effectiveOrAxis}`;
                         parts.push(`${e.label} OR: ${orStr}`);
                     });
 
+                    const anyExceeds = Object.values(overrides).some(o => o.exceedsLens);
                     window._tsOverCylAdj = { title: `Cross-cylinder: ${parts.join(', ')}`, overrides };
-                    ocViewBtnHtml = `<button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyOverCylAdjustment()">View Adjusted Results \u2192</button>`;
+                    if (anyExceeds) {
+                        const excEntry = Object.entries(overrides).find(([,o]) => o.exceedsLens);
+                        ocViewBtnHtml = `<div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border-radius:8px;font-size:13px;color:#dc2626;font-weight:600">
+                            Cylinder ${excEntry[1].idealCyl.toFixed(2)} D exceeds this lens's max (${excEntry[1].lensCylMax.toFixed(2)} D).
+                        </div>
+                        <button onclick="state.step=2;state.selectedLens=null;state.troubleshoot=null;state.overRefraction=null;state.orRotation=null;render()" style="margin-top:10px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans)">
+                            <i class="ph-duotone ph-arrows-counter-clockwise"></i>&nbsp; Back to Compatible Lenses
+                        </button>`;
+                    } else {
+                        ocViewBtnHtml = `<button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyOverCylAdjustment()">View Adjusted Results \u2192</button>`;
+                    }
                 }
 
                 suggestionsHtml = overCylHtml + ocViewBtnHtml;
@@ -6225,13 +6211,20 @@
             document.getElementById('subnavTools').classList.toggle('active', tab === 'tools');
             document.getElementById('clSubtabs').style.display = tab === 'lenses' ? '' : 'none';
             if (tab === 'lenses') {
-                const showPrescribe = clSubTab === 'prescribe';
-                document.querySelector('main.main').style.display = showPrescribe ? '' : 'none';
-                document.getElementById('browsePage').style.display = showPrescribe ? 'none' : '';
-                if (!showPrescribe) renderBrowse();
+                document.querySelector('main.main').style.display = '';
+                document.querySelector('main.main').style.paddingBottom = clSubTab === 'prescribe' ? '' : '0';
+                document.getElementById('lensesContent').style.display = clSubTab === 'prescribe' ? '' : 'none';
+                document.getElementById('browsePage').style.display = clSubTab === 'browse' ? '' : 'none';
+                document.getElementById('vertexPage').style.display = clSubTab === 'vertex' ? '' : 'none';
+                document.getElementById('radiusPage').style.display = clSubTab === 'radius' ? '' : 'none';
+                if (clSubTab === 'browse') renderBrowse();
+                if (clSubTab === 'vertex') renderVertexChart();
+                if (clSubTab === 'radius') renderRadiusChart();
             } else {
                 document.querySelector('main.main').style.display = 'none';
                 document.getElementById('browsePage').style.display = 'none';
+                document.getElementById('vertexPage').style.display = 'none';
+                document.getElementById('radiusPage').style.display = 'none';
             }
             document.getElementById('medsPage').style.display = tab === 'meds' ? '' : 'none';
             if (tab === 'meds') {
@@ -6452,11 +6445,10 @@
             for (var i = 0; i < filtered.length; i++) {
                 var t = filtered[i];
                 var iconHtml = t.svgIcon
-                    ? '<div class="icon" style="font-size:inherit;">' + t.svgIcon + '</div>'
-                    : '<div class="icon"><i class="ph-duotone ' + t.icon + '"></i></div>';
+                    ? '<span class="icon" style="font-size:inherit;">' + t.svgIcon + '</span>'
+                    : '<span class="icon"><i class="ph-duotone ' + t.icon + '"></i></span>';
                 cards += '<button class="option-btn" onclick="openTool(\'' + t.id + '\')">' +
-                    iconHtml +
-                    '<div class="title">' + t.title + '</div>' +
+                    '<div class="title-row">' + iconHtml + '<span class="title">' + t.title + '</span></div>' +
                     '<div class="desc">' + t.desc + '</div>' +
                     '</button>';
             }
@@ -6470,8 +6462,7 @@
 
             el.innerHTML =
                 '<div style="margin-bottom:18px;">' +
-                    '<div style="font-size:18px;font-weight:700;margin-bottom:4px;">Clinical Tools</div>' +
-                    '<div style="font-size:13px;color:var(--ink-secondary);">Select a tool to get started.</div>' +
+                    '<div style="font-size:18px;font-weight:700;">Clinical Tools</div>' +
                 '</div>' +
                 '<div class="tools-search-wrap">' +
                     '<span class="tools-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>' +
@@ -9095,9 +9086,174 @@
             clSubTab = sub;
             document.getElementById('clSubPrescribe').classList.toggle('active', sub === 'prescribe');
             document.getElementById('clSubBrowse').classList.toggle('active', sub === 'browse');
-            document.querySelector('main.main').style.display = sub === 'prescribe' ? '' : 'none';
+            document.getElementById('clSubVertex').classList.toggle('active', sub === 'vertex');
+            document.getElementById('clSubRadius').classList.toggle('active', sub === 'radius');
+            document.getElementById('lensesContent').style.display = sub === 'prescribe' ? '' : 'none';
             document.getElementById('browsePage').style.display = sub === 'browse' ? '' : 'none';
+            document.getElementById('vertexPage').style.display = sub === 'vertex' ? '' : 'none';
+            document.getElementById('radiusPage').style.display = sub === 'radius' ? '' : 'none';
+            document.querySelector('main.main').style.paddingBottom = sub === 'prescribe' ? '' : '0';
             if (sub === 'browse') renderBrowse();
+            if (sub === 'vertex') renderVertexChart();
+            if (sub === 'radius') renderRadiusChart();
+        }
+
+        function renderVertexChart() {
+            var data = [
+                [4.00,3.87,4.25],[4.25,4.00,4.50],[4.50,4.25,4.75],[4.75,4.50,5.00],
+                [5.00,4.75,5.25],[5.25,5.00,5.62],[5.50,5.12,5.87],[5.75,5.37,6.12],
+                [6.00,5.62,6.50],[6.25,5.75,6.75],[6.50,6.00,7.00],[6.75,6.25,7.37],
+                [7.00,6.50,7.62],[7.25,6.62,8.00],[7.50,6.87,8.25],[7.75,7.12,8.50],
+                [8.00,7.25,8.87],[8.25,7.50,9.12],[8.50,7.75,9.50],[8.75,8.00,9.75],
+                [9.00,8.12,10.12],[9.25,8.37,10.37],[9.50,8.50,10.75],[9.75,8.75,11.00],
+                [10.00,8.87,11.37],[10.25,9.12,11.75],[10.50,9.37,12.00],[10.75,9.50,12.37],
+                [11.00,9.75,12.75],[11.25,9.87,13.00],[11.50,10.12,13.50],[11.75,10.25,13.75],
+                [12.00,10.50,14.00],[12.25,10.62,14.37],[12.50,10.87,14.75],[12.75,11.12,15.00],
+                [13.00,11.25,15.50],[13.25,11.50,15.75],[13.50,11.62,16.12],[13.75,11.87,16.50],
+                [14.00,12.00,16.75],[14.25,12.12,17.25],[14.50,12.37,17.50],[14.75,12.50,18.00],
+                [15.00,12.75,18.25],[15.25,12.87,18.75],[15.50,13.00,19.00],[15.75,13.25,19.37],
+                [16.00,13.50,19.75],[16.25,13.62,20.25],[16.50,13.75,20.50],[16.75,14.00,21.00],
+                [17.00,14.12,21.50],[17.25,14.25,21.75],[17.50,14.50,22.25],[17.75,14.62,22.50],
+                [18.00,14.75,23.00],[18.25,15.00,23.50],[18.50,15.12,23.75],[18.75,15.25,24.25],
+                [19.00,15.50,24.75],[20.00,16.00,26.00]
+            ];
+            var html = '<div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:24px;max-width:560px;margin:0 auto">';
+            html += '<h2 style="font-size:18px;font-weight:700;color:var(--ink);margin:0 0 4px">Vertex Conversion Chart</h2>';
+            html += '<p style="font-size:13px;color:var(--ink-secondary);margin:0 0 16px">Vertex distance: 12mm &mdash; applies to powers &ge; &plusmn;4.00D</p>';
+            html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:12px 14px;background:#f1f0ee;border-radius:10px">';
+            html += '<div class="sign-toggle"><button type="button" id="vtxSignNeg" class="active-neg" onclick="vtxSetSign(true)">&minus;</button><button type="button" id="vtxSignPos" onclick="vtxSetSign(false)">+</button></div>';
+            html += '<select id="vtxPowerSelect" onchange="vtxCalc()" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--mono,\'IBM Plex Mono\',monospace);background:#fff;color:var(--ink);appearance:auto">';
+            html += '<option value="">Select power...</option>';
+            for (var p = 4.00; p <= 20.00; p = Math.round((p + 0.25) * 100) / 100) {
+                html += '<option value="' + p.toFixed(2) + '">' + p.toFixed(2) + '</option>';
+            }
+            html += '</select>';
+            html += '</div>';
+            html += '<div id="vtxResult" style="display:none;margin-bottom:20px;padding:14px;background:var(--accent-light);border-radius:10px;text-align:center;font-family:var(--mono,\'IBM Plex Mono\',monospace);font-size:15px;font-weight:600;color:var(--ink);position:relative"></div>';
+            html += '<div id="vtxResetWrap" style="display:none;text-align:center;margin-bottom:16px"><button onclick="vtxReset()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:22px;line-height:1;transition:color 0.15s" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--ink-muted)\'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button></div>';
+            html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px;font-family:var(--mono,\'IBM Plex Mono\',monospace)">';
+            html += '<thead><tr style="border-bottom:2px solid var(--border)">';
+            html += '<th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Spectacle Rx (+/&minus;)</th>';
+            html += '<th style="text-align:center;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Minus CL</th>';
+            html += '<th style="text-align:center;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Plus CL</th>';
+            html += '</tr></thead><tbody>';
+            for (var i = 0; i < data.length; i++) {
+                var r = data[i];
+                var bg = i % 2 === 0 ? '' : ' style="background:rgba(0,0,0,0.02)"';
+                html += '<tr' + bg + '>';
+                html += '<td style="padding:7px 12px;border-bottom:1px solid var(--border);font-weight:600">' + r[0].toFixed(2) + '</td>';
+                html += '<td style="padding:7px 12px;border-bottom:1px solid var(--border);text-align:center;color:#dc2626">' + r[1].toFixed(2) + '</td>';
+                html += '<td style="padding:7px 12px;border-bottom:1px solid var(--border);text-align:center;color:#16a34a">' + r[2].toFixed(2) + '</td>';
+                html += '</tr>';
+            }
+            html += '</tbody></table></div></div>';
+            document.getElementById('vertexContent').innerHTML = html;
+        }
+
+        var vtxSignNeg = true;
+        function vtxSetSign(neg) {
+            vtxSignNeg = neg;
+            document.getElementById('vtxSignNeg').className = neg ? 'active-neg' : '';
+            document.getElementById('vtxSignPos').className = neg ? '' : 'active-pos';
+            vtxCalc();
+        }
+        function vtxReset() {
+            vtxSignNeg = true;
+            document.getElementById('vtxSignNeg').className = 'active-neg';
+            document.getElementById('vtxSignPos').className = '';
+            document.getElementById('vtxPowerSelect').value = '';
+            document.getElementById('vtxResult').style.display = 'none';
+            document.getElementById('vtxResetWrap').style.display = 'none';
+        }
+        function vtxCalc() {
+            var sel = document.getElementById('vtxPowerSelect');
+            var res = document.getElementById('vtxResult');
+            var resetWrap = document.getElementById('vtxResetWrap');
+            var val = parseFloat(sel.value);
+            if (!val || val < 4) { res.style.display = 'none'; resetWrap.style.display = 'none'; return; }
+            var d = 0.012;
+            var spec = vtxSignNeg ? -val : val;
+            var cl = spec / (1 - d * spec);
+            var rounded = Math.round(cl * 4) / 4;
+            var sign = rounded >= 0 ? '+' : '\u2212';
+            res.style.display = '';
+            resetWrap.style.display = '';
+            res.innerHTML = 'Spectacle <b>' + (spec >= 0 ? '+' : '\u2212') + val.toFixed(2) + 'D</b> &rarr; Contact Lens <b style="color:var(--accent)">' + sign + Math.abs(rounded).toFixed(2) + 'D</b>';
+        }
+
+        function renderRadiusChart() {
+            var data = [
+                [35.00,9.64],[35.50,9.51],[36.00,9.38],[36.50,9.25],[37.00,9.12],
+                [37.50,9.00],[38.00,8.88],[38.50,8.77],[39.00,8.65],[39.50,8.54],
+                [40.00,8.44],[40.25,8.38],[40.50,8.33],[40.75,8.28],[41.00,8.23],
+                [41.25,8.18],[41.50,8.13],[41.75,8.08],[42.00,8.04],[42.25,7.99],
+                [42.50,7.94],[42.75,7.89],[43.00,7.85],[43.25,7.80],[43.50,7.76],
+                [43.75,7.71],[44.00,7.67],[44.25,7.63],[44.50,7.58],[44.75,7.54],
+                [45.00,7.50],[45.25,7.46],[45.50,7.42],[45.75,7.38],[46.00,7.34],
+                [46.25,7.30],[46.50,7.26],[46.75,7.22],[47.00,7.18],[47.25,7.14],
+                [47.50,7.11],[47.75,7.07],[48.00,7.03],[48.50,6.96],[49.00,6.89],
+                [49.50,6.82],[50.00,6.75],[50.50,6.68],[51.00,6.62],[52.00,6.49]
+            ];
+            var html = '<div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:24px;max-width:460px;margin:0 auto">';
+            html += '<h2 style="font-size:18px;font-weight:700;color:var(--ink);margin:0 0 4px">Diopter to Radius Conversion</h2>';
+            html += '<p style="font-size:13px;color:var(--ink-secondary);margin:0 0 16px">n = 1.3375 &mdash; Radius (mm) = 337.5 / Diopters</p>';
+            // Quick converter
+            html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:12px 14px;background:#f1f0ee;border-radius:10px">';
+            html += '<div class="sign-toggle"><button type="button" id="rcModeD" class="active-neg" onclick="rcSetMode(\'d\')" style="width:auto;padding:0 10px;font-size:12px;letter-spacing:0.02em">D</button><button type="button" id="rcModeMM" onclick="rcSetMode(\'mm\')" style="width:auto;padding:0 10px;font-size:12px;letter-spacing:0.02em">mm</button></div>';
+            html += '<input type="number" id="rcInput" placeholder="Enter value..." oninput="rcCalc()" step="0.01" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--mono,\'IBM Plex Mono\',monospace);background:#fff;color:var(--ink)">';
+            html += '</div>';
+            html += '<div id="rcResult" style="display:none;margin-bottom:12px;padding:14px;background:var(--accent-light);border-radius:10px;text-align:center;font-family:var(--mono,\'IBM Plex Mono\',monospace);font-size:15px;font-weight:600;color:var(--ink)"></div>';
+            html += '<div id="rcResetWrap" style="display:none;text-align:center;margin-bottom:16px"><button onclick="rcReset()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:22px;line-height:1;transition:color 0.15s" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--ink-muted)\'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button></div>';
+            html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px;font-family:var(--mono,\'IBM Plex Mono\',monospace)">';
+            html += '<thead><tr style="border-bottom:2px solid var(--border)">';
+            html += '<th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Diopters (D)</th>';
+            html += '<th style="text-align:center;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Radius (mm)</th>';
+            html += '</tr></thead><tbody>';
+            for (var i = 0; i < data.length; i++) {
+                var r = data[i];
+                var bg = i % 2 === 0 ? '' : ' style="background:rgba(0,0,0,0.02)"';
+                html += '<tr' + bg + '>';
+                html += '<td style="padding:7px 12px;border-bottom:1px solid var(--border);font-weight:600">' + r[0].toFixed(2) + ' D</td>';
+                html += '<td style="padding:7px 12px;border-bottom:1px solid var(--border);text-align:center">' + r[1].toFixed(2) + ' mm</td>';
+                html += '</tr>';
+            }
+            html += '</tbody></table></div></div>';
+            document.getElementById('radiusContent').innerHTML = html;
+        }
+
+        var rcMode = 'd'; // 'd' = diopter input, 'mm' = radius input
+        function rcSetMode(mode) {
+            rcMode = mode;
+            document.getElementById('rcModeD').className = mode === 'd' ? 'active-neg' : '';
+            document.getElementById('rcModeMM').className = mode === 'mm' ? 'active-pos' : '';
+            var input = document.getElementById('rcInput');
+            input.placeholder = mode === 'd' ? 'Enter diopters...' : 'Enter radius (mm)...';
+            rcCalc();
+        }
+        function rcReset() {
+            rcMode = 'd';
+            document.getElementById('rcModeD').className = 'active-neg';
+            document.getElementById('rcModeMM').className = '';
+            document.getElementById('rcInput').value = '';
+            document.getElementById('rcInput').placeholder = 'Enter diopters...';
+            document.getElementById('rcResult').style.display = 'none';
+            document.getElementById('rcResetWrap').style.display = 'none';
+        }
+        function rcCalc() {
+            var val = parseFloat(document.getElementById('rcInput').value);
+            var res = document.getElementById('rcResult');
+            var resetWrap = document.getElementById('rcResetWrap');
+            if (!val || val <= 0) { res.style.display = 'none'; resetWrap.style.display = 'none'; return; }
+            var result;
+            if (rcMode === 'd') {
+                result = 337.5 / val;
+                res.innerHTML = '<b>' + val.toFixed(2) + ' D</b> &rarr; <b style="color:var(--accent)">' + result.toFixed(2) + ' mm</b>';
+            } else {
+                result = 337.5 / val;
+                res.innerHTML = '<b>' + val.toFixed(2) + ' mm</b> &rarr; <b style="color:var(--accent)">' + result.toFixed(2) + ' D</b>';
+            }
+            res.style.display = '';
+            resetWrap.style.display = '';
         }
 
         // ===== NEURO VISUAL FIELD INDEX TOOL =====
@@ -9698,8 +9854,7 @@
                 const count = MEDS.filter(m => g.conditions.includes(m.condition)).length;
                 const active = medsState.selectedConditionGroup === g.id;
                 html += `<div class="option-btn ${active ? 'active' : ''} ${count===0?'zero':''}" onclick="selectMedCondition('${g.id}')">
-                    <div class="icon">${g.icon}</div>
-                    <div class="title">${g.label}</div>
+                    <div class="title-row"><span class="icon">${g.icon}</span><span class="title">${g.label}</span></div>
                     <div class="count">${count} med${count!==1?'s':''}</div>
                 </div>`;
             });
