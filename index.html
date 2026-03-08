@@ -4,42 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55' stroke='%2306b6d4' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M33 55 Q60 28 87 55 Q60 82 33 55Z' stroke='%2306b6d4' stroke-width='5' fill='rgba(6,182,212,0.1)' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='55' r='9' fill='%2306b6d4'/%3E%3Ccircle cx='63.5' cy='52.5' r='2.8' fill='%230a0b0f'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=block&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55' stroke='%230d9488' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M33 55 Q60 28 87 55 Q60 82 33 55Z' stroke='%230d9488' stroke-width='5' fill='rgba(13,148,136,0.1)' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='55' r='9' fill='%230d9488'/%3E%3Ccircle cx='63.5' cy='52.5' r='2.8' fill='%231a2332'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=block&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web@2"></script>
     <style>
         :root {
-            --bg: #0f1117;
-            --surface: rgba(255,255,255,0.06);
-            --surface-solid: #181a23;
-            --ink: #f1f5f9;
-            --ink-secondary: #94a3b8;
-            --ink-muted: #64748b;
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.16);
-            --accent: #06b6d4;
-            --accent-light: rgba(6,182,212,0.12);
-            --accent-glow: 0 0 20px rgba(6,182,212,0.15);
-            --success: #34d399;
-            --success-bg: rgba(52,211,153,0.1);
-            --success-border: rgba(52,211,153,0.25);
-            --danger: #f87171;
-            --danger-bg: rgba(248,113,113,0.1);
+            --bg: #f4eee7;
+            --surface: rgba(0,0,0,0.03);
+            --surface-solid: #ffffff;
+            --ink: #1a2332;
+            --ink-secondary: #64748b;
+            --ink-muted: #94a3b8;
+            --border: rgba(0,0,0,0.08);
+            --border-hover: rgba(0,0,0,0.12);
+            --accent: #0d9488;
+            --accent-light: rgba(13,148,136,0.10);
+            --accent-glow: 0 0 20px rgba(13,148,136,0.12);
+            --success: #059669;
+            --success-bg: rgba(5,150,105,0.08);
+            --success-border: rgba(5,150,105,0.2);
+            --danger: #dc2626;
+            --danger-bg: rgba(220,38,38,0.06);
             --radius: 10px;
             --radius-lg: 14px;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-            --shadow-md: 0 2px 8px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.05);
-            --shadow-lg: 0 4px 20px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.05);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.08);
             --mono: 'IBM Plex Mono', 'SF Mono', monospace;
-            --sans: 'DM Sans', -apple-system, sans-serif;
-            --alcon: #3b9eff;
-            --alcon-bg: rgba(59,158,255,0.1);
-            --bl: #f59e0b;
-            --bl-bg: rgba(245,158,11,0.1);
-            --cv: #2dd4bf;
-            --cv-bg: rgba(45,212,191,0.1);
-            --jj: #c084fc;
-            --jj-bg: rgba(192,132,252,0.1);
+            --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+
+            --alcon: #2563eb;
+            --alcon-bg: rgba(37,99,235,0.08);
+            --bl: #d97706;
+            --bl-bg: rgba(217,119,6,0.08);
+            --cv: #0d9488;
+            --cv-bg: rgba(13,148,136,0.08);
+            --jj: #7c3aed;
+            --jj-bg: rgba(124,58,237,0.08);
         }
 
         *, *::before, *::after {
@@ -49,7 +50,7 @@
         }
 
         html, body {
-            color-scheme: dark;
+            color-scheme: light;
         }
 
         body {
@@ -67,8 +68,8 @@
 
         /* HEADER */
         .header {
-            background: linear-gradient(135deg, #0f1117 0%, #161926 100%);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a2332 0%, #1e293b 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
             padding: 16px 20px 0;
             position: sticky;
             top: 0;
@@ -138,9 +139,9 @@
             border-color: rgba(255,255,255,0.2);
         }
         .cl-subtab.active {
-            color: var(--accent);
-            background: rgba(6,182,212,0.1);
-            border-color: rgba(6,182,212,0.3);
+            color: #5eead4;
+            background: rgba(13,148,136,0.15);
+            border-color: rgba(13,148,136,0.4);
         }
 
         .header-inner {
@@ -177,12 +178,12 @@
             font-weight: 700;
             font-size: 26px;
             letter-spacing: 0.02em;
-            text-shadow: 0 0 30px rgba(6,182,212,0.3);
+            text-shadow: 0 0 30px rgba(13,148,136,0.3);
         }
 
         .logo-sub {
             color: rgba(255,255,255,0.45);
-            font-family: var(--mono);
+
             font-size: 10px;
             letter-spacing: 0.03em;
             margin-top: 1px;
@@ -251,7 +252,7 @@
             height: 10px;
             background: var(--accent);
             color: #fff;
-            box-shadow: 0 0 8px rgba(6,182,212,0.4);
+            box-shadow: 0 0 8px rgba(13,148,136,0.4);
         }
 
         .step-item.done .step-num {
@@ -288,17 +289,16 @@
 
         /* CARD */
         .card {
-            background: var(--surface);
+            background: #ffffff;
             border: none;
-            border-left: 2px solid rgba(6,182,212,0.4);
-            border-radius: var(--radius-lg);
+            border-left: 3px solid rgba(13,148,136,0.4);
+            border-radius: 12px;
             padding: 32px 28px;
-            box-shadow: var(--shadow-md);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .card-title {
+
             font-size: 21px;
             font-weight: 700;
             margin-bottom: 4px;
@@ -348,7 +348,7 @@
             width: 36px;
             border: none;
             background: var(--surface-solid);
-            font-family: var(--mono);
+
             font-size: 16px;
             font-weight: 700;
             color: var(--ink-secondary);
@@ -368,26 +368,26 @@
 
         .sign-toggle button.active-neg {
             background: rgba(220,38,38,0.08);
-            color: #f87171;
+            color: #dc2626;
         }
 
         .sign-toggle button.active-pos {
             background: rgba(22,163,74,0.08);
-            color: #4ade80;
+            color: #16a34a;
         }
 
         .sign-toggle button.active-90 {
             background: rgba(37,99,235,0.08);
-            color: #60a5fa;
+            color: #2563eb;
         }
 
         .sign-toggle button.active-180 {
             background: rgba(234,88,12,0.08);
-            color: #fb923c;
+            color: #ea580c;
         }
 
         .sign-toggle button:not(.active-neg):not(.active-pos):not(.active-90):not(.active-180):hover {
-            background: rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.04);
         }
 
         .form-group input, .form-group select {
@@ -397,6 +397,7 @@
             border: 2px solid var(--border);
             font-size: 15px;
             font-family: var(--mono);
+
             font-weight: 500;
             color: var(--ink);
             background: var(--surface-solid);
@@ -417,7 +418,7 @@
             outline: none;
             border-color: var(--accent);
             background: var(--surface-solid);
-            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
         }
 
         .form-group input::placeholder {
@@ -464,9 +465,9 @@
             width: 100%;
             padding: 8px 0;
             margin: 4px 0 12px;
-            border: 1.5px dashed rgba(6,182,212,0.3);
+            border: 1.5px dashed rgba(13,148,136,0.3);
             border-radius: var(--radius);
-            background: rgba(6,182,212,0.04);
+            background: rgba(13,148,136,0.04);
             color: var(--accent);
             font-family: var(--sans);
             font-size: 13px;
@@ -515,7 +516,7 @@
             border-radius: 8px;
             border: 2px solid var(--border);
             background: var(--surface-solid);
-            font-family: var(--mono);
+
             font-size: 12px;
             font-weight: 600;
             color: var(--ink-muted);
@@ -533,15 +534,15 @@
         }
 
         .dom-toggle.active-left {
-            border-color: #a78bfa;
-            background: rgba(124,58,237,0.12);
-            color: #c4b5fd;
+            border-color: #7c3aed;
+            background: rgba(124,58,237,0.08);
+            color: #7c3aed;
         }
 
         .dom-toggle.active-right {
-            border-color: #f59e0b;
-            background: rgba(245,158,11,0.12);
-            color: #fbbf24;
+            border-color: #d97706;
+            background: rgba(217,119,6,0.08);
+            color: #d97706;
         }
 
         /* VERTEX BOX */
@@ -555,7 +556,7 @@
         }
 
         .vertex-label {
-            font-family: var(--mono);
+
             font-size: 10px;
             font-weight: 700;
             color: var(--success);
@@ -571,7 +572,7 @@
         }
 
         .vertex-val {
-            font-family: var(--mono);
+
             font-size: 14px;
             color: var(--ink);
         }
@@ -632,6 +633,7 @@
         }
 
         .option-btn .title {
+
             font-size: 14px;
             font-weight: 700;
             color: var(--ink);
@@ -644,7 +646,7 @@
         }
 
         .option-btn .count {
-            font-family: var(--mono);
+
             font-size: 10px;
             font-weight: 600;
             color: var(--ink-muted);
@@ -701,25 +703,25 @@
         .brand-alcon.active {
             border-color: var(--alcon);
             background: var(--alcon-bg);
-            box-shadow: 0 0 20px rgba(59,158,255,0.15);
+            box-shadow: 0 0 20px rgba(37,99,235,0.12);
         }
 
         .brand-bl.active {
             border-color: var(--bl);
             background: var(--bl-bg);
-            box-shadow: 0 0 20px rgba(245,158,11,0.15);
+            box-shadow: 0 0 20px rgba(217,119,6,0.12);
         }
 
         .brand-cv.active {
             border-color: var(--cv);
             background: var(--cv-bg);
-            box-shadow: 0 0 20px rgba(45,212,191,0.15);
+            box-shadow: 0 0 20px rgba(13,148,136,0.12);
         }
 
         .brand-jj.active {
             border-color: var(--jj);
             background: var(--jj-bg);
-            box-shadow: 0 0 20px rgba(192,132,252,0.15);
+            box-shadow: 0 0 20px rgba(124,58,237,0.12);
         }
 
         /* SHOW ALL BTN */
@@ -757,6 +759,7 @@
         }
 
         .results-count {
+
             font-size: 20px;
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -765,7 +768,7 @@
         .results-meta {
             font-size: 12.5px;
             color: var(--ink-muted);
-            font-family: var(--mono);
+
             margin-top: 3px;
         }
 
@@ -778,7 +781,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 10px;
-            font-family: var(--mono);
+
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -809,18 +812,16 @@
         .lens-card {
             padding: 16px 18px;
             border-radius: var(--radius);
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: #ffffff;
+            border: none;
             transition: all 0.15s;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .lens-card:hover {
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         }
 
         .lens-card .brand-stripe {
@@ -847,7 +848,7 @@
         }
 
         .badge {
-            font-family: var(--mono);
+
             font-size: 9.5px;
             font-weight: 700;
             padding: 3px 8px;
@@ -859,40 +860,41 @@
         .badge-brand-alcon {
             background: var(--alcon-bg);
             color: var(--alcon);
-            border: 1px solid rgba(59,158,255,0.3);
+            border: 1px solid rgba(37,99,235,0.25);
         }
 
         .badge-brand-bl {
             background: var(--bl-bg);
             color: var(--bl);
-            border: 1px solid rgba(245,158,11,0.3);
+            border: 1px solid rgba(217,119,6,0.25);
         }
 
         .badge-brand-cv {
             background: var(--cv-bg);
             color: var(--cv);
-            border: 1px solid rgba(45,212,191,0.3);
+            border: 1px solid rgba(13,148,136,0.25);
         }
 
         .badge-brand-jj {
             background: var(--jj-bg);
             color: var(--jj);
-            border: 1px solid rgba(192,132,252,0.3);
+            border: 1px solid rgba(124,58,237,0.25);
         }
 
         .badge-modality {
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.04);
             color: var(--ink-muted);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,0,0,0.08);
         }
 
         .badge-dk {
-            background: rgba(245,158,11,0.1);
-            color: #fbbf24;
-            border: 1px solid rgba(245,158,11,0.25);
+            background: rgba(217,119,6,0.08);
+            color: #b45309;
+            border: 1px solid rgba(217,119,6,0.2);
         }
 
         .lens-name {
+
             font-size: 15.5px;
             font-weight: 700;
             color: var(--ink);
@@ -907,7 +909,7 @@
         }
 
         .lens-price {
-            font-family: var(--mono);
+
             font-size: 13.5px;
             font-weight: 700;
             color: var(--ink);
@@ -933,7 +935,7 @@
         .spec-item {}
 
         .spec-label {
-            font-family: var(--mono);
+
             font-size: 9.5px;
             font-weight: 600;
             color: var(--ink-muted);
@@ -942,7 +944,7 @@
         }
 
         .spec-value {
-            font-family: var(--mono);
+
             font-size: 12.5px;
             font-weight: 500;
             color: var(--ink);
@@ -968,7 +970,7 @@
         }
 
         .lens-select-btn:hover {
-            background: #0891b2;
+            background: #0f766e;
             box-shadow: var(--accent-glow);
         }
 
@@ -995,10 +997,11 @@
         }
 
         .order-back-btn:hover {
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.04);
         }
 
         .order-lens-name {
+
             font-size: 20px;
             font-weight: 700;
             color: var(--ink);
@@ -1007,7 +1010,7 @@
         }
 
         .order-lens-brand {
-            font-family: var(--mono);
+
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
@@ -1016,7 +1019,7 @@
         }
 
         .order-section-title {
-            font-family: var(--mono);
+
             font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
@@ -1045,7 +1048,7 @@
         }
 
         .order-param-label {
-            font-family: var(--mono);
+
             font-size: 9.5px;
             font-weight: 600;
             color: var(--ink-muted);
@@ -1055,7 +1058,7 @@
         }
 
         .order-param-value {
-            font-family: var(--mono);
+
             font-size: 18px;
             font-weight: 700;
             color: var(--ink);
@@ -1063,15 +1066,15 @@
         }
 
         .order-param-note {
-            font-family: var(--mono);
+
             font-size: 9px;
             color: var(--ink-secondary);
             margin-top: 2px;
         }
 
         .order-param.highlight {
-            background: rgba(6,182,212,0.08);
-            border-color: rgba(6,182,212,0.25);
+            background: rgba(13,148,136,0.06);
+            border-color: rgba(13,148,136,0.2);
         }
 
         .order-param.highlight .order-param-value {
@@ -1079,19 +1082,19 @@
         }
 
         .order-note-box {
-            background: rgba(251,191,36,0.08);
-            border: 1px solid rgba(251,191,36,0.2);
+            background: rgba(217,119,6,0.06);
+            border: 1px solid rgba(217,119,6,0.15);
             border-radius: 6px;
             padding: 8px 10px;
             margin-bottom: 0;
             margin-top: 12px;
             font-size: 11px;
-            color: #fbbf24;
+            color: #92400e;
             line-height: 1.4;
         }
 
         .order-note-box strong {
-            color: #fcd34d;
+            color: #78350f;
         }
 
         .order-lens-info {
@@ -1102,7 +1105,7 @@
         }
 
         .order-info-item {
-            font-family: var(--mono);
+
             font-size: 11px;
         }
 
@@ -1125,7 +1128,7 @@
             text-align: center;
             background: var(--danger-bg);
             border-radius: var(--radius);
-            border: 1px solid rgba(248,113,113,0.25);
+            border: 1px solid rgba(220,38,38,0.2);
         }
 
         .empty-icon {
@@ -1136,12 +1139,12 @@
         .empty-title {
             font-size: 15px;
             font-weight: 700;
-            color: #f87171;
+            color: #dc2626;
         }
 
         .empty-desc {
             font-size: 12.5px;
-            color: #fca5a5;
+            color: #991b1b;
             margin-top: 4px;
         }
 
@@ -1175,7 +1178,7 @@
         }
 
         .nav-btn-back:hover {
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.04);
         }
 
         .nav-btn-back:disabled {
@@ -1190,12 +1193,12 @@
         }
 
         .nav-btn-next:hover {
-            background: #0891b2;
+            background: #0f766e;
             box-shadow: var(--accent-glow);
         }
 
         .nav-btn-next:disabled {
-            background: rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.06);
             color: var(--ink-muted);
             cursor: default;
         }
@@ -1204,7 +1207,7 @@
         .footer {
             text-align: center;
             margin-top: 20px;
-            font-family: var(--mono);
+
             font-size: 10px;
             color: var(--ink-muted);
             line-height: 1.7;
@@ -1351,7 +1354,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--mono);
+
             font-size: 12px;
             font-weight: 700;
             flex-shrink: 0;
@@ -1363,6 +1366,7 @@
         }
 
         .ts-title {
+
             font-size: 14px;
             font-weight: 700;
             color: var(--ink);
@@ -1385,7 +1389,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: var(--mono);
+
             font-size: 12px;
             padding: 8px 12px;
             border-radius: 6px;
@@ -1469,7 +1473,7 @@
             width: 100%;
             padding: 12px 48px 12px 40px;
             border-radius: 12px;
-            border: 2px solid transparent;
+            border: 2px solid var(--border);
             font-size: 15px;
             font-family: var(--sans);
             font-weight: 500;
@@ -1482,7 +1486,7 @@
             outline: none;
             border-color: var(--accent);
             background: var(--surface-solid);
-            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
         }
         .med-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
         .med-search-icon {
@@ -1539,7 +1543,7 @@
             background: var(--surface-solid);
             border: 1px solid var(--border);
             border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             max-height: 280px;
             overflow-y: auto;
             z-index: 60;
@@ -1572,18 +1576,16 @@
         .med-card {
             padding: 16px 18px;
             border-radius: var(--radius);
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: #ffffff;
+            border: none;
             transition: all 0.15s;
             position: relative;
             overflow: hidden;
             margin-bottom: 8px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
         .med-card:hover {
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         }
         .tier-stripe {
             position: absolute;
@@ -1595,14 +1597,14 @@
         }
         /* Badges */
         .badge-condition {
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.04);
             color: var(--ink-muted);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,0,0,0.08);
         }
         .badge-pf {
-            background: rgba(59,130,246,0.1);
-            color: #60a5fa;
-            border: 1px solid rgba(59,130,246,0.25);
+            background: rgba(59,130,246,0.08);
+            color: #2563eb;
+            border: 1px solid rgba(59,130,246,0.2);
         }
         .badge-generic {
             background: var(--success-bg);
@@ -1615,7 +1617,7 @@
         }
         .med-card .badge:hover {
             transform: scale(1.12);
-            filter: brightness(1.3);
+            filter: brightness(0.85);
         }
 
         /* Med card layout */
@@ -1639,6 +1641,7 @@
             flex-wrap: wrap;
         }
         .med-brand-name {
+
             font-size: 15.5px;
             font-weight: 700;
             color: var(--ink);
@@ -1650,7 +1653,7 @@
             margin-top: 2px;
         }
         .med-drug-class {
-            font-family: var(--mono);
+
             font-size: 10px;
             font-weight: 600;
             color: var(--ink-muted);
@@ -1673,29 +1676,28 @@
             min-width: 100px;
         }
         .med-price-label {
-            font-family: var(--mono);
             font-size: 9.5px;
             font-weight: 600;
             color: var(--ink-muted);
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            text-align: center;
+            text-align: left;
         }
         .med-price-value {
-            font-family: var(--mono);
             font-size: 16px;
             font-weight: 700;
             color: var(--ink);
             margin-top: 2px;
             white-space: nowrap;
-            text-align: center;
+            text-align: left;
+            font-variant-numeric: tabular-nums;
         }
         .med-price-savings {
-            font-family: var(--mono);
             font-size: 10.5px;
             font-weight: 600;
             color: var(--success);
             margin-top: 2px;
+            text-align: left;
         }
         /* Dosing */
         .med-dosing {
@@ -1705,7 +1707,7 @@
             line-height: 1.5;
         }
         .med-dosing-label {
-            font-family: var(--mono);
+
             font-size: 9.5px;
             font-weight: 600;
             color: var(--ink-muted);
@@ -1713,7 +1715,7 @@
             letter-spacing: 0.06em;
         }
         .med-bottle {
-            font-family: var(--mono);
+
             font-size: 11px;
             color: var(--ink-muted);
             margin-top: 4px;
@@ -1723,7 +1725,7 @@
         .med-notes-toggle {
             display: inline-block;
             margin-top: 8px;
-            font-family: var(--mono);
+
             font-size: 10.5px;
             font-weight: 700;
             text-transform: uppercase;
@@ -1736,23 +1738,23 @@
         }
         .med-notes-toggle:hover { text-decoration: underline; }
         .med-notes-content {
-            background: rgba(251,191,36,0.08);
-            border: 1px solid rgba(251,191,36,0.2);
+            background: rgba(217,119,6,0.06);
+            border: 1px solid rgba(217,119,6,0.15);
             border-radius: 8px;
             padding: 10px 14px;
             margin-top: 8px;
             font-size: 12.5px;
-            color: #fbbf24;
+            color: #92400e;
             line-height: 1.5;
         }
         .med-notes-list {
-            background: rgba(251,191,36,0.08);
-            border: 1px solid rgba(251,191,36,0.2);
+            background: rgba(217,119,6,0.06);
+            border: 1px solid rgba(217,119,6,0.15);
             border-radius: 8px;
             padding: 8px 14px 8px 30px;
             margin: 8px 0 0 0;
             font-size: 12.5px;
-            color: #fbbf24;
+            color: #92400e;
             line-height: 1.35;
             list-style: disc;
         }
@@ -1766,7 +1768,7 @@
             height: 32px;
             border-radius: 50%;
             border: none;
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.04);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1792,7 +1794,7 @@
             border-radius: 20px;
             border: 1.5px solid var(--border);
             background: var(--surface);
-            font-family: var(--mono);
+
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
@@ -1820,18 +1822,18 @@
             margin-bottom: 2px;
         }
         .med-filter-chip {
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 4px 10px;
+            border-radius: 16px;
             border: 1.5px solid var(--border);
             background: var(--surface);
             font-family: var(--sans);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             color: var(--ink-secondary);
             cursor: pointer;
             transition: all 0.15s;
         }
-        .med-filter-chip:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.04); }
+        .med-filter-chip:hover { border-color: var(--border-hover); background: rgba(0,0,0,0.03); }
         .med-filter-chip.active {
             border-color: var(--accent);
             background: var(--accent-light);
@@ -1858,38 +1860,38 @@
             vertical-align: middle;
             flex-shrink: 0;
         }
-        .dc-dot-pga { background: #2dd4bf; }
-        .dc-dot-beta { background: #facc15; border: 1px solid #e5c100; }
-        .dc-dot-cai { background: #f97316; }
-        .dc-dot-alpha { background: #a855f7; }
+        .dc-dot-pga { background: #0d9488; }
+        .dc-dot-beta { background: #ca8a04; border: 1px solid #a16207; }
+        .dc-dot-cai { background: #ea580c; }
+        .dc-dot-alpha { background: #7c3aed; }
         .dc-dot-miotic { background: #16a34a; }
         .dc-dot-combo { background: #1e3a8a; }
         .dc-dot-rock { background: #6b7280; }
-        .med-filter-chip.dc-pga.active { background: rgba(45,212,191,0.1); border-color: #2dd4bf; color: #2dd4bf; }
-        .med-filter-chip.dc-beta.active { background: rgba(250,204,21,0.1); border-color: #facc15; color: #facc15; }
-        .med-filter-chip.dc-cai.active { background: rgba(249,115,22,0.1); border-color: #f97316; color: #fb923c; }
-        .med-filter-chip.dc-alpha.active { background: rgba(168,85,247,0.1); border-color: #a855f7; color: #c084fc; }
-        .med-filter-chip.dc-miotic.active { background: rgba(22,163,74,0.1); border-color: #16a34a; color: #4ade80; }
-        .med-filter-chip.dc-combo.active { background: rgba(30,58,138,0.15); border-color: #3b82f6; color: #60a5fa; }
-        .med-filter-chip.dc-rock.active { background: rgba(107,114,128,0.15); border-color: #6b7280; color: #9ca3af; }
-        .dc-dot-abx { background: #f43f5e; }
-        .dc-dot-hist { background: #0ea5e9; }
+        .med-filter-chip.dc-pga.active { background: rgba(13,148,136,0.1); border-color: #0d9488; color: #0d9488; }
+        .med-filter-chip.dc-beta.active { background: rgba(202,138,4,0.1); border-color: #ca8a04; color: #a16207; }
+        .med-filter-chip.dc-cai.active { background: rgba(249,115,22,0.1); border-color: #ea580c; color: #c2410c; }
+        .med-filter-chip.dc-alpha.active { background: rgba(168,85,247,0.1); border-color: #7c3aed; color: #7c3aed; }
+        .med-filter-chip.dc-miotic.active { background: rgba(22,163,74,0.1); border-color: #16a34a; color: #15803d; }
+        .med-filter-chip.dc-combo.active { background: rgba(30,58,138,0.1); border-color: #2563eb; color: #2563eb; }
+        .med-filter-chip.dc-rock.active { background: rgba(107,114,128,0.1); border-color: #6b7280; color: #4b5563; }
+        .dc-dot-abx { background: #e11d48; }
+        .dc-dot-hist { background: #0284c7; }
         .dc-dot-steroid { background: #d97706; }
-        .dc-dot-nsaid { background: #6366f1; }
+        .dc-dot-nsaid { background: #4f46e5; }
         .dc-dot-viral { background: #64748b; }
-        .dc-dot-vegf { background: #d946ef; }
+        .dc-dot-vegf { background: #a21caf; }
         .dc-dot-immuno { background: #059669; }
-        .dc-dot-tear { background: #06b6d4; }
+        .dc-dot-tear { background: #0d9488; }
         .dc-dot-fungal { background: #65a30d; }
-        .med-filter-chip.dc-abx.active { background: rgba(244,63,94,0.1); border-color: #f43f5e; color: #fb7185; }
-        .med-filter-chip.dc-hist.active { background: rgba(14,165,233,0.1); border-color: #0ea5e9; color: #38bdf8; }
-        .med-filter-chip.dc-steroid.active { background: rgba(217,119,6,0.1); border-color: #d97706; color: #fbbf24; }
-        .med-filter-chip.dc-nsaid.active { background: rgba(99,102,241,0.1); border-color: #6366f1; color: #a5b4fc; }
-        .med-filter-chip.dc-viral.active { background: rgba(100,116,139,0.1); border-color: #64748b; color: #94a3b8; }
-        .med-filter-chip.dc-vegf.active { background: rgba(217,70,239,0.1); border-color: #d946ef; color: #e879f9; }
-        .med-filter-chip.dc-immuno.active { background: rgba(5,150,105,0.1); border-color: #059669; color: #34d399; }
-        .med-filter-chip.dc-tear.active { background: rgba(6,182,212,0.1); border-color: #06b6d4; color: #22d3ee; }
-        .med-filter-chip.dc-fungal.active { background: rgba(101,163,13,0.1); border-color: #65a30d; color: #a3e635; }
+        .med-filter-chip.dc-abx.active { background: rgba(244,63,94,0.1); border-color: #e11d48; color: #be123c; }
+        .med-filter-chip.dc-hist.active { background: rgba(14,165,233,0.1); border-color: #0284c7; color: #0369a1; }
+        .med-filter-chip.dc-steroid.active { background: rgba(217,119,6,0.1); border-color: #d97706; color: #b45309; }
+        .med-filter-chip.dc-nsaid.active { background: rgba(99,102,241,0.1); border-color: #4f46e5; color: #4338ca; }
+        .med-filter-chip.dc-viral.active { background: rgba(100,116,139,0.1); border-color: #475569; color: #475569; }
+        .med-filter-chip.dc-vegf.active { background: rgba(217,70,239,0.1); border-color: #c026d3; color: #a21caf; }
+        .med-filter-chip.dc-immuno.active { background: rgba(5,150,105,0.1); border-color: #059669; color: #047857; }
+        .med-filter-chip.dc-tear.active { background: rgba(13,148,136,0.1); border-color: #0d9488; color: #0d9488; }
+        .med-filter-chip.dc-fungal.active { background: rgba(101,163,13,0.1); border-color: #65a30d; color: #4d7c0f; }
 
         /* Price slider */
         .med-price-filter {
@@ -1903,7 +1905,7 @@
             border: 1px solid var(--border);
         }
         .med-price-filter label {
-            font-family: var(--mono);
+
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
@@ -1927,10 +1929,10 @@
             background: var(--accent);
             cursor: pointer;
             border: 2px solid var(--bg);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
         .med-price-filter .price-val {
-            font-family: var(--mono);
+
             font-size: 12px;
             font-weight: 700;
             color: var(--ink);
@@ -1943,7 +1945,7 @@
         .med-card-condensed .med-expanded-content { display: none; }
         .med-card-condensed.expanded .med-expanded-content { display: block; }
         .med-card-condensed .med-expand-hint {
-            font-family: var(--mono);
+
             font-size: 10px;
             color: var(--ink-muted);
             text-transform: uppercase;
@@ -1973,11 +1975,11 @@
         .med-footer {
             margin-top: 24px;
             padding: 14px 16px;
-            background: rgba(251,191,36,0.08);
-            border: 1px solid rgba(251,191,36,0.2);
+            background: rgba(217,119,6,0.06);
+            border: 1px solid rgba(217,119,6,0.15);
             border-radius: 8px;
             font-size: 11px;
-            color: #fbbf24;
+            color: #92400e;
             line-height: 1.5;
             text-align: center;
         }
@@ -2315,12 +2317,12 @@
                 gap: 8px;
             }
             .med-filter-chip {
-                padding: 8px 12px;
-                font-size: 12px;
-                min-height: 40px;
+                padding: 6px 10px;
+                font-size: 11px;
+                min-height: 36px;
                 display: inline-flex;
                 align-items: center;
-                border-radius: 20px;
+                border-radius: 16px;
             }
             .med-filter-chip .dc-dot {
                 width: 12px;
@@ -2488,9 +2490,9 @@
                 padding: 14px 12px;
             }
             .med-filter-chip {
-                padding: 9px 14px;
-                font-size: 12px;
-                min-height: 40px;
+                padding: 6px 12px;
+                font-size: 11px;
+                min-height: 36px;
             }
             .option-btn {
                 padding: 16px 14px;
@@ -2502,14 +2504,14 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f1117;
+            background: #efe8e0;
         }
         ::-webkit-scrollbar-thumb {
-            background: #374151;
+            background: #cbd5e1;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563;
+            background: #94a3b8;
         }
 
         /* Browse All tab */
@@ -2521,7 +2523,7 @@
             width: 100%;
             padding: 10px 40px 10px 36px;
             border-radius: 10px;
-            border: 2px solid transparent;
+            border: 2px solid var(--border);
             font-size: 14px;
             font-family: var(--sans);
             font-weight: 500;
@@ -2533,7 +2535,7 @@
         .browse-search-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
         }
         .browse-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
         .browse-search-icon {
@@ -2587,7 +2589,7 @@
             font-weight: 500;
         }
         .browse-table tbody tr:hover {
-            background: rgba(255,255,255,0.04);
+            background: rgba(0,0,0,0.02);
         }
         .browse-type {
             display: inline-block;
@@ -2595,7 +2597,7 @@
             font-weight: 700;
             padding: 1px 5px;
             border-radius: 4px;
-            background: rgba(6,182,212,0.15);
+            background: rgba(13,148,136,0.1);
             color: var(--accent);
             margin-left: 6px;
             vertical-align: middle;
@@ -2607,7 +2609,7 @@
             font-weight: 600;
             padding: 1px 5px;
             border-radius: 4px;
-            background: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.04);
             color: var(--ink-muted);
             margin-left: 4px;
             vertical-align: middle;
@@ -2619,8 +2621,8 @@
             font-weight: 700;
             padding: 1px 5px;
             border-radius: 4px;
-            background: rgba(236,72,153,0.15);
-            color: #ec4899;
+            background: rgba(219,39,119,0.08);
+            color: #db2777;
             margin-left: 4px;
             vertical-align: middle;
             letter-spacing: 0.3px;
@@ -2656,21 +2658,21 @@
             transition: all 0.12s;
             font-family: var(--sans);
         }
-        .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: var(--ink-muted); border-color: rgba(255,255,255,0.2); }
-        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-mod:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); color: var(--ink); }
-        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); color: #fff; font-weight: 800; box-shadow: 0 0 8px rgba(255,255,255,0.15); }
-        .browse-filter-btn.bf-sphere { color: #3b9eff; border-color: rgba(59,158,255,0.4); }
-        .browse-filter-btn.bf-sphere:hover { background: rgba(59,158,255,0.15); border-color: #3b9eff; color: #3b9eff; }
-        .browse-filter-btn.bf-sphere.active { background: rgba(59,158,255,0.25); border-color: #3b9eff; color: #3b9eff; font-weight: 800; box-shadow: 0 0 10px rgba(59,158,255,0.3); }
-        .browse-filter-btn.bf-toric { color: #f59e0b; border-color: rgba(245,158,11,0.4); }
-        .browse-filter-btn.bf-toric:hover { background: rgba(245,158,11,0.15); border-color: #f59e0b; color: #f59e0b; }
-        .browse-filter-btn.bf-toric.active { background: rgba(245,158,11,0.25); border-color: #f59e0b; color: #f59e0b; font-weight: 800; box-shadow: 0 0 10px rgba(245,158,11,0.3); }
-        .browse-filter-btn.bf-multifocal { color: #2dd4bf; border-color: rgba(45,212,191,0.4); }
-        .browse-filter-btn.bf-multifocal:hover { background: rgba(45,212,191,0.15); border-color: #2dd4bf; color: #2dd4bf; }
-        .browse-filter-btn.bf-multifocal.active { background: rgba(45,212,191,0.25); border-color: #2dd4bf; color: #2dd4bf; font-weight: 800; box-shadow: 0 0 10px rgba(45,212,191,0.3); }
-        .browse-filter-btn.bf-mftoric { color: #c084fc; border-color: rgba(192,132,252,0.4); }
-        .browse-filter-btn.bf-mftoric:hover { background: rgba(192,132,252,0.15); border-color: #c084fc; color: #c084fc; }
-        .browse-filter-btn.bf-mftoric.active { background: rgba(192,132,252,0.25); border-color: #c084fc; color: #c084fc; font-weight: 800; box-shadow: 0 0 10px rgba(192,132,252,0.3); }
+        .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: var(--ink-muted); border-color: rgba(0,0,0,0.12); }
+        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-mod:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.2); color: var(--ink); }
+        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.25); color: var(--ink); font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-sphere { color: #2563eb; border-color: rgba(37,99,235,0.3); }
+        .browse-filter-btn.bf-sphere:hover { background: rgba(37,99,235,0.08); border-color: #2563eb; color: #2563eb; }
+        .browse-filter-btn.bf-sphere.active { background: rgba(37,99,235,0.12); border-color: #2563eb; color: #2563eb; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-toric { color: #d97706; border-color: rgba(217,119,6,0.3); }
+        .browse-filter-btn.bf-toric:hover { background: rgba(217,119,6,0.08); border-color: #d97706; color: #d97706; }
+        .browse-filter-btn.bf-toric.active { background: rgba(217,119,6,0.12); border-color: #d97706; color: #b45309; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-multifocal { color: #0d9488; border-color: rgba(13,148,136,0.3); }
+        .browse-filter-btn.bf-multifocal:hover { background: rgba(13,148,136,0.08); border-color: #0d9488; color: #0d9488; }
+        .browse-filter-btn.bf-multifocal.active { background: rgba(13,148,136,0.12); border-color: #0d9488; color: #0d9488; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-mftoric { color: #7c3aed; border-color: rgba(124,58,237,0.3); }
+        .browse-filter-btn.bf-mftoric:hover { background: rgba(124,58,237,0.08); border-color: #7c3aed; color: #7c3aed; }
+        .browse-filter-btn.bf-mftoric.active { background: rgba(124,58,237,0.12); border-color: #7c3aed; color: #7c3aed; font-weight: 800; box-shadow: none; }
         .browse-table th.browse-th-active {
             color: var(--accent);
         }
@@ -2689,17 +2691,16 @@
 
         /* TOOLS / IOP CALCULATOR */
         .tools-card {
-            background: var(--surface);
+            background: #ffffff;
             border: none;
-            border-left: 2px solid rgba(6,182,212,0.4);
-            border-radius: var(--radius-lg);
+            border-left: 3px solid rgba(13,148,136,0.4);
+            border-radius: 12px;
             padding: 28px 24px;
-            box-shadow: var(--shadow-md);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             margin-bottom: 16px;
         }
         .tools-card-title {
+
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 4px;
@@ -2728,7 +2729,7 @@
             color: var(--ink-secondary);
             margin-bottom: 6px;
         }
-        .iop-form-group input,
+        .iop-form-group input:not([type="checkbox"]):not([type="radio"]),
         .iop-form-group select {
             width: 100%;
             padding: 11px 13px;
@@ -2736,6 +2737,7 @@
             border: 2px solid var(--border);
             font-size: 15px;
             font-family: var(--mono);
+
             font-weight: 500;
             color: var(--ink);
             background: var(--surface-solid);
@@ -2750,11 +2752,11 @@
             padding-right: 32px;
             cursor: pointer;
         }
-        .iop-form-group input:focus,
+        .iop-form-group input:not([type="checkbox"]):not([type="radio"]):focus,
         .iop-form-group select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
         }
         .iop-form-group input::placeholder {
             color: var(--ink-muted);
@@ -2764,8 +2766,8 @@
             margin-top: 20px;
             padding: 20px;
             border-radius: var(--radius);
-            background: rgba(6,182,212,0.06);
-            border: 1px solid rgba(6,182,212,0.2);
+            background: rgba(13,148,136,0.05);
+            border: 1px solid rgba(13,148,136,0.15);
         }
         .iop-result-label {
             font-size: 12px;
@@ -2776,7 +2778,7 @@
             margin-bottom: 6px;
         }
         .iop-result-value {
-            font-family: var(--mono);
+
             font-size: 32px;
             font-weight: 700;
             color: var(--accent);
@@ -2800,7 +2802,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 12px;
-            font-family: var(--mono);
+
         }
         .iop-ref-table th {
             font-family: var(--sans);
@@ -2813,11 +2815,11 @@
         }
         .iop-ref-table td {
             padding: 5px 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
             color: var(--ink);
         }
         .iop-ref-table tr.highlight td {
-            background: rgba(6,182,212,0.08);
+            background: rgba(13,148,136,0.06);
             font-weight: 600;
         }
         .iop-ref-table .adj-pos { color: var(--danger); }
@@ -2853,7 +2855,7 @@
         .iop-eye-block {
             padding: 16px;
             border-radius: var(--radius);
-            background: rgba(255,255,255,0.02);
+            background: rgba(0,0,0,0.02);
             border: 1px solid var(--border);
         }
         .iop-eye-label {
@@ -2869,16 +2871,16 @@
             font-weight: 600;
             padding: 2px 7px;
             border-radius: 4px;
-            background: rgba(6,182,212,0.12);
+            background: rgba(13,148,136,0.1);
             color: var(--accent);
         }
         .glauc-pts-badge {
             display: inline-block;
-            font-family: var(--mono);
+
             font-size: 10px;
             font-weight: 600;
             color: var(--accent);
-            background: rgba(6,182,212,0.12);
+            background: rgba(13,148,136,0.1);
             padding: 1px 6px;
             border-radius: 4px;
             margin-left: 4px;
@@ -2890,7 +2892,7 @@
         .glauc-risk-bar {
             height: 8px;
             border-radius: 4px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.06);
             overflow: hidden;
         }
         .glauc-risk-fill {
@@ -2904,7 +2906,7 @@
             font-size: 10px;
             color: var(--ink-muted);
             margin-top: 4px;
-            font-family: var(--mono);
+
         }
         /* Tools search bar */
         .tools-search-wrap {
@@ -2925,7 +2927,7 @@
             width: 100%;
             padding: 12px 16px 12px 40px;
             border-radius: 12px;
-            border: 2px solid transparent;
+            border: 2px solid var(--border);
             font-size: 15px;
             font-family: var(--sans);
             font-weight: 500;
@@ -2937,7 +2939,7 @@
         .tools-search-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(6,182,212,0.2);
+            box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
         }
         .tools-search-input::placeholder {
             color: var(--ink-muted);
@@ -2957,20 +2959,20 @@
         }
         #toolsContent .option-btn:hover,
         #medsContent .option-btn:hover {
-            border-color: rgba(6,182,212,0.4);
-            background: rgba(6,182,212,0.06);
-            box-shadow: 0 0 24px rgba(6,182,212,0.12), 0 0 0 1px rgba(6,182,212,0.1);
+            border-color: rgba(13,148,136,0.5);
+            background: rgba(13,148,136,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
             transform: translateY(-2px);
         }
         #toolsContent .option-btn:hover .icon,
         #medsContent .option-btn:hover .icon {
             color: var(--accent);
             transform: scale(1.2);
-            filter: drop-shadow(0 0 8px rgba(6,182,212,0.5));
+            filter: drop-shadow(0 0 8px rgba(13,148,136,0.3));
         }
         #toolsContent .option-btn:hover .title,
         #medsContent .option-btn:hover .title {
-            color: #fff;
+            color: var(--ink);
         }
         #toolsContent .option-btn:hover .desc,
         #medsContent .option-btn:hover .desc {
@@ -3039,7 +3041,7 @@
             margin-top: 14px;
         }
         .myopia-summary-card {
-            background: rgba(255,255,255,0.03);
+            background: rgba(0,0,0,0.02);
             border-radius: 8px;
             padding: 12px;
             border: 1px solid var(--border);
@@ -3050,7 +3052,7 @@
             margin-bottom: 3px;
         }
         .myopia-summary-card .value {
-            font-family: var(--mono);
+
             font-size: 18px;
             font-weight: 700;
         }
@@ -3066,7 +3068,7 @@
             font-size: 13px;
         }
         .bv-norms-table th {
-            background: var(--surface-alt, rgba(255,255,255,0.04));
+            background: var(--surface-alt, rgba(0,0,0,0.03));
             padding: 10px 12px;
             text-align: left;
             font-weight: 700;
@@ -3083,7 +3085,7 @@
         }
         .bv-norms-table tr:last-child td { border-bottom: none; }
         .bv-norms-table .bv-cat-row td {
-            background: rgba(0,210,211,0.06);
+            background: rgba(13,148,136,0.05);
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
@@ -3152,18 +3154,18 @@
         }
         .bv-opt-btn:hover {
             border-color: var(--accent);
-            background: rgba(0,210,211,0.06);
+            background: rgba(13,148,136,0.05);
         }
         .bv-opt-btn.selected {
             border-color: var(--accent);
-            background: rgba(0,210,211,0.12);
+            background: rgba(13,148,136,0.1);
             color: var(--accent);
         }
         .bv-result-box {
             margin-top: 18px;
             padding: 20px;
             border-radius: 12px;
-            background: rgba(0,210,211,0.08);
+            background: rgba(13,148,136,0.06);
             border: 1px solid var(--accent);
             text-align: center;
         }
@@ -3197,10 +3199,10 @@
         .de-section-title { font-weight: 700; font-size: 15px; flex: 1; }
         .de-section-summary { font-size: 12px; color: var(--ink-muted); }
         .de-section-body { padding: 0 0 10px 0; }
-        .de-normal { color: #34d399; font-weight: 600; }
-        .de-mild { color: #facc15; font-weight: 600; }
-        .de-moderate { color: #fb923c; font-weight: 600; }
-        .de-severe { color: #f87171; font-weight: 600; }
+        .de-normal { color: #059669; font-weight: 600; }
+        .de-mild { color: #a16207; font-weight: 600; }
+        .de-moderate { color: #c2410c; font-weight: 600; }
+        .de-severe { color: #dc2626; font-weight: 600; }
         .de-subsection { margin: 12px 0 6px 0; font-weight: 700; font-size: 13px; color: var(--accent); }
         .de-note { font-size: 12px; color: var(--ink-muted); margin: 6px 0; line-height: 1.5; }
         .de-expand-btns { display: flex; gap: 8px; margin-top: 6px; }
@@ -3209,26 +3211,26 @@
             color: var(--accent); font-family: var(--sans); font-size: 12px;
             font-weight: 600; padding: 5px 12px; cursor: pointer;
         }
-        .de-expand-btns button:hover { background: rgba(0,210,211,0.06); }
+        .de-expand-btns button:hover { background: rgba(13,148,136,0.05); }
 
         /* Gonioscopy hotspot tooltips */
         .gonio-img-wrap { position: relative; display: block; width: 100%; }
         .gonio-hotspot {
             position: absolute; width: 22px; height: 22px; border-radius: 50%;
             transform: translate(-50%, -50%); cursor: pointer; z-index: 2;
-            background: rgba(6,182,212,0.08); border: 1.5px solid transparent;
+            background: rgba(13,148,136,0.08); border: 1.5px solid transparent;
             transition: background 0.15s, border-color 0.15s;
         }
         .gonio-hotspot:hover, .gonio-hotspot.active {
-            background: rgba(6,182,212,0.25); border-color: var(--accent);
+            background: rgba(13,148,136,0.2); border-color: var(--accent);
         }
         .gonio-hotspot::after {
             content: attr(data-label); position: absolute; bottom: calc(100% + 6px);
             left: 50%; transform: translateX(-50%);
-            background: #1a1a2e; border: 1px solid #06b6d4; border-radius: 8px;
+            background: #1a2332; border: 1px solid #0d9488; border-radius: 8px;
             padding: 5px 10px; font-size: 11px; font-weight: 600; white-space: nowrap;
             opacity: 0; pointer-events: none; transition: opacity 0.15s;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.4); color: #fff; line-height: 1.4;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15); color: #fff; line-height: 1.4;
             z-index: 10;
         }
         .gonio-hotspot:hover::after, .gonio-hotspot.active::after { opacity: 1; }
@@ -3252,10 +3254,10 @@
             border: 1.5px solid transparent; transition: all 0.15s;
             margin-bottom: 6px;
         }
-        .vf-defect-row:hover { background: rgba(255,255,255,0.04); }
+        .vf-defect-row:hover { background: rgba(0,0,0,0.03); }
         .vf-defect-row.active {
-            background: rgba(6,182,212,0.08);
-            border-color: rgba(6,182,212,0.35);
+            background: rgba(13,148,136,0.06);
+            border-color: rgba(13,148,136,0.25);
         }
         .vf-defect-label {
             font-size: 12px; font-weight: 600; color: var(--ink-secondary);
@@ -3264,7 +3266,7 @@
         .vf-defect-row.active .vf-defect-label { color: var(--accent); }
         .vf-defect-num {
             width: 22px; height: 22px; border-radius: 50%;
-            background: rgba(255,255,255,0.08); color: var(--ink-muted);
+            background: rgba(0,0,0,0.06); color: var(--ink-muted);
             font-size: 11px; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
@@ -3281,7 +3283,7 @@
         .vf-info-detail { color: var(--ink-secondary); font-size: 12px; margin-top: 4px; }
         .vf-info-detail strong { color: var(--ink); }
         .vf-pathway-wrap {
-            position: relative; background: rgba(255,255,255,0.03);
+            position: relative; background: rgba(0,0,0,0.02);
             border-radius: 12px; padding: 12px; border: 1px solid var(--border);
         }
         @media (max-width: 700px) {
@@ -3308,10 +3310,10 @@
         <div class="header-inner">
             <div class="logo-group" onclick="resetAll()" style="cursor:pointer">
                 <svg width="66" height="66" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#06b6d4" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#06b6d4" stroke-width="5" fill="rgba(6,182,212,0.1)" stroke-linejoin="round"/>
-                    <circle cx="60" cy="55" r="9" fill="#06b6d4"/>
-                    <circle cx="63.5" cy="52.5" r="2.8" fill="#0a0b0f"/>
+                    <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#0d9488" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#0d9488" stroke-width="5" fill="rgba(13,148,136,0.1)" stroke-linejoin="round"/>
+                    <circle cx="60" cy="55" r="9" fill="#0d9488"/>
+                    <circle cx="63.5" cy="52.5" r="2.8" fill="#1a2332"/>
                 </svg>
                 <div>
                     <div class="logo-text">Pocket OD</div>
@@ -4886,9 +4888,9 @@
                 { label: "Material", value: lens.material || "—" },
                 { label: "Wear", value: lens.wear },
                 { label: "Pack Sizes", value: lens.qty },
-                { label: "Price/Pack", value: `<span style="color:#22c55e">~${lens.price}</span>` },
-                ...(yearlyCost ? [{ label: "Annual Cost", value: `<span style="color:#22c55e">${yearlyCost}</span>` }] : []),
-                ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#ec4899;font-weight:600">Therapeutic Use</span>` }] : []),
+                { label: "Price/Pack", value: `<span style="color:#059669">~${lens.price}</span>` },
+                ...(yearlyCost ? [{ label: "Annual Cost", value: `<span style="color:#059669">${yearlyCost}</span>` }] : []),
+                ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#db2777;font-weight:600">Therapeutic Use</span>` }] : []),
             ];
 
             const infoHtml = infoItems.map(i => `<div class="order-info-item">
@@ -4934,7 +4936,7 @@
                         </div>`
                     ).join("");
                     return `<div style="margin-top:20px">
-                        <div class="order-section-title" style="color:#f5c542;font-style:italic">Still Not Clear? Next Step</div>
+                        <div class="order-section-title" style="color:#b45309;font-style:italic">Still Not Clear? Next Step</div>
                         <div class="troubleshoot-suggestion fade-in">
                             <div class="ts-step">${stepNum}</div>
                             <div class="ts-body">
@@ -6390,6 +6392,8 @@
                 renderDrTool(el);
             } else if (toolsActiveTool === 'vfindex') {
                 renderVfIndexTool(el);
+            } else if (toolsActiveTool === 'bvdx') {
+                renderBvDxTool(el);
             }
         }
 
@@ -6407,6 +6411,8 @@
               keywords:'myopia nearsighted progression pediatric child atropine ortho-k misight dims treatment control' },
             { id:'bv', icon:'ph-binoculars', title:'Binocular Vision Norms', desc:'Morgan\u2019s expected values for BV testing',
               keywords:'binocular vision bv norms morgan vergence phoria tropia npc nra pra accommodation facility' },
+            { id:'bvdx', icon:'ph-intersect', title:'BV Disorder Calculator', desc:'Step-wise binocular vision disorder identifier',
+              keywords:'binocular vision disorder bv convergence insufficiency excess divergence accommodative esophoria exophoria diagnosis calculator profile' },
             { id:'parks', icon:'ph-path', title:'Park\u2019s 3-Step Test', desc:'Identify paretic cyclovertical muscle',
               keywords:'parks 3 step three step cranial nerve palsy strabismus hypertropia oblique rectus cn iv trochlear cyclovertical muscle' },
             { id:'dryeye', icon:'ph-drop-half', title:'Dry Eye Reference', desc:'Testing norms, grading scales & DEWS II classification',
@@ -6712,8 +6718,8 @@
             var riskCls = glaucRiskClass(total);
             var colorMap = {
                 'low': 'var(--success)',
-                'mod': '#facc15',
-                'mod-high': '#fb923c',
+                'mod': '#ca8a04',
+                'mod-high': '#ea580c',
                 'high': 'var(--danger)',
                 'very-high': '#ef4444'
             };
@@ -6840,8 +6846,8 @@
                                 <tr>
                                     <td style="font-weight:600;">5-Year Risk</td>
                                     <td class="adj-neg">\u22644.0%</td>
-                                    <td style="color:#facc15;">10%</td>
-                                    <td style="color:#fb923c;">15%</td>
+                                    <td style="color:#a16207;">10%</td>
+                                    <td style="color:#c2410c;">15%</td>
                                     <td class="adj-pos">20%</td>
                                     <td class="adj-pos">\u226533%</td>
                                 </tr>
@@ -6972,21 +6978,21 @@
 
             // Details grid
             html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">';
-            html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+            html += '<div style="background:rgba(0,0,0,0.02);border-radius:8px;padding:10px;">';
             html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Actual Weight</div>';
             html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;">' + wKg.toFixed(1) + ' kg</div>';
             html += '</div>';
             if (ibw) {
-                html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+                html += '<div style="background:rgba(0,0,0,0.02);border-radius:8px;padding:10px;">';
                 html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Ideal Body Weight</div>';
                 html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;">' + ibw.toFixed(1) + ' kg</div>';
                 html += '</div>';
             }
-            html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+            html += '<div style="background:rgba(0,0,0,0.02);border-radius:8px;padding:10px;">';
             html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Max Safe Dose</div>';
             html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--accent);">' + effectiveMax.toFixed(0) + ' mg/day</div>';
             html += '</div>';
-            html += '<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;">';
+            html += '<div style="background:rgba(0,0,0,0.02);border-radius:8px;padding:10px;">';
             html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Current Dose</div>';
             html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;">' + dose + ' mg/day</div>';
             html += '</div>';
@@ -7142,7 +7148,7 @@
                             <thead><tr><th>Duration</th><th>\u22645 mg/kg/day</th><th>&gt;5 mg/kg/day</th></tr></thead>
                             <tbody>
                                 <tr><td style="font-weight:600;">Within 5 years</td><td class="adj-neg">&lt;1%</td><td class="adj-pos">\u22482%</td></tr>
-                                <tr><td style="font-weight:600;">10 years</td><td style="color:#facc15;">&lt;2%</td><td class="adj-pos">\u224810%</td></tr>
+                                <tr><td style="font-weight:600;">10 years</td><td style="color:#a16207;">&lt;2%</td><td class="adj-pos">\u224810%</td></tr>
                                 <tr><td style="font-weight:600;">20 years</td><td class="adj-pos">\u224820%</td><td class="adj-pos">\u224840%</td></tr>
                             </tbody>
                         </table>
@@ -7192,13 +7198,13 @@
 
         // Treatment efficacy (% reduction in progression, from meta-analyses)
         const MYOP_TX = {
-            'none':         { label:'No Treatment (SV)',         eff:0,    color:'#f87171' },
+            'none':         { label:'No Treatment (SV)',         eff:0,    color:'#dc2626' },
             'atro-low':     { label:'Atropine 0.01%',            eff:0.30, color:'#a78bfa' },
             'atro-mod':     { label:'Atropine 0.05%',            eff:0.50, color:'#818cf8' },
-            'ortho-k':      { label:'Orthokeratology',           eff:0.45, color:'#2dd4bf' },
-            'misight':      { label:'MiSight / Soft Multifocal CL', eff:0.50, color:'#38bdf8' },
-            'dims':         { label:'DIMS / Lenslet Spectacles', eff:0.40, color:'#fbbf24' },
-            'combo':        { label:'Ortho-K + Low-Dose Atropine', eff:0.55, color:'#34d399' }
+            'ortho-k':      { label:'Orthokeratology',           eff:0.45, color:'#0d9488' },
+            'misight':      { label:'MiSight / Soft Multifocal CL', eff:0.50, color:'#0284c7' },
+            'dims':         { label:'DIMS / Lenslet Spectacles', eff:0.40, color:'#d97706' },
+            'combo':        { label:'Ortho-K + Low-Dose Atropine', eff:0.55, color:'#059669' }
         };
 
         function myopAnnualRate(age, ethnicity, sex) {
@@ -7293,7 +7299,7 @@
 
             var txInfo = MYOP_TX[tx];
             var txColor = txInfo.color;
-            var noTxColor = '#f87171';
+            var noTxColor = '#dc2626';
 
             // Chart dimensions
             var allRx = untreated.map(function(p){return p.rx;}).concat(treated.map(function(p){return p.rx;}));
@@ -7334,14 +7340,14 @@
             for (var g = gridStart; g <= maxRx; g += step) {
                 var gy = syF(g);
                 if (gy < padTop - 2 || gy > h - padBot + 2) continue;
-                svg += '<line x1="' + padLeft + '" y1="' + gy + '" x2="' + (w - padRight) + '" y2="' + gy + '" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>';
+                svg += '<line x1="' + padLeft + '" y1="' + gy + '" x2="' + (w - padRight) + '" y2="' + gy + '" stroke="rgba(0,0,0,0.07)" stroke-width="1"/>';
                 svg += '<text x="' + (padLeft - 8) + '" y="' + (gy + 4) + '" fill="#64748b" font-size="11" font-family="\'IBM Plex Mono\',monospace" text-anchor="end">' + g.toFixed(step < 1 ? 1 : 0) + '</text>';
             }
 
             // X labels + vertical tick lines
             for (var xa = ageMin; xa <= ageMax; xa++) {
                 var xx = sxF(xa);
-                svg += '<line x1="' + xx + '" y1="' + padTop + '" x2="' + xx + '" y2="' + (h - padBot) + '" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>';
+                svg += '<line x1="' + xx + '" y1="' + padTop + '" x2="' + xx + '" y2="' + (h - padBot) + '" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>';
                 svg += '<text x="' + xx + '" y="' + (h - padBot + 18) + '" fill="#64748b" font-size="12" font-family="\'IBM Plex Mono\',monospace" text-anchor="middle">' + xa + '</text>';
             }
 
@@ -7374,10 +7380,10 @@
             }
 
             // Hover overlay elements (hidden by default)
-            svg += '<line id="myopHoverLine" x1="0" y1="' + padTop + '" x2="0" y2="' + (h - padBot) + '" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3,3" visibility="hidden"/>';
-            svg += '<circle id="myopHoverDotU" cx="0" cy="0" r="6" fill="' + noTxColor + '" stroke="#0f1117" stroke-width="2" visibility="hidden"/>';
+            svg += '<line id="myopHoverLine" x1="0" y1="' + padTop + '" x2="0" y2="' + (h - padBot) + '" stroke="rgba(0,0,0,0.2)" stroke-width="1" stroke-dasharray="3,3" visibility="hidden"/>';
+            svg += '<circle id="myopHoverDotU" cx="0" cy="0" r="6" fill="' + noTxColor + '" stroke="#ffffff" stroke-width="2" visibility="hidden"/>';
             if (tx !== 'none') {
-                svg += '<circle id="myopHoverDotT" cx="0" cy="0" r="6" fill="' + txColor + '" stroke="#0f1117" stroke-width="2" visibility="hidden"/>';
+                svg += '<circle id="myopHoverDotT" cx="0" cy="0" r="6" fill="' + txColor + '" stroke="#ffffff" stroke-width="2" visibility="hidden"/>';
             }
 
             // Y axis label
@@ -7391,7 +7397,7 @@
             svg += '</svg>';
 
             // Tooltip div (positioned absolutely over chart)
-            var tooltip = '<div id="myopTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(15,17,23,0.95);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 12px;font-size:12px;z-index:10;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.5);"></div>';
+            var tooltip = '<div id="myopTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(255,255,255,0.95);border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:8px 12px;font-size:12px;z-index:10;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.1);color:#1a2332;"></div>';
 
             var html = '';
             html += '<div class="myopia-chart" id="myopChartWrap" style="position:relative;">' + svg + tooltip + '</div>';
@@ -7698,7 +7704,7 @@
 
             var o = '<svg viewBox="0 0 280 112" xmlns="http://www.w3.org/2000/svg" style="max-width:300px;width:100%">';
             o += '<defs><pattern id="'+hid+'" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">';
-            o += '<line x1="0" y1="0" x2="0" y2="4" stroke="rgba(255,255,255,0.22)" stroke-width="1"/></pattern>';
+            o += '<line x1="0" y1="0" x2="0" y2="4" stroke="rgba(0,0,0,0.15)" stroke-width="1"/></pattern>';
             o += '<clipPath id="rc'+step+'"><path d="'+ep(rCx,rCy)+'"/></clipPath>';
             o += '<clipPath id="lc'+step+'"><path d="'+ep(lCx,lCy)+'"/></clipPath>';
             o += '</defs>';
@@ -7826,6 +7832,237 @@
             html += '<div style="margin-top:14px;text-align:center;">';
             html += '<button onclick="bvResetParks()" style="background:none;border:1px solid var(--rule);color:var(--ink-muted);padding:8px 18px;border-radius:8px;font-family:var(--sans);font-size:13px;cursor:pointer;">Reset</button>';
             html += '</div>';
+
+            el.innerHTML = html;
+        }
+
+        /* ── BV Disorder Calculator ─────────────────────────────── */
+
+        var bvDxState = { step: 1, coverTest: null, dnRelation: null, npc: null, vergFacility: null, vergAmplitude: null, baf: null, maf: null, mem: null, accAmp: null };
+
+        var BV_PROFILES = [
+            { name:'Basic Exophoria', coverTest:'exo', dnRelation:'equal', npc:'normal', vergFacility:'lowBO', vergAmplitude:'lowNFV', baf:'low', maf:'normal', mem:'normal', accAmp:'normal' },
+            { name:'Convergence Insufficiency', coverTest:'exo', dnRelation:'nearGreater', npc:'receded', vergFacility:'lowBO', vergAmplitude:'lowNFV', baf:'low', maf:'normal', mem:'high', accAmp:'normal' },
+            { name:'Divergence Excess', coverTest:'exo', dnRelation:'distGreater', npc:'normal', vergFacility:'normal', vergAmplitude:'normal', baf:'normal', maf:'normal', mem:'normal', accAmp:'normal' },
+            { name:'Basic Esophoria', coverTest:'eso', dnRelation:'equal', npc:'normal', vergFacility:'lowBI', vergAmplitude:'lowPFV', baf:'low', maf:'normal', mem:'low', accAmp:'normal' },
+            { name:'Convergence Excess', coverTest:'eso', dnRelation:'nearGreater', npc:'normal', vergFacility:'lowBI', vergAmplitude:'lowPFV', baf:'low', maf:'normal', mem:'low', accAmp:'normal' },
+            { name:'Divergence Insufficiency', coverTest:'eso', dnRelation:'distGreater', npc:'normal', vergFacility:'normal', vergAmplitude:'normal', baf:'normal', maf:'normal', mem:'normal', accAmp:'normal' },
+            { name:'Accommodative Insufficiency', coverTest:'varies', dnRelation:'varies', npc:'normal', vergFacility:'normal', vergAmplitude:'normal', baf:'low', maf:'low', mem:'high', accAmp:'low' },
+            { name:'Accommodative Excess', coverTest:'varies', dnRelation:'varies', npc:'normal', vergFacility:'normal', vergAmplitude:'normal', baf:'low', maf:'low', mem:'low', accAmp:'normal' }
+        ];
+
+        var BVDX_STEPS = [
+            { field:'coverTest', question:'What is the cover test finding?', options:[
+                { value:'exo', label:'Exophoria' },
+                { value:'eso', label:'Esophoria' }
+            ]},
+            { field:'dnRelation', question:'How does the deviation compare at distance vs near?', options:[
+                { value:'equal', label:'Distance \u2248 Near' },
+                { value:'nearGreater', label:'Near > Distance' },
+                { value:'distGreater', label:'Distance > Near' }
+            ]},
+            { field:'npc', question:'What is the Near Point of Convergence?', options:[
+                { value:'normal', label:'Normal (\u2264 10 cm)' },
+                { value:'receded', label:'Receded (> 10 cm)' }
+            ]},
+            { field:'vergFacility', question:'What is the vergence facility finding?', options:[
+                { value:'normal', label:'Normal' },
+                { value:'lowBO', label:'Low BO (difficulty clearing base-out)' },
+                { value:'lowBI', label:'Low BI (difficulty clearing base-in)' }
+            ]},
+            { field:'vergAmplitude', question:'Which vergence amplitude is reduced?', options:[
+                { value:'normal', label:'Normal' },
+                { value:'lowNFV', label:'Low NFV (low negative fusional vergence / BO)' },
+                { value:'lowPFV', label:'Low PFV (low positive fusional vergence / BI)' }
+            ]},
+            { field:'baf', question:'What is the Binocular Accommodative Facility?', options:[
+                { value:'normal', label:'Normal' },
+                { value:'low', label:'Low (fails both +/\u2013)' }
+            ]},
+            { field:'maf', question:'What is the Monocular Accommodative Facility?', options:[
+                { value:'normal', label:'Normal' },
+                { value:'low', label:'Low (fails +, \u2013, or both)' }
+            ]},
+            { field:'mem', question:'What is the MEM retinoscopy finding?', options:[
+                { value:'normal', label:'Normal (+0.25 to +0.75)' },
+                { value:'high', label:'High (> +0.75)' },
+                { value:'low', label:'Low (< +0.25 or negative)' }
+            ]},
+            { field:'accAmp', question:'Is the accommodative amplitude normal for age?', options:[
+                { value:'normal', label:'Normal' },
+                { value:'low', label:'Low (below Hofstetter\u2019s minimum)' }
+            ]}
+        ];
+
+        function bvDxSelect(field, value) {
+            bvDxState[field] = value;
+            bvDxState.step = Math.min(bvDxState.step + 1, BVDX_STEPS.length + 1);
+            renderBvDxTool(document.getElementById('toolsContent'));
+        }
+
+        function bvDxBack() {
+            if (bvDxState.step > 1) {
+                bvDxState.step--;
+                var field = BVDX_STEPS[bvDxState.step - 1].field;
+                bvDxState[field] = null;
+                renderBvDxTool(document.getElementById('toolsContent'));
+            }
+        }
+
+        function bvDxReset() {
+            bvDxState = { step: 1, coverTest: null, dnRelation: null, npc: null, vergFacility: null, vergAmplitude: null, baf: null, maf: null, mem: null, accAmp: null };
+            renderBvDxTool(document.getElementById('toolsContent'));
+        }
+
+        function getBvDxResult() {
+            var fields = ['coverTest','dnRelation','npc','vergFacility','vergAmplitude','baf','maf','mem','accAmp'];
+            var scores = [];
+            for (var i = 0; i < BV_PROFILES.length; i++) {
+                var p = BV_PROFILES[i];
+                var matched = 0;
+                var applicable = 0;
+                for (var j = 0; j < fields.length; j++) {
+                    var f = fields[j];
+                    var expected = p[f];
+                    var answer = bvDxState[f];
+                    if (expected === 'varies') continue;
+                    applicable++;
+                    if (expected === answer) matched++;
+                }
+                var pct = applicable > 0 ? Math.round((matched / applicable) * 100) : 0;
+                scores.push({ profile: p, score: matched, total: applicable, pct: pct });
+            }
+            scores.sort(function(a, b) { return b.pct - a.pct || b.score - a.score; });
+            return scores;
+        }
+
+        function bvDxFieldLabel(field, value) {
+            for (var i = 0; i < BVDX_STEPS.length; i++) {
+                if (BVDX_STEPS[i].field === field) {
+                    for (var j = 0; j < BVDX_STEPS[i].options.length; j++) {
+                        if (BVDX_STEPS[i].options[j].value === value) return BVDX_STEPS[i].options[j].label;
+                    }
+                }
+            }
+            return value || '\u2014';
+        }
+
+        function renderBvDxTool(el) {
+            var html = '';
+            html += '<div style="padding:4px 0 8px;display:flex;align-items:center;gap:10px;">';
+            html += '<button onclick="toolsActiveTool=null;renderTools();" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:22px;padding:4px;display:flex;align-items:center;"><i class="ph-bold ph-arrow-left"></i></button>';
+            html += '<div><div style="font-size:18px;font-weight:800;color:var(--ink);">BV Disorder Calculator</div>';
+            html += '<div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">Step-wise binocular vision disorder identifier</div></div>';
+            html += '</div>';
+
+            var totalSteps = BVDX_STEPS.length;
+            var currentStep = bvDxState.step;
+            var showResult = currentStep > totalSteps;
+
+            /* Progress bar */
+            html += '<div style="margin:12px 0 18px;">';
+            html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">';
+            html += '<span style="font-size:12px;font-weight:600;color:var(--ink-muted);">' + (showResult ? 'Result' : 'Step ' + currentStep + ' of ' + totalSteps) + '</span>';
+            html += '<span style="font-size:12px;color:var(--ink-muted);">' + Math.round((Math.min(currentStep, totalSteps) / totalSteps) * 100) + '%</span>';
+            html += '</div>';
+            html += '<div style="height:6px;background:var(--rule);border-radius:3px;overflow:hidden;">';
+            html += '<div style="height:100%;width:' + Math.round((Math.min(currentStep, totalSteps) / totalSteps) * 100) + '%;background:var(--accent);border-radius:3px;transition:width 0.3s;"></div>';
+            html += '</div></div>';
+
+            if (!showResult) {
+                /* Render current step question */
+                var stepData = BVDX_STEPS[currentStep - 1];
+                html += '<div class="bv-step-wrap">';
+                html += '<div class="bv-step active">';
+                html += '<div class="bv-step-header"><span class="bv-step-num">' + currentStep + '</span> ' + stepData.question + '</div>';
+                html += '<div class="bv-step-options" style="flex-direction:column;">';
+                for (var i = 0; i < stepData.options.length; i++) {
+                    var opt = stepData.options[i];
+                    var sel = bvDxState[stepData.field] === opt.value ? ' selected' : '';
+                    html += '<button class="bv-opt-btn' + sel + '" onclick="bvDxSelect(\'' + stepData.field + '\',\'' + opt.value + '\')" style="text-align:left;min-width:auto;">' + opt.label + '</button>';
+                }
+                html += '</div></div></div>';
+
+                /* Back button */
+                if (currentStep > 1) {
+                    html += '<div style="margin-top:14px;text-align:center;">';
+                    html += '<button onclick="bvDxBack()" style="background:none;border:1px solid var(--rule);color:var(--ink-muted);padding:8px 18px;border-radius:8px;font-family:var(--sans);font-size:13px;cursor:pointer;"><i class="ph-bold ph-arrow-left" style="margin-right:4px;"></i> Back</button>';
+                    html += '</div>';
+                }
+
+                /* Summary of previous answers */
+                if (currentStep > 1) {
+                    html += '<div style="margin-top:18px;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;">';
+                    html += '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-muted);margin-bottom:8px;">Your Selections</div>';
+                    for (var s = 0; s < currentStep - 1; s++) {
+                        var sf = BVDX_STEPS[s];
+                        html += '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid var(--rule);">';
+                        html += '<span style="color:var(--ink-muted);">' + sf.field.replace(/([A-Z])/g, ' $1').replace(/^./, function(c){return c.toUpperCase();}) + '</span>';
+                        html += '<span style="font-weight:600;color:var(--ink);">' + bvDxFieldLabel(sf.field, bvDxState[sf.field]) + '</span>';
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                }
+            } else {
+                /* Result */
+                var results = getBvDxResult();
+                var top = results[0];
+                var fields = ['coverTest','dnRelation','npc','vergFacility','vergAmplitude','baf','maf','mem','accAmp'];
+                var fieldLabels = { coverTest:'Cover Test', dnRelation:'D vs N', npc:'NPC', vergFacility:'Vergence Facility', vergAmplitude:'Vergence Amplitude', baf:'BAF', maf:'MAF', mem:'MEM', accAmp:'Acc Amp' };
+
+                html += '<div class="bv-result-box">';
+                html += '<div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-muted);margin-bottom:6px;">Suspected BV Disorder</div>';
+                html += '<div class="bv-result-muscle">' + top.profile.name + '</div>';
+                html += '<div style="font-size:15px;font-weight:700;color:' + (top.pct >= 80 ? 'var(--success)' : top.pct >= 60 ? '#d97706' : 'var(--danger)') + ';margin-top:4px;">' + top.pct + '% match</div>';
+                html += '</div>';
+
+                /* Comparison table */
+                html += '<div style="margin-top:18px;overflow-x:auto;">';
+                html += '<table style="width:100%;border-collapse:collapse;font-size:12.5px;">';
+                html += '<thead><tr style="border-bottom:2px solid var(--rule);">';
+                html += '<th style="text-align:left;padding:8px 6px;color:var(--ink-muted);font-weight:700;">Test</th>';
+                html += '<th style="text-align:left;padding:8px 6px;color:var(--ink-muted);font-weight:700;">Your Finding</th>';
+                html += '<th style="text-align:left;padding:8px 6px;color:var(--ink-muted);font-weight:700;">Expected</th>';
+                html += '<th style="text-align:center;padding:8px 6px;color:var(--ink-muted);font-weight:700;"></th>';
+                html += '</tr></thead><tbody>';
+                for (var fi = 0; fi < fields.length; fi++) {
+                    var f = fields[fi];
+                    var expected = top.profile[f];
+                    var answer = bvDxState[f];
+                    var match = expected === 'varies' || expected === answer;
+                    var icon = match ? '<span style="color:var(--success);font-weight:700;">\u2713</span>' : '<span style="color:var(--danger);font-weight:700;">\u2717</span>';
+                    if (expected === 'varies') icon = '<span style="color:var(--ink-muted);">\u2014</span>';
+                    html += '<tr style="border-bottom:1px solid var(--rule);">';
+                    html += '<td style="padding:8px 6px;font-weight:600;">' + fieldLabels[f] + '</td>';
+                    html += '<td style="padding:8px 6px;">' + bvDxFieldLabel(f, answer) + '</td>';
+                    html += '<td style="padding:8px 6px;">' + (expected === 'varies' ? 'Varies' : bvDxFieldLabel(f, expected)) + '</td>';
+                    html += '<td style="padding:8px 6px;text-align:center;">' + icon + '</td>';
+                    html += '</tr>';
+                }
+                html += '</tbody></table></div>';
+
+                /* Other matches */
+                if (results.length > 1 && results[1].pct > 0) {
+                    html += '<div style="margin-top:18px;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;">';
+                    html += '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-muted);margin-bottom:8px;">Other Possible Matches</div>';
+                    for (var r = 1; r < results.length && r < 4; r++) {
+                        if (results[r].pct === 0) break;
+                        var barColor = results[r].pct >= 80 ? 'var(--success)' : results[r].pct >= 60 ? '#d97706' : 'var(--ink-muted)';
+                        html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;' + (r < 3 ? 'border-bottom:1px solid var(--rule);' : '') + '">';
+                        html += '<div style="flex:1;font-size:13px;font-weight:600;color:var(--ink);">' + results[r].profile.name + '</div>';
+                        html += '<div style="width:60px;height:6px;background:var(--rule);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + results[r].pct + '%;background:' + barColor + ';border-radius:3px;"></div></div>';
+                        html += '<div style="font-size:12px;font-weight:700;color:' + barColor + ';min-width:36px;text-align:right;">' + results[r].pct + '%</div>';
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                }
+
+                /* Back and Start Over buttons */
+                html += '<div style="margin-top:18px;text-align:center;display:flex;gap:10px;justify-content:center;">';
+                html += '<button onclick="bvDxBack()" style="background:none;border:1px solid var(--rule);color:var(--ink-muted);padding:8px 18px;border-radius:8px;font-family:var(--sans);font-size:13px;cursor:pointer;"><i class="ph-bold ph-arrow-left" style="margin-right:4px;"></i> Back</button>';
+                html += '<button onclick="bvDxReset()" style="background:var(--accent);border:none;color:#fff;padding:8px 18px;border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;">Start Over</button>';
+                html += '</div>';
+            }
 
             el.innerHTML = html;
         }
@@ -8217,11 +8454,11 @@
 
             // Section B — Shaffer Grading System
             var grades = [
-                { num: '4', angle: '35\u201345\u00b0 (wide open)', structures: 'CB, SS, TM, SL', significance: 'No risk of closure', color: '#34d399' },
-                { num: '3', angle: '25\u201335\u00b0 (open)', structures: 'SS, TM, SL', significance: 'No risk of closure', color: '#34d399' },
-                { num: '2', angle: '20\u00b0 (narrow)', structures: 'TM, SL', significance: 'Possible closure', color: '#facc15' },
-                { num: '1', angle: '\u226410\u00b0 (very narrow)', structures: 'SL only', significance: 'High risk of closure', color: '#fb923c' },
-                { num: '0', angle: '0\u00b0 (closed)', structures: 'None (iridocorneal contact)', significance: 'Closed / appositional closure', color: '#f87171' }
+                { num: '4', angle: '35\u201345\u00b0 (wide open)', structures: 'CB, SS, TM, SL', significance: 'No risk of closure', color: '#059669' },
+                { num: '3', angle: '25\u201335\u00b0 (open)', structures: 'SS, TM, SL', significance: 'No risk of closure', color: '#059669' },
+                { num: '2', angle: '20\u00b0 (narrow)', structures: 'TM, SL', significance: 'Possible closure', color: '#a16207' },
+                { num: '1', angle: '\u226410\u00b0 (very narrow)', structures: 'SL only', significance: 'High risk of closure', color: '#c2410c' },
+                { num: '0', angle: '0\u00b0 (closed)', structures: 'None (iridocorneal contact)', significance: 'Closed / appositional closure', color: '#dc2626' }
             ];
 
             var shafferContent = '<figure style="margin:0;">'
@@ -8301,19 +8538,19 @@
                 + deTable(
                     ['Type', 'Cone Affected', 'Inheritance', 'Prevalence'],
                     [
-                        ['Protanomaly', 'L-cone (<span style="color:#f87171;">red</span>) reduced', 'X-linked', '~1% males'],
-                        ['Protanopia', 'L-cone (<span style="color:#f87171;">red</span>) absent', 'X-linked', '~1% males'],
-                        ['Deuteranomaly', 'M-cone (<span style="color:#34d399;">green</span>) reduced', 'X-linked', '~5% males'],
-                        ['Deuteranopia', 'M-cone (<span style="color:#34d399;">green</span>) absent', 'X-linked', '~1% males'],
-                        ['Tritanomaly', 'S-cone (<span style="color:#60a5fa;">blue</span>) reduced', 'Autosomal dominant', 'Very rare'],
-                        ['Tritanopia', 'S-cone (<span style="color:#60a5fa;">blue</span>) absent', 'Autosomal dominant', '~0.001%']
+                        ['Protanomaly', 'L-cone (<span style="color:#dc2626;">red</span>) reduced', 'X-linked', '~1% males'],
+                        ['Protanopia', 'L-cone (<span style="color:#dc2626;">red</span>) absent', 'X-linked', '~1% males'],
+                        ['Deuteranomaly', 'M-cone (<span style="color:#059669;">green</span>) reduced', 'X-linked', '~5% males'],
+                        ['Deuteranopia', 'M-cone (<span style="color:#059669;">green</span>) absent', 'X-linked', '~1% males'],
+                        ['Tritanomaly', 'S-cone (<span style="color:#2563eb;">blue</span>) reduced', 'Autosomal dominant', 'Very rare'],
+                        ['Tritanopia', 'S-cone (<span style="color:#2563eb;">blue</span>) absent', 'Autosomal dominant', '~0.001%']
                     ]
                 )
-                + '<div class="de-note" style="margin-top:10px;"><span style="color:#f87171;">Red</span>-<span style="color:#34d399;">green</span> deficiencies (protan/deutan) affect ~8% of males, &lt;0.5% of females.</div>';
+                + '<div class="de-note" style="margin-top:10px;"><span style="color:#dc2626;">Red</span>-<span style="color:#059669;">green</span> deficiencies (protan/deutan) affect ~8% of males, &lt;0.5% of females.</div>';
             html += buildCvSection('overview', 'ph-info', 'Overview', 'Classification of congenital color vision deficiencies', overviewContent);
 
             // Section B — Ishihara Plates
-            var ishiharaContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Screening test available in 38- or 24-plate editions. Detects <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span> deficiencies only.</p>'
+            var ishiharaContent = '<p style="font-size:13px;line-height:1.6;margin:8px 0 14px 0;color:var(--ink);">Screening test available in 38- or 24-plate editions. Detects <span style="color:#dc2626;">red</span>-<span style="color:#059669;">green</span> deficiencies only.</p>'
                 + deTable(
                     ['Finding', 'Normal', 'Protan', 'Deutan'],
                     [
@@ -8323,7 +8560,7 @@
                         ['Hidden digit plates', 'Cannot see digit', 'May trace digit', 'May trace digit']
                     ]
                 )
-                + '<div class="de-note" style="margin-top:10px;"><strong>Note:</strong> Ishihara does NOT detect tritan defects. Use HRR or D-15 for <span style="color:#60a5fa;">blue</span>-<span style="color:#facc15;">yellow</span> screening.</div>';
+                + '<div class="de-note" style="margin-top:10px;"><strong>Note:</strong> Ishihara does NOT detect tritan defects. Use HRR or D-15 for <span style="color:#2563eb;">blue</span>-<span style="color:#a16207;">yellow</span> screening.</div>';
             html += buildCvSection('ishihara', 'ph-circles-three', 'Ishihara Plates', 'Red-green screening test \u2014 38 or 24 plate editions', ishiharaContent);
 
             // Section C — HRR (Hardy-Rand-Rittler)
@@ -8331,7 +8568,7 @@
                 + deTable(
                     ['Finding', 'Normal', 'Protan', 'Deutan', 'Tritan'],
                     [
-                        ['Screening plates', '<span class="de-normal">All correct</span>', 'Errors on <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span>', 'Errors on <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span>', 'Errors on <span style="color:#60a5fa;">blue</span>-<span style="color:#facc15;">yellow</span>'],
+                        ['Screening plates', '<span class="de-normal">All correct</span>', 'Errors on <span style="color:#dc2626;">red</span>-<span style="color:#059669;">green</span>', 'Errors on <span style="color:#dc2626;">red</span>-<span style="color:#059669;">green</span>', 'Errors on <span style="color:#2563eb;">blue</span>-<span style="color:#a16207;">yellow</span>'],
                         ['Diagnostic: Red-Green', 'No errors', '<span class="de-severe">Protan axis errors</span>', '<span class="de-severe">Deutan axis errors</span>', 'No errors'],
                         ['Diagnostic: Blue-Yellow', 'No errors', 'No errors', 'No errors', '<span class="de-severe">Tritan axis errors</span>'],
                         ['Severity grading', '\u2014', '<span class="de-mild">Mild</span> / <span class="de-moderate">Medium</span> / <span class="de-severe">Strong</span>', '<span class="de-mild">Mild</span> / <span class="de-moderate">Medium</span> / <span class="de-severe">Strong</span>', '<span class="de-mild">Mild</span> / <span class="de-moderate">Medium</span> / <span class="de-severe">Strong</span>']
@@ -8360,11 +8597,11 @@
             var acquiredContent = deTable(
                     ['Condition', 'Typical Pattern', 'Tests Affected'],
                     [
-                        ['Optic neuropathy (MS, NAION)', '<span style="color:#f87171;">Red</span> desaturation; acquired <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span> or mixed', 'Ishihara, HRR, D-15'],
-                        ['Macular disease (AMD, CSR)', 'Acquired tritan (<span style="color:#60a5fa;">blue</span>-<span style="color:#facc15;">yellow</span>)', 'HRR, D-15'],
+                        ['Optic neuropathy (MS, NAION)', '<span style="color:#dc2626;">Red</span> desaturation; acquired <span style="color:#dc2626;">red</span>-<span style="color:#059669;">green</span> or mixed', 'Ishihara, HRR, D-15'],
+                        ['Macular disease (AMD, CSR)', 'Acquired tritan (<span style="color:#2563eb;">blue</span>-<span style="color:#a16207;">yellow</span>)', 'HRR, D-15'],
                         ['Glaucoma', 'Acquired tritan \u2192 mixed (late)', 'D-15, HRR'],
-                        ['Medications (ethambutol, Plaquenil)', '<span style="color:#f87171;">Red</span>-<span style="color:#34d399;">green</span> or mixed', 'Ishihara, HRR'],
-                        ['Media opacities (cataract)', 'Pseudo-tritan (<span style="color:#60a5fa;">blue</span> absorption)', 'D-15']
+                        ['Medications (ethambutol, Plaquenil)', '<span style="color:#dc2626;">Red</span>-<span style="color:#059669;">green</span> or mixed', 'Ishihara, HRR'],
+                        ['Media opacities (cataract)', 'Pseudo-tritan (<span style="color:#2563eb;">blue</span> absorption)', 'D-15']
                     ]
                 )
                 + '<div class="de-note" style="margin-top:10px;"><strong>Note:</strong> Acquired defects are typically asymmetric between eyes (unlike congenital). Always test monocularly and compare.</div>';
@@ -8373,7 +8610,7 @@
             // Section F — Clinical Pearl
             html += '<div class="tools-card">'
                 + '<div class="de-note" style="font-size:13px;line-height:1.7;margin:0;color:var(--ink);"><strong style="color:var(--accent);">Clinical Pearl:</strong> '
-                + 'Screen with Ishihara for <span style="color:#f87171;">red</span>-<span style="color:#34d399;">green</span> defects. If abnormal or tritan suspected, confirm with HRR for type and severity. '
+                + 'Screen with Ishihara for <span style="color:#dc2626;">red</span>-<span style="color:#059669;">green</span> defects. If abnormal or tritan suspected, confirm with HRR for type and severity. '
                 + 'D-15 differentiates moderate/severe from mild. Always test monocularly for acquired defects.</div>'
                 + '</div>';
 
@@ -8684,14 +8921,14 @@
             if (s.hemorrhages && s.hem_quads >= 4) severeCount++;
             if (s.venous_beading && s.vb_quads >= 2) severeCount++;
             if (s.irma) severeCount++;
-            if (severeCount >= 1) return { grade: 'Severe NPDR', desc: 'Severe Non-Proliferative DR (4-2-1 rule met)', color: '#f87171' };
+            if (severeCount >= 1) return { grade: 'Severe NPDR', desc: 'Severe Non-Proliferative DR (4-2-1 rule met)', color: '#dc2626' };
             // Moderate NPDR
             if (s.ma && (s.hemorrhages || s.hard_exudates || s.cws || s.venous_beading))
-                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#fb923c' };
+                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#c2410c' };
             if ((s.hemorrhages || s.hard_exudates || s.cws || s.venous_beading))
-                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#fb923c' };
+                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#c2410c' };
             // Mild NPDR
-            if (s.ma) return { grade: 'Mild NPDR', desc: 'Microaneurysms only', color: '#facc15' };
+            if (s.ma) return { grade: 'Mild NPDR', desc: 'Microaneurysms only', color: '#a16207' };
             return null;
         }
 
@@ -8752,7 +8989,7 @@
                     + drQuadBtn('hem_quads', 1, '1') + drQuadBtn('hem_quads', 2, '2') + drQuadBtn('hem_quads', 3, '3') + drQuadBtn('hem_quads', 4, '4')
                     + '</div>' : '')
                 + '</div>'
-                + (drState.hemorrhages && drState.hem_quads === 4 ? '<div style="font-size:11px;color:#f87171;margin:-4px 0 10px 24px;font-weight:600;">4 quadrants \u2192 meets severe NPDR criterion (4-2-1)</div>' : '');
+                + (drState.hemorrhages && drState.hem_quads === 4 ? '<div style="font-size:11px;color:#dc2626;margin:-4px 0 10px 24px;font-weight:600;">4 quadrants \u2192 meets severe NPDR criterion (4-2-1)</div>' : '');
 
             graderContent += drCheck('hard_exudates', 'Hard exudates');
             graderContent += drCheck('cws', 'Cotton wool spots');
@@ -8767,7 +9004,7 @@
                     + drQuadBtn('vb_quads', 1, '1') + drQuadBtn('vb_quads', 2, '\u22652')
                     + '</div>' : '')
                 + '</div>'
-                + (drState.venous_beading && drState.vb_quads >= 2 ? '<div style="font-size:11px;color:#f87171;margin:-4px 0 10px 24px;font-weight:600;">\u22652 quadrants \u2192 meets severe NPDR criterion (4-2-1)</div>' : '');
+                + (drState.venous_beading && drState.vb_quads >= 2 ? '<div style="font-size:11px;color:#dc2626;margin:-4px 0 10px 24px;font-weight:600;">\u22652 quadrants \u2192 meets severe NPDR criterion (4-2-1)</div>' : '');
 
             graderContent += drCheck('irma', 'IRMA (intraretinal microvascular abnormality)');
             graderContent += '</div>';
@@ -8901,7 +9138,7 @@
             });
             lines.push('];');
             var output = lines.join('\n');
-            console.log('%c[VF Debug] Copy this into buildVfPathwaySvg:', 'color:#06b6d4;font-weight:bold');
+            console.log('%c[VF Debug] Copy this into buildVfPathwaySvg:', 'color:#0d9488;font-weight:bold');
             console.log(output);
         }
 
@@ -9076,7 +9313,7 @@
             }
 
             // Outline
-            svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>';
+            svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>';
 
             svg += '</svg>';
             return svg;
@@ -9088,9 +9325,9 @@
             var cR = '#f5b731';      // yellow — temporal fibers (uncrossed)
             var cGold = '#b5985a';   // eye outlines
             var cFlesh = 'rgba(200,155,120,0.3)'; // eyelid arcs
-            var cBrain = 'rgba(255,255,255,0.055)'; // brain silhouette
-            var cLabel = 'rgba(255,255,255,0.5)';
-            var cAccent = '#06b6d4';
+            var cBrain = 'rgba(0,0,0,0.04)'; // brain silhouette
+            var cLabel = 'rgba(0,0,0,0.4)';
+            var cAccent = '#0d9488';
 
             var w = 380, h = 620;
             var svg = '<svg class="vf-pathway-svg" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">';
@@ -9129,11 +9366,11 @@
                 + '" fill="'+cBrain+'"/>';
 
             // Brain fold/sulcus hints
-            svg += '<path d="M105,495 C118,478 132,474 142,482" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="3"/>';
-            svg += '<path d="M275,495 C262,478 248,474 238,482" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="3"/>';
-            svg += '<path d="M155,570 Q175,555 190,558 Q205,555 225,570" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="2.5"/>';
-            svg += '<path d="M82,430 C90,418 100,416 108,422" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="2.5"/>';
-            svg += '<path d="M298,430 C290,418 280,416 272,422" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="2.5"/>';
+            svg += '<path d="M105,495 C118,478 132,474 142,482" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="3"/>';
+            svg += '<path d="M275,495 C262,478 248,474 238,482" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="3"/>';
+            svg += '<path d="M155,570 Q175,555 190,558 Q205,555 225,570" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="2.5"/>';
+            svg += '<path d="M82,430 C90,418 100,416 108,422" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="2.5"/>';
+            svg += '<path d="M298,430 C290,418 280,416 272,422" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="2.5"/>';
 
             // ══════════════════════════════════════════
             // 2. OPTIC RADIATIONS  (thin fan-out lines)
@@ -9155,7 +9392,7 @@
             svg += '<path d="M252,'+lgnY+' C253,'+(lgnY+28)+' 258,'+(lgnY+50)+' 254,'+(lgnY+86)+' S224,'+(cortexY-28)+' 212,'+cortexY+'" fill="none" stroke="'+cP+'" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>';
 
             // Radiation crossings at bottom (calcarine area)
-            svg += '<path d="M168,'+cortexY+' C178,'+(cortexY+12)+' 202,'+(cortexY+12)+' 212,'+cortexY+'" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>';
+            svg += '<path d="M168,'+cortexY+' C178,'+(cortexY+12)+' 202,'+(cortexY+12)+' 212,'+cortexY+'" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>';
 
             // ══════════════════════════════════════════
             // 3. OPTIC TRACTS  (thick fibers, chiasm to LGN)
@@ -9170,8 +9407,8 @@
             // 4. LGN MARKERS
             // ══════════════════════════════════════════
             // Left LGN — small open circle
-            svg += '<circle cx="135" cy="'+lgnY+'" r="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>';
-            svg += '<circle cx="135" cy="'+lgnY+'" r="2" fill="rgba(255,255,255,0.15)"/>';
+            svg += '<circle cx="135" cy="'+lgnY+'" r="5" fill="rgba(0,0,0,0.03)" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>';
+            svg += '<circle cx="135" cy="'+lgnY+'" r="2" fill="rgba(0,0,0,0.1)"/>';
 
             // ══════════════════════════════════════════
             // 5. OPTIC CHIASM  (X-crossing of nasal fibers)
@@ -9182,7 +9419,7 @@
             svg += '<path d="M205,'+chiasmY+' C198,'+(chiasmY-8)+' 182,'+(chiasmY-8)+' 165,'+chiasmY+'" fill="none" stroke="'+cP+'" stroke-width="11" stroke-linecap="round" opacity="0.7"/>';
 
             // Small circle at chiasm center
-            svg += '<circle cx="190" cy="'+chiasmY+'" r="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>';
+            svg += '<circle cx="190" cy="'+chiasmY+'" r="4" fill="rgba(0,0,0,0.04)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>';
 
             // ══════════════════════════════════════════
             // 6. OPTIC NERVES  (thick intertwined fibers)
@@ -9216,12 +9453,12 @@
             svg += '<path d="M'+(leX-16)+','+(eyeY-20)+' Q'+(leX-30)+','+eyeY+' '+(leX-16)+','+(eyeY+20)+'" fill="none" stroke="'+cR+'" stroke-width="2.5" opacity="0.75"/>';
             svg += '<path d="M'+(leX+16)+','+(eyeY-20)+' Q'+(leX+30)+','+eyeY+' '+(leX+16)+','+(eyeY+20)+'" fill="none" stroke="'+cP+'" stroke-width="2.5" opacity="0.75"/>';
             // Visual field division line
-            svg += '<line x1="'+leX+'" y1="'+(eyeY-eyeR+6)+'" x2="'+leX+'" y2="'+(eyeY+eyeR-6)+'" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>';
+            svg += '<line x1="'+leX+'" y1="'+(eyeY-eyeR+6)+'" x2="'+leX+'" y2="'+(eyeY+eyeR-6)+'" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>';
 
             // Right eye: red on left, purple on right
             svg += '<path d="M'+(reX-16)+','+(eyeY-20)+' Q'+(reX-30)+','+eyeY+' '+(reX-16)+','+(eyeY+20)+'" fill="none" stroke="'+cR+'" stroke-width="2.5" opacity="0.75"/>';
             svg += '<path d="M'+(reX+16)+','+(eyeY-20)+' Q'+(reX+30)+','+eyeY+' '+(reX+16)+','+(eyeY+20)+'" fill="none" stroke="'+cP+'" stroke-width="2.5" opacity="0.75"/>';
-            svg += '<line x1="'+reX+'" y1="'+(eyeY-eyeR+6)+'" x2="'+reX+'" y2="'+(eyeY+eyeR-6)+'" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>';
+            svg += '<line x1="'+reX+'" y1="'+(eyeY-eyeR+6)+'" x2="'+reX+'" y2="'+(eyeY+eyeR-6)+'" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>';
 
             // Eye labels
             svg += '<text x="'+leX+'" y="18" text-anchor="middle" fill="'+cLabel+'" font-size="10" font-weight="600" font-family="var(--sans)">LEFT EYE</text>';
@@ -9253,7 +9490,7 @@
 
             // ── Fiber legend (top-left) ──
             var lgY = 8;
-            svg += '<rect x="8" y="'+lgY+'" width="116" height="40" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>';
+            svg += '<rect x="8" y="'+lgY+'" width="116" height="40" rx="6" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>';
             svg += '<line x1="16" y1="'+(lgY+14)+'" x2="36" y2="'+(lgY+14)+'" stroke="'+cR+'" stroke-width="4" stroke-linecap="round" opacity="0.8"/>';
             svg += '<text x="42" y="'+(lgY+17)+'"'+ls+'>Temporal</text>';
             svg += '<line x1="16" y1="'+(lgY+30)+'" x2="36" y2="'+(lgY+30)+'" stroke="'+cP+'" stroke-width="4" stroke-linecap="round" opacity="0.8"/>';
@@ -9284,8 +9521,8 @@
                 svg += '<g class="' + btnClass + '" data-lesion-id="' + l.label + '"'
                     + (isDebug ? ' style="cursor:grab;"' : ' onclick="selectVfDefect(' + l.id + ')" style="cursor:pointer;"')
                     + '>'
-                    + '<circle class="vf-lesion-ring" cx="' + lx + '" cy="' + ly + '" r="13" fill="' + (isActive ? cAccent : isDebug ? 'rgba(6,182,212,0.15)' : 'rgba(255,255,255,0.08)') + '" stroke="' + (isActive ? cAccent : isDebug ? 'rgba(6,182,212,0.5)' : 'rgba(255,255,255,0.22)') + '" stroke-width="1.5"/>'
-                    + '<text class="vf-lesion-num" x="' + lx + '" y="' + (ly + 4) + '" text-anchor="middle" fill="' + (isActive ? '#0f1117' : isDebug ? cAccent : 'rgba(255,255,255,0.65)') + '" font-size="12" font-weight="700" font-family="var(--sans)">' + l.label + '</text>'
+                    + '<circle class="vf-lesion-ring" cx="' + lx + '" cy="' + ly + '" r="13" fill="' + (isActive ? cAccent : isDebug ? 'rgba(13,148,136,0.15)' : 'rgba(0,0,0,0.06)') + '" stroke="' + (isActive ? cAccent : isDebug ? 'rgba(13,148,136,0.5)' : 'rgba(0,0,0,0.15)') + '" stroke-width="1.5"/>'
+                    + '<text class="vf-lesion-num" x="' + lx + '" y="' + (ly + 4) + '" text-anchor="middle" fill="' + (isActive ? '#ffffff' : isDebug ? cAccent : 'rgba(0,0,0,0.5)') + '" font-size="12" font-weight="700" font-family="var(--sans)">' + l.label + '</text>'
                     + '</g>';
             }
 
@@ -9302,15 +9539,15 @@
 
             // Debug mode banner
             if (vfDebugMode) {
-                html += '<div style="margin-bottom:12px;padding:10px 14px;border-radius:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">'
+                html += '<div style="margin-bottom:12px;padding:10px 14px;border-radius:8px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">'
                     + '<div style="display:flex;align-items:center;gap:8px;">'
-                    + '<span style="background:var(--accent);color:#0f1117;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:0.5px;">DEBUG</span>'
+                    + '<span style="background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:0.5px;">DEBUG</span>'
                     + '<span style="font-size:12px;color:var(--accent);font-weight:600;">Drag markers to reposition. Coordinates shown on hover.</span>'
                     + '</div>'
                     + '<div style="display:flex;gap:6px;">'
-                    + '<button onclick="vfLogPositions()" style="background:var(--accent);color:#0f1117;border:none;font-family:var(--sans);font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;cursor:pointer;">Log Positions</button>'
-                    + '<button onclick="vfDebugPositions={};toggleVfDebug()" style="background:rgba(255,255,255,0.1);color:var(--ink);border:none;font-family:var(--sans);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;">Reset &amp; Exit</button>'
-                    + '<button onclick="toggleVfDebug()" style="background:rgba(255,255,255,0.1);color:var(--ink);border:none;font-family:var(--sans);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;">Exit Debug</button>'
+                    + '<button onclick="vfLogPositions()" style="background:var(--accent);color:#fff;border:none;font-family:var(--sans);font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;cursor:pointer;">Log Positions</button>'
+                    + '<button onclick="vfDebugPositions={};toggleVfDebug()" style="background:rgba(0,0,0,0.06);color:var(--ink);border:none;font-family:var(--sans);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;">Reset &amp; Exit</button>'
+                    + '<button onclick="toggleVfDebug()" style="background:rgba(0,0,0,0.06);color:var(--ink);border:none;font-family:var(--sans);font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;">Exit Debug</button>'
                     + '</div></div>';
             }
 
@@ -9654,7 +9891,7 @@
             // Names
             html += `<div class="med-brand-name">${escMedHtml(med.brand_name)}</div>`;
             const isCombo = /combination/i.test(med.drug_class) && !/antibiotic|steroid|cortico/i.test(med.drug_class);
-            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#94a3b8;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
+            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#64748b;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
             html += `<div class="med-drug-class">${escMedHtml(med.drug_class)}</div>`;
             html += `</div>`;
             // Prices (right side)
@@ -9711,27 +9948,27 @@
             if (/cai.*alpha/i.test(d)) return '#8BA888';
             if (/alpha.*beta/i.test(d)) return '#003366';
             if (/rock.*prostaglandin/i.test(d)) return '#C0C0C0';
-            if (/prostaglandin/.test(d)) return '#2dd4bf';
-            if (/beta.blocker/.test(d)) return '#eab308';
-            if (/carbonic anhydrase|^cai/.test(d)) return '#f97316';
-            if (/alpha/.test(d)) return '#a855f7';
+            if (/prostaglandin/.test(d)) return '#0d9488';
+            if (/beta.blocker/.test(d)) return '#ca8a04';
+            if (/carbonic anhydrase|^cai/.test(d)) return '#ea580c';
+            if (/alpha/.test(d)) return '#7c3aed';
             if (/rho kinase|rock/.test(d)) return '#6b7280';
             if (/miotic|parasympathomimetic/.test(d)) return '#16a34a';
             if (/combination|aminoglycoside/.test(d)) return '#1e3a8a';
-            if (/artificial tear|lubricant|lipid/.test(d)) return '#3b82f6';
-            if (/fluoroquinolone/.test(d)) return '#ef4444';
-            if (/macrolide/.test(d)) return '#ec4899';
-            if (/antiviral/.test(d)) return '#8b5cf6';
+            if (/artificial tear|lubricant|lipid/.test(d)) return '#2563eb';
+            if (/fluoroquinolone/.test(d)) return '#dc2626';
+            if (/macrolide/.test(d)) return '#db2777';
+            if (/antiviral/.test(d)) return '#7c3aed';
             if (/antifungal/.test(d)) return '#78716c';
-            if (/corticosteroid/.test(d)) return '#f97316';
-            if (/nsaid/.test(d)) return '#eab308';
-            if (/antihistamine|mast cell/.test(d)) return '#a855f7';
-            if (/anti.vegf|bispecific/.test(d)) return '#0ea5e9';
+            if (/corticosteroid/.test(d)) return '#ea580c';
+            if (/nsaid/.test(d)) return '#ca8a04';
+            if (/antihistamine|mast cell/.test(d)) return '#7c3aed';
+            if (/anti.vegf|bispecific/.test(d)) return '#0284c7';
             if (/cycloplegic|mydriatic/.test(d)) return '#16a34a';
-            if (/parasiticide|isoxazoline/.test(d)) return '#6366f1';
-            if (/immunomodulator|calcineurin/.test(d)) return '#2dd4bf';
-            if (/lfa/.test(d)) return '#2dd4bf';
-            if (/nicotinic/.test(d)) return '#2dd4bf';
+            if (/parasiticide|isoxazoline/.test(d)) return '#4f46e5';
+            if (/immunomodulator|calcineurin/.test(d)) return '#0d9488';
+            if (/lfa/.test(d)) return '#0d9488';
+            if (/nicotinic/.test(d)) return '#0d9488';
             return '#9ca3af';
         }
 
@@ -10109,9 +10346,9 @@
                 { label: "Material", value: lens.material || "\u2014" },
                 { label: "Wear", value: lens.wear },
                 { label: "Pack Sizes", value: lens.qty },
-                { label: "Price/Pack", value: `<span style="color:#22c55e">~${lens.price}</span>` },
-                ...(yearlyCost ? [{ label: "Annual Cost", value: `<span style="color:#22c55e">${yearlyCost}</span>` }] : []),
-                ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#ec4899;font-weight:600">Therapeutic Use</span>` }] : []),
+                { label: "Price/Pack", value: `<span style="color:#059669">~${lens.price}</span>` },
+                ...(yearlyCost ? [{ label: "Annual Cost", value: `<span style="color:#059669">${yearlyCost}</span>` }] : []),
+                ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#db2777;font-weight:600">Therapeutic Use</span>` }] : []),
             ];
 
             let notes = [];
@@ -10154,8 +10391,8 @@
             const tf = browseState.typeFilter;
 
             const typeLabel = { sphere:"SPH", toric:"TORIC", multifocal:"MF", "multifocal-toric":"MF TORIC" };
-            const typeColorMap = { sphere:"#3b9eff", toric:"#f59e0b", multifocal:"#2dd4bf", "multifocal-toric":"#c084fc" };
-            const typeBgMap = { sphere:"rgba(59,158,255,0.15)", toric:"rgba(245,158,11,0.15)", multifocal:"rgba(45,212,191,0.15)", "multifocal-toric":"rgba(192,132,252,0.15)" };
+            const typeColorMap = { sphere:"#2563eb", toric:"#d97706", multifocal:"#0d9488", "multifocal-toric":"#7c3aed" };
+            const typeBgMap = { sphere:"rgba(37,99,235,0.1)", toric:"rgba(217,119,6,0.1)", multifocal:"rgba(13,148,136,0.1)", "multifocal-toric":"rgba(124,58,237,0.1)" };
             const schedLabel = { daily:"1D", weekly:"1W", biweekly:"2W", monthly:"1M" };
             const typeFilters = [
                 { key:"sphere", cls:"sphere", label:"SPH" },
@@ -10210,7 +10447,7 @@
                 let allLenses = [...LENSES];
                 if (tf) allLenses = allLenses.filter(l => l.type === tf);
                 if (mf) allLenses = allLenses.filter(l => l.modality === mf);
-                if (search) allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search))));
+                if (search) allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search))));
                 if (browseState.sortDk) allLenses.sort((a, b) => browseState.sortDk === "desc" ? b.dk - a.dk : a.dk - b.dk);
                 else if (browseState.sortBc) allLenses.sort((a, b) => browseState.sortBc === "desc" ? parseFloat(b.bc) - parseFloat(a.bc) : parseFloat(a.bc) - parseFloat(b.bc));
                 else if (browseState.sortDia) allLenses.sort((a, b) => browseState.sortDia === "desc" ? parseFloat(b.diam) - parseFloat(a.diam) : parseFloat(a.diam) - parseFloat(b.diam));
@@ -10238,7 +10475,7 @@
                 let lenses = LENSES.filter(l => l.brand === brand);
                 if (tf) lenses = lenses.filter(l => l.type === tf);
                 if (mf) lenses = lenses.filter(l => l.modality === mf);
-                if (search) lenses = lenses.filter(l => l.name.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search))));
+                if (search) lenses = lenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search))));
                 if (lenses.length === 0) return;
                 lenses.sort((a, b) => a.name.localeCompare(b.name));
                 const color = brandColorMap[brand] || "var(--accent)";
@@ -10278,8 +10515,8 @@
         // INIT
         render();
     </script>
-    <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#555;">
-        <div style="margin-bottom:4px;font-style:italic;color:#06b6d4;">Built by an Optometrist, For Optometrists.</div>
+    <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#94a3b8;background:#ede6de;">
+        <div style="margin-bottom:4px;font-style:italic;color:#0d9488;">Built by an Optometrist, For Optometrists.</div>
         <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
         <div>&copy; 2026 Pocket OD</div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
