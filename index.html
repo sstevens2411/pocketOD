@@ -563,7 +563,7 @@
         /* OPTION GRID */
         .option-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
@@ -587,7 +587,6 @@
         .option-btn.active {
             background: var(--accent-light);
             box-shadow: 0 2px 8px rgba(13,148,136,0.15);
-            outline: 2px solid var(--accent);
         }
 
         .option-btn .icon {
@@ -1222,7 +1221,7 @@
                 padding: 10px 8px;
             }
             .option-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 8px;
             }
             .option-card {
@@ -1411,6 +1410,9 @@
             .form-grid {
                 grid-template-columns: 1fr;
                 gap: 8px;
+            }
+            .option-grid {
+                grid-template-columns: 1fr;
             }
             .main {
                 padding: 8px 6px 50px;
@@ -2062,7 +2064,7 @@
 
             /* --- Option grid — touch-friendly --- */
             .option-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 10px;
             }
             .option-grid.med-condition-grid {
@@ -2525,12 +2527,14 @@
             font-size: 14px;
             border-left: 3px solid var(--accent);
             border-bottom: none;
+            border-radius: 6px;
         }
         .browse-table td {
             padding: 6px 10px;
             border-bottom: 1px solid var(--border);
             white-space: nowrap;
             vertical-align: middle;
+            color: var(--ink);
         }
         .browse-name {
             font-weight: 500;
@@ -2540,11 +2544,11 @@
         }
         .browse-type {
             display: inline-block;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
-            padding: 1px 5px;
+            padding: 2px 6px;
             border-radius: 4px;
-            background: rgba(13,148,136,0.1);
+            background: rgba(13,148,136,0.12);
             color: var(--accent);
             margin-left: 6px;
             vertical-align: middle;
@@ -2552,30 +2556,30 @@
         }
         .browse-sched {
             display: inline-block;
-            font-size: 9px;
-            font-weight: 600;
-            padding: 1px 5px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
             border-radius: 4px;
-            background: rgba(0,0,0,0.04);
-            color: var(--ink-muted);
+            background: rgba(0,0,0,0.06);
+            color: var(--ink-secondary);
             margin-left: 4px;
             vertical-align: middle;
             letter-spacing: 0.3px;
         }
         .browse-therapeutic {
             display: inline-block;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
-            padding: 1px 5px;
+            padding: 2px 6px;
             border-radius: 4px;
-            background: rgba(219,39,119,0.08);
+            background: rgba(219,39,119,0.10);
             color: #db2777;
             margin-left: 4px;
             vertical-align: middle;
             letter-spacing: 0.3px;
         }
         .browse-table .browse-muted {
-            color: var(--ink-secondary);
+            color: var(--ink);
         }
         .browse-empty {
             text-align: center;
@@ -2788,8 +2792,8 @@
         .ref-toggle-btn .ph-caret-right { transition: transform 0.2s; font-size: 14px; }
         .ref-toggle-wrap.ref-open .ref-toggle-btn .ph-caret-right { transform: rotate(90deg); }
         .ref-toggle-content {
-            display: none; margin-top: 10px; font-size: 11px;
-            color: var(--ink-muted); line-height: 1.6;
+            display: none; margin-top: 10px; font-size: 12px;
+            color: var(--ink-secondary); line-height: 1.6;
         }
         .ref-toggle-wrap.ref-open .ref-toggle-content { display: block; }
         .iop-eye-row {
@@ -2927,11 +2931,11 @@
         @media (min-width: 601px) {
             #toolsContent .option-btn,
             #medsContent .option-btn {
-                padding: 22px 20px;
+                padding: 28px 22px;
             }
             #toolsContent .option-btn .icon,
             #medsContent .option-btn .icon {
-                font-size: 20px;
+                font-size: 26px;
             }
             #toolsContent .option-btn .title,
             #medsContent .option-btn .title {
@@ -2940,7 +2944,7 @@
             #toolsContent .option-btn .desc,
             #medsContent .option-btn .desc {
                 font-size: 13.5px;
-                margin-top: 4px;
+                margin-top: 6px;
                 color: var(--ink-secondary);
             }
         }
@@ -3122,7 +3126,8 @@
         }
         .bv-result-nerve {
             font-size: 14px;
-            color: var(--ink-muted);
+            font-weight: 600;
+            color: var(--ink-secondary);
         }
         /* Dry Eye Reference Tool */
         .de-section-header {
@@ -3863,13 +3868,20 @@
                 }
             });
 
+            // Remove standard lenses where BOTH eyes need the companion (XR);
+            // the XR lens entry will cover them directly instead
+            const withoutRedundant = results.filter(r => {
+                if (r.companionForOD && r.companionForOS && !r.forOD && !r.forOS) return false;
+                return true;
+            });
+
             // Suppress XR lenses that fit both eyes when their standard companion
             // already appears as a mixed pair (avoids redundant, pricier recommendation)
-            const filtered = results.filter(r => {
+            const filtered = withoutRedundant.filter(r => {
                 if (!r.companion || !r.forOD || !r.forOS) return true;
                 // This lens covers both eyes directly; check if its companion
                 // is in results as a mixed pair that also covers both eyes
-                return !results.some(c => c.name === r.companion && (c.companionForOD || c.companionForOS));
+                return !withoutRedundant.some(c => c.name === r.companion && (c.companionForOD || c.companionForOS));
             });
 
             const dir = state.sortDir === "asc" ? 1 : -1;
@@ -5383,14 +5395,14 @@
                 <div style="margin-bottom:20px">
                     <div class="order-section-title">Select Vision Complaint</div>
                     <div class="option-grid">
-                        <div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
+                        ${lens.type === 'multifocal' || lens.type === 'multifocal-toric' ? `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
                             <div class="desc">Difficulty seeing far away</div>
                         </div>
                         <div class="option-btn ${state.troubleshoot === 'near' ? 'active' : ''}" onclick="setTroubleshoot('near')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Blurry at Near</span></div>
                             <div class="desc">Difficulty reading or close work</div>
-                        </div>
+                        </div>` : ''}
                         ${isToric ? `<div class="option-btn ${state.troubleshoot === 'rotation' ? 'active' : ''}" onclick="setTroubleshoot('rotation')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></span><span class="title">Lens Rotation</span></div>
                             <div class="desc">Toric lens rotating on eye</div>
@@ -6387,6 +6399,28 @@
                 renderVfIndexTool(el);
             } else if (toolsActiveTool === 'bvdx') {
                 renderBvDxTool(el);
+            } else if (toolsActiveTool === 'amblyopia') {
+                renderAmblyopiaTool(el);
+            } else if (toolsActiveTool === 'va') {
+                renderVaTool(el);
+            } else if (toolsActiveTool === 'prentice') {
+                renderPrenticeTool(el);
+            } else if (toolsActiveTool === 'hofstetter') {
+                renderHofstetterTool(el);
+            } else if (toolsActiveTool === 'iol') {
+                renderIolTool(el);
+            } else if (toolsActiveTool === 'keratoconus') {
+                renderKeratoconusTool(el);
+            } else if (toolsActiveTool === 'vanherick') {
+                renderVanHerickTool(el);
+            } else if (toolsActiveTool === 'rapd') {
+                renderRapdTool(el);
+            } else if (toolsActiveTool === 'opticnerve') {
+                renderOpticNerveTool(el);
+            } else if (toolsActiveTool === 'pupilcn') {
+                renderPupilCnTool(el);
+            } else if (toolsActiveTool === 'clparam') {
+                renderClParamTool(el);
             }
         }
 
@@ -6413,15 +6447,37 @@
             { id:'gonio', icon:'gonio-svg', title:'Gonioscopy', desc:'Shaffer angle grading reference',
               keywords:'gonioscopy angle shaffer grading anterior chamber closure narrow open trabecular meshwork scleral spur',
               svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M96,72a8,8,0,0,1,8-8A104.11,104.11,0,0,1,208,168a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88A8,8,0,0,1,96,72ZM240,192H80V32a8,8,0,0,0-16,0V64H32a8,8,0,0,0,0,16H64V200a8,8,0,0,0,8,8H240a8,8,0,0,0,0-16Z"></path></svg>' },
-            { id:'colorvision', icon:'ph-palette', title:'Color Vision', desc:'Expected results by deficiency type',
-              keywords:'color vision ishihara hrr d-15 d15 farnsworth protan deutan tritan cvd red green blue cone deficiency anomalous acquired optic neuropathy' },
+            { id:'amblyopia', icon:'ph-baby', title:'Amblyopia Risk', desc:'Screen for amblyogenic refractive factors',
+              keywords:'amblyopia risk anisometropia isoametropia refractive hyperopia myopia astigmatism pediatric lazy eye screening' },
             { id:'amd', icon:'ph-eye', title:'AMD Staging', desc:'AREDS severity scale & interactive risk calculator',
               keywords:'amd age related macular degeneration drusen geographic atrophy ga cnv choroidal neovascular beckman areds pigment rpe dry wet staging grading' },
             { id:'dr', icon:'dr-svg', title:'Diabetic Retinopathy', desc:'Interactive DR grading by clinical findings',
               keywords:'diabetic retinopathy dr npdr pdr mild moderate severe proliferative microaneurysm hemorrhage cotton wool spot venous beading irma neovascularization 4-2-1 grading',
               svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path></svg>' },
             { id:'vfindex', icon:'ph-brain', title:'Neuro Visual Field Index', desc:'Interactive visual pathway lesion localizer',
-              keywords:'visual field defect hemianopia hemianopsia quadrantanopia scotoma bitemporal homonymous optic chiasm tract radiation cortex lesion neurological pathway macular sparing meyer loop parietal temporal occipital lgn lateral geniculate' }
+              keywords:'visual field defect hemianopia hemianopsia quadrantanopia scotoma bitemporal homonymous optic chiasm tract radiation cortex lesion neurological pathway macular sparing meyer loop parietal temporal occipital lgn lateral geniculate' },
+            { id:'colorvision', icon:'ph-palette', title:'Color Vision', desc:'Expected results by deficiency type',
+              keywords:'color vision ishihara hrr d-15 d15 farnsworth protan deutan tritan cvd red green blue cone deficiency anomalous acquired optic neuropathy' },
+            { id:'va', icon:'ph-eye-slash', title:'Visual Acuity Converter', desc:'Convert between Snellen, LogMAR, Decimal & MAR',
+              keywords:'visual acuity snellen logmar decimal mar convert converter notation 20/20 6/6' },
+            { id:'prentice', icon:'ph-arrows-out-line-horizontal', title:'Prentice\u2019s Rule', desc:'Calculate induced prism from lens decentration',
+              keywords:'prentice rule prism diopter decentration induced prismatic effect lens power' },
+            { id:'hofstetter', icon:'ph-magnifying-glass-plus', title:'Hofstetter\u2019s Norms', desc:'Expected accommodative amplitudes by age',
+              keywords:'hofstetter accommodation amplitude age expected minimum average maximum push-up' },
+            { id:'iol', icon:'ph-circle-dashed', title:'IOL Power Calculator', desc:'SRK/T estimated IOL power from biometry',
+              keywords:'iol intraocular lens power srkt srk/t axial length keratometry a-constant cataract surgery biometry' },
+            { id:'keratoconus', icon:'ph-warning-diamond', title:'Keratoconus Screening', desc:'Flag suspicious topography & pachymetry values',
+              keywords:'keratoconus ectasia topography pachymetry steep flat k keratometry i-s value screening cone cornea' },
+            { id:'vanherick', icon:'ph-flashlight', title:'Van Herick Grading', desc:'Anterior chamber angle estimation at slit lamp',
+              keywords:'van herick anterior chamber angle grading slit lamp narrow closure estimation peripheral depth' },
+            { id:'rapd', icon:'ph-circle-half', title:'RAPD Grading Scale', desc:'Relative afferent pupillary defect staging',
+              keywords:'rapd relative afferent pupillary defect marcus gunn swinging flashlight pupil grading scale' },
+            { id:'opticnerve', icon:'ph-graph', title:'Optic Nerve Assessment', desc:'ISNT rule, disc size norms & C/D significance',
+              keywords:'optic nerve disc cup ratio isnt rule rim thickness size neuroretinal assessment glaucoma nfl' },
+            { id:'pupilcn', icon:'ph-list-checks', title:'Pupil & CN Assessment', desc:'Cranial nerve II\u2013VII testing & pupil abnormalities',
+              keywords:'pupil cranial nerve cn assessment horner adie argyll robertson cn3 cn4 cn5 cn6 cn7 palsy' },
+            { id:'clparam', icon:'ph-disc', title:'CL Parameter Calculator', desc:'Base curve & diameter from keratometry readings',
+              keywords:'contact lens parameter base curve diameter keratometry flat k steep k sam fap fitting calculator bc' }
         ];
 
         function onToolsSearch(val) {
@@ -6461,9 +6517,6 @@
             }
 
             el.innerHTML =
-                '<div style="margin-bottom:18px;">' +
-                    '<div style="font-size:18px;font-weight:700;">Clinical Tools</div>' +
-                '</div>' +
                 '<div class="tools-search-wrap">' +
                     '<span class="tools-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>' +
                     '<input type="text" class="tools-search-input" id="toolsSearchInput" placeholder="Search tools\u2026" value="' + (toolsSearchQuery || '').replace(/"/g,'&quot;') + '" oninput="onToolsSearch(this.value)" autocomplete="off">' +
@@ -9765,6 +9818,1039 @@
             }
         }
 
+        // ===== AMBLYOPIA RISK SCREENING TOOL =====
+
+        const amblyopiaState = {
+            odSph: null, odCyl: null, odSphSign: '+', odCylSign: '\u2212',
+            osSph: null, osCyl: null, osSphSign: '+', osCylSign: '\u2212'
+        };
+
+        function amblyopiaVal(raw, sign) {
+            if (raw === null || raw === '' || raw === undefined) return null;
+            var v = parseFloat(raw);
+            if (isNaN(v) || v === 0) return null;
+            return (sign === '-' || sign === '\u2212') ? -Math.abs(v) : Math.abs(v);
+        }
+
+        function amblyopiaCalc() {
+            var odS = amblyopiaVal(amblyopiaState.odSph, amblyopiaState.odSphSign);
+            var odC = amblyopiaVal(amblyopiaState.odCyl, amblyopiaState.odCylSign);
+            var osS = amblyopiaVal(amblyopiaState.osSph, amblyopiaState.osSphSign);
+            var osC = amblyopiaVal(amblyopiaState.osCyl, amblyopiaState.osCylSign);
+
+            // Determine spherical equivalent type for each eye
+            var odSE = odS !== null ? odS : null;
+            var osSE = osS !== null ? osS : null;
+            var odCylAbs = odC !== null ? Math.abs(odC) : null;
+            var osCylAbs = osC !== null ? Math.abs(osC) : null;
+
+            var risks = [];
+
+            // --- Anisometropia (difference between eyes) ---
+            // Hyperopia anisometropia: difference in hyperopic sphere >1.00D
+            if (odS !== null && osS !== null) {
+                var sphDiff = Math.abs(odS - osS);
+                if (odS > 0 || osS > 0) {
+                    // At least one eye is hyperopic — check hyperopia threshold
+                    if (sphDiff > 1.00) {
+                        risks.push({ type: 'Anisometropia', category: 'Hyperopia', value: sphDiff.toFixed(2) + 'D difference', threshold: '>1.00D' });
+                    }
+                }
+                if (odS < 0 || osS < 0) {
+                    // At least one eye is myopic — check myopia threshold
+                    if (sphDiff > 3.00) {
+                        risks.push({ type: 'Anisometropia', category: 'Myopia', value: sphDiff.toFixed(2) + 'D difference', threshold: '>3.00D' });
+                    }
+                }
+            }
+            // Astigmatism anisometropia
+            if (odCylAbs !== null && osCylAbs !== null) {
+                var cylDiff = Math.abs(odCylAbs - osCylAbs);
+                if (cylDiff > 1.50) {
+                    risks.push({ type: 'Anisometropia', category: 'Astigmatism', value: cylDiff.toFixed(2) + 'D difference', threshold: '>1.50D' });
+                }
+            }
+
+            // --- Isoametropia (both eyes) ---
+            if (odS !== null && osS !== null) {
+                // Hyperopia: both eyes >+5.00D
+                if (odS > 5.00 && osS > 5.00) {
+                    risks.push({ type: 'Isoametropia', category: 'Hyperopia', value: 'OD ' + (odS > 0 ? '+' : '') + odS.toFixed(2) + ' / OS ' + (osS > 0 ? '+' : '') + osS.toFixed(2), threshold: '>+5.00D both eyes' });
+                }
+                // Myopia: both eyes more negative than -8.00D
+                if (odS < -8.00 && osS < -8.00) {
+                    risks.push({ type: 'Isoametropia', category: 'Myopia', value: 'OD ' + odS.toFixed(2) + ' / OS ' + osS.toFixed(2), threshold: '>-8.00D both eyes' });
+                }
+            }
+            // Astigmatism isoametropia: both eyes >2.50D cyl
+            if (odCylAbs !== null && osCylAbs !== null) {
+                if (odCylAbs > 2.50 && osCylAbs > 2.50) {
+                    risks.push({ type: 'Isoametropia', category: 'Astigmatism', value: 'OD ' + odCylAbs.toFixed(2) + 'D / OS ' + osCylAbs.toFixed(2) + 'D', threshold: '>2.50D both eyes' });
+                }
+            }
+
+            return risks;
+        }
+
+        function onAmblyopiaInput(field, val) {
+            amblyopiaState[field] = val;
+            renderAmblyopiaResult();
+        }
+
+        function onAmblyopiaSign(field, sign) {
+            amblyopiaState[field] = sign;
+            renderAmblyopiaResult();
+        }
+
+        function renderAmblyopiaResult() {
+            var el = document.getElementById('amblyopiaResult');
+            if (!el) return;
+
+            var odS = amblyopiaVal(amblyopiaState.odSph, amblyopiaState.odSphSign);
+            var osS = amblyopiaVal(amblyopiaState.osSph, amblyopiaState.osSphSign);
+            var odC = amblyopiaVal(amblyopiaState.odCyl, amblyopiaState.odCylSign);
+            var osC = amblyopiaVal(amblyopiaState.osCyl, amblyopiaState.osCylSign);
+
+            var hasAnySphere = odS !== null || osS !== null;
+            var hasAnyCyl = odC !== null || osC !== null;
+            if (!hasAnySphere && !hasAnyCyl) {
+                el.style.display = 'none';
+                return;
+            }
+            el.style.display = '';
+
+            var risks = amblyopiaCalc();
+
+            if (risks.length === 0) {
+                el.innerHTML =
+                    '<div class="iop-result-label">Result</div>' +
+                    '<div class="iop-result-value" style="color:var(--success);font-size:20px;">No Amblyogenic Risk Factors Identified</div>' +
+                    '<div class="iop-result-detail" style="margin-top:6px;">Entered values do not exceed anisometropia or isoametropia thresholds for refractive amblyopia.</div>';
+                return;
+            }
+
+            var html = '<div class="iop-result-label">Amblyogenic Risk Factors Found</div>';
+            for (var i = 0; i < risks.length; i++) {
+                var r = risks[i];
+                var color = r.type === 'Anisometropia' ? 'var(--danger)' : '#ea580c';
+                html += '<div style="background:var(--surface-raised,var(--bg));border-radius:8px;padding:10px 12px;margin-top:' + (i === 0 ? '10' : '8') + 'px;border-left:3px solid ' + color + ';">';
+                html += '<div style="font-weight:700;font-size:14px;color:' + color + ';">' + r.type + ' \u2014 ' + r.category + '</div>';
+                html += '<div style="font-size:13px;color:var(--ink-secondary);margin-top:2px;">' + r.value + ' <span style="color:var(--ink-muted);">(threshold: ' + r.threshold + ')</span></div>';
+                html += '</div>';
+            }
+            el.innerHTML = html;
+        }
+
+        function amblyopiaReset() {
+            amblyopiaState.odSph = null; amblyopiaState.odCyl = null;
+            amblyopiaState.osSph = null; amblyopiaState.osCyl = null;
+            amblyopiaState.odSphSign = '+'; amblyopiaState.odCylSign = '\u2212';
+            amblyopiaState.osSphSign = '+'; amblyopiaState.osCylSign = '\u2212';
+            renderAmblyopiaTool(document.getElementById('toolsContent'));
+        }
+
+        function renderAmblyopiaTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Amblyogenic Risk Factor Thresholds</div>
+                    <div class="iop-table-wrap">
+                        <table class="iop-ref-table">
+                            <thead><tr><th>Risk Type</th><th>Hyperopia</th><th>Myopia</th><th>Astigmatism</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight:600;">Anisometropia<br><span style="font-weight:400;font-size:11px;color:var(--ink-muted);">(inter-eye difference)</span></td>
+                                    <td class="adj-pos">&gt;1.00D</td>
+                                    <td class="adj-pos">&gt;3.00D</td>
+                                    <td class="adj-pos">&gt;1.50D</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:600;">Isoametropia<br><span style="font-weight:400;font-size:11px;color:var(--ink-muted);">(both eyes)</span></td>
+                                    <td class="adj-pos">&gt;5.00D</td>
+                                    <td class="adj-pos">&gt;8.00D</td>
+                                    <td class="adj-pos">&gt;2.50D</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-baby"></i> Amblyopia Risk Screening</div>
+                    <div class="tools-card-desc">
+                        Enter OD and OS refractive values to screen for amblyogenic risk factors.
+                    </div>
+
+                    <div class="eye-section" style="margin-top:4px;">
+                        <div class="eye-header">OD — Right Eye</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Sphere (D)</label>
+                                <div class="input-row">
+                                    <div class="sign-toggle">
+                                        <button type="button" id="amb_odSphNeg" class="${amblyopiaState.odSphSign === '+' ? '' : 'active-neg'}" onclick="onAmblyopiaSign('odSphSign','\u2212');renderAmblyopiaTool(document.getElementById('toolsContent'));">\u2212</button>
+                                        <button type="button" id="amb_odSphPos" class="${amblyopiaState.odSphSign === '+' ? 'active-pos' : ''}" onclick="onAmblyopiaSign('odSphSign','+');renderAmblyopiaTool(document.getElementById('toolsContent'));">+</button>
+                                    </div>
+                                    <select id="ambOdSph" onchange="onAmblyopiaInput('odSph',this.value)">${buildPowerOptions(20, amblyopiaState.odSph || '0.00')}</select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cylinder (D)</label>
+                                <div class="input-row">
+                                    <div class="sign-toggle">
+                                        <button type="button" id="amb_odCylNeg" class="${amblyopiaState.odCylSign === '+' ? '' : 'active-neg'}" onclick="onAmblyopiaSign('odCylSign','\u2212');renderAmblyopiaTool(document.getElementById('toolsContent'));">\u2212</button>
+                                        <button type="button" id="amb_odCylPos" class="${amblyopiaState.odCylSign === '+' ? 'active-pos' : ''}" onclick="onAmblyopiaSign('odCylSign','+');renderAmblyopiaTool(document.getElementById('toolsContent'));">+</button>
+                                    </div>
+                                    <select id="ambOdCyl" onchange="onAmblyopiaInput('odCyl',this.value)">${buildPowerOptions(6, amblyopiaState.odCyl || '0.00')}</select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="eye-section">
+                        <div class="eye-header">OS — Left Eye</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Sphere (D)</label>
+                                <div class="input-row">
+                                    <div class="sign-toggle">
+                                        <button type="button" id="amb_osSphNeg" class="${amblyopiaState.osSphSign === '+' ? '' : 'active-neg'}" onclick="onAmblyopiaSign('osSphSign','\u2212');renderAmblyopiaTool(document.getElementById('toolsContent'));">\u2212</button>
+                                        <button type="button" id="amb_osSphPos" class="${amblyopiaState.osSphSign === '+' ? 'active-pos' : ''}" onclick="onAmblyopiaSign('osSphSign','+');renderAmblyopiaTool(document.getElementById('toolsContent'));">+</button>
+                                    </div>
+                                    <select id="ambOsSph" onchange="onAmblyopiaInput('osSph',this.value)">${buildPowerOptions(20, amblyopiaState.osSph || '0.00')}</select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cylinder (D)</label>
+                                <div class="input-row">
+                                    <div class="sign-toggle">
+                                        <button type="button" id="amb_osCylNeg" class="${amblyopiaState.osCylSign === '+' ? '' : 'active-neg'}" onclick="onAmblyopiaSign('osCylSign','\u2212');renderAmblyopiaTool(document.getElementById('toolsContent'));">\u2212</button>
+                                        <button type="button" id="amb_osCylPos" class="${amblyopiaState.osCylSign === '+' ? 'active-pos' : ''}" onclick="onAmblyopiaSign('osCylSign','+');renderAmblyopiaTool(document.getElementById('toolsContent'));">+</button>
+                                    </div>
+                                    <select id="ambOsCyl" onchange="onAmblyopiaInput('osCyl',this.value)">${buildPowerOptions(6, amblyopiaState.osCyl || '0.00')}</select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="iop-result-box" id="amblyopiaResult" style="margin-top:20px;display:none;"></div>
+
+                    <div style="margin-top:14px;text-align:right;">
+                        <button onclick="amblyopiaReset()" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--ink-secondary);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 14px;transition:all 0.15s;">Reset</button>
+                    </div>
+
+                    <div class="ref-toggle-wrap">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Reference:</strong> Amblyogenic risk factor thresholds for refractive amblyopia. American Academy of Ophthalmology Preferred Practice Pattern, Pediatric Eye Evaluations.<br>
+                            Values represent clinically significant thresholds associated with increased risk of amblyopia development. This tool is intended to aid clinical screening and does not replace comprehensive examination.
+                        </div>
+                    </div>
+                </div>
+            `;
+            renderAmblyopiaResult();
+        }
+
+        // ===== VISUAL ACUITY CONVERTER =====
+        var vaState = { value: '', format: 'snellen' };
+
+        function vaCalc() {
+            var v = parseFloat(vaState.value);
+            if (!v || v <= 0) return null;
+            var logmar, snellenDenom, decimal, mar;
+            if (vaState.format === 'snellen') {
+                snellenDenom = v;
+                logmar = Math.log10(snellenDenom / 20);
+                decimal = 20 / snellenDenom;
+                mar = snellenDenom / 20;
+            } else if (vaState.format === 'logmar') {
+                logmar = v;
+                snellenDenom = 20 * Math.pow(10, logmar);
+                decimal = 1 / Math.pow(10, logmar);
+                mar = Math.pow(10, logmar);
+            } else if (vaState.format === 'decimal') {
+                decimal = v;
+                snellenDenom = 20 / decimal;
+                logmar = -Math.log10(decimal);
+                mar = 1 / decimal;
+            } else if (vaState.format === 'mar') {
+                mar = v;
+                snellenDenom = mar * 20;
+                logmar = Math.log10(mar);
+                decimal = 1 / mar;
+            }
+            return { snellen: '20/' + snellenDenom.toFixed(snellenDenom % 1 === 0 ? 0 : 1), logmar: logmar.toFixed(2), decimal: decimal.toFixed(2), mar: mar.toFixed(2) };
+        }
+
+        function renderVaTool(el) {
+            var r = vaCalc();
+            var resultHtml = '';
+            if (r) {
+                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
+                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Conversion Results</div>' +
+                    '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Snellen</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.snellen + '</td></tr>' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">LogMAR</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.logmar + '</td></tr>' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Decimal</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.decimal + '</td></tr>' +
+                    '<tr><td style="padding:6px 0;font-weight:600;">MAR</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.mar + '</td></tr>' +
+                    '</table></div>';
+            }
+            var refRows = [
+                ['20/20','0.00','1.00','1.00'],['20/25','0.10','0.80','1.25'],['20/30','0.18','0.67','1.50'],
+                ['20/40','0.30','0.50','2.00'],['20/50','0.40','0.40','2.50'],['20/60','0.48','0.33','3.00'],
+                ['20/80','0.60','0.25','4.00'],['20/100','0.70','0.20','5.00'],['20/200','1.00','0.10','10.00'],
+                ['20/400','1.30','0.05','20.00']
+            ];
+            var refHtml = '<tr><th style="text-align:left;padding:6px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Snellen</th><th style="padding:6px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">LogMAR</th><th style="padding:6px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Decimal</th><th style="padding:6px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">MAR</th></tr>';
+            for (var i = 0; i < refRows.length; i++) {
+                var row = refRows[i];
+                refHtml += '<tr><td style="padding:5px 8px;font-size:12px;border-bottom:1px solid var(--border);">' + row[0] + '</td><td style="padding:5px 8px;font-size:12px;text-align:center;border-bottom:1px solid var(--border);">' + row[1] + '</td><td style="padding:5px 8px;font-size:12px;text-align:center;border-bottom:1px solid var(--border);">' + row[2] + '</td><td style="padding:5px 8px;font-size:12px;text-align:center;border-bottom:1px solid var(--border);">' + row[3] + '</td></tr>';
+            }
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-eye-slash"></i> Visual Acuity Converter</div>
+                    <div class="tools-card-desc">Convert between Snellen (20/x denominator), LogMAR, Decimal, and MAR notation systems.</div>
+                    <div class="iop-form-grid" style="margin-bottom:0;">
+                        <div class="iop-form-group">
+                            <label>Input Format</label>
+                            <select id="vaFormat" onchange="vaState.format=this.value;renderVaTool(document.getElementById('toolsContent'));">
+                                <option value="snellen" ${vaState.format==='snellen'?'selected':''}>Snellen (20/x denominator)</option>
+                                <option value="logmar" ${vaState.format==='logmar'?'selected':''}>LogMAR</option>
+                                <option value="decimal" ${vaState.format==='decimal'?'selected':''}>Decimal</option>
+                                <option value="mar" ${vaState.format==='mar'?'selected':''}>MAR</option>
+                            </select>
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Value</label>
+                            <input type="number" id="vaValue" placeholder="${vaState.format==='snellen'?'e.g. 40 for 20/40':'e.g. 0.30'}" step="any"
+                                value="${vaState.value}"
+                                oninput="vaState.value=this.value;renderVaTool(document.getElementById('toolsContent'));">
+                        </div>
+                    </div>
+                    ${resultHtml}
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Common Equivalents</div>
+                    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;">${refHtml}</table></div>
+                </div>
+            `;
+            var inp = document.getElementById('vaValue');
+            if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+        }
+
+        // ===== PRENTICE'S RULE =====
+        var prenticeState = { power: '', decentration: '' };
+
+        function prenticeCalc() {
+            var p = parseFloat(prenticeState.power);
+            var d = parseFloat(prenticeState.decentration);
+            if (isNaN(p) || isNaN(d)) return null;
+            return { prism: Math.abs(p * d / 10).toFixed(2) };
+        }
+
+        function renderPrenticeTool(el) {
+            var r = prenticeCalc();
+            var resultHtml = '';
+            if (r) {
+                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
+                    '<div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--accent);">Induced Prism</div>' +
+                    '<div style="font-family:var(--mono);font-size:24px;font-weight:700;">' + r.prism + ' \u0394</div>' +
+                    '<div style="font-size:12px;color:var(--ink-secondary);margin-top:6px;">Prism (\u0394) = |Power (D)| \u00D7 Decentration (cm)</div>' +
+                    '</div>';
+            }
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-arrows-out-line-horizontal"></i> Prentice\u2019s Rule Calculator</div>
+                    <div class="tools-card-desc">Calculate the induced prismatic effect when a patient looks through a decentered point on a lens.</div>
+                    <div class="iop-form-grid" style="margin-bottom:0;">
+                        <div class="iop-form-group">
+                            <label>Lens Power (D)</label>
+                            <input type="number" id="prenticePower" placeholder="e.g. \u22123.00" step="any"
+                                value="${prenticeState.power}"
+                                oninput="prenticeState.power=this.value;renderPrenticeTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Decentration (mm)</label>
+                            <input type="number" id="prenticeDecent" placeholder="e.g. 5" step="any" min="0"
+                                value="${prenticeState.decentration}"
+                                oninput="prenticeState.decentration=this.value;renderPrenticeTool(document.getElementById('toolsContent'));">
+                        </div>
+                    </div>
+                    ${resultHtml}
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Prentice\u2019s Rule:</strong> Prism (\u0394) = F (D) \u00D7 d (cm), where F is the lens power and d is the decentration from the optical center in centimeters.<br>
+                            Clinically important when fitting spectacles, evaluating induced prism from poorly centered lenses, or prescribing slab-off prism.
+                        </div>
+                    </div>
+                </div>
+            `;
+            var inp = document.getElementById('prenticePower');
+            if (inp && !prenticeState.power) { inp.focus(); }
+        }
+
+        // ===== HOFSTETTER'S ACCOMMODATIVE NORMS =====
+        var hofstetterState = { age: '' };
+
+        function hofstetterCalc() {
+            var a = parseFloat(hofstetterState.age);
+            if (isNaN(a) || a < 0) return null;
+            return {
+                min: Math.max(0, 15 - 0.25 * a).toFixed(2),
+                avg: Math.max(0, 18.5 - 0.30 * a).toFixed(2),
+                max: Math.max(0, 25 - 0.40 * a).toFixed(2)
+            };
+        }
+
+        function renderHofstetterTool(el) {
+            var r = hofstetterCalc();
+            var resultHtml = '';
+            if (r) {
+                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
+                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Expected Amplitude of Accommodation</div>' +
+                    '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Minimum</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.min + ' D</td><td style="padding:6px 0;text-align:right;font-size:11px;color:var(--ink-secondary);">15 \u2212 0.25 \u00D7 age</td></tr>' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Average</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.avg + ' D</td><td style="padding:6px 0;text-align:right;font-size:11px;color:var(--ink-secondary);">18.5 \u2212 0.30 \u00D7 age</td></tr>' +
+                    '<tr><td style="padding:6px 0;font-weight:600;">Maximum</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.max + ' D</td><td style="padding:6px 0;text-align:right;font-size:11px;color:var(--ink-secondary);">25 \u2212 0.40 \u00D7 age</td></tr>' +
+                    '</table></div>';
+            }
+            var ageRows = [5,10,15,20,25,30,35,40,45,50,55,60,65,70];
+            var tableHtml = '<tr><th style="text-align:left;padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Age</th><th style="padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Min</th><th style="padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Avg</th><th style="padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Max</th></tr>';
+            for (var i = 0; i < ageRows.length; i++) {
+                var a = ageRows[i];
+                tableHtml += '<tr><td style="padding:4px 8px;font-size:12px;border-bottom:1px solid var(--border);">' + a + '</td>' +
+                    '<td style="padding:4px 8px;font-size:12px;text-align:center;border-bottom:1px solid var(--border);">' + Math.max(0,15-0.25*a).toFixed(2) + '</td>' +
+                    '<td style="padding:4px 8px;font-size:12px;text-align:center;border-bottom:1px solid var(--border);">' + Math.max(0,18.5-0.30*a).toFixed(2) + '</td>' +
+                    '<td style="padding:4px 8px;font-size:12px;text-align:center;border-bottom:1px solid var(--border);">' + Math.max(0,25-0.40*a).toFixed(2) + '</td></tr>';
+            }
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-magnifying-glass-plus"></i> Hofstetter\u2019s Accommodative Norms</div>
+                    <div class="tools-card-desc">Calculate expected minimum, average, and maximum amplitudes of accommodation by patient age.</div>
+                    <div class="iop-form-grid" style="margin-bottom:0;">
+                        <div class="iop-form-group">
+                            <label>Patient Age (years)</label>
+                            <input type="number" id="hofAge" placeholder="e.g. 40" min="0" max="100" step="1"
+                                value="${hofstetterState.age}"
+                                oninput="hofstetterState.age=this.value;renderHofstetterTool(document.getElementById('toolsContent'));">
+                        </div>
+                    </div>
+                    ${resultHtml}
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Age Reference Table</div>
+                    <div class="tools-card-desc">Expected amplitude of accommodation (D) by age.</div>
+                    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;">${tableHtml}</table></div>
+                </div>
+            `;
+            var inp = document.getElementById('hofAge');
+            if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+        }
+
+        // ===== IOL POWER CALCULATOR =====
+        var iolState = { al: '', avgK: '', aConst: '118.4', targetRx: '0' };
+
+        function iolCalc() {
+            var al = parseFloat(iolState.al);
+            var k = parseFloat(iolState.avgK);
+            var a = parseFloat(iolState.aConst);
+            var tgt = parseFloat(iolState.targetRx) || 0;
+            if (isNaN(al) || isNaN(k) || isNaN(a)) return null;
+            var power = a - 2.5 * al - 0.9 * k + (tgt * -1.25);
+            return { power: power.toFixed(2) };
+        }
+
+        function renderIolTool(el) {
+            var r = iolCalc();
+            var resultHtml = '';
+            if (r) {
+                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
+                    '<div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--accent);">Estimated IOL Power</div>' +
+                    '<div style="font-family:var(--mono);font-size:24px;font-weight:700;">' + r.power + ' D</div>' +
+                    '<div style="font-size:12px;color:var(--ink-secondary);margin-top:8px;">P = A \u2212 2.5\u00D7AL \u2212 0.9\u00D7K + target correction</div>' +
+                    '<div style="margin-top:10px;padding:8px 10px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.15);border-radius:6px;font-size:11px;color:#dc2626;">' +
+                    '<strong>Disclaimer:</strong> This is a simplified SRK/T estimate for educational purposes only. Always use validated biometry software (e.g., Barrett Universal II, Hill-RBF) for surgical planning.' +
+                    '</div></div>';
+            }
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-circle-dashed"></i> IOL Power Calculator</div>
+                    <div class="tools-card-desc">Simplified SRK/T formula estimate for intraocular lens power. For educational reference only.</div>
+                    <div class="iop-form-grid" style="margin-bottom:0;">
+                        <div class="iop-form-group">
+                            <label>Axial Length (mm)</label>
+                            <input type="number" id="iolAl" placeholder="e.g. 23.5" step="0.01" min="15" max="40"
+                                value="${iolState.al}"
+                                oninput="iolState.al=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Average K (D)</label>
+                            <input type="number" id="iolK" placeholder="e.g. 43.50" step="0.01" min="30" max="60"
+                                value="${iolState.avgK}"
+                                oninput="iolState.avgK=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>A-Constant</label>
+                            <input type="number" id="iolA" placeholder="e.g. 118.4" step="0.1"
+                                value="${iolState.aConst}"
+                                oninput="iolState.aConst=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Target Refraction (D)</label>
+                            <input type="number" id="iolTgt" placeholder="e.g. \u22120.50" step="0.25"
+                                value="${iolState.targetRx}"
+                                oninput="iolState.targetRx=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                        </div>
+                    </div>
+                    ${resultHtml}
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>SRK/T Formula (simplified):</strong> P = A \u2212 2.5\u00D7AL \u2212 0.9\u00D7K.<br>
+                            Common A-constants: SA60AT = 118.7, SN60WF = 118.7, MA60AC = 118.4, Tecnis ZCB00 = 119.3.<br>
+                            This simplified version does not account for ELP, retinal thickness factor, or corneal curvature radius adjustments used in the full SRK/T derivation.
+                        </div>
+                    </div>
+                </div>
+            `;
+            var inp = document.getElementById('iolAl');
+            if (inp && !iolState.al) { inp.focus(); }
+        }
+
+        // ===== KERATOCONUS SCREENING =====
+        var kcState = { steepK: '', flatK: '', pachy: '', isVal: '' };
+
+        function kcCalc() {
+            var sk = parseFloat(kcState.steepK);
+            var fk = parseFloat(kcState.flatK);
+            var p = parseFloat(kcState.pachy);
+            var is = parseFloat(kcState.isVal);
+            var flags = [];
+            if (!isNaN(sk) && !isNaN(fk)) {
+                var meanK = (sk + fk) / 2;
+                var kDiff = Math.abs(sk - fk);
+                if (meanK > 47.2) flags.push({ label: 'Mean K > 47.2 D (' + meanK.toFixed(2) + ')', level: 'red' });
+                else if (meanK > 45.5) flags.push({ label: 'Mean K ' + meanK.toFixed(2) + ' D (borderline)', level: 'yellow' });
+                else flags.push({ label: 'Mean K ' + meanK.toFixed(2) + ' D (normal)', level: 'green' });
+                if (kDiff > 2.0) flags.push({ label: 'K difference > 2.0 D (' + kDiff.toFixed(2) + ')', level: 'red' });
+                else if (kDiff > 1.5) flags.push({ label: 'K difference ' + kDiff.toFixed(2) + ' D (borderline)', level: 'yellow' });
+                else flags.push({ label: 'K difference ' + kDiff.toFixed(2) + ' D (normal)', level: 'green' });
+            }
+            if (!isNaN(p)) {
+                if (p < 470) flags.push({ label: 'Pachymetry < 470 \u00B5m (' + p + ')', level: 'red' });
+                else if (p < 500) flags.push({ label: 'Pachymetry ' + p + ' \u00B5m (borderline)', level: 'yellow' });
+                else flags.push({ label: 'Pachymetry ' + p + ' \u00B5m (normal)', level: 'green' });
+            }
+            if (!isNaN(is)) {
+                if (is > 1.4) flags.push({ label: 'I\u2013S value > 1.4 D (' + is.toFixed(2) + ')', level: 'red' });
+                else if (is > 1.0) flags.push({ label: 'I\u2013S value ' + is.toFixed(2) + ' D (borderline)', level: 'yellow' });
+                else flags.push({ label: 'I\u2013S value ' + is.toFixed(2) + ' D (normal)', level: 'green' });
+            }
+            return flags.length ? flags : null;
+        }
+
+        function renderKeratoconusTool(el) {
+            var flags = kcCalc();
+            var resultHtml = '';
+            if (flags) {
+                var flagsHtml = '';
+                var colorMap = { red: '#dc2626', yellow: '#d97706', green: '#059669' };
+                var bgMap = { red: 'rgba(220,38,38,0.06)', yellow: 'rgba(217,119,6,0.06)', green: 'rgba(5,150,105,0.06)' };
+                for (var i = 0; i < flags.length; i++) {
+                    var f = flags[i];
+                    flagsHtml += '<div style="padding:8px 10px;background:' + bgMap[f.level] + ';border:1px solid ' + colorMap[f.level] + '22;border-radius:6px;font-size:12px;font-weight:600;color:' + colorMap[f.level] + ';margin-bottom:6px;">' +
+                        '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + colorMap[f.level] + ';margin-right:8px;"></span>' + f.label + '</div>';
+                }
+                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
+                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Risk Flags</div>' +
+                    flagsHtml + '</div>';
+            }
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-warning-diamond"></i> Keratoconus Screening</div>
+                    <div class="tools-card-desc">Flag suspicious topography and pachymetry values. Color-coded risk assessment based on clinical thresholds.</div>
+                    <div class="iop-form-grid" style="margin-bottom:0;">
+                        <div class="iop-form-group">
+                            <label>Steep K (D)</label>
+                            <input type="number" id="kcSteep" placeholder="e.g. 46.00" step="0.01"
+                                value="${kcState.steepK}"
+                                oninput="kcState.steepK=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Flat K (D)</label>
+                            <input type="number" id="kcFlat" placeholder="e.g. 43.50" step="0.01"
+                                value="${kcState.flatK}"
+                                oninput="kcState.flatK=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Thinnest Pachymetry (\u00B5m)</label>
+                            <input type="number" id="kcPachy" placeholder="e.g. 490" step="1"
+                                value="${kcState.pachy}"
+                                oninput="kcState.pachy=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>I\u2013S Value (D) <span style="font-weight:400;color:var(--ink-muted);">optional</span></label>
+                            <input type="number" id="kcIs" placeholder="e.g. 1.2" step="0.01"
+                                value="${kcState.isVal}"
+                                oninput="kcState.isVal=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                        </div>
+                    </div>
+                    ${resultHtml}
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Screening thresholds:</strong><br>
+                            \u2022 Mean K > 47.2 D \u2014 suggestive of keratoconus<br>
+                            \u2022 K difference > 2.0 D \u2014 asymmetric astigmatism<br>
+                            \u2022 Thinnest pachy < 470 \u00B5m \u2014 abnormally thin<br>
+                            \u2022 I\u2013S value > 1.4 D \u2014 inferior steepening (Rabinowitz criteria)<br>
+                            Always correlate with clinical exam, topography pattern, and tomography.
+                        </div>
+                    </div>
+                </div>
+            `;
+            var inp = document.getElementById('kcSteep');
+            if (inp && !kcState.steepK) { inp.focus(); }
+        }
+
+        // ===== VAN HERICK GRADING =====
+        function renderVanHerickTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-flashlight"></i> Van Herick Angle Grading</div>
+                    <div class="tools-card-desc">Slit-lamp estimation of anterior chamber angle width by comparing the peripheral corneal thickness to the shadow gap.</div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--border);">
+                                    <th style="text-align:left;padding:8px;font-weight:600;">Grade</th>
+                                    <th style="text-align:left;padding:8px;font-weight:600;">Shadow : Cornea</th>
+                                    <th style="text-align:left;padding:8px;font-weight:600;">Angle Width</th>
+                                    <th style="text-align:left;padding:8px;font-weight:600;">Interpretation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;font-weight:700;">4</td>
+                                    <td style="padding:8px;">\u2265 1 : 1</td>
+                                    <td style="padding:8px;">Wide open (35\u201345\u00B0)</td>
+                                    <td style="padding:8px;"><span style="color:#059669;font-weight:600;">Impossible to close</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;font-weight:700;">3</td>
+                                    <td style="padding:8px;">1/4 \u2013 1/2 : 1</td>
+                                    <td style="padding:8px;">Open (20\u201335\u00B0)</td>
+                                    <td style="padding:8px;"><span style="color:#059669;font-weight:600;">Closure unlikely</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;font-weight:700;">2</td>
+                                    <td style="padding:8px;">1/4 : 1</td>
+                                    <td style="padding:8px;">Narrow (20\u00B0)</td>
+                                    <td style="padding:8px;"><span style="color:#d97706;font-weight:600;">Closure possible</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;font-weight:700;">1</td>
+                                    <td style="padding:8px;">< 1/4 : 1</td>
+                                    <td style="padding:8px;">Very narrow (10\u00B0)</td>
+                                    <td style="padding:8px;"><span style="color:#dc2626;font-weight:600;">Closure likely \u2014 gonioscopy indicated</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px;font-weight:700;">0</td>
+                                    <td style="padding:8px;">0 (contact)</td>
+                                    <td style="padding:8px;">Closed (0\u00B0)</td>
+                                    <td style="padding:8px;"><span style="color:#dc2626;font-weight:600;">Closed angle \u2014 urgent referral</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Technique:</strong> Direct a narrow slit beam at the temporal limbus at 60\u00B0. Compare the width of the dark interval (shadow) between the corneal endothelium and the iris to the corneal optical section thickness.<br>
+                            Van Herick RD, Shaffer RN, Schwartz A. Estimation of width of angle of anterior chamber. Am J Ophthalmol. 1969;68(4):626\u2013629.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== RAPD GRADING SCALE =====
+        function renderRapdTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-circle-half"></i> RAPD Grading Scale</div>
+                    <div class="tools-card-desc">Relative Afferent Pupillary Defect grading using the swinging flashlight test (0\u20135 scale).</div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--border);">
+                                    <th style="text-align:center;padding:8px;font-weight:600;width:60px;">Grade</th>
+                                    <th style="text-align:left;padding:8px;font-weight:600;">Pupil Response</th>
+                                    <th style="text-align:left;padding:8px;font-weight:600;">Clinical Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;text-align:center;font-weight:700;">0</td>
+                                    <td style="padding:8px;">Normal symmetric</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">No relative defect. Equal constriction in both eyes.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;text-align:center;font-weight:700;">1</td>
+                                    <td style="padding:8px;">Weak initial constriction, then dilates</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">Subtle. Brief constriction followed by slow escape dilation.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;text-align:center;font-weight:700;">2</td>
+                                    <td style="padding:8px;">Stalls (no constriction), then dilates</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">Pupil holds momentarily at same size, then slowly dilates.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;text-align:center;font-weight:700;">3</td>
+                                    <td style="padding:8px;">Immediate dilation</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">Pupil dilates immediately when light swings to affected eye.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:8px;text-align:center;font-weight:700;">4</td>
+                                    <td style="padding:8px;">Amaurotic \u2014 no constriction to direct light</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">No direct response. Consensual response present from fellow eye.</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px;text-align:center;font-weight:700;">5</td>
+                                    <td style="padding:8px;">Fixed, dilated pupil</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">No direct or consensual response. Complete afferent block.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Swinging Flashlight Test:</strong> Alternate a bright light between pupils in a dim room at ~1 second intervals. The affected eye will dilate (or fail to constrict) when the light swings to it.<br>
+                            Common causes: optic neuritis, ischemic optic neuropathy, optic nerve compression, retinal detachment, severe glaucoma (asymmetric), large central retinal vein occlusion.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== OPTIC NERVE ASSESSMENT =====
+        function renderOpticNerveTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-graph"></i> Optic Nerve Assessment</div>
+                    <div class="tools-card-desc">Key norms and rules for evaluating the optic nerve head.</div>
+
+                    <div style="margin-bottom:18px;">
+                        <div style="font-weight:700;font-size:13px;margin-bottom:8px;">ISNT Rule (Normal Rim Thickness)</div>
+                        <div style="padding:12px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:8px;font-size:13px;">
+                            <strong>I \u2265 S \u2265 N \u2265 T</strong><br>
+                            <span style="color:var(--ink-secondary);font-size:12px;">Inferior rim is thickest, Superior next, then Nasal, Temporal thinnest. Violation suggests glaucomatous damage.</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:18px;">
+                        <div style="font-weight:700;font-size:13px;margin-bottom:8px;">Disc Size Categories</div>
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead><tr style="border-bottom:2px solid var(--border);">
+                                <th style="text-align:left;padding:6px 8px;font-weight:600;">Size</th>
+                                <th style="text-align:left;padding:6px 8px;font-weight:600;">Disc Area</th>
+                                <th style="text-align:left;padding:6px 8px;font-weight:600;">Vertical Diameter</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;">Small</td><td style="padding:6px 8px;">< 1.5 mm\u00B2</td><td style="padding:6px 8px;">< 1.5 mm</td></tr>
+                                <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;">Average</td><td style="padding:6px 8px;">1.5 \u2013 2.5 mm\u00B2</td><td style="padding:6px 8px;">1.5 \u2013 2.0 mm</td></tr>
+                                <tr><td style="padding:6px 8px;">Large</td><td style="padding:6px 8px;">> 2.5 mm\u00B2</td><td style="padding:6px 8px;">> 2.0 mm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin-bottom:4px;">
+                        <div style="font-weight:700;font-size:13px;margin-bottom:8px;">C/D Ratio Significance by Disc Size</div>
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead><tr style="border-bottom:2px solid var(--border);">
+                                <th style="text-align:left;padding:6px 8px;font-weight:600;">Disc Size</th>
+                                <th style="text-align:left;padding:6px 8px;font-weight:600;">Suspicious C/D</th>
+                                <th style="text-align:left;padding:6px 8px;font-weight:600;">Notes</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px 8px;">Small disc</td>
+                                    <td style="padding:6px 8px;font-family:var(--mono);">\u2265 0.3</td>
+                                    <td style="padding:6px 8px;color:var(--ink-secondary);font-size:12px;">Small discs have small cups; even modest cupping may be pathologic</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px 8px;">Average disc</td>
+                                    <td style="padding:6px 8px;font-family:var(--mono);">\u2265 0.5</td>
+                                    <td style="padding:6px 8px;color:var(--ink-secondary);font-size:12px;">C/D > 0.5 warrants further evaluation</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:6px 8px;">Large disc</td>
+                                    <td style="padding:6px 8px;font-family:var(--mono);">\u2265 0.7</td>
+                                    <td style="padding:6px 8px;color:var(--ink-secondary);font-size:12px;">Physiologic cupping is expected; assess rim tissue carefully</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Key clinical pearls:</strong><br>
+                            \u2022 C/D asymmetry \u2265 0.2 between eyes is suspicious for glaucoma<br>
+                            \u2022 Look for disc hemorrhages (Drance hemorrhages) \u2014 highly specific for glaucoma<br>
+                            \u2022 NFL defects (wedge-shaped) often precede detectable VF loss<br>
+                            \u2022 Assess pallor vs. cupping: pallor suggests non-glaucomatous optic neuropathy<br>
+                            Jonas JB, et al. Ophthalmoscopic evaluation of the optic nerve head. Surv Ophthalmol. 1999;43(4):293\u2013320.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== PUPIL & CN ASSESSMENT =====
+        function renderPupilCnTool(el) {
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-list-checks"></i> Cranial Nerve Assessment (II\u2013VII)</div>
+                    <div class="tools-card-desc">Quick reference for CN function, tests, and abnormal findings relevant to eye care.</div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+                            <thead><tr style="border-bottom:2px solid var(--border);">
+                                <th style="text-align:left;padding:6px;font-weight:600;">CN</th>
+                                <th style="text-align:left;padding:6px;font-weight:600;">Function</th>
+                                <th style="text-align:left;padding:6px;font-weight:600;">Test</th>
+                                <th style="text-align:left;padding:6px;font-weight:600;">Abnormal Findings</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">II</td>
+                                    <td style="padding:6px;">Optic \u2014 Vision</td>
+                                    <td style="padding:6px;">VA, pupils, VF, color</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">RAPD, VF defect, decreased VA/color</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">III</td>
+                                    <td style="padding:6px;">Oculomotor \u2014 EOM, lid, pupil</td>
+                                    <td style="padding:6px;">Motility, lid position, pupil</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Ptosis, \"down & out\" eye, mydriasis</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">IV</td>
+                                    <td style="padding:6px;">Trochlear \u2014 SO</td>
+                                    <td style="padding:6px;">Park\u2019s 3-step</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Hypertropia, head tilt, vertical diplopia</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">V</td>
+                                    <td style="padding:6px;">Trigeminal \u2014 Sensation</td>
+                                    <td style="padding:6px;">Cotton wisp, corneal reflex</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Decreased corneal sensation, neurotrophic keratitis</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">VI</td>
+                                    <td style="padding:6px;">Abducens \u2014 LR</td>
+                                    <td style="padding:6px;">Lateral gaze</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Esotropia, limited abduction, horizontal diplopia</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:6px;font-weight:700;">VII</td>
+                                    <td style="padding:6px;">Facial \u2014 Motor, lacrimal</td>
+                                    <td style="padding:6px;">Lid closure, Bell\u2019s</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Lagophthalmos, exposure keratopathy, decreased tearing</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-circle-half"></i> Pupil Abnormalities</div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+                            <thead><tr style="border-bottom:2px solid var(--border);">
+                                <th style="text-align:left;padding:6px;font-weight:600;">Condition</th>
+                                <th style="text-align:left;padding:6px;font-weight:600;">Pupil Size</th>
+                                <th style="text-align:left;padding:6px;font-weight:600;">Light Reflex</th>
+                                <th style="text-align:left;padding:6px;font-weight:600;">Key Features</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">Horner\u2019s Syndrome</td>
+                                    <td style="padding:6px;">Miotic (small)</td>
+                                    <td style="padding:6px;">Normal</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Ptosis + miosis + anhidrosis. Dilation lag. 4% cocaine / 0.5% apraclonidine test.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">Adie\u2019s Tonic Pupil</td>
+                                    <td style="padding:6px;">Mydriatic (large)</td>
+                                    <td style="padding:6px;">Sluggish/absent</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Vermiform iris movement. Light-near dissociation. Dilute pilocarpine (0.125%) constricts.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">RAPD</td>
+                                    <td style="padding:6px;">Normal at rest</td>
+                                    <td style="padding:6px;">Asymmetric</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Swinging flashlight test positive. Optic nerve or severe retinal pathology.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px;font-weight:700;">CN III Palsy</td>
+                                    <td style="padding:6px;">Mydriatic (fixed)</td>
+                                    <td style="padding:6px;">Absent</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Ptosis + \"down & out\" + fixed dilated pupil. Rule out aneurysm (PComm).</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:6px;font-weight:700;">Argyll Robertson</td>
+                                    <td style="padding:6px;">Miotic (bilateral)</td>
+                                    <td style="padding:6px;">Absent</td>
+                                    <td style="padding:6px;color:var(--ink-secondary);">Light-near dissociation: no light reflex but accommodative constriction present. Neurosyphilis.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== CL PARAMETER CALCULATOR =====
+        var clParamState = { flatK: '', steepK: '' };
+
+        function clParamCalc() {
+            var fk = parseFloat(clParamState.flatK);
+            var sk = parseFloat(clParamState.steepK);
+            if (isNaN(fk)) return null;
+            var bc = (337.5 / fk).toFixed(2);
+            var bcFlatter = (337.5 / (fk - 0.50)).toFixed(2);
+            var kDiff = !isNaN(sk) ? Math.abs(sk - fk).toFixed(2) : null;
+            var toricity = '';
+            if (kDiff !== null) {
+                var kd = parseFloat(kDiff);
+                if (kd < 1.0) toricity = 'Spherical CL likely adequate';
+                else if (kd < 2.5) toricity = 'Toric CL recommended';
+                else toricity = 'High toricity \u2014 specialty lens may be needed';
+            }
+            var diam = fk < 42 ? '14.5\u201315.0 mm (flatter cornea)' : fk > 46 ? '13.8\u201314.2 mm (steeper cornea)' : '14.0\u201314.5 mm (average)';
+            return { bc: bc, bcFlatter: bcFlatter, kDiff: kDiff, toricity: toricity, diam: diam };
+        }
+
+        function renderClParamTool(el) {
+            var r = clParamCalc();
+            var resultHtml = '';
+            if (r) {
+                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
+                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Recommended Parameters</div>' +
+                    '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Base Curve (on flat K)</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.bc + ' mm</td></tr>' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">BC 0.50 D flatter</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.bcFlatter + ' mm</td></tr>' +
+                    '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Diameter Guidance</td><td style="padding:6px 0;text-align:right;font-size:12px;">' + r.diam + '</td></tr>';
+                if (r.kDiff !== null) {
+                    resultHtml += '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Corneal Toricity</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.kDiff + ' D</td></tr>' +
+                        '<tr><td style="padding:6px 0;font-weight:600;">Lens Type</td><td style="padding:6px 0;text-align:right;font-size:12px;">' + r.toricity + '</td></tr>';
+                }
+                resultHtml += '</table></div>';
+            }
+            el.innerHTML = `
+                <div style="margin-bottom:14px;">
+                    <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools
+                    </button>
+                </div>
+                <div class="tools-card">
+                    <div class="tools-card-title"><i class="ph-duotone ph-disc"></i> CL Parameter Calculator</div>
+                    <div class="tools-card-desc">Estimate initial base curve and diameter from keratometry readings for soft contact lens fitting.</div>
+                    <div class="iop-form-grid" style="margin-bottom:0;">
+                        <div class="iop-form-group">
+                            <label>Flat K (D)</label>
+                            <input type="number" id="clFlatK" placeholder="e.g. 43.00" step="0.01"
+                                value="${clParamState.flatK}"
+                                oninput="clParamState.flatK=this.value;renderClParamTool(document.getElementById('toolsContent'));">
+                        </div>
+                        <div class="iop-form-group">
+                            <label>Steep K (D) <span style="font-weight:400;color:var(--ink-muted);">optional</span></label>
+                            <input type="number" id="clSteepK" placeholder="e.g. 44.50" step="0.01"
+                                value="${clParamState.steepK}"
+                                oninput="clParamState.steepK=this.value;renderClParamTool(document.getElementById('toolsContent'));">
+                        </div>
+                    </div>
+                    ${resultHtml}
+
+                    <div style="margin-top:18px;padding:12px;background:var(--surface);border-radius:8px;">
+                        <div style="font-weight:700;font-size:13px;margin-bottom:6px;">SAM\u2013FAP Rule</div>
+                        <div style="font-size:12px;color:var(--ink-secondary);">
+                            <strong>S</strong>teep lens = <strong>A</strong>dd <strong>M</strong>inus (over-refraction more minus \u2192 lens is too steep)<br>
+                            <strong>F</strong>lat lens = <strong>A</strong>dd <strong>P</strong>lus (over-refraction more plus \u2192 lens is too flat)
+                        </div>
+                    </div>
+
+                    <div class="ref-toggle-wrap" style="margin-top:14px;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Fitting guidelines:</strong><br>
+                            \u2022 Initial BC: on flat K or slightly flatter (0.50 D) for soft CLs<br>
+                            \u2022 BC (mm) = 337.5 / K (D)<br>
+                            \u2022 Corneal toricity < 1.0 D: spherical soft lens usually adequate<br>
+                            \u2022 Corneal toricity 1.0\u20132.5 D: toric soft lens recommended<br>
+                            \u2022 Corneal toricity > 2.5 D: consider specialty toric or RGP<br>
+                            \u2022 Larger diameters provide more stability; smaller for steeper corneas
+                        </div>
+                    </div>
+                </div>
+            `;
+            var inp = document.getElementById('clFlatK');
+            if (inp && !clParamState.flatK) { inp.focus(); }
+        }
+
         // ===== MEDICATIONS TAB =====
 
         function renderMeds() {
@@ -9935,9 +11021,9 @@
             html += `<div class="results-header" style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;">
                 <div class="results-count">${filtered.length} Medication${filtered.length!==1?'s':''}</div>
                 <div style="display:flex;gap:4px;">
-                    <button class="med-sort-btn ${medsState.sortMode==='class'?'active':''}" onclick="toggleMedSort('class')" title="Sort by class">
+                    ${medsState.selectedConditionGroup !== 'macular_degeneration' ? `<button class="med-sort-btn ${medsState.sortMode==='class'?'active':''}" onclick="toggleMedSort('class')" title="Sort by class">
                         <i class="ph-duotone ph-list-numbers" style="font-size:13px;vertical-align:-1px;"></i> Generation ${medsState.sortMode==='class' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
-                    </button>
+                    </button>` : ''}
                     <button class="med-sort-btn ${medsState.sortMode==='price'?'active':''}" onclick="toggleMedSort('price')" title="Sort by generic price">
                         <i class="ph-duotone ph-currency-dollar" style="font-size:13px;vertical-align:-1px;"></i> Generic ${medsState.sortMode==='price' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
                     </button>
@@ -10596,6 +11682,7 @@
 
             let totalShown = 0;
             const brandColorMap = { Alcon:"var(--alcon)", "Bausch + Lomb":"var(--bl)", CooperVision:"var(--cv)", "J&J Acuvue":"var(--jj)" };
+            const brandBgMap = { Alcon:"var(--alcon-bg)", "Bausch + Lomb":"var(--bl-bg)", CooperVision:"var(--cv-bg)", "J&J Acuvue":"var(--jj-bg)" };
 
             if (anySort) {
                 // Flat list sorted by selected column
@@ -10634,7 +11721,8 @@
                 if (lenses.length === 0) return;
                 lenses.sort((a, b) => a.name.localeCompare(b.name));
                 const color = brandColorMap[brand] || "var(--accent)";
-                html += `<tr class="browse-brand-row"><td colspan="7" style="border-left-color:${color};color:${color}">${brand}</td></tr>`;
+                const bg = brandBgMap[brand] || "rgba(13,148,136,0.08)";
+                html += `<tr class="browse-brand-row"><td colspan="7" style="border-left-color:${color};color:${color};background:${bg}">${brand}</td></tr>`;
                 lenses.forEach(l => {
                     const tb = typeLabel[l.type] || "";
                     const sb = schedLabel[l.modality] || "";
