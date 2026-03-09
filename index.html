@@ -607,8 +607,8 @@
         }
 
         .option-btn .desc {
-            font-size: 11.5px;
-            color: var(--ink-muted);
+            font-size: 12px;
+            color: var(--ink-secondary);
             margin-top: 4px;
         }
 
@@ -3427,14 +3427,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdj", eye:"dominant", amount:-0.25 },
-                        { action:"lowerAdd", eye:"dominant" },
-                        { action:"designSwap", eye:"nonDominant", to:"D" }
+                        { action:"textOnly", title:"To Improve Distance", textMinus:"Perform hand-held trial lens over-refraction. Push minus in \u22120.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye).", textPlus:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye)." }
                     ],
                     near: [
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 },
-                        { action:"raiseAdd", eye:"nonDominant" },
-                        { action:"designSwap", eye:"dominant", to:"N" }
+                        { action:"textOnly", title:"To Improve Near", text:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the sphere of the eye that results in greatest improvement in near vision (most likely non-dominant eye). Manufacturer recommends against changing the ADD power." }
                     ]
                 }
             }},
@@ -3448,14 +3444,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdj", eye:"dominant", amount:-0.25 },
-                        { action:"lowerAdd", eye:"dominant" },
-                        { action:"designSwap", eye:"nonDominant", to:"D" }
+                        { action:"textOnly", title:"To Improve Distance", textMinus:"Perform hand-held trial lens over-refraction. Push minus in \u22120.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye).", textPlus:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye)." }
                     ],
                     near: [
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 },
-                        { action:"raiseAdd", eye:"nonDominant" },
-                        { action:"designSwap", eye:"dominant", to:"N" }
+                        { action:"textOnly", title:"To Improve Near", text:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the sphere of the eye that results in greatest improvement in near vision (most likely non-dominant eye). Manufacturer recommends against changing the ADD power." }
                     ]
                 }
             }},
@@ -4886,6 +4878,16 @@
 
                 ${adjBanner}${nonAdaptBanner}
 
+                ${(lens.type === 'multifocal' || lens.type === 'multifocal-toric') && !state.dominantEye ? `
+                <div style="margin:16px 0;padding:14px 16px;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.15);border-radius:10px;">
+                    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#b45309;margin-bottom:8px;">Select Dominant Eye</div>
+                    <div style="font-size:12px;color:var(--ink-secondary);margin-bottom:10px;">Required for optimized multifocal add power and design recommendations.</div>
+                    <div class="input-row" style="gap:8px;max-width:280px;">
+                        <button type="button" id="domLeftResult" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1" onclick="state.dominantEye='left';render();">Left (OS)</button>
+                        <button type="button" id="domRightResult" class="dom-toggle ${state.dominantEye === 'right' ? 'active-right' : ''}" style="flex:1" onclick="state.dominantEye='right';render();">Right (OD)</button>
+                    </div>
+                </div>` : ''}
+
                 ${eyeSectionsHtml}
 
                 ${(() => {
@@ -5444,10 +5446,32 @@
 
                         const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
                         const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                        if (step.action !== "addTableSwap" && !targetEye) return;
+                        if (step.action !== "addTableSwap" && step.action !== "textOnly" && !targetEye) return;
 
                         const prevLen = suggestions.length;
                         switch (step.action) {
+                            case "textOnly": {
+                                let msg = step.text || '';
+                                if (!msg && step.textMinus && step.textPlus) {
+                                    // Determine if minus or plus sphere based on dominant eye
+                                    const tEye = domEye || nonDomEye;
+                                    if (tEye) {
+                                        const clSph = getCurrentSph(tEye.eye);
+                                        msg = clSph < 0 ? step.textMinus : step.textPlus;
+                                    } else {
+                                        msg = step.textMinus;
+                                    }
+                                }
+                                suggestions.push({
+                                    tsStepIdx: null,
+                                    title: step.title || (isDistance ? 'To Improve Distance' : 'To Improve Near'),
+                                    rationale: msg,
+                                    adjustments: {},
+                                    changes: [],
+                                    textOnly: true
+                                });
+                                break;
+                            }
                             case "sphereAdj": {
                                 const currentSph = getCurrentSph(targetEye.eye);
                                 const newSph = snapTo025(currentSph + step.amount);
@@ -5731,6 +5755,15 @@
                 if (suggestions.length > 0) {
                     suggestionsHtml = `<div class="order-section-title">${isDistance ? 'Distance' : 'Near'} Vision Adjustments</div>`;
                     suggestionsHtml += suggestions.map((s, i) => {
+                        if (s.textOnly) {
+                            return `<div class="troubleshoot-suggestion fade-in">
+                                <div class="ts-step"><i class="ph-duotone ph-info" style="font-size:16px;"></i></div>
+                                <div class="ts-body">
+                                    <div class="ts-title">${s.title}</div>
+                                    ${s.rationale ? `<div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>` : ''}
+                                </div>
+                            </div>`;
+                        }
                         const changesHtml = s.changes.map(c =>
                             `<div class="ts-change">
                                 <span class="ts-change-eye">${c.eye}</span>
@@ -6421,6 +6454,10 @@
                 renderPupilCnTool(el);
             } else if (toolsActiveTool === 'clparam') {
                 renderClParamTool(el);
+            } else if (toolsActiveTool === 'anisocoria') {
+                renderAnisocoriaTool(el);
+            } else if (toolsActiveTool === 'uveitislab') {
+                renderUveitisLabTool(el);
             }
         }
 
@@ -6477,7 +6514,11 @@
             { id:'pupilcn', icon:'ph-list-checks', title:'Pupil & CN Assessment', desc:'Cranial nerve II\u2013VII testing & pupil abnormalities',
               keywords:'pupil cranial nerve cn assessment horner adie argyll robertson cn3 cn4 cn5 cn6 cn7 palsy' },
             { id:'clparam', icon:'ph-disc', title:'CL Parameter Calculator', desc:'Base curve & diameter from keratometry readings',
-              keywords:'contact lens parameter base curve diameter keratometry flat k steep k sam fap fitting calculator bc' }
+              keywords:'contact lens parameter base curve diameter keratometry flat k steep k sam fap fitting calculator bc' },
+            { id:'anisocoria', icon:'ph-eye', title:'Anisocoria Decision Tree', desc:'Stepwise evaluation of unequal pupils',
+              keywords:'anisocoria pupil unequal horner adie tonic pharmacologic mydriasis cn3 pilocarpine cocaine apraclonidine hydroxyamphetamine decision tree' },
+            { id:'uveitislab', icon:'ph-flask', title:'Uveitis Lab Guide', desc:'Searchable lab reference for uveitis work-up',
+              keywords:'uveitis lab workup hla-b27 ana antinuclear rf rheumatoid factor ace angiotensin lysozyme rpr vdrl fta-abs syphilis cbc esr crp quantiferon ppd tuberculosis chest xray anca lyme toxoplasma hsv vzv cmv hla-a29 toxocara sarcoidosis ankylosing spondylitis lupus granulomatosis birdshot' }
         ];
 
         function onToolsSearch(val) {
@@ -10884,6 +10925,421 @@
                 </div>
             `;
             clParamUpdateResult();
+        }
+
+        /* ── Anisocoria Decision Tree ───────────────────────────── */
+
+        var anisoState = { s1: null, s2: null, s3: null, s4: null };
+
+        function anisoSelect(step, val) {
+            anisoState['s' + step] = val;
+            for (var i = step + 1; i <= 4; i++) anisoState['s' + i] = null;
+            renderAnisoContent();
+        }
+
+        function anisoReset() {
+            anisoState = { s1: null, s2: null, s3: null, s4: null };
+            renderAnisoContent();
+        }
+
+        function renderAnisoContent() {
+            var el = document.getElementById('anisoContent');
+            if (!el) return;
+            var s = anisoState;
+            var html = '<div class="bv-step-wrap">';
+
+            /* ── Step 1: Light vs Dark vs Equal ── */
+            html += '<div class="bv-step active">';
+            html += '<div class="bv-step-header"><span class="bv-step-num">1</span> Is anisocoria greater in LIGHT or DARK?</div>';
+            html += '<div class="bv-step-options">';
+            html += '<button class="bv-opt-btn' + (s.s1 === 'dark' ? ' selected' : '') + '" onclick="anisoSelect(1,\'dark\')">Greater in Dark</button>';
+            html += '<button class="bv-opt-btn' + (s.s1 === 'light' ? ' selected' : '') + '" onclick="anisoSelect(1,\'light\')">Greater in Light</button>';
+            html += '<button class="bv-opt-btn' + (s.s1 === 'equal' ? ' selected' : '') + '" onclick="anisoSelect(1,\'equal\')">Equal in Both</button>';
+            html += '</div>';
+            html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">Compare pupil size difference in bright light vs dim/dark conditions.</div>';
+            html += '</div>';
+
+            /* ── Equal → immediate result ── */
+            if (s.s1 === 'equal') {
+                html += anisoResult('Simple / Physiologic Anisocoria',
+                    'Benign finding present in ~20% of the population.',
+                    ['Difference typically \u22641 mm and stable across lighting', 'No dilation lag, no other neurologic signs', 'No treatment needed \u2014 reassure patient']);
+            }
+
+            /* ══════ DARK BRANCH ══════ */
+            if (s.s1 === 'dark') {
+                /* Step 2: Dilation lag */
+                html += '<div class="bv-step active">';
+                html += '<div class="bv-step-header"><span class="bv-step-num">2</span> Is there a dilation lag of the smaller pupil?</div>';
+                html += '<div class="bv-step-options">';
+                html += '<button class="bv-opt-btn' + (s.s2 === 'yes' ? ' selected' : '') + '" onclick="anisoSelect(2,\'yes\')">Yes \u2014 Dilation Lag Present</button>';
+                html += '<button class="bv-opt-btn' + (s.s2 === 'no' ? ' selected' : '') + '" onclick="anisoSelect(2,\'no\')">No Dilation Lag</button>';
+                html += '</div>';
+                html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">Observe pupil dilation speed after turning lights off. A lag suggests sympathetic deficit.</div>';
+                html += '</div>';
+
+                if (s.s2 === 'no') {
+                    html += anisoResult('Simple / Physiologic Anisocoria',
+                        'Benign finding present in ~20% of the population.',
+                        ['Difference typically \u22641 mm and stable across lighting', 'No dilation lag rules out Horner\u2019s syndrome', 'No treatment needed \u2014 reassure patient']);
+                }
+
+                if (s.s2 === 'yes') {
+                    /* Step 3: Cocaine / Apraclonidine */
+                    html += '<div class="bv-step active">';
+                    html += '<div class="bv-step-header"><span class="bv-step-num">3</span> Apraclonidine 0.5\u20131%</div>';
+                    html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin:-4px 0 8px;padding-left:32px;">OR Cocaine 4\u201310%</div>';
+                    html += '<div class="bv-step-options">';
+                    html += '<button class="bv-opt-btn' + (s.s3 === 'abnormal' ? ' selected' : '') + '" onclick="anisoSelect(3,\'abnormal\')">Positive: Only Affected Pupil Dilates</button>';
+                    html += '<button class="bv-opt-btn' + (s.s3 === 'normal' ? ' selected' : '') + '" onclick="anisoSelect(3,\'normal\')">Negative: Neither Eye Dilates</button>';
+                    html += '</div>';
+                    html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">';
+                    html += '<b>Cocaine:</b> Post-drop anisocoria \u22650.8 mm \u2192 Horner\u2019s. <b>Apraclonidine:</b> Reversal of anisocoria \u2192 Horner\u2019s (requires \u226536 hrs for denervation supersensitivity). This test does not localize the location of the lesion.';
+                    html += '</div>';
+                    html += '</div>';
+
+                    if (s.s3 === 'normal') {
+                        html += anisoResult('Not Horner\u2019s Syndrome \u2014 Simple Anisocoria',
+                            'Pharmacologic testing does not support Horner\u2019s syndrome.',
+                            ['Consider other causes of miosis or re-evaluate anisocoria', 'Physiologic anisocoria remains likely', 'Follow up if clinical suspicion persists']);
+                    }
+
+                    if (s.s3 === 'abnormal') {
+                        /* Step 4: Hydroxyamphetamine */
+                        html += '<div class="bv-step active">';
+                        html += '<div class="bv-step-header"><span class="bv-step-num">4</span> Phenylephrine 1%</div>';
+                        html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin:-4px 0 8px;padding-left:32px;">OR Hydroxyamphetamine 1% test (wait \u226548 hrs after cocaine)</div>';
+                        html += '<div class="bv-step-options">';
+                        html += '<button class="bv-opt-btn' + (s.s4 === 'dilates' ? ' selected' : '') + '" onclick="anisoSelect(4,\'dilates\')">Positive: Affected Pupil Dilates</button>';
+                        html += '<button class="bv-opt-btn' + (s.s4 === 'nodilate' ? ' selected' : '') + '" onclick="anisoSelect(4,\'nodilate\')">Negative: Neither Pupil Dilates</button>';
+                        html += '</div>';
+                        html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">Hydroxyamphetamine releases stored norepinephrine from intact post-ganglionic neurons.</div>';
+                        html += '</div>';
+
+                        if (s.s4 === 'dilates') {
+                            html += anisoResult('Pre-ganglionic Horner\u2019s Syndrome (1st / 2nd Order)',
+                                'Lesion at 1st-order (central) or 2nd-order (pre-ganglionic) neuron. Post-ganglionic neuron is intact.',
+                                ['1st order: hypothalamic \u2192 ciliospinal center (C8\u2013T2) \u2014 stroke, tumor, demyelination', '2nd order: ciliospinal center \u2192 superior cervical ganglion \u2014 Pancoast tumor, thoracic surgery', 'Neuroimaging (MRI brain/spine, CT chest) recommended', 'Classic triad: miosis, ptosis, anhidrosis (facial)']);
+                        }
+                        if (s.s4 === 'nodilate') {
+                            html += anisoResult('Post-ganglionic Horner\u2019s Syndrome (3rd Order)',
+                                'Lesion at 3rd-order (post-ganglionic) neuron, from superior cervical ganglion to the eye.',
+                                ['Common causes: carotid dissection, cavernous sinus lesion, cluster headache', 'MRA or CTA of head/neck recommended to rule out carotid dissection', 'Anhidrosis limited to medial forehead (if present)', 'Urgent workup if acute onset or associated with pain/headache']);
+                        }
+                    }
+                }
+            }
+
+            /* ══════ LIGHT BRANCH ══════ */
+            if (s.s1 === 'light') {
+                /* Step 2: Iris damage */
+                html += '<div class="bv-step active">';
+                html += '<div class="bv-step-header"><span class="bv-step-num">2</span> Slit lamp exam \u2014 is there iris damage?</div>';
+                html += '<div class="bv-step-options">';
+                html += '<button class="bv-opt-btn' + (s.s2 === 'yes' ? ' selected' : '') + '" onclick="anisoSelect(2,\'yes\')">Yes \u2014 Iris Damage Present</button>';
+                html += '<button class="bv-opt-btn' + (s.s2 === 'no' ? ' selected' : '') + '" onclick="anisoSelect(2,\'no\')">No \u2014 Iris Normal</button>';
+                html += '</div>';
+                html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">Look for posterior synechiae, iris sphincter tears, transillumination defects, or surgical changes.</div>';
+                html += '</div>';
+
+                if (s.s2 === 'yes') {
+                    html += anisoResult('Structural Iris Damage',
+                        'Mechanical disruption of the iris sphincter prevents normal constriction.',
+                        ['Causes: blunt trauma, posterior synechiae (uveitis), prior intraocular surgery', 'Iris sphincter tears may be visible on slit lamp', 'Transillumination defects suggest pigment loss or atrophy', 'Manage underlying cause; pupil may not normalize']);
+                }
+
+                if (s.s2 === 'no') {
+                    /* Step 3: Dilute pilocarpine */
+                    html += '<div class="bv-step active">';
+                    html += '<div class="bv-step-header"><span class="bv-step-num">3</span> Pilocarpine 0.05\u20130.1% (diluted) to the larger pupil</div>';
+                    html += '<div class="bv-step-options">';
+                    html += '<button class="bv-opt-btn' + (s.s3 === 'constricts' ? ' selected' : '') + '" onclick="anisoSelect(3,\'constricts\')">Positive: Larger Pupil Constricts</button>';
+                    html += '<button class="bv-opt-btn' + (s.s3 === 'noconstrict' ? ' selected' : '') + '" onclick="anisoSelect(3,\'noconstrict\')">Negative: Larger Pupil Does Not Constrict</button>';
+                    html += '</div>';
+                    html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">Dilute pilocarpine will constrict a denervated pupil (supersensitivity) but not a normal pupil. Wait 30\u201345 min.</div>';
+                    html += '</div>';
+
+                    if (s.s3 === 'constricts') {
+                        html += anisoResult('Adie\u2019s Tonic Pupil',
+                            'Denervation supersensitivity of the iris sphincter due to ciliary ganglion or short posterior ciliary nerve damage.',
+                            ['Typically young women; usually unilateral', 'Light-near dissociation: poor light response, better near response', 'Sectoral vermiform (worm-like) iris movements on slit lamp', 'Often idiopathic; associated with diminished deep tendon reflexes (Holmes-Adie syndrome)', 'Benign \u2014 may use dilute pilocarpine for cosmesis if desired']);
+                    }
+
+                    if (s.s3 === 'noconstrict') {
+                        /* Step 4: Full-strength pilocarpine */
+                        html += '<div class="bv-step active">';
+                        html += '<div class="bv-step-header"><span class="bv-step-num">4</span> Pilocarpine 1.0% (full-strength) to the larger pupil</div>';
+                        html += '<div class="bv-step-options">';
+                        html += '<button class="bv-opt-btn' + (s.s4 === 'constricts' ? ' selected' : '') + '" onclick="anisoSelect(4,\'constricts\')">Positive: Larger Pupil Constricts</button>';
+                        html += '<button class="bv-opt-btn' + (s.s4 === 'noconstrict' ? ' selected' : '') + '" onclick="anisoSelect(4,\'noconstrict\')">Negative: Larger Pupil Does Not Constrict</button>';
+                        html += '</div>';
+                        html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin-top:6px;">Full-strength pilocarpine will constrict a pupil with CN III palsy but not a pharmacologically dilated pupil.</div>';
+                        html += '</div>';
+
+                        if (s.s4 === 'constricts') {
+                            html += anisoResult('CN III Palsy (Oculomotor Nerve)',
+                                'Parasympathetic denervation from CN III dysfunction causes mydriasis.',
+                                ['Check for ptosis, EOM restriction (especially adduction, elevation, depression). Impacted eye typically \u201cDown and Out.\u201d Often large ptosis', 'Pupil-involving CN III palsy: rule out posterior communicating artery aneurysm \u2014 URGENT', 'Pain + pupil involvement = aneurysm until proven otherwise \u2192 CTA/MRA stat', 'Other causes: ischemic (microvascular, typically pupil-sparing), tumor, trauma', 'Complete vs. incomplete palsy guides urgency of workup']);
+                        }
+                        if (s.s4 === 'noconstrict') {
+                            html += anisoResult('Pharmacologic Mydriasis',
+                                'Pupil dilated by exogenous mydriatic agent. No neural or structural cause.',
+                                ['Pupil will not constrict even to pilocarpine 1% \u2014 hallmark finding', 'Common agents: tropicamide, cyclopentolate, atropine, scopolamine patch', 'Ask about occupational exposure (healthcare workers, veterinary staff)', 'Check for scopolamine patch behind ear', 'Self-resolves once agent wears off; no neuroimaging needed']);
+                        }
+                    }
+                }
+            }
+
+            html += '</div>';
+
+            /* Reset button */
+            html += '<div style="margin-top:14px;text-align:center;">';
+            html += '<button onclick="anisoReset()" style="background:none;border:1px solid var(--rule);color:var(--ink-muted);padding:8px 18px;border-radius:8px;font-family:var(--sans);font-size:13px;cursor:pointer;">Reset</button>';
+            html += '</div>';
+
+            el.innerHTML = html;
+        }
+
+        function anisoResult(title, desc, bullets) {
+            var html = '<div class="bv-result-box">';
+            html += '<div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-muted);margin-bottom:6px;">Speculative Diagnosis</div>';
+            html += '<div class="bv-result-muscle">' + title + '</div>';
+            html += '<div style="color:var(--ink);font-size:13px;margin:8px 0;">' + desc + '</div>';
+            html += '<ul style="text-align:left;margin:8px 0 10px;padding-left:20px;color:var(--ink);font-size:12.5px;line-height:1.6;">';
+            for (var i = 0; i < bullets.length; i++) html += '<li>' + bullets[i] + '</li>';
+            html += '</ul>';
+            html += '<div style="font-size:11px;color:var(--ink-muted);margin-top:8px;font-style:italic;">Ref: StatPearls \u2014 Anisocoria (NCBI NBK470384)</div>';
+            html += '</div>';
+            return html;
+        }
+
+        function renderAnisocoriaTool(el) {
+            el.innerHTML = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>'
+                + '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-eye"></i> Anisocoria Decision Tree</div>'
+                + '<div class="tools-card-desc">Stepwise evaluation of unequal pupils. Guides through clinical observation and pharmacologic testing to reach a diagnosis.</div>'
+                + '<div id="anisoContent"></div>'
+                + '</div>';
+            anisoState = { s1: null, s2: null, s3: null, s4: null };
+            renderAnisoContent();
+        }
+
+        // ===== UVEITIS LAB GUIDE =====
+
+        var uveitisLabState = { search: '', expanded: {} };
+
+        var UVEITIS_LABS = [
+            { id:'hlab27', name:'HLA-B27', abbr:'HLA-B27', category:'core', summary:'Human leukocyte antigen associated with autoimmune uveitis',
+              normalRange:'Negative (absent)',
+              abnormalMeaning:'Positive result indicates genetic predisposition to certain autoimmune conditions; does not confirm disease alone.',
+              associatedConditions:['Ankylosing spondylitis','Reactive arthritis (Reiter syndrome)','Psoriatic arthritis','Inflammatory bowel disease–associated uveitis','Acute anterior uveitis (AAU)'],
+              clinicalNotes:'HLA-B27–positive AAU is typically unilateral, recurrent, and non-granulomatous. Most common genetic marker in anterior uveitis. Present in ~50% of AAU patients vs ~8% of general population.',
+              reference:'Rosenbaum JT. Uveitis: Etiology, clinical manifestations, and diagnosis. UpToDate, 2024.' },
+            { id:'ana', name:'Antinuclear Antibody', abbr:'ANA', category:'core', summary:'Screening test for systemic autoimmune conditions',
+              normalRange:'Negative (titer < 1:40)',
+              abnormalMeaning:'Positive ANA suggests possible autoimmune etiology. Higher titers (≥1:160) are more clinically significant. Pattern (homogeneous, speckled, nucleolar) guides further testing.',
+              associatedConditions:['Systemic lupus erythematosus (SLE)','Juvenile idiopathic arthritis (JIA)','Scleroderma','Sjögren syndrome','Pediatric anterior uveitis'],
+              clinicalNotes:'ANA-positive JIA carries highest risk of chronic anterior uveitis in children. Screening critical in pediatric patients even without joint symptoms. Low-titer positives common in healthy individuals (~15%).',
+              reference:'Heiligenhaus A et al. Review for disease of the year: epidemiology of juvenile idiopathic arthritis and associated uveitis. Ocul Immunol Inflamm. 2013;21(3):185–191.' },
+            { id:'rf', name:'Rheumatoid Factor', abbr:'RF', category:'core', summary:'Autoantibody associated with rheumatoid and autoimmune disease',
+              normalRange:'< 14 IU/mL (varies by lab)',
+              abnormalMeaning:'Elevated RF suggests rheumatoid arthritis or other autoimmune process. Not specific—can be elevated in infections and with age.',
+              associatedConditions:['Rheumatoid arthritis','Sjögren syndrome','Scleritis / episcleritis','Peripheral ulcerative keratitis (PUK)','Cryoglobulinemia'],
+              clinicalNotes:'RF-positive RA patients have higher risk of scleritis and PUK. Less directly associated with uveitis than other markers but part of standard autoimmune panel.',
+              reference:'Smith JR, Rosenbaum JT. Management of uveitis: a rheumatologic perspective. Arthritis Rheum. 2002;46(2):309–318.' },
+            { id:'ace', name:'Angiotensin-Converting Enzyme', abbr:'ACE', category:'core', summary:'Serum marker for sarcoidosis evaluation',
+              normalRange:'8–52 U/L (varies by lab and age)',
+              abnormalMeaning:'Elevated ACE (often >2× upper limit) suggests granulomatous disease, most commonly sarcoidosis. Sensitivity ~60%, specificity ~90%.',
+              associatedConditions:['Sarcoidosis','Tuberculosis','Berylliosis','Gaucher disease','Granulomatous anterior/intermediate/panuveitis'],
+              clinicalNotes:'ACE alone has limited sensitivity for ocular sarcoidosis. Best used in combination with lysozyme and chest imaging. ACE inhibitor medications will lower serum ACE and invalidate results—must hold before testing.',
+              reference:'Herbort CP et al. International criteria for the diagnosis of ocular sarcoidosis (IWOS). Ocul Immunol Inflamm. 2009;17(3):160–169.' },
+            { id:'lysozyme', name:'Lysozyme', abbr:'Lysozyme', category:'core', summary:'Serum marker complementing ACE for sarcoidosis',
+              normalRange:'2.8–8.0 µg/mL (varies by lab)',
+              abnormalMeaning:'Elevated lysozyme supports granulomatous inflammation, particularly sarcoidosis. Sensitivity ~60–78% for sarcoidosis.',
+              associatedConditions:['Sarcoidosis','Tuberculosis','Crohn disease','Monocytic leukemia','Granulomatous uveitis'],
+              clinicalNotes:'Lysozyme combined with ACE increases diagnostic sensitivity for sarcoidosis to ~73%. Not affected by ACE inhibitor use, making it a valuable complement.',
+              reference:'Baarsma GS et al. The predictive value of serum angiotensin converting enzyme and lysozyme levels in the diagnosis of ocular sarcoidosis. Am J Ophthalmol. 1987;104(2):211–217.' },
+            { id:'rpr', name:'RPR / VDRL', abbr:'RPR/VDRL', category:'core', summary:'Non-treponemal screening test for syphilis',
+              normalRange:'Non-reactive',
+              abnormalMeaning:'Reactive result indicates possible active syphilis infection. Titer level correlates with disease activity. Must be confirmed with treponemal test (FTA-ABS).',
+              associatedConditions:['Primary/secondary/tertiary syphilis','Congenital syphilis','Ocular syphilis (any form of uveitis)','Interstitial keratitis','Argyll Robertson pupil'],
+              clinicalNotes:'Syphilis is "the great masquerader"—can mimic virtually any form of uveitis. RPR/VDRL can be false-negative in very early or late disease, and false-positive in pregnancy, SLE, and antiphospholipid syndrome. Always confirm with FTA-ABS.',
+              reference:'Moradi A et al. Clinical features and incidence rates of ocular complications in patients with ocular syphilis. Am J Ophthalmol. 2015;159(2):334–343.' },
+            { id:'ftaabs', name:'FTA-ABS', abbr:'FTA-ABS', category:'core', summary:'Treponemal confirmatory test for syphilis',
+              normalRange:'Non-reactive',
+              abnormalMeaning:'Reactive FTA-ABS confirms current or past treponemal infection. Remains positive for life even after treatment.',
+              associatedConditions:['Syphilis (all stages)','Ocular syphilis','Neurosyphilis','Congenital syphilis'],
+              clinicalNotes:'FTA-ABS is more sensitive and specific than RPR/VDRL. A positive FTA-ABS with reactive RPR/VDRL and compatible ocular findings warrants treatment. Lumbar puncture should be considered for any ocular syphilis case to rule out neurosyphilis.',
+              reference:'CDC. Sexually Transmitted Infections Treatment Guidelines, 2021. MMWR Recomm Rep. 2021;70(4):1–187.' },
+            { id:'cbc', name:'Complete Blood Count', abbr:'CBC', category:'core', summary:'Baseline hematologic evaluation',
+              normalRange:'WBC 4.5–11.0 ×10³/µL; Hgb 12–17 g/dL; Plt 150–400 ×10³/µL',
+              abnormalMeaning:'Leukocytosis may suggest infection or inflammation. Leukopenia seen in SLE, medications. Lymphopenia in sarcoidosis. Anemia may suggest chronic disease.',
+              associatedConditions:['Infection (leukocytosis)','Lymphoma / leukemia (masquerade syndrome)','SLE (leukopenia, lymphopenia)','Medication toxicity','Sarcoidosis (lymphopenia)'],
+              clinicalNotes:'CBC is a baseline lab for any uveitis workup and important for monitoring immunosuppressive therapy. Atypical cells on smear may suggest intraocular lymphoma (masquerade syndrome).',
+              reference:'Jabs DA et al. Guidelines for the use of immunosuppressive drugs in patients with ocular inflammatory disorders. Am J Ophthalmol. 2000;130(4):492–513.' },
+            { id:'esrcrp', name:'ESR / CRP', abbr:'ESR/CRP', category:'core', summary:'Non-specific markers of systemic inflammation',
+              normalRange:'ESR: 0–20 mm/hr (♂), 0–30 mm/hr (♀); CRP: < 1.0 mg/dL',
+              abnormalMeaning:'Elevated ESR/CRP indicate systemic inflammation but are non-specific. Useful for monitoring disease activity and treatment response.',
+              associatedConditions:['Giant cell arteritis (markedly elevated)','Systemic vasculitis','Sarcoidosis','Rheumatoid arthritis','Infections','Inflammatory bowel disease'],
+              clinicalNotes:'ESR rises with age (rule of thumb: upper normal ≈ age/2 for males). CRP responds more rapidly to inflammation and is less affected by age/anemia. Both are important for GCA workup.',
+              reference:'Sack GH Jr. Serum amyloid A—a review. Mol Med. 2018;24(1):46.' },
+            { id:'quantiferon', name:'QuantiFERON-TB Gold / PPD', abbr:'QFT/PPD', category:'core', summary:'Screening for tuberculosis exposure',
+              normalRange:'QuantiFERON: Negative; PPD: < 5 mm induration (immunocompromised) or < 10 mm (other risk) or < 15 mm (no risk)',
+              abnormalMeaning:'Positive result indicates prior TB exposure or latent TB infection. Does not distinguish latent from active disease.',
+              associatedConditions:['Tuberculosis (pulmonary and extrapulmonary)','Tubercular uveitis (granulomatous)','Serpiginous-like choroiditis','Retinal vasculitis','Optic neuropathy'],
+              clinicalNotes:'QuantiFERON preferred over PPD (no cross-reactivity with BCG vaccine, single visit). TB uveitis can present as granulomatous anterior uveitis, intermediate uveitis, serpiginous-like choroiditis, or retinal vasculitis. Must rule out TB before starting immunosuppression.',
+              reference:'Gupta V et al. Tubercular uveitis: an update. Expert Rev Ophthalmol. 2016;11(2):145–159.' },
+            { id:'chestxr', name:'Chest X-ray', abbr:'CXR', category:'core', summary:'Imaging for sarcoidosis and tuberculosis evaluation',
+              normalRange:'No hilar lymphadenopathy, infiltrates, or masses',
+              abnormalMeaning:'Bilateral hilar lymphadenopathy (BHL) strongly suggests sarcoidosis. Apical scarring/cavitation may indicate TB. Masses require further evaluation.',
+              associatedConditions:['Sarcoidosis (bilateral hilar lymphadenopathy)','Tuberculosis','Lymphoma','Fungal infection','Metastatic disease'],
+              clinicalNotes:'CXR is part of the standard uveitis workup. ~50% of sarcoidosis patients with uveitis have abnormal CXR. If clinical suspicion is high but CXR is normal, consider chest CT for subtle hilar adenopathy. Garland triad (BHL + right paratracheal adenopathy) classic for sarcoidosis.',
+              reference:'Statement on Sarcoidosis. Am J Respir Crit Care Med. 1999;160(2):736–755.' },
+            { id:'anca', name:'ANCA', abbr:'ANCA', category:'extended', summary:'Antineutrophil cytoplasmic antibodies for vasculitis evaluation',
+              normalRange:'Negative (c-ANCA and p-ANCA)',
+              abnormalMeaning:'c-ANCA (anti-PR3) associated with granulomatosis with polyangiitis (GPA). p-ANCA (anti-MPO) associated with microscopic polyangiitis and eosinophilic GPA.',
+              associatedConditions:['Granulomatosis with polyangiitis (GPA / Wegener)','Microscopic polyangiitis','Eosinophilic granulomatosis with polyangiitis (Churg-Strauss)','Necrotizing scleritis','Peripheral ulcerative keratitis'],
+              clinicalNotes:'Order when scleritis, retinal vasculitis, or orbital inflammation is present. GPA can cause orbital disease, scleritis, PUK, and retinal vasculitis. c-ANCA has ~90% sensitivity for active GPA.',
+              reference:'Sfiniadaki E et al. Ocular manifestations of granulomatosis with polyangiitis: a review of the literature. Autoimmun Rev. 2019;18(12):102364.' },
+            { id:'lyme', name:'Lyme Titer', abbr:'Lyme Ab', category:'extended', summary:'Screening for Borrelia burgdorferi infection',
+              normalRange:'Negative (EIA/ELISA screening)',
+              abnormalMeaning:'Positive EIA must be confirmed with Western blot (IgM and IgG). Two-tier testing required per CDC guidelines.',
+              associatedConditions:['Lyme disease (Borrelia burgdorferi)','Intermediate uveitis','Neuroretinitis','Cranial nerve palsies (especially CN VII)','Keratitis'],
+              clinicalNotes:'Consider in endemic areas (Northeast, upper Midwest US). Lyme can cause intermediate uveitis, vitritis, and neuroretinitis. Test before diagnosing idiopathic intermediate uveitis in endemic regions. False positives possible with syphilis, EBV, and autoimmune disease.',
+              reference:'Mikkilä HO et al. The expanding clinical spectrum of ocular Lyme borreliosis. Ophthalmology. 2000;107(3):581–587.' },
+            { id:'toxoplasma', name:'Toxoplasma IgG / IgM', abbr:'Toxo IgG/IgM', category:'extended', summary:'Serologic testing for toxoplasmic retinochoroiditis',
+              normalRange:'IgG: Negative; IgM: Negative',
+              abnormalMeaning:'Positive IgG indicates prior exposure (common—~30% of US adults). Positive IgM suggests recent or active infection. Most ocular toxoplasmosis is reactivation (IgG+, IgM−).',
+              associatedConditions:['Toxoplasmic retinochoroiditis','Congenital toxoplasmosis','Posterior uveitis with focal necrotizing retinitis','Immunocompromised diffuse toxoplasmosis'],
+              clinicalNotes:'Most common cause of infectious posterior uveitis worldwide. Classic "headlight in the fog" appearance. Negative IgG essentially excludes toxoplasmic retinochoroiditis. Diagnosis is primarily clinical; serology is supportive.',
+              reference:'Holland GN. Ocular toxoplasmosis: a global reassessment. Am J Ophthalmol. 2003;136(6):973–988.' },
+            { id:'hsvvzv', name:'HSV / VZV PCR', abbr:'HSV/VZV PCR', category:'extended', summary:'PCR testing of aqueous or vitreous for herpetic uveitis',
+              normalRange:'Not detected',
+              abnormalMeaning:'Detected HSV-1, HSV-2, or VZV DNA confirms viral etiology. PCR of aqueous humor has high specificity (>95%).',
+              associatedConditions:['Herpetic anterior uveitis (HSV, VZV)','Acute retinal necrosis (ARN)','Progressive outer retinal necrosis (PORN)','Herpetic keratouveitis','Post-herpetic uveitis'],
+              clinicalNotes:'Aqueous tap for PCR is the gold standard for confirming viral uveitis. Consider in unilateral hypertensive anterior uveitis, sectoral iris atrophy, or ARN. ARN is an ocular emergency—early antiviral treatment is critical.',
+              reference:'Sugita S et al. Diagnosis of intraocular lymphoma by PCR and aqueous analysis. Ocul Immunol Inflamm. 2009;17(3):141–147.' },
+            { id:'cmv', name:'CMV PCR', abbr:'CMV PCR', category:'extended', summary:'PCR testing for cytomegalovirus-associated uveitis',
+              normalRange:'Not detected',
+              abnormalMeaning:'Detected CMV DNA in aqueous humor confirms CMV-associated anterior uveitis or retinitis.',
+              associatedConditions:['CMV anterior uveitis (Posner-Schlossman–like)','CMV retinitis (immunocompromised)','CMV endotheliitis','Fuchs-like heterochromic iridocyclitis'],
+              clinicalNotes:'Consider CMV in recurrent hypertensive anterior uveitis with endothelial changes, especially in immunocompromised patients. CMV retinitis seen with CD4 < 50 cells/µL. Aqueous PCR is diagnostic. Treat with oral valganciclovir.',
+              reference:'Chee SP et al. Clinical features of cytomegalovirus anterior uveitis. Ocul Immunol Inflamm. 2012;20(2):107–110.' },
+            { id:'hlaa29', name:'HLA-A29', abbr:'HLA-A29', category:'extended', summary:'Genetic marker strongly associated with birdshot chorioretinopathy',
+              normalRange:'Negative (absent)',
+              abnormalMeaning:'Positive HLA-A29 strongly supports diagnosis of birdshot chorioretinopathy (>95% of patients are positive). Strongest known HLA–disease association in ophthalmology.',
+              associatedConditions:['Birdshot chorioretinopathy'],
+              clinicalNotes:'Order when bilateral vitritis with cream-colored ovoid lesions is seen, especially in middle-aged Caucasian patients. Negative HLA-A29 essentially excludes birdshot. Prevalence of HLA-A29 in general population ~7%, so positive predictive value depends on clinical context.',
+              reference:'Shah KH et al. Birdshot chorioretinopathy. Surv Ophthalmol. 2005;50(6):519–541.' },
+            { id:'toxocara', name:'Toxocara Antibody', abbr:'Toxocara Ab', category:'extended', summary:'Serologic test for ocular toxocariasis',
+              normalRange:'Negative (ELISA < 1:32)',
+              abnormalMeaning:'Positive serum ELISA suggests Toxocara exposure. Aqueous/vitreous ELISA is more specific for ocular disease (Goldmann-Witmer coefficient).',
+              associatedConditions:['Ocular toxocariasis','Peripheral granuloma','Posterior pole granuloma','Chronic endophthalmitis (pediatric)','Diffuse unilateral subacute neuroretinitis (DUSN)'],
+              clinicalNotes:'Most common in children with history of soil exposure or contact with puppies/kittens. Presents as unilateral posterior or peripheral granuloma, or chronic vitritis. Serum testing has limited sensitivity for isolated ocular disease; aqueous testing may be needed.',
+              reference:'Stewart JM et al. Prevalence, clinical features, and causes of vision loss among patients with ocular toxocariasis. Retina. 2005;25(8):1005–1013.' }
+        ];
+
+        function uveitisLabToggle(labId) {
+            uveitisLabState.expanded[labId] = !uveitisLabState.expanded[labId];
+            renderUveitisLabContent();
+        }
+
+        function uveitisLabSearch(val) {
+            uveitisLabState.search = val;
+            renderUveitisLabContent();
+        }
+
+        function uveitisLabExpandAll() {
+            for (var i = 0; i < UVEITIS_LABS.length; i++) {
+                uveitisLabState.expanded[UVEITIS_LABS[i].id] = true;
+            }
+            renderUveitisLabContent();
+        }
+
+        function uveitisLabCollapseAll() {
+            for (var k in uveitisLabState.expanded) uveitisLabState.expanded[k] = false;
+            renderUveitisLabContent();
+        }
+
+        function renderUveitisLabCard(lab) {
+            var exp = uveitisLabState.expanded[lab.id];
+            var html = '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="uveitisLabToggle(\'' + lab.id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + lab.name + (lab.abbr !== lab.name ? ' <span style="opacity:0.6;font-weight:500;">(' + lab.abbr + ')</span>' : '') + '</div>'
+                + '<div class="de-section-summary">' + lab.summary + '</div></div>'
+                + '</div>';
+            if (exp) {
+                html += '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">';
+                html += '<div class="de-subsection"><strong>Normal Range:</strong> ' + lab.normalRange + '</div>';
+                html += '<div class="de-subsection"><strong>Abnormal / Positive Indicates:</strong> ' + lab.abnormalMeaning + '</div>';
+                if (lab.associatedConditions && lab.associatedConditions.length) {
+                    html += '<div class="de-subsection"><strong>Associated Conditions:</strong><ul style="margin:4px 0 0 0;padding-left:20px;">';
+                    for (var c = 0; c < lab.associatedConditions.length; c++) {
+                        html += '<li>' + lab.associatedConditions[c] + '</li>';
+                    }
+                    html += '</ul></div>';
+                }
+                html += '<div class="de-subsection"><strong>Clinical Notes:</strong> ' + lab.clinicalNotes + '</div>';
+                html += '<div class="de-note" style="margin-top:10px;font-size:11px;opacity:0.7;"><em>Ref: ' + lab.reference + '</em></div>';
+                html += '</div>';
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function renderUveitisLabContent() {
+            var el = document.getElementById('uveitisLabContent');
+            if (!el) return;
+            var q = uveitisLabState.search.trim().toLowerCase();
+            var coreLabs = [];
+            var extLabs = [];
+            for (var i = 0; i < UVEITIS_LABS.length; i++) {
+                var lab = UVEITIS_LABS[i];
+                if (q) {
+                    var haystack = (lab.name + ' ' + lab.abbr + ' ' + lab.summary + ' ' + lab.associatedConditions.join(' ')).toLowerCase();
+                    if (haystack.indexOf(q) === -1) continue;
+                }
+                if (lab.category === 'core') coreLabs.push(lab);
+                else extLabs.push(lab);
+            }
+            var html = '';
+            if (coreLabs.length === 0 && extLabs.length === 0) {
+                html = '<div style="text-align:center;padding:24px;opacity:0.5;">No labs match your search.</div>';
+            } else {
+                if (coreLabs.length > 0) {
+                    html += '<div style="font-size:13px;font-weight:700;color:var(--accent);margin:12px 0 8px 2px;text-transform:uppercase;letter-spacing:0.5px;">Core Panel (' + coreLabs.length + ')</div>';
+                    for (var c = 0; c < coreLabs.length; c++) html += renderUveitisLabCard(coreLabs[c]);
+                }
+                if (extLabs.length > 0) {
+                    html += '<div style="font-size:13px;font-weight:700;color:var(--accent);margin:16px 0 8px 2px;text-transform:uppercase;letter-spacing:0.5px;">Extended Panel (' + extLabs.length + ')</div>';
+                    for (var e = 0; e < extLabs.length; e++) html += renderUveitisLabCard(extLabs[e]);
+                }
+            }
+            el.innerHTML = html;
+            var si = document.getElementById('uveitisLabSearchInput');
+            if (si) si.focus();
+        }
+
+        function renderUveitisLabTool(el) {
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="uveitisLabExpandAll()">Expand All</button><button onclick="uveitisLabCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+            html += '<div class="tools-card" style="margin-bottom:14px;">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-flask" style="color:var(--accent);"></i> Uveitis Lab Guide</div>'
+                + '<div class="tools-card-desc">Searchable lab reference for uveitis work-up. Tap any lab to view normal ranges, interpretation, associated conditions, and clinical notes.</div>'
+                + '</div>';
+            html += '<input type="text" id="uveitisLabSearchInput" placeholder="Search labs (e.g. sarcoid, syphilis, HLA)…" value="' + (uveitisLabState.search || '') + '" oninput="uveitisLabSearch(this.value)" style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid var(--rule);border-radius:10px;font-size:14px;font-family:var(--sans);background:var(--card);color:var(--text);margin-bottom:14px;outline:none;" onfocus="this.style.borderColor=\'var(--accent)\'" onblur="this.style.borderColor=\'var(--rule)\'">';
+            html += '<div id="uveitisLabContent"></div>';
+            el.innerHTML = html;
+            renderUveitisLabContent();
         }
 
         // ===== MEDICATIONS TAB =====
