@@ -10087,19 +10087,26 @@
             return { snellen: '20/' + snellenDenom.toFixed(snellenDenom % 1 === 0 ? 0 : 1), logmar: logmar.toFixed(2), decimal: decimal.toFixed(2), mar: mar.toFixed(2) };
         }
 
-        function renderVaTool(el) {
+        function vaUpdateResult() {
+            var box = document.getElementById('vaResultBox');
+            if (!box) return;
             var r = vaCalc();
-            var resultHtml = '';
             if (r) {
-                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
-                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Conversion Results</div>' +
+                box.innerHTML = '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Conversion Results</div>' +
                     '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Snellen</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.snellen + '</td></tr>' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">LogMAR</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.logmar + '</td></tr>' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Decimal</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.decimal + '</td></tr>' +
                     '<tr><td style="padding:6px 0;font-weight:600;">MAR</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.mar + '</td></tr>' +
-                    '</table></div>';
+                    '</table>';
+                box.style.display = '';
+            } else {
+                box.innerHTML = '';
+                box.style.display = 'none';
             }
+        }
+
+        function renderVaTool(el) {
             var refRows = [
                 ['20/20','0.00','1.00','1.00'],['20/25','0.10','0.80','1.25'],['20/30','0.18','0.67','1.50'],
                 ['20/40','0.30','0.50','2.00'],['20/50','0.40','0.40','2.50'],['20/60','0.48','0.33','3.00'],
@@ -10134,18 +10141,17 @@
                             <label>Value</label>
                             <input type="number" id="vaValue" placeholder="${vaState.format==='snellen'?'e.g. 40 for 20/40':'e.g. 0.30'}" step="any"
                                 value="${vaState.value}"
-                                oninput="vaState.value=this.value;renderVaTool(document.getElementById('toolsContent'));">
+                                oninput="vaState.value=this.value;vaUpdateResult();">
                         </div>
                     </div>
-                    ${resultHtml}
+                    <div class="iop-result-box" id="vaResultBox" style="margin-top:18px;display:none;"></div>
                 </div>
                 <div class="tools-card">
                     <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Common Equivalents</div>
                     <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;">${refHtml}</table></div>
                 </div>
             `;
-            var inp = document.getElementById('vaValue');
-            if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+            vaUpdateResult();
         }
 
         // ===== PRENTICE'S RULE =====
@@ -10158,16 +10164,22 @@
             return { prism: Math.abs(p * d / 10).toFixed(2) };
         }
 
-        function renderPrenticeTool(el) {
+        function prenticeUpdateResult() {
+            var box = document.getElementById('prenticeResultBox');
+            if (!box) return;
             var r = prenticeCalc();
-            var resultHtml = '';
             if (r) {
-                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
-                    '<div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--accent);">Induced Prism</div>' +
+                box.innerHTML = '<div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--accent);">Induced Prism</div>' +
                     '<div style="font-family:var(--mono);font-size:24px;font-weight:700;">' + r.prism + ' \u0394</div>' +
-                    '<div style="font-size:12px;color:var(--ink-secondary);margin-top:6px;">Prism (\u0394) = |Power (D)| \u00D7 Decentration (cm)</div>' +
-                    '</div>';
+                    '<div style="font-size:12px;color:var(--ink-secondary);margin-top:6px;">Prism (\u0394) = |Power (D)| \u00D7 Decentration (cm)</div>';
+                box.style.display = '';
+            } else {
+                box.innerHTML = '';
+                box.style.display = 'none';
             }
+        }
+
+        function renderPrenticeTool(el) {
             el.innerHTML = `
                 <div style="margin-bottom:14px;">
                     <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
@@ -10182,16 +10194,16 @@
                             <label>Lens Power (D)</label>
                             <input type="number" id="prenticePower" placeholder="e.g. \u22123.00" step="any"
                                 value="${prenticeState.power}"
-                                oninput="prenticeState.power=this.value;renderPrenticeTool(document.getElementById('toolsContent'));">
+                                oninput="prenticeState.power=this.value;prenticeUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>Decentration (mm)</label>
                             <input type="number" id="prenticeDecent" placeholder="e.g. 5" step="any" min="0"
                                 value="${prenticeState.decentration}"
-                                oninput="prenticeState.decentration=this.value;renderPrenticeTool(document.getElementById('toolsContent'));">
+                                oninput="prenticeState.decentration=this.value;prenticeUpdateResult();">
                         </div>
                     </div>
-                    ${resultHtml}
+                    <div class="iop-result-box" id="prenticeResultBox" style="margin-top:18px;display:none;"></div>
                     <div class="ref-toggle-wrap" style="margin-top:14px;">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
@@ -10201,8 +10213,7 @@
                     </div>
                 </div>
             `;
-            var inp = document.getElementById('prenticePower');
-            if (inp && !prenticeState.power) { inp.focus(); }
+            prenticeUpdateResult();
         }
 
         // ===== HOFSTETTER'S ACCOMMODATIVE NORMS =====
@@ -10218,18 +10229,25 @@
             };
         }
 
-        function renderHofstetterTool(el) {
+        function hofstetterUpdateResult() {
+            var box = document.getElementById('hofstetterResultBox');
+            if (!box) return;
             var r = hofstetterCalc();
-            var resultHtml = '';
             if (r) {
-                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
-                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Expected Amplitude of Accommodation</div>' +
+                box.innerHTML = '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Expected Amplitude of Accommodation</div>' +
                     '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Minimum</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.min + ' D</td><td style="padding:6px 0;text-align:right;font-size:11px;color:var(--ink-secondary);">15 \u2212 0.25 \u00D7 age</td></tr>' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Average</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.avg + ' D</td><td style="padding:6px 0;text-align:right;font-size:11px;color:var(--ink-secondary);">18.5 \u2212 0.30 \u00D7 age</td></tr>' +
                     '<tr><td style="padding:6px 0;font-weight:600;">Maximum</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.max + ' D</td><td style="padding:6px 0;text-align:right;font-size:11px;color:var(--ink-secondary);">25 \u2212 0.40 \u00D7 age</td></tr>' +
-                    '</table></div>';
+                    '</table>';
+                box.style.display = '';
+            } else {
+                box.innerHTML = '';
+                box.style.display = 'none';
             }
+        }
+
+        function renderHofstetterTool(el) {
             var ageRows = [5,10,15,20,25,30,35,40,45,50,55,60,65,70];
             var tableHtml = '<tr><th style="text-align:left;padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Age</th><th style="padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Min</th><th style="padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Avg</th><th style="padding:5px 8px;font-size:12px;font-weight:600;border-bottom:2px solid var(--border);">Max</th></tr>';
             for (var i = 0; i < ageRows.length; i++) {
@@ -10253,10 +10271,10 @@
                             <label>Patient Age (years)</label>
                             <input type="number" id="hofAge" placeholder="e.g. 40" min="0" max="100" step="1"
                                 value="${hofstetterState.age}"
-                                oninput="hofstetterState.age=this.value;renderHofstetterTool(document.getElementById('toolsContent'));">
+                                oninput="hofstetterState.age=this.value;hofstetterUpdateResult();">
                         </div>
                     </div>
-                    ${resultHtml}
+                    <div class="iop-result-box" id="hofstetterResultBox" style="margin-top:18px;display:none;"></div>
                 </div>
                 <div class="tools-card">
                     <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Age Reference Table</div>
@@ -10264,8 +10282,7 @@
                     <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;">${tableHtml}</table></div>
                 </div>
             `;
-            var inp = document.getElementById('hofAge');
-            if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+            hofstetterUpdateResult();
         }
 
         // ===== IOL POWER CALCULATOR =====
@@ -10281,18 +10298,25 @@
             return { power: power.toFixed(2) };
         }
 
-        function renderIolTool(el) {
+        function iolUpdateResult() {
+            var box = document.getElementById('iolResultBox');
+            if (!box) return;
             var r = iolCalc();
-            var resultHtml = '';
             if (r) {
-                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
-                    '<div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--accent);">Estimated IOL Power</div>' +
+                box.innerHTML = '<div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--accent);">Estimated IOL Power</div>' +
                     '<div style="font-family:var(--mono);font-size:24px;font-weight:700;">' + r.power + ' D</div>' +
                     '<div style="font-size:12px;color:var(--ink-secondary);margin-top:8px;">P = A \u2212 2.5\u00D7AL \u2212 0.9\u00D7K + target correction</div>' +
                     '<div style="margin-top:10px;padding:8px 10px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.15);border-radius:6px;font-size:11px;color:#dc2626;">' +
                     '<strong>Disclaimer:</strong> This is a simplified SRK/T estimate for educational purposes only. Always use validated biometry software (e.g., Barrett Universal II, Hill-RBF) for surgical planning.' +
-                    '</div></div>';
+                    '</div>';
+                box.style.display = '';
+            } else {
+                box.innerHTML = '';
+                box.style.display = 'none';
             }
+        }
+
+        function renderIolTool(el) {
             el.innerHTML = `
                 <div style="margin-bottom:14px;">
                     <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
@@ -10307,28 +10331,28 @@
                             <label>Axial Length (mm)</label>
                             <input type="number" id="iolAl" placeholder="e.g. 23.5" step="0.01" min="15" max="40"
                                 value="${iolState.al}"
-                                oninput="iolState.al=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                                oninput="iolState.al=this.value;iolUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>Average K (D)</label>
                             <input type="number" id="iolK" placeholder="e.g. 43.50" step="0.01" min="30" max="60"
                                 value="${iolState.avgK}"
-                                oninput="iolState.avgK=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                                oninput="iolState.avgK=this.value;iolUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>A-Constant</label>
                             <input type="number" id="iolA" placeholder="e.g. 118.4" step="0.1"
                                 value="${iolState.aConst}"
-                                oninput="iolState.aConst=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                                oninput="iolState.aConst=this.value;iolUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>Target Refraction (D)</label>
                             <input type="number" id="iolTgt" placeholder="e.g. \u22120.50" step="0.25"
                                 value="${iolState.targetRx}"
-                                oninput="iolState.targetRx=this.value;renderIolTool(document.getElementById('toolsContent'));">
+                                oninput="iolState.targetRx=this.value;iolUpdateResult();">
                         </div>
                     </div>
-                    ${resultHtml}
+                    <div class="iop-result-box" id="iolResultBox" style="margin-top:18px;display:none;"></div>
                     <div class="ref-toggle-wrap" style="margin-top:14px;">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
@@ -10339,8 +10363,7 @@
                     </div>
                 </div>
             `;
-            var inp = document.getElementById('iolAl');
-            if (inp && !iolState.al) { inp.focus(); }
+            iolUpdateResult();
         }
 
         // ===== KERATOCONUS SCREENING =====
@@ -10375,9 +10398,10 @@
             return flags.length ? flags : null;
         }
 
-        function renderKeratoconusTool(el) {
+        function kcUpdateResult() {
+            var box = document.getElementById('kcResultBox');
+            if (!box) return;
             var flags = kcCalc();
-            var resultHtml = '';
             if (flags) {
                 var flagsHtml = '';
                 var colorMap = { red: '#dc2626', yellow: '#d97706', green: '#059669' };
@@ -10387,10 +10411,15 @@
                     flagsHtml += '<div style="padding:8px 10px;background:' + bgMap[f.level] + ';border:1px solid ' + colorMap[f.level] + '22;border-radius:6px;font-size:12px;font-weight:600;color:' + colorMap[f.level] + ';margin-bottom:6px;">' +
                         '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + colorMap[f.level] + ';margin-right:8px;"></span>' + f.label + '</div>';
                 }
-                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
-                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Risk Flags</div>' +
-                    flagsHtml + '</div>';
+                box.innerHTML = '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Risk Flags</div>' + flagsHtml;
+                box.style.display = '';
+            } else {
+                box.innerHTML = '';
+                box.style.display = 'none';
             }
+        }
+
+        function renderKeratoconusTool(el) {
             el.innerHTML = `
                 <div style="margin-bottom:14px;">
                     <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
@@ -10405,28 +10434,28 @@
                             <label>Steep K (D)</label>
                             <input type="number" id="kcSteep" placeholder="e.g. 46.00" step="0.01"
                                 value="${kcState.steepK}"
-                                oninput="kcState.steepK=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                                oninput="kcState.steepK=this.value;kcUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>Flat K (D)</label>
                             <input type="number" id="kcFlat" placeholder="e.g. 43.50" step="0.01"
                                 value="${kcState.flatK}"
-                                oninput="kcState.flatK=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                                oninput="kcState.flatK=this.value;kcUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>Thinnest Pachymetry (\u00B5m)</label>
                             <input type="number" id="kcPachy" placeholder="e.g. 490" step="1"
                                 value="${kcState.pachy}"
-                                oninput="kcState.pachy=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                                oninput="kcState.pachy=this.value;kcUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>I\u2013S Value (D) <span style="font-weight:400;color:var(--ink-muted);">optional</span></label>
                             <input type="number" id="kcIs" placeholder="e.g. 1.2" step="0.01"
                                 value="${kcState.isVal}"
-                                oninput="kcState.isVal=this.value;renderKeratoconusTool(document.getElementById('toolsContent'));">
+                                oninput="kcState.isVal=this.value;kcUpdateResult();">
                         </div>
                     </div>
-                    ${resultHtml}
+                    <div class="iop-result-box" id="kcResultBox" style="margin-top:18px;display:none;"></div>
                     <div class="ref-toggle-wrap" style="margin-top:14px;">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
@@ -10440,8 +10469,7 @@
                     </div>
                 </div>
             `;
-            var inp = document.getElementById('kcSteep');
-            if (inp && !kcState.steepK) { inp.focus(); }
+            kcUpdateResult();
         }
 
         // ===== VAN HERICK GRADING =====
@@ -10689,7 +10717,7 @@
                                 <tr style="border-bottom:1px solid var(--border);">
                                     <td style="padding:6px;font-weight:700;">IV</td>
                                     <td style="padding:6px;">Trochlear \u2014 SO</td>
-                                    <td style="padding:6px;">Park\u2019s 3-step</td>
+                                    <td style="padding:6px;"><a href="#" onclick="event.preventDefault();openTool('parks');" style="color:var(--accent);text-decoration:none;font-weight:600;">Park\u2019s 3-step</a></td>
                                     <td style="padding:6px;color:var(--ink-secondary);">Hypertropia, head tilt, vertical diplopia</td>
                                 </tr>
                                 <tr style="border-bottom:1px solid var(--border);">
@@ -10784,22 +10812,30 @@
             return { bc: bc, bcFlatter: bcFlatter, kDiff: kDiff, toricity: toricity, diam: diam };
         }
 
-        function renderClParamTool(el) {
+        function clParamUpdateResult() {
+            var box = document.getElementById('clParamResultBox');
+            if (!box) return;
             var r = clParamCalc();
-            var resultHtml = '';
             if (r) {
-                resultHtml = '<div class="iop-result-box" style="margin-top:18px;">' +
-                    '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Recommended Parameters</div>' +
+                var html = '<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--accent);">Recommended Parameters</div>' +
                     '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Base Curve (on flat K)</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.bc + ' mm</td></tr>' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">BC 0.50 D flatter</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.bcFlatter + ' mm</td></tr>' +
                     '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Diameter Guidance</td><td style="padding:6px 0;text-align:right;font-size:12px;">' + r.diam + '</td></tr>';
                 if (r.kDiff !== null) {
-                    resultHtml += '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Corneal Toricity</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.kDiff + ' D</td></tr>' +
+                    html += '<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 0;font-weight:600;">Corneal Toricity</td><td style="padding:6px 0;text-align:right;font-family:var(--mono);">' + r.kDiff + ' D</td></tr>' +
                         '<tr><td style="padding:6px 0;font-weight:600;">Lens Type</td><td style="padding:6px 0;text-align:right;font-size:12px;">' + r.toricity + '</td></tr>';
                 }
-                resultHtml += '</table></div>';
+                html += '</table>';
+                box.innerHTML = html;
+                box.style.display = '';
+            } else {
+                box.innerHTML = '';
+                box.style.display = 'none';
             }
+        }
+
+        function renderClParamTool(el) {
             el.innerHTML = `
                 <div style="margin-bottom:14px;">
                     <button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">
@@ -10814,16 +10850,16 @@
                             <label>Flat K (D)</label>
                             <input type="number" id="clFlatK" placeholder="e.g. 43.00" step="0.01"
                                 value="${clParamState.flatK}"
-                                oninput="clParamState.flatK=this.value;renderClParamTool(document.getElementById('toolsContent'));">
+                                oninput="clParamState.flatK=this.value;clParamUpdateResult();">
                         </div>
                         <div class="iop-form-group">
                             <label>Steep K (D) <span style="font-weight:400;color:var(--ink-muted);">optional</span></label>
                             <input type="number" id="clSteepK" placeholder="e.g. 44.50" step="0.01"
                                 value="${clParamState.steepK}"
-                                oninput="clParamState.steepK=this.value;renderClParamTool(document.getElementById('toolsContent'));">
+                                oninput="clParamState.steepK=this.value;clParamUpdateResult();">
                         </div>
                     </div>
-                    ${resultHtml}
+                    <div class="iop-result-box" id="clParamResultBox" style="margin-top:18px;display:none;"></div>
 
                     <div style="margin-top:18px;padding:12px;background:var(--surface);border-radius:8px;">
                         <div style="font-weight:700;font-size:13px;margin-bottom:6px;">SAM\u2013FAP Rule</div>
@@ -10847,8 +10883,7 @@
                     </div>
                 </div>
             `;
-            var inp = document.getElementById('clFlatK');
-            if (inp && !clParamState.flatK) { inp.focus(); }
+            clParamUpdateResult();
         }
 
         // ===== MEDICATIONS TAB =====
