@@ -1117,12 +1117,9 @@
         .nav-row {
             display: flex;
             justify-content: space-between;
-            position: sticky;
-            bottom: 0;
-            background: var(--bg);
-            padding: 12px 0;
+            padding: 16px 0 0;
             margin-top: 16px;
-            z-index: 50;
+            border-top: 1px solid var(--rule);
         }
 
         .nav-btn {
@@ -1152,20 +1149,38 @@
         }
 
         .nav-btn-next {
-            border: none;
-            background: var(--accent);
-            color: #fff;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            transition: all 0.3s ease;
         }
 
         .nav-btn-next:hover {
-            background: #0f766e;
+            background: var(--accent);
+            color: #fff;
             box-shadow: var(--accent-glow);
         }
 
+        .nav-btn-next .btn-arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn-next:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
         .nav-btn-next:disabled {
-            background: rgba(0,0,0,0.06);
+            background: transparent;
+            border-color: rgba(0,0,0,0.08);
             color: var(--ink-muted);
             cursor: default;
+            box-shadow: none;
+        }
+
+        .nav-btn-next:disabled:hover {
+            background: transparent;
+            color: var(--ink-muted);
         }
 
         /* FOOTER */
@@ -1925,7 +1940,6 @@
             padding-bottom: 2px;
         }
         .med-subcondition-section + .med-subcondition-section {
-            border-top: 1px solid var(--border);
             padding-top: 14px;
         }
         .med-subcondition-label {
@@ -2514,8 +2528,7 @@
             color: var(--ink-muted);
             font-size: 10px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             text-align: left;
             padding: 8px 10px;
             border-bottom: 2px solid var(--border);
@@ -2644,13 +2657,17 @@
         .tools-card {
             background: #ffffff;
             border: none;
+            border-left: 3px solid var(--accent);
             border-radius: 12px;
             padding: 28px 24px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            margin-bottom: 16px;
+            margin-bottom: 10px;
+        }
+        .tools-card.tools-card-expanded {
+            border-left-color: var(--accent);
+            background: rgba(13,148,136,0.02);
         }
         .tools-card-title {
-
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 4px;
@@ -3140,9 +3157,9 @@
         }
         .de-section-header:hover { opacity: 0.8; }
         .de-chevron {
-            font-size: 14px;
-            transition: transform 0.2s;
-            color: var(--ink-muted);
+            font-size: 16px;
+            transition: transform 0.2s ease;
+            color: var(--accent);
         }
         .de-chevron.expanded { transform: rotate(90deg); }
         .de-section-icon { font-size: 20px; color: var(--accent); }
@@ -3292,15 +3309,13 @@
             <div class="steps-bar" id="stepsBar"></div>
             <div class="card">
                 <div id="stepContent"></div>
-            </div>
-            <div class="nav-row">
-                <button class="nav-btn nav-btn-back" id="btnBack" onclick="goBack()">&larr; Back</button>
-                <button class="nav-btn nav-btn-next" id="btnNext" onclick="goNext()">Next &rarr;</button>
+                <div class="nav-row" id="navRow">
+                    <button class="nav-btn nav-btn-back" id="btnBack" onclick="goBack()">&larr; Back</button>
+                    <button class="nav-btn nav-btn-next" id="btnNext" onclick="goNext()">Next <span class="btn-arrow">&rarr;</span></button>
+                </div>
             </div>
             <footer class="footer">
-                Data sourced from manufacturer catalogs &middot; Always verify parameters before prescribing<br>
-                Vertex conversion applied at 12mm for powers &ge; &plusmn;4.00D<br>
-                Prices are estimates based on averages across major retailers and may vary by location
+                Data sourced from manufacturer catalogs. Verify all parameters before prescribing.<span id="footerPricing"></span>
             </footer>
         </div>
     </main>
@@ -3988,16 +4003,19 @@
             back.style.visibility = state.step === 0 ? "hidden" : "visible";
 
             if (state.step === 3) {
-                next.textContent = "\u27F3 New Search";
+                next.innerHTML = '\u27F3 New Search';
                 next.disabled = false;
             } else if (state.step === 2) {
                 const count = getCompatibleLenses().length;
-                next.textContent = `Show Results (${count}) \u2192`;
+                next.innerHTML = `Show Results (${count}) <span class="btn-arrow">\u2192</span>`;
                 next.disabled = false;
             } else {
-                next.textContent = "Next \u2192";
+                next.innerHTML = 'Next <span class="btn-arrow">\u2192</span>';
                 next.disabled = false;
             }
+
+            var fp = document.getElementById('footerPricing');
+            if (fp) fp.innerHTML = state.step === 3 ? '<br>Prices are estimates. Annual cost assumes both eyes. Actual prices vary by retailer.' : '';
         }
 
         // SELECT OPTION GENERATORS (0.00 at top, ascending)
@@ -4083,7 +4101,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Add Power</label>
+                        <label>Add Power <span style="font-weight:400;opacity:0.6;">(for MF CLs only)</span></label>
                         <select id="${prefix}_inAdd"><option value="0.00" ${(!eye.addAbs || eye.addAbs === "0.00") ? "selected" : ""}>0.00</option>${buildPowerOptions(3, eye.addAbs || "0.00", 1)}</select>
                     </div>
                 </div>
@@ -6175,6 +6193,7 @@
                 state.orRotation = null;
                 state.step--;
                 render();
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }
         }
 
@@ -6209,6 +6228,7 @@
                 }
                 state.step++;
                 render();
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }
         }
 
@@ -6245,6 +6265,7 @@
                 state.tsRotation = null;
                 state.step = i;
                 render();
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }
         }
 
@@ -6255,6 +6276,30 @@
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
             document.getElementById('subnavTools').classList.toggle('active', tab === 'tools');
             document.getElementById('clSubtabs').style.display = tab === 'lenses' ? '' : 'none';
+
+            // Reset meds state when navigating away
+            if (tab !== 'meds') {
+                medsState.paStep = 0;
+                medsState.selectedConditionGroup = null;
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+                medsState.categorySearch = "";
+                medsState.searchQuery = "";
+                medsState.showFavoritesOnly = false;
+                medsState.expandedCards = {};
+                medsState.sortMode = 'class';
+                medsState.sortAsc = true;
+            }
+
+            // Reset tools state when navigating away
+            if (tab !== 'tools') {
+                toolsActiveTool = null;
+                toolsSearchQuery = '';
+                toolsCategoryFilter = null;
+            }
+
+            // Reset browse state when navigating away from lenses
+            if (tab !== 'lenses') resetBrowseState();
+
             if (tab === 'lenses') {
                 document.querySelector('main.main').style.display = '';
                 document.querySelector('main.main').style.paddingBottom = clSubTab === 'prescribe' ? '' : '0';
@@ -6272,21 +6317,9 @@
                 document.getElementById('radiusPage').style.display = 'none';
             }
             document.getElementById('medsPage').style.display = tab === 'meds' ? '' : 'none';
-            if (tab === 'meds') {
-                medsState.paStep = 0;
-                medsState.selectedConditionGroup = null;
-                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
-                medsState.categorySearch = "";
-                medsState.sortMode = 'class';
-                medsState.sortAsc = true;
-                renderMeds();
-            }
+            if (tab === 'meds') renderMeds();
             document.getElementById('toolsPage').style.display = tab === 'tools' ? '' : 'none';
-            if (tab === 'tools') {
-                toolsActiveTool = null;
-                toolsSearchQuery = '';
-                renderTools();
-            }
+            if (tab === 'tools') renderTools();
         }
 
         function navigateToMed(medId) {
@@ -6462,6 +6495,22 @@
         }
 
         var toolsSearchQuery = '';
+        var toolsCategoryFilter = null;
+
+        var TOOLS_CATEGORIES = [
+            { id:'glaucoma', label:'Glaucoma', tools:['iop','glaucoma'] },
+            { id:'pediatrics', label:'Pediatrics', tools:['myopia','amblyopia','colorvision','bv','bvdx'] },
+            { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter'] },
+            { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks'] },
+            { id:'oculardz', label:'Ocular Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve'] }
+        ];
+
+        function toggleToolsCategory(catId) {
+            toolsCategoryFilter = toolsCategoryFilter === catId ? null : catId;
+            toolsSearchQuery = '';
+            var el = document.getElementById('toolsContent');
+            if (el && !toolsActiveTool) renderToolsMenu(el);
+        }
 
         const TOOLS_REGISTRY = [
             { id:'iop', icon:'iop-svg', title:'IOP Correction', desc:'Adjust tonometry for corneal thickness (CCT)',
@@ -6523,18 +6572,31 @@
 
         function onToolsSearch(val) {
             toolsSearchQuery = val;
+            if (val.trim()) toolsCategoryFilter = null;
             var el = document.getElementById('toolsContent');
             if (el && !toolsActiveTool) renderToolsMenu(el);
         }
 
         function renderToolsMenu(el) {
             var q = toolsSearchQuery.trim().toLowerCase();
+            var activeCat = toolsCategoryFilter;
+            var catToolIds = null;
+            if (activeCat) {
+                for (var ci = 0; ci < TOOLS_CATEGORIES.length; ci++) {
+                    if (TOOLS_CATEGORIES[ci].id === activeCat) { catToolIds = TOOLS_CATEGORIES[ci].tools; break; }
+                }
+            }
+
             var filtered = TOOLS_REGISTRY;
             if (q) {
                 filtered = TOOLS_REGISTRY.filter(function(t) {
                     return t.title.toLowerCase().indexOf(q) !== -1 ||
                            t.desc.toLowerCase().indexOf(q) !== -1 ||
                            t.keywords.indexOf(q) !== -1;
+                });
+            } else if (catToolIds) {
+                filtered = TOOLS_REGISTRY.filter(function(t) {
+                    return catToolIds.indexOf(t.id) !== -1;
                 });
             }
 
@@ -6551,17 +6613,31 @@
             }
 
             if (filtered.length === 0) {
+                var msg = q ? 'No tools match \u201C' + q.replace(/</g,'&lt;') + '\u201D' : 'No tools in this category.';
                 cards = '<div style="grid-column:1/-1;text-align:center;padding:24px 0;color:var(--ink-muted);font-size:13px;">' +
                     '<i class="ph-duotone ph-magnifying-glass" style="font-size:24px;display:block;margin-bottom:8px;opacity:0.4;"></i>' +
-                    'No tools match \u201C' + q.replace(/</g,'&lt;') + '\u201D' +
-                    '</div>';
+                    msg + '</div>';
             }
+
+            // Category filter buttons
+            var catColors = { glaucoma:'#0d9488', pediatrics:'#7c3aed', bv:'#2563eb', neuro:'#c2410c', oculardz:'#b45309' };
+            var catBtns = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">';
+            var allActive = !activeCat;
+            catBtns += '<button onclick="toggleToolsCategory(null)" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (allActive ? 'var(--accent)' : 'var(--border)') + ';background:' + (allActive ? 'rgba(13,148,136,0.1)' : 'var(--surface)') + ';color:' + (allActive ? 'var(--accent)' : 'var(--ink)') + ';transition:all 0.15s;">All</button>';
+            for (var j = 0; j < TOOLS_CATEGORIES.length; j++) {
+                var cat = TOOLS_CATEGORIES[j];
+                var isActive = activeCat === cat.id;
+                var cc = catColors[cat.id] || 'var(--accent)';
+                catBtns += '<button onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (isActive ? cc : 'var(--border)') + ';background:' + (isActive ? cc + '18' : 'var(--surface)') + ';color:' + (isActive ? cc : 'var(--ink)') + ';transition:all 0.15s;">' + cat.label + '</button>';
+            }
+            catBtns += '</div>';
 
             el.innerHTML =
                 '<div class="tools-search-wrap">' +
                     '<span class="tools-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>' +
                     '<input type="text" class="tools-search-input" id="toolsSearchInput" placeholder="Search tools\u2026" value="' + (toolsSearchQuery || '').replace(/"/g,'&quot;') + '" oninput="onToolsSearch(this.value)" autocomplete="off">' +
                 '</div>' +
+                catBtns +
                 '<div class="option-grid">' + cards + '</div>';
 
             // Restore focus to search input if user is typing
@@ -8251,7 +8327,7 @@
             var exp = dryEyeExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
                 + '<div class="de-section-header" onclick="toggleDryEyeSection(\'' + id + '\')" style="padding:16px 20px;">'
-                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
                 + '<div class="de-section-summary">' + summary + '</div></div>'
@@ -8470,7 +8546,7 @@
             var exp = gonioExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
                 + '<div class="de-section-header" onclick="toggleGonioSection(\'' + id + '\')" style="padding:16px 20px;">'
-                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
                 + '<div class="de-section-summary">' + summary + '</div></div>'
@@ -8601,7 +8677,7 @@
             var exp = cvExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
                 + '<div class="de-section-header" onclick="toggleCvSection(\'' + id + '\')" style="padding:16px 20px;">'
-                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
                 + '<div class="de-section-summary">' + summary + '</div></div>'
@@ -8716,7 +8792,7 @@
             var exp = amdExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
                 + '<div class="de-section-header" onclick="toggleAmdSection(\'' + id + '\')" style="padding:16px 20px;">'
-                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
                 + '<div class="de-section-summary">' + summary + '</div></div>'
@@ -8960,7 +9036,7 @@
             var exp = drExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
                 + '<div class="de-section-header" onclick="toggleDrSection(\'' + id + '\')" style="padding:16px 20px;">'
-                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
                 + '<div class="de-section-summary">' + summary + '</div></div>'
@@ -9176,7 +9252,21 @@
             if (anyChecked) updateDrResult();
         }
 
+        function resetBrowseState() {
+            browseState.search = "";
+            browseState.typeFilter = null;
+            browseState.modalityFilter = null;
+            browseState.sortDk = null;
+            browseState.sortBc = null;
+            browseState.sortDia = null;
+            browseState.sortSph = null;
+            browseState.sortCyl = null;
+            browseState.sortCost = null;
+            browseState.selectedLens = null;
+        }
+
         function switchClSub(sub) {
+            if (clSubTab === 'browse' && sub !== 'browse') resetBrowseState();
             clSubTab = sub;
             document.getElementById('clSubPrescribe').classList.toggle('active', sub === 'prescribe');
             document.getElementById('clSubBrowse').classList.toggle('active', sub === 'browse');
@@ -11267,9 +11357,9 @@
 
         function renderUveitisLabCard(lab) {
             var exp = uveitisLabState.expanded[lab.id];
-            var html = '<div class="tools-card" style="padding:0;">'
+            var html = '<div class="tools-card' + (exp ? ' tools-card-expanded' : '') + '" style="padding:0;">'
                 + '<div class="de-section-header" onclick="uveitisLabToggle(\'' + lab.id + '\')" style="padding:16px 20px;">'
-                + '<i class="de-chevron ph-bold ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + lab.name + (lab.abbr !== lab.name ? ' <span style="opacity:0.6;font-weight:500;">(' + lab.abbr + ')</span>' : '') + '</div>'
                 + '<div class="de-section-summary">' + lab.summary + '</div></div>'
                 + '</div>';
@@ -11312,11 +11402,11 @@
                 html = '<div style="text-align:center;padding:24px;opacity:0.5;">No labs match your search.</div>';
             } else {
                 if (coreLabs.length > 0) {
-                    html += '<div style="font-size:13px;font-weight:700;color:var(--accent);margin:12px 0 8px 2px;text-transform:uppercase;letter-spacing:0.5px;">Core Panel (' + coreLabs.length + ')</div>';
+                    html += '<div style="font-size:13px;font-weight:600;color:var(--accent);margin:12px 0 8px 2px;">Core Panel <span style="color:var(--ink-muted);font-weight:400;">' + coreLabs.length + '</span></div>';
                     for (var c = 0; c < coreLabs.length; c++) html += renderUveitisLabCard(coreLabs[c]);
                 }
                 if (extLabs.length > 0) {
-                    html += '<div style="font-size:13px;font-weight:700;color:var(--accent);margin:16px 0 8px 2px;text-transform:uppercase;letter-spacing:0.5px;">Extended Panel (' + extLabs.length + ')</div>';
+                    html += '<div style="font-size:13px;font-weight:600;color:var(--accent);margin:16px 0 8px 2px;">Extended Panel <span style="color:var(--ink-muted);font-weight:400;">' + extLabs.length + '</span></div>';
                     for (var e = 0; e < extLabs.length; e++) html += renderUveitisLabCard(extLabs[e]);
                 }
             }
@@ -11332,11 +11422,11 @@
                 + '</button>'
                 + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="uveitisLabExpandAll()">Expand All</button><button onclick="uveitisLabCollapseAll()">Collapse All</button></div>'
                 + '</div>';
-            html += '<div class="tools-card" style="margin-bottom:14px;">'
-                + '<div class="tools-card-title"><i class="ph-duotone ph-flask" style="color:var(--accent);"></i> Uveitis Lab Guide</div>'
-                + '<div class="tools-card-desc">Searchable lab reference for uveitis work-up. Tap any lab to view normal ranges, interpretation, associated conditions, and clinical notes.</div>'
+            html += '<div style="margin-bottom:14px;">'
+                + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;"><i class="ph-duotone ph-flask" style="color:var(--accent);font-size:28px;"></i><span style="font-size:20px;font-weight:700;color:var(--ink);">Uveitis Lab Guide</span></div>'
+                + '<div style="font-size:13px;color:var(--ink-muted);">Uveitis work-up lab reference</div>'
                 + '</div>';
-            html += '<input type="text" id="uveitisLabSearchInput" placeholder="Search labs (e.g. sarcoid, syphilis, HLA)…" value="' + (uveitisLabState.search || '') + '" oninput="uveitisLabSearch(this.value)" style="width:100%;box-sizing:border-box;padding:10px 14px;border:1.5px solid var(--rule);border-radius:10px;font-size:14px;font-family:var(--sans);background:var(--card);color:var(--text);margin-bottom:14px;outline:none;" onfocus="this.style.borderColor=\'var(--accent)\'" onblur="this.style.borderColor=\'var(--rule)\'">';
+            html += '<input type="text" id="uveitisLabSearchInput" placeholder="Search labs (e.g. sarcoid, syphilis, HLA)…" value="' + (uveitisLabState.search || '') + '" oninput="uveitisLabSearch(this.value)" style="width:100%;box-sizing:border-box;padding:10px 14px 10px 14px;border:2px solid transparent;border-radius:10px;font-size:14px;font-family:var(--sans);background:#f1f0ee;color:var(--ink);margin-bottom:14px;outline:none;transition:all 0.15s;" onfocus="this.style.borderColor=\'var(--accent)\';this.style.background=\'#ffffff\'" onblur="this.style.borderColor=\'transparent\';this.style.background=\'#f1f0ee\'">';
             html += '<div id="uveitisLabContent"></div>';
             el.innerHTML = html;
             renderUveitisLabContent();
@@ -11406,7 +11496,6 @@
             </div>`;
             if (medsState.showFavoritesOnly) {
                 const favResults = MEDS.filter(m => medsState.favorites.includes(m.id));
-                html += `<div class="results-header"><div><div class="results-count">${favResults.length} Favorite${favResults.length!==1?'s':''}</div></div></div>`;
                 if (favResults.length === 0) {
                     html += `<div class="empty"><div class="empty-icon"><i class="ph-duotone ph-pill"></i></div><div class="empty-title">No favorites yet</div><div class="empty-desc">Star medications to add them here.</div></div>`;
                 } else {
@@ -11419,7 +11508,6 @@
             if (medsState.searchQuery.trim().length >= 2) {
                 const results = getMedLookupResults();
                 if (results.length > 0) {
-                    html += `<div class="results-header"><div><div class="results-count">${results.length} Result${results.length!==1?'s':''}</div></div></div>`;
                     html += `<div class="lens-list" style="margin-bottom:16px">`;
                     results.forEach(med => { html += renderMedCard(med, false); });
                     html += `</div>`;
@@ -11509,8 +11597,7 @@
 
             // Medication list
             const filtered = getMedFilteredResults();
-            html += `<div class="results-header" style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;">
-                <div class="results-count">${filtered.length} Medication${filtered.length!==1?'s':''}</div>
+            html += `<div class="results-header" style="margin-top:16px;display:flex;align-items:center;justify-content:flex-end;">
                 <div style="display:flex;gap:4px;">
                     ${medsState.selectedConditionGroup !== 'macular_degeneration' ? `<button class="med-sort-btn ${medsState.sortMode==='class'?'active':''}" onclick="toggleMedSort('class')" title="Sort by class">
                         <i class="ph-duotone ph-list-numbers" style="font-size:13px;vertical-align:-1px;"></i> Generation ${medsState.sortMode==='class' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
@@ -11616,7 +11703,8 @@
             html += `<div class="med-info">`;
             // Badges
             html += `<div class="badges">`;
-            html += `<span class="badge badge-condition">${condInfo ? condInfo.label : med.condition}</span>`;
+            const inCategory = medsState.selectedConditionGroup && MED_CONDITION_GROUPS.find(g => g.id === medsState.selectedConditionGroup && g.conditions.includes(med.condition));
+            if (!inCategory) html += `<span class="badge badge-condition">${condInfo ? condInfo.label : med.condition}</span>`;
             if (med.preservative_free) html += `<span class="badge badge-pf">PF</span>`;
             if (med.generic_available) html += `<span class="badge badge-generic">Generic</span>`;
             html += `</div>`;
@@ -11643,9 +11731,6 @@
             html += `<button class="med-fav-btn ${isFav?'favorited':''}" onclick="event.stopPropagation();toggleMedFavorite('${med.id}')" title="${isFav?'Remove from favorites':'Add to favorites'}"><i class="ph-duotone ph-star"></i></button>`;
             html += `</div>`;
 
-            if (condensed) {
-                html += `<div class="med-expand-hint">Tap for details</div>`;
-            }
 
             // Expanded content
             html += `<div class="${condensed ? 'med-expanded-content' : ''}">`;
@@ -12023,7 +12108,7 @@
         }
 
         // ===== BROWSE ALL TAB =====
-        const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null, sortBc: null, sortDia: null, selectedLens: null };
+        const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null, sortBc: null, sortDia: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
 
         function toggleBrowseType(type) {
             browseState.typeFilter = type;
@@ -12035,8 +12120,26 @@
             renderBrowse();
         }
 
+        function calcLensAnnualCost(l) {
+            var priceStr = l.price || '';
+            var m = priceStr.match(/\$(\d+)/);
+            if (!m) return null;
+            var price = parseInt(m[1], 10);
+            var pkMatch = priceStr.match(/\((\d+)pk\)/i);
+            var packSize;
+            if (pkMatch) {
+                packSize = parseInt(pkMatch[1], 10);
+            } else {
+                var qtys = (l.qty || '').split(',').map(function(s){ return parseInt(s.trim(), 10); }).filter(function(n){ return !isNaN(n); });
+                packSize = qtys.length ? qtys[0] : 6;
+            }
+            var replacements = { daily:365, weekly:52, biweekly:26, monthly:12 };
+            var reps = replacements[l.modality] || 12;
+            return Math.round((reps / packSize) * price * 2);
+        }
+
         function toggleBrowseSort(key) {
-            const keys = ['sortDk', 'sortBc', 'sortDia'];
+            const keys = ['sortDk', 'sortBc', 'sortDia', 'sortSph', 'sortCyl', 'sortCost'];
             const stateKey = 'sort' + key;
             if (!browseState[stateKey]) browseState[stateKey] = "desc";
             else if (browseState[stateKey] === "desc") browseState[stateKey] = "asc";
@@ -12163,12 +12266,13 @@
             const divider = `<span style="width:1px;align-self:stretch;background:var(--border);margin:0 4px"></span>`;
             html += `<div class="browse-filters" style="margin-bottom:10px">${allBtn}${typeBtns}${divider}${modBtns}</div>`;
 
-            const anySort = browseState.sortDk || browseState.sortBc || browseState.sortDia;
-            const mkArrow = (s) => s === "desc" ? " &#9660;" : s === "asc" ? " &#9650;" : "";
+            const anySort = browseState.sortDk || browseState.sortBc || browseState.sortDia || browseState.sortSph || browseState.sortCyl || browseState.sortCost;
+            const mkArrow = (s) => s === "desc" ? " &#9660;" : s === "asc" ? " &#9650;" : ' <span style="opacity:0.3">&#9650;</span>';
             const mkClass = (s) => s ? ' class="browse-th-active"' : '';
+            const clearSort = "browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;browseState.sortSph=null;browseState.sortCyl=null;browseState.sortCost=null;renderBrowse()";
 
             html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
-                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;renderBrowse()">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th>Sph Range</th><th>Cyl Range</th><th>Axes</th>
+                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">DK${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
 
             let totalShown = 0;
@@ -12184,6 +12288,9 @@
                 if (browseState.sortDk) allLenses.sort((a, b) => browseState.sortDk === "desc" ? b.dk - a.dk : a.dk - b.dk);
                 else if (browseState.sortBc) allLenses.sort((a, b) => browseState.sortBc === "desc" ? parseFloat(b.bc) - parseFloat(a.bc) : parseFloat(a.bc) - parseFloat(b.bc));
                 else if (browseState.sortDia) allLenses.sort((a, b) => browseState.sortDia === "desc" ? parseFloat(b.diam) - parseFloat(a.diam) : parseFloat(a.diam) - parseFloat(b.diam));
+                else if (browseState.sortSph) allLenses.sort((a, b) => browseState.sortSph === "desc" ? (b.sphMax - b.sphMin) - (a.sphMax - a.sphMin) : (a.sphMax - a.sphMin) - (b.sphMax - b.sphMin));
+                else if (browseState.sortCyl) allLenses.sort((a, b) => { var ac = Math.abs(a.cylMin) + Math.abs(a.cylMax), bc = Math.abs(b.cylMin) + Math.abs(b.cylMax); return browseState.sortCyl === "desc" ? bc - ac : ac - bc; });
+                else if (browseState.sortCost) allLenses.sort((a, b) => { var ac = calcLensAnnualCost(a) || 0, bc = calcLensAnnualCost(b) || 0; return browseState.sortCost === "desc" ? bc - ac : ac - bc; });
                 allLenses.forEach(l => {
                     const tb = typeLabel[l.type] || "";
                     const sb = schedLabel[l.modality] || "";
@@ -12199,6 +12306,7 @@
                         <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
                         <td class="browse-muted">${cylStr}</td>
                         <td class="browse-muted">${axStr}</td>
+                        <td class="browse-muted">${(() => { var c = calcLensAnnualCost(l); return c !== null ? '$' + c.toLocaleString() : '\u2014'; })()}</td>
                     </tr>`;
                     totalShown++;
                 });
@@ -12213,7 +12321,7 @@
                 lenses.sort((a, b) => a.name.localeCompare(b.name));
                 const color = brandColorMap[brand] || "var(--accent)";
                 const bg = brandBgMap[brand] || "rgba(13,148,136,0.08)";
-                html += `<tr class="browse-brand-row"><td colspan="7" style="border-left-color:${color};color:${color};background:${bg}">${brand}</td></tr>`;
+                html += `<tr class="browse-brand-row"><td colspan="8" style="border-left-color:${color};color:${color};background:${bg}">${brand}</td></tr>`;
                 lenses.forEach(l => {
                     const tb = typeLabel[l.type] || "";
                     const sb = schedLabel[l.modality] || "";
@@ -12228,6 +12336,7 @@
                         <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
                         <td class="browse-muted">${cylStr}</td>
                         <td class="browse-muted">${axStr}</td>
+                        <td class="browse-muted">${(() => { var c = calcLensAnnualCost(l); return c !== null ? '$' + c.toLocaleString() : '\u2014'; })()}</td>
                     </tr>`;
                     totalShown++;
                 });
@@ -12250,7 +12359,7 @@
         render();
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#94a3b8;background:#ede6de;">
-        <div style="margin-bottom:4px;font-style:italic;color:#0d9488;">Built by an Optometrist, For Optometrists.</div>
+        <div style="margin-bottom:4px;color:#94a3b8;">Built by an Optometrist, For Optometrists.</div>
         <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
         <div>&copy; 2026 Pocket OD</div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
