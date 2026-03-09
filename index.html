@@ -175,6 +175,7 @@
             background: var(--accent-light);
             border-color: var(--accent);
         }
+        .cl-label-short { display: none; }
 
 
         /* LAYOUT */
@@ -1987,7 +1988,7 @@
                 gap: 0;
             }
             .logo-group {
-                justify-content: flex-start;
+                justify-content: center;
                 margin-bottom: 6px;
             }
             .logo-text {
@@ -2009,7 +2010,7 @@
 
             /* --- Main layout --- */
             .main {
-                padding: 16px 12px 80px;
+                padding: 8px 12px 80px;
             }
 
             /* --- Cards --- */
@@ -2062,8 +2063,8 @@
 
             /* --- Steps bar --- */
             .steps-bar {
-                padding: 6px 8px;
-                margin-bottom: 14px;
+                padding: 0 8px;
+                margin-bottom: 0;
                 justify-content: center;
             }
             .step-item {
@@ -2074,6 +2075,63 @@
                 width: 8px;
                 height: 8px;
                 font-size: 0;
+            }
+
+            /* --- CL Subtabs — single row, short labels --- */
+            .cl-subtabs {
+                gap: 6px;
+                margin-bottom: 4px;
+                padding: 2px 0;
+            }
+            .cl-subtabs-left, .cl-subtabs-right {
+                display: contents;
+            }
+            .cl-subtab {
+                flex: 1;
+                text-align: center;
+                font-size: 11px;
+                padding: 8px 6px;
+                white-space: nowrap;
+                letter-spacing: 0;
+                border-color: rgba(0,0,0,0.18);
+                color: var(--ink);
+            }
+            .cl-label-full { display: none; }
+            .cl-label-short { display: inline; }
+
+            /* --- Search bars — compact on mobile --- */
+            .browse-search-input {
+                padding: 7px 36px 7px 32px;
+                font-size: 13px;
+                border-radius: 8px;
+            }
+            .browse-search-wrap {
+                margin-bottom: 8px;
+            }
+            .browse-search-icon {
+                font-size: 14px;
+                left: 10px;
+            }
+            .tools-search-input {
+                padding: 7px 14px 7px 34px;
+                font-size: 13px;
+                border-radius: 8px;
+            }
+            .tools-search-wrap {
+                margin-bottom: 10px;
+            }
+            .tools-search-icon {
+                font-size: 15px;
+                left: 11px;
+            }
+            .med-search-input {
+                min-height: unset;
+                padding: 7px 14px 7px 34px;
+                font-size: 13px;
+                border-radius: 8px;
+            }
+            .med-search-wrap {
+                margin-bottom: 10px;
             }
 
             /* --- Option grid — touch-friendly --- */
@@ -2648,7 +2706,7 @@
             .browse-filters { gap: 4px; }
             .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; }
             .browse-table { font-size: 12px; min-width: 640px; }
-            .browse-table th { padding: 6px 6px; }
+            .browse-table th { padding: 6px 6px; position: static; }
             .browse-table td { padding: 5px 6px; }
             .browse-type, .browse-sched { font-size: 8px; padding: 1px 3px; }
         }
@@ -3301,8 +3359,8 @@
                 <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">Browse All</div>
             </div>
             <div class="cl-subtabs-right">
-                <div class="cl-subtab" id="clSubVertex" onclick="switchClSub('vertex')">Vertex Chart</div>
-                <div class="cl-subtab" id="clSubRadius" onclick="switchClSub('radius')">Radius Conversion</div>
+                <div class="cl-subtab" id="clSubVertex" onclick="switchClSub('vertex')"><span class="cl-label-full">Vertex Chart</span><span class="cl-label-short">Vertex</span></div>
+                <div class="cl-subtab" id="clSubRadius" onclick="switchClSub('radius')"><span class="cl-label-full">Radius Conversion</span><span class="cl-label-short">Radius Conv.</span></div>
             </div>
         </div>
         <div id="lensesContent">
@@ -6499,10 +6557,10 @@
 
         var TOOLS_CATEGORIES = [
             { id:'glaucoma', label:'Glaucoma', tools:['iop','glaucoma'] },
-            { id:'pediatrics', label:'Pediatrics', tools:['myopia','amblyopia','colorvision','bv','bvdx'] },
+            { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx'] },
             { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter'] },
             { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks'] },
-            { id:'oculardz', label:'Ocular Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve'] }
+            { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve'] }
         ];
 
         function toggleToolsCategory(catId) {
@@ -6621,14 +6679,16 @@
 
             // Category filter buttons
             var catColors = { glaucoma:'#0d9488', pediatrics:'#7c3aed', bv:'#2563eb', neuro:'#c2410c', oculardz:'#b45309' };
-            var catBtns = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">';
+            var catBtns = '<div style="display:flex;flex-wrap:' + (window.innerWidth <= 640 ? 'nowrap' : 'wrap') + ';gap:6px;margin-bottom:12px;">';
             var allActive = !activeCat;
             catBtns += '<button onclick="toggleToolsCategory(null)" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (allActive ? 'var(--accent)' : 'var(--border)') + ';background:' + (allActive ? 'rgba(13,148,136,0.1)' : 'var(--surface)') + ';color:' + (allActive ? 'var(--accent)' : 'var(--ink)') + ';transition:all 0.15s;">All</button>';
             for (var j = 0; j < TOOLS_CATEGORIES.length; j++) {
                 var cat = TOOLS_CATEGORIES[j];
                 var isActive = activeCat === cat.id;
                 var cc = catColors[cat.id] || 'var(--accent)';
-                catBtns += '<button onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (isActive ? cc : 'var(--border)') + ';background:' + (isActive ? cc + '18' : 'var(--surface)') + ';color:' + (isActive ? cc : 'var(--ink)') + ';transition:all 0.15s;">' + cat.label + '</button>';
+                var isMobile = window.innerWidth <= 640;
+                var displayLabel = (isMobile && cat.shortLabel) ? cat.shortLabel : cat.label;
+                catBtns += '<button onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (isActive ? cc : 'var(--border)') + ';background:' + (isActive ? cc + '18' : 'var(--surface)') + ';color:' + (isActive ? cc : 'var(--ink)') + ';transition:all 0.15s;white-space:nowrap;">' + displayLabel + '</button>';
             }
             catBtns += '</div>';
 
