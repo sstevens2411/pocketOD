@@ -16,8 +16,8 @@
             --surface: rgba(0,0,0,0.03);
             --surface-solid: #ffffff;
             --ink: #1a2332;
-            --ink-secondary: #64748b;
-            --ink-muted: #94a3b8;
+            --ink-secondary: #475569;
+            --ink-muted: #475569;
             --border: rgba(0,0,0,0.08);
             --border-hover: rgba(0,0,0,0.12);
             --accent: #0d9488;
@@ -1686,7 +1686,7 @@
         /* Dosing */
         .med-dosing {
             font-size: 12.5px;
-            color: var(--ink-secondary);
+            color: #334155;
             margin-top: 8px;
             line-height: 1.5;
         }
@@ -1728,7 +1728,7 @@
             padding: 10px 14px;
             margin-top: 8px;
             font-size: 12.5px;
-            color: #92400e;
+            color: #334155;
             line-height: 1.5;
         }
         .med-notes-list {
@@ -1738,7 +1738,7 @@
             padding: 8px 14px 8px 30px;
             margin: 8px 0 0 0;
             font-size: 12.5px;
-            color: #92400e;
+            color: #334155;
             line-height: 1.35;
             list-style: disc;
         }
@@ -2684,9 +2684,9 @@
             transition: all 0.12s;
             font-family: var(--sans);
         }
-        .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: var(--ink-muted); border-color: rgba(0,0,0,0.12); }
-        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-mod:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.2); color: var(--ink); }
-        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.25); color: var(--ink); font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: #334155; border-color: rgba(0,0,0,0.22); }
+        .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-mod:hover { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.3); color: var(--ink); }
+        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.35); color: var(--ink); font-weight: 800; box-shadow: none; }
         .browse-filter-btn.bf-sphere { color: #2563eb; border-color: rgba(37,99,235,0.3); }
         .browse-filter-btn.bf-sphere:hover { background: rgba(37,99,235,0.08); border-color: #2563eb; color: #2563eb; }
         .browse-filter-btn.bf-sphere.active { background: rgba(37,99,235,0.12); border-color: #2563eb; color: #2563eb; font-weight: 800; box-shadow: none; }
@@ -3500,20 +3500,45 @@
             { name:"INFUSE Multifocal", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:107, bc:"8.6", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"10, 90", price:"$151 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)" },
             { name:"Ultra Monthly", brand:"Bausch + Lomb", type:"sphere", modality:"monthly", dk:114, bc:"8.5", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$66", wear:"EW", material:"Samfilcon A (SiHy)", privateLabels:[{name:"eureka! Monthly",retailer:"Walmart"}] },
             { name:"Ultra for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$80", wear:"EW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)" },
-            { name:"Ultra for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"monthly", dk:114, bc:"8.5", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"6", price:"$98", wear:"EW", material:"Samfilcon A (SiHy)" },
-            { name:"Ultra Multifocal for Astigmatism", brand:"Bausch + Lomb", type:"multifocal-toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:["Low","High"], qty:"6", price:"$150", wear:"DW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+            { name:"Ultra for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"monthly", dk:114, bc:"8.5", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"6", price:"$98", wear:"EW", material:"Samfilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
-                    { specAddMin:1.75, specAddMax:2.50, clAdd:"High", dominant:"Low", nonDominant:"High" },
+                    { specAddMin:1.75, specAddMax:1.75, clAdd:"High", dominant:"Low", nonDominant:"High" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"High", nonDominant:"High" },
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"lowerAdd", eye:"dominant", dropTo:"Ultra for Astigmatism" },
-                        { action:"sphereAdj", eye:"dominant", amount:-0.25 }
+                        { action:"lowerAdd", eye:"dominant", dropTo:"Ultra Monthly", addConfigs:["Low/Low"] },
+                        { action:"lowerAdd", eye:"dominant", addConfigs:["High/High"] },
+                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/Low","High/High"] },
+                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/High"] }
                     ],
                     near: [
                         { action:"raiseAdd", eye:"nonDominant" },
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye (wearing High Add lens) using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
+                        { action:"raiseAdd", eye:"dominant", offLabel:true, addConfigs:["Low/Low","Low/High"] },
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"If vision is still unsatisfactory, make small changes by adding +0.25D at a time to non-dominant eye using handheld lenses, and continue evaluating vision binocularly in normal room illumination. Adjust contact lens power when vision is satisfactory.", addConfigs:["High/High"] }
+                    ]
+                }
+            }},
+            { name:"Ultra Multifocal for Astigmatism", brand:"Bausch + Lomb", type:"multifocal-toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:["Low","High"], qty:"6", price:"$150", wear:"DW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.75, specAddMax:1.75, clAdd:"High", dominant:"Low", nonDominant:"High" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"High", nonDominant:"High" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"lowerAdd", eye:"dominant", dropTo:"Ultra for Astigmatism", addConfigs:["Low/Low"] },
+                        { action:"lowerAdd", eye:"dominant", addConfigs:["High/High"] },
+                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/Low","High/High"] },
+                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/High"] }
+                    ],
+                    near: [
+                        { action:"raiseAdd", eye:"nonDominant" },
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye (wearing High Add lens) using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
+                        { action:"raiseAdd", eye:"dominant", offLabel:true, addConfigs:["Low/Low","Low/High"] },
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"If vision is still unsatisfactory, make small changes by adding +0.25D at a time to non-dominant eye using handheld lenses, and continue evaluating vision binocularly in normal room illumination. Adjust contact lens power when vision is satisfactory.", addConfigs:["High/High"] }
                     ]
                 }
             }},
@@ -4262,10 +4287,10 @@
 
                 <div class="form-grid" style="margin-top:14px">
                     <div class="form-group" style="grid-column: 1 / -1">
-                        <label>Dominant Eye (optional)</label>
+                        <label>Dominant Eye (optional, but needed for MF refinement)</label>
                         <div class="input-row" style="gap:8px">
-                            <button type="button" id="domLeft" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1">Left</button>
                             <button type="button" id="domRight" class="dom-toggle ${state.dominantEye === 'right' ? 'active-right' : ''}" style="flex:1">Right</button>
+                            <button type="button" id="domLeft" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1">Left</button>
                         </div>
                     </div>
                 </div>
@@ -4852,14 +4877,16 @@
             }
 
             if (odOk) {
-                const { params, vertexApplied } = buildEyeParams(state.od, odDominant, "OD");
+                const odDropLens = (state.tsAdjustment && state.tsAdjustment.overrides["OD"] && state.tsAdjustment.overrides["OD"].lensDropTo) ? LENSES.find(l => l.name === state.tsAdjustment.overrides["OD"].lensDropTo) : null;
+                const { params, vertexApplied } = buildEyeParams(state.od, odDominant, "OD", odDropLens || undefined);
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                     <div class="order-param-label">${p.label}</div>
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                const odTitle = isMixedPair
-                    ? `OD (Right Eye) \u2014 <span style="color:${brandColor};font-weight:600">${lens.name}</span>`
+                const odLensName = odDropLens ? odDropLens.name : lens.name;
+                const odTitle = (isMixedPair || odDropLens)
+                    ? `OD (Right Eye) \u2014 <span style="color:${brandColor};font-weight:600">${odLensName}</span>`
                     : `OD (Right Eye) \u2014 Order Parameters`;
                 eyeSectionsHtml += `<div class="order-section-title">${odTitle}</div>
                     <div class="order-grid">${html}</div>`;
@@ -4882,14 +4909,16 @@
             }
 
             if (osOk) {
-                const { params, vertexApplied } = buildEyeParams(state.os, osDominant, "OS");
+                const osDropLens = (state.tsAdjustment && state.tsAdjustment.overrides["OS"] && state.tsAdjustment.overrides["OS"].lensDropTo) ? LENSES.find(l => l.name === state.tsAdjustment.overrides["OS"].lensDropTo) : null;
+                const { params, vertexApplied } = buildEyeParams(state.os, osDominant, "OS", osDropLens || undefined);
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                     <div class="order-param-label">${p.label}</div>
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                const osTitle = isMixedPair
-                    ? `OS (Left Eye) \u2014 <span style="color:${brandColor};font-weight:600">${lens.name}</span>`
+                const osLensName = osDropLens ? osDropLens.name : lens.name;
+                const osTitle = (isMixedPair || osDropLens)
+                    ? `OS (Left Eye) \u2014 <span style="color:${brandColor};font-weight:600">${osLensName}</span>`
                     : `OS (Left Eye) \u2014 Order Parameters`;
                 eyeSectionsHtml += `<div class="order-section-title">${osTitle}</div>
                     <div class="order-grid">${html}</div>`;
@@ -4973,6 +5002,7 @@
 
             const isAdjusted = state.tsAdjustment !== null;
             const isNonAdapt = state.nonAdaptFrom !== null;
+            const hasLensDrop = isAdjusted && state.tsAdjustment.overrides && Object.values(state.tsAdjustment.overrides).some(o => o.lensDropTo);
             const adjBanner = isAdjusted ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Adjusted Order:</strong> ${state.tsAdjustment.title}</div>` : '';
             const nonAdaptBanner = isNonAdapt ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Non-Adapt Conversion:</strong> Cylinder folded into sphere via spherical equivalent</div>` : '';
 
@@ -4982,9 +5012,13 @@
                     : isAdjusted
                     ? `<button class="order-back-btn" onclick="backToTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> Back to Troubleshooting</button>`
                     : `<button class="order-back-btn" onclick="deselectLens()"><i class="ph-duotone ph-arrow-left"></i> Back to Results</button>`}
-                ${isMixedPair
-                    ? `<div class="order-lens-name" style="font-size:16px;line-height:1.5">OD: <span style="color:${brandColor}">${odCompLens ? odCompLens.name : lens.name}</span>, OS: <span style="color:${brandColor}">${osCompLens ? osCompLens.name : lens.name}</span></div>
-                    <div class="order-lens-brand" style="color:${brandColor}">${lens.brand} \u00B7 Mixed Pair</div>`
+                ${(isMixedPair || hasLensDrop)
+                    ? (() => {
+                        const odName = (state.tsAdjustment && state.tsAdjustment.overrides["OD"] && state.tsAdjustment.overrides["OD"].lensDropTo) ? state.tsAdjustment.overrides["OD"].lensDropTo : (odCompLens ? odCompLens.name : lens.name);
+                        const osName = (state.tsAdjustment && state.tsAdjustment.overrides["OS"] && state.tsAdjustment.overrides["OS"].lensDropTo) ? state.tsAdjustment.overrides["OS"].lensDropTo : (osCompLens ? osCompLens.name : lens.name);
+                        return `<div class="order-lens-name" style="font-size:16px;line-height:1.5">OD: <span style="color:${brandColor}">${odName}</span><br>OS: <span style="color:${brandColor}">${osName}</span></div>
+                        <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`;
+                    })()
                     : `<div class="order-lens-name">${lens.name}</div>
                     <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`}
 
@@ -5009,6 +5043,40 @@
                     if (!nextSug) return '';
                     window._tsNextSuggestion = nextSug;
                     const stepNum = (state.tsAdjustment.stepNumber || 1) + 1;
+                    if (nextSug.sphereAdjSelect) {
+                        const baseSph = nextSug.selectBaseSph;
+                        const eye = nextSug.selectEye;
+                        const isPlus = nextSug.selectOptions[0] > 0;
+                        const optHtml = nextSug.selectOptions.map(amt =>
+                            `<option value="${amt}">${amt > 0 ? '+' : ''}${amt.toFixed(2)}</option>`
+                        ).join('');
+                        return `<div style="margin-top:20px">
+                            <div class="order-section-title" style="color:#b45309;font-style:italic">Still Not Clear? Next Step</div>
+                            <div class="troubleshoot-suggestion fade-in">
+                                <div class="ts-step">${stepNum}</div>
+                                <div class="ts-body">
+                                    <div class="ts-title">Add ${isPlus ? 'plus' : 'minus'} to ${eye} sphere</div>
+                                    <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${nextSug.rationale}</div>
+                                    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);">Patient accepted:</span>
+                                        <select id="tsNextSelectAmt" onchange="updateTsNextSelectPreview()" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">
+                                            ${optHtml}
+                                        </select>
+                                    </div>
+                                    <div class="ts-changes" id="tsNextSelectChanges">
+                                        <div class="ts-change">
+                                            <span class="ts-change-eye">${eye}</span>
+                                            <span class="ts-change-param">Sphere:</span>
+                                            <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
+                                            <span class="ts-change-arrow">\u2192</span>
+                                            <span class="ts-change-to">${snapTo025(baseSph + nextSug.selectOptions[0]) > 0 ? "+" : ""}${snapTo025(baseSph + nextSug.selectOptions[0]).toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyNextTsSelectStep()">View Adjusted Results \u2192</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
                     const changesHtml = nextSug.changes.map(c =>
                         `<div class="ts-change">
                             <span class="ts-change-eye">${c.eye}</span>
@@ -5075,11 +5143,41 @@
                 if (adj.addOverride !== undefined) merged[eye].addOverride = adj.addOverride;
                 if (adj.designOverride !== undefined) merged[eye].designOverride = adj.designOverride;
                 if (adj.axisOverride !== undefined) merged[eye].axisOverride = adj.axisOverride;
+                if (adj.lensDropTo !== undefined) merged[eye].lensDropTo = adj.lensDropTo;
             }
             state.tsAdjustment = { title: s.title, overrides: merged, complaint: state.troubleshoot, tsStepIdx: s.tsStepIdx !== undefined ? s.tsStepIdx : null, stepNumber: 1 };
             state.troubleshoot = null;
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function updateTsSelectPreview(index) {
+            const s = window._tsSuggestions[index];
+            if (!s || !s.sphereAdjSelect) return;
+            const sel = document.getElementById('tsSelectAmt_' + index);
+            if (!sel) return;
+            const amt = parseFloat(sel.value);
+            const baseSph = s.selectBaseSph;
+            const newSph = snapTo025(baseSph + amt);
+            const changesEl = document.getElementById('tsSelectChanges_' + index);
+            if (changesEl) {
+                changesEl.innerHTML = `<div class="ts-change">
+                    <span class="ts-change-eye">${s.selectEye}</span>
+                    <span class="ts-change-param">Sphere:</span>
+                    <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
+                    <span class="ts-change-arrow">\u2192</span>
+                    <span class="ts-change-to">${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}</span>
+                </div>`;
+            }
+        }
+
+        function applyTsSelectAdjustment(index) {
+            const s = window._tsSuggestions[index];
+            if (!s || !s.sphereAdjSelect) return;
+            const sel = document.getElementById('tsSelectAmt_' + index);
+            const amt = sel ? parseFloat(sel.value) : s.selectOptions[0];
+            s.adjustments[s.selectEye] = { sphDelta: amt };
+            applyTsAdjustment(index);
         }
 
         function computeNextTsStep() {
@@ -5152,6 +5250,22 @@
                         const lbl = step.amount > 0 ? `+${step.amount.toFixed(2)}` : step.amount.toFixed(2);
                         return { title: `Add ${lbl}D to ${targetEye.label} sphere`, rationale: `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`, adjustments: { [targetEye.label]: { sphDelta: step.amount } }, changes: [{ eye: targetEye.label, param: "Sphere", from: `${cur > 0 ? "+" : ""}${cur.toFixed(2)}`, to: `${nxt > 0 ? "+" : ""}${nxt.toFixed(2)}` }], tsStepIdx: i };
                     }
+                    case "sphereAdjSelect": {
+                        const cur2 = getAdjSph(targetEye.eye, targetEye.label);
+                        const defAmt = step.options[0];
+                        const defNxt = snapTo025(cur2 + defAmt);
+                        return {
+                            title: `Add ${defAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
+                            rationale: step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`,
+                            adjustments: { [targetEye.label]: { sphDelta: defAmt } },
+                            changes: [{ eye: targetEye.label, param: "Sphere", from: `${cur2 > 0 ? "+" : ""}${cur2.toFixed(2)}`, to: `${defNxt > 0 ? "+" : ""}${defNxt.toFixed(2)}` }],
+                            tsStepIdx: i,
+                            sphereAdjSelect: true,
+                            selectOptions: step.options,
+                            selectEye: targetEye.label,
+                            selectBaseSph: cur2
+                        };
+                    }
                     case "lowerAdd": {
                         const addTypes = lens.addTypes;
                         let curAdd = getAdjAdd(targetEye.eye, targetEye.isDominant, targetEye.label);
@@ -5175,7 +5289,7 @@
                             }
                             return sug;
                         } else if (step.dropTo) {
-                            return { title: `Consider ${step.dropTo}`, rationale: `Already at lowest add (${curAdd}) \u2014 consider ${step.dropTo} (toric-only) for clearer distance`, adjustments: {}, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: "None (toric only)" }], tsStepIdx: i };
+                            return { title: `Consider ${step.dropTo}`, rationale: `Already at lowest add (${curAdd}) \u2014 switch ${eyeLabel} eye to ${step.dropTo} (non-multifocal) for clearer distance`, adjustments: { [targetEye.label]: { lensDropTo: step.dropTo } }, changes: [{ eye: targetEye.label, param: "Lens", from: lens.name, to: step.dropTo }], tsStepIdx: i };
                         }
                         continue;
                     }
@@ -5191,7 +5305,11 @@
                         }
                         if (ci === -1 || ci >= addTypes.length - 1) continue;
                         const nAdd = addTypes[ci + 1];
-                        return { title: `Increase ${targetEye.label} add power`, rationale: `Increase ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer near`, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i };
+                        const raT = step.offLabel ? `Change ${targetEye.label} from ${curAdd} to ${nAdd} Add` : `Increase ${targetEye.label} add power`;
+                        const raR = step.offLabel
+                            ? `<u>Although not part of the manufacturer\u2019s fitting guide</u>, you can try changing ${curAdd} Add to ${nAdd} Add on the ${eyeLabel} eye.`
+                            : `Increase ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer near`;
+                        return { title: raT, rationale: raR, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i, offLabel: !!step.offLabel };
                     }
                     case "addTableSwap": {
                         const specAdd = domEye ? (parseFloat(domEye.eye.add) || 0) : (nonDomEye ? (parseFloat(nonDomEye.eye.add) || 0) : 0);
@@ -5275,6 +5393,35 @@
             state.tsAdjustment = { title: s.title, overrides: merged, complaint: state.tsAdjustment.complaint, tsStepIdx: s.tsStepIdx, stepNumber: (state.tsAdjustment.stepNumber || 1) + 1 };
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function updateTsNextSelectPreview() {
+            const s = window._tsNextSuggestion;
+            if (!s || !s.sphereAdjSelect) return;
+            const sel = document.getElementById('tsNextSelectAmt');
+            if (!sel) return;
+            const amt = parseFloat(sel.value);
+            const baseSph = s.selectBaseSph;
+            const newSph = snapTo025(baseSph + amt);
+            const el = document.getElementById('tsNextSelectChanges');
+            if (el) {
+                el.innerHTML = `<div class="ts-change">
+                    <span class="ts-change-eye">${s.selectEye}</span>
+                    <span class="ts-change-param">Sphere:</span>
+                    <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
+                    <span class="ts-change-arrow">\u2192</span>
+                    <span class="ts-change-to">${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}</span>
+                </div>`;
+            }
+        }
+
+        function applyNextTsSelectStep() {
+            const s = window._tsNextSuggestion;
+            if (!s || !s.sphereAdjSelect) return;
+            const sel = document.getElementById('tsNextSelectAmt');
+            const amt = sel ? parseFloat(sel.value) : s.selectOptions[0];
+            s.adjustments[s.selectEye] = { sphDelta: amt };
+            applyNextTsStep();
         }
 
         function backToTroubleshoot() {
@@ -5464,7 +5611,7 @@
             const odDominant = state.dominantEye === 'right' ? true : state.dominantEye === 'left' ? false : null;
             const osDominant = state.dominantEye === 'left' ? true : state.dominantEye === 'right' ? false : null;
 
-            function getCurrentSph(eye) {
+            function getCurrentSph(eye, eyeLabel) {
                 const sph = parseFloat(eye.sphere) || 0;
                 const cyl = parseFloat(eye.cylinder) || 0;
                 let clSph = snapTo025(vertexConvert(sph));
@@ -5479,6 +5626,9 @@
                     }
                 } else if (lens.type === "sphere" || lens.type === "multifocal") {
                     clSph = snapTo025(clSph + cyl / 2);
+                }
+                if (eyeLabel && state.tsAdjustment && state.tsAdjustment.overrides && state.tsAdjustment.overrides[eyeLabel] && state.tsAdjustment.overrides[eyeLabel].sphDelta !== undefined) {
+                    clSph = snapTo025(clSph + state.tsAdjustment.overrides[eyeLabel].sphDelta);
                 }
                 return clSph;
             }
@@ -5551,9 +5701,13 @@
                     const nonDomAdd = nonDomEye ? getCurrentAdd(nonDomEye.eye, false) : null;
                     const currentAddConfig = (domAdd && nonDomAdd) ? `${domAdd}/${nonDomAdd}` : null;
 
+                    // Skip steps already applied in previous adjustments for same complaint
+                    const prevTsIdx = (state.tsAdjustment && state.tsAdjustment.complaint === state.troubleshoot && state.tsAdjustment.tsStepIdx !== null && state.tsAdjustment.tsStepIdx !== undefined) ? state.tsAdjustment.tsStepIdx : -1;
+
                     let firstStepDone = false;
                     tsSteps.forEach((step, stepIdx) => {
                         if (firstStepDone) return;
+                        if (stepIdx <= prevTsIdx) return;
                         if (step.addConfigs && (!currentAddConfig || !step.addConfigs.includes(currentAddConfig))) return;
 
                         const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
@@ -5568,7 +5722,7 @@
                                     // Determine if minus or plus sphere based on dominant eye
                                     const tEye = domEye || nonDomEye;
                                     if (tEye) {
-                                        const clSph = getCurrentSph(tEye.eye);
+                                        const clSph = getCurrentSph(tEye.eye, tEye.label);
                                         msg = clSph < 0 ? step.textMinus : step.textPlus;
                                     } else {
                                         msg = step.textMinus;
@@ -5585,7 +5739,7 @@
                                 break;
                             }
                             case "sphereAdj": {
-                                const currentSph = getCurrentSph(targetEye.eye);
+                                const currentSph = getCurrentSph(targetEye.eye, targetEye.label);
                                 const newSph = snapTo025(currentSph + step.amount);
                                 const label = step.amount > 0 ? `+${step.amount.toFixed(2)}` : step.amount.toFixed(2);
                                 suggestions.push({
@@ -5598,6 +5752,28 @@
                                         from: `${currentSph > 0 ? "+" : ""}${currentSph.toFixed(2)}`,
                                         to: `${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}`
                                     }]
+                                });
+                                break;
+                            }
+                            case "sphereAdjSelect": {
+                                const currentSph = getCurrentSph(targetEye.eye, targetEye.label);
+                                const defaultAmt = step.options[0];
+                                const defaultNew = snapTo025(currentSph + defaultAmt);
+                                const defaultLabel = defaultAmt > 0 ? `+${defaultAmt.toFixed(2)}` : defaultAmt.toFixed(2);
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: `Add ${defaultAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
+                                    rationale: step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`,
+                                    adjustments: { [targetEye.label]: { sphDelta: defaultAmt } },
+                                    changes: [{
+                                        eye: targetEye.label, param: "Sphere",
+                                        from: `${currentSph > 0 ? "+" : ""}${currentSph.toFixed(2)}`,
+                                        to: `${defaultNew > 0 ? "+" : ""}${defaultNew.toFixed(2)}`
+                                    }],
+                                    sphereAdjSelect: true,
+                                    selectOptions: step.options,
+                                    selectEye: targetEye.label,
+                                    selectBaseSph: currentSph
                                 });
                                 break;
                             }
@@ -5623,7 +5799,7 @@
                                         changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: newAdd }]
                                     };
                                     if (step.sphereCompensation) {
-                                        const cSph = getCurrentSph(targetEye.eye);
+                                        const cSph = getCurrentSph(targetEye.eye, targetEye.label);
                                         const nSph = snapTo025(cSph + step.sphereCompensation);
                                         suggestion.adjustments[targetEye.label].sphDelta = step.sphereCompensation;
                                         suggestion.changes.push({
@@ -5638,9 +5814,9 @@
                                     suggestions.push({
                                         tsStepIdx: stepIdx,
                                         title: `Consider ${step.dropTo}`,
-                                        rationale: `Already at lowest add (${currentAdd}) \u2014 consider ${step.dropTo} (toric-only) for clearer distance`,
-                                        adjustments: {},
-                                        changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: "None (toric only)" }]
+                                        rationale: `Already at lowest add (${currentAdd}) \u2014 switch ${eyeLabel} eye to ${step.dropTo} (non-multifocal) for clearer distance`,
+                                        adjustments: { [targetEye.label]: { lensDropTo: step.dropTo } },
+                                        changes: [{ eye: targetEye.label, param: "Lens", from: lens.name, to: step.dropTo }]
                                     });
                                 }
                                 break;
@@ -5658,12 +5834,17 @@
                                 if (currentIdx === -1 || currentIdx >= addTypes.length - 1) break;
 
                                 const newAdd = addTypes[currentIdx + 1];
+                                const raTitle = step.offLabel ? `Change ${targetEye.label} from ${currentAdd} to ${newAdd} Add` : `Increase ${targetEye.label} add power`;
+                                const raRationale = step.offLabel
+                                    ? `<u>Although not part of the manufacturer\u2019s fitting guide</u>, you can try changing ${currentAdd} Add to ${newAdd} Add on the ${eyeLabel} eye.`
+                                    : `Increase ${eyeLabel} eye add from ${currentAdd} to ${newAdd} for clearer near`;
                                 suggestions.push({
                                     tsStepIdx: stepIdx,
-                                    title: `Increase ${targetEye.label} add power`,
-                                    rationale: `Increase ${eyeLabel} eye add from ${currentAdd} to ${newAdd} for clearer near`,
+                                    title: raTitle,
+                                    rationale: raRationale,
                                     adjustments: { [targetEye.label]: { addOverride: newAdd } },
-                                    changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: newAdd }]
+                                    changes: [{ eye: targetEye.label, param: "Add", from: currentAdd, to: newAdd }],
+                                    offLabel: !!step.offLabel
                                 });
                                 break;
                             }
@@ -5678,7 +5859,7 @@
                                 if (step.sphereAdj) {
                                     const sTarget = step.sphereAdj.eye === "dominant" ? domEye : nonDomEye;
                                     if (sTarget) {
-                                        const curSph = getCurrentSph(sTarget.eye);
+                                        const curSph = getCurrentSph(sTarget.eye, sTarget.label);
                                         const nxtSph = snapTo025(curSph + step.sphereAdj.amount);
                                         if (!tsAdj[sTarget.label]) tsAdj[sTarget.label] = {};
                                         tsAdj[sTarget.label].sphDelta = step.sphereAdj.amount;
@@ -5756,7 +5937,7 @@
                 }
 
                 if (primaryEye && secondaryEye) {
-                    const currentSph = getCurrentSph(primaryEye.eye);
+                    const currentSph = getCurrentSph(primaryEye.eye, primaryEye.label);
                     const newSph = snapTo025(currentSph + sphAdj);
                     suggestions.push({
                         title: `Add ${sphAdjLabel} to ${primaryEye.label} sphere`,
@@ -5769,7 +5950,7 @@
                         }]
                     });
 
-                    const current2 = getCurrentSph(secondaryEye.eye);
+                    const current2 = getCurrentSph(secondaryEye.eye, secondaryEye.label);
                     const new2 = snapTo025(current2 + sphAdj);
                     suggestions.push({
                         title: `Add ${sphAdjLabel} to both eyes`,
@@ -5786,7 +5967,7 @@
                     });
                 } else {
                     eyes.forEach(e => {
-                        const currentSph = getCurrentSph(e.eye);
+                        const currentSph = getCurrentSph(e.eye, e.label);
                         const newSph = snapTo025(currentSph + sphAdj);
                         suggestions.push({
                             title: `Add ${sphAdjLabel} to ${e.label} sphere`,
@@ -5873,6 +6054,38 @@
                                 <div class="ts-body">
                                     <div class="ts-title">${s.title}</div>
                                     ${s.rationale ? `<div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>` : ''}
+                                </div>
+                            </div>`;
+                        }
+                        if (s.sphereAdjSelect) {
+                            const baseSph = s.selectBaseSph;
+                            const eye = s.selectEye;
+                            const sIsPlus = s.selectOptions[0] > 0;
+                            const optionsHtml = s.selectOptions.map(amt => {
+                                const nv = snapTo025(baseSph + amt);
+                                return `<option value="${amt}">${amt > 0 ? '+' : ''}${amt.toFixed(2)}</option>`;
+                            }).join('');
+                            return `<div class="troubleshoot-suggestion fade-in">
+                                <div class="ts-step">${i + 1}</div>
+                                <div class="ts-body">
+                                    <div class="ts-title">Add ${sIsPlus ? 'plus' : 'minus'} to ${eye} sphere</div>
+                                    <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
+                                    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);">Patient accepted:</span>
+                                        <select id="tsSelectAmt_${i}" onchange="updateTsSelectPreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">
+                                            ${optionsHtml}
+                                        </select>
+                                    </div>
+                                    <div class="ts-changes" id="tsSelectChanges_${i}">
+                                        <div class="ts-change">
+                                            <span class="ts-change-eye">${eye}</span>
+                                            <span class="ts-change-param">Sphere:</span>
+                                            <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
+                                            <span class="ts-change-arrow">\u2192</span>
+                                            <span class="ts-change-to">${snapTo025(baseSph + s.selectOptions[0]) > 0 ? "+" : ""}${snapTo025(baseSph + s.selectOptions[0]).toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsSelectAdjustment(${i})">View Adjusted Results \u2192</button>
                                 </div>
                             </div>`;
                         }
@@ -6038,7 +6251,7 @@
 
                     // Current CL Rx
                     const cyl = parseFloat(e.eye.cylinder) || 0;
-                    const clSph = getCurrentSph(e.eye);
+                    const clSph = getCurrentSph(e.eye, e.label);
                     const clCyl = snapCyl(cyl, lens);
                     const rxAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
                     let clAxis = snapAxis(rxAxis, lens);
@@ -6172,7 +6385,7 @@
                         const or = state.overRefraction[e.label];
                         const rot = state.orRotation[e.label];
                         const cyl = parseFloat(e.eye.cylinder) || 0;
-                        const clSph = getCurrentSph(e.eye);
+                        const clSph = getCurrentSph(e.eye, e.label);
                         const clCyl = snapCyl(cyl, lens);
                         const rxAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
                         let clAxis = snapAxis(rxAxis, lens);
@@ -6585,6 +6798,8 @@
                 renderAnisocoriaTool(el);
             } else if (toolsActiveTool === 'uveitislab') {
                 renderUveitisLabTool(el);
+            } else if (toolsActiveTool === 'eggers') {
+                renderEggersChartTool(el);
             }
         }
 
@@ -6661,7 +6876,9 @@
             { id:'anisocoria', icon:'ph-eye', title:'Anisocoria Decision Tree', desc:'Stepwise evaluation of unequal pupils',
               keywords:'anisocoria pupil unequal horner adie tonic pharmacologic mydriasis cn3 pilocarpine cocaine apraclonidine hydroxyamphetamine decision tree' },
             { id:'uveitislab', icon:'ph-flask', title:'Uveitis Lab Guide', desc:'Searchable lab reference for uveitis work-up',
-              keywords:'uveitis lab workup hla-b27 ana antinuclear rf rheumatoid factor ace angiotensin lysozyme rpr vdrl fta-abs syphilis cbc esr crp quantiferon ppd tuberculosis chest xray anca lyme toxoplasma hsv vzv cmv hla-a29 toxocara sarcoidosis ankylosing spondylitis lupus granulomatosis birdshot' }
+              keywords:'uveitis lab workup hla-b27 ana antinuclear rf rheumatoid factor ace angiotensin lysozyme rpr vdrl fta-abs syphilis cbc esr crp quantiferon ppd tuberculosis chest xray anca lyme toxoplasma hsv vzv cmv hla-a29 toxocara sarcoidosis ankylosing spondylitis lupus granulomatosis birdshot' },
+            { id:'eggers', icon:'ph-table', title:"Egger's Chart", desc:'Visual acuity to dioptric blur & astigmatism conversion',
+              keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' }
         ];
 
         function onToolsSearch(val) {
@@ -7644,9 +7861,9 @@
             }
 
             // Y axis label
-            svg += '<text x="14" y="' + (padTop + plotH / 2) + '" fill="#94a3b8" font-size="12" font-family="var(--sans)" font-weight="600" text-anchor="middle" transform="rotate(-90,14,' + (padTop + plotH / 2) + ')">Spherical Equivalent (D)</text>';
+            svg += '<text x="14" y="' + (padTop + plotH / 2) + '" fill="#64748b" font-size="12" font-family="var(--sans)" font-weight="600" text-anchor="middle" transform="rotate(-90,14,' + (padTop + plotH / 2) + ')">Spherical Equivalent (D)</text>';
             // X axis label
-            svg += '<text x="' + (padLeft + plotW / 2) + '" y="' + (h - 2) + '" fill="#94a3b8" font-size="12" font-family="var(--sans)" font-weight="600" text-anchor="middle">Age (years)</text>';
+            svg += '<text x="' + (padLeft + plotW / 2) + '" y="' + (h - 2) + '" fill="#64748b" font-size="12" font-family="var(--sans)" font-weight="600" text-anchor="middle">Age (years)</text>';
 
             // Invisible hover rect to capture mouse
             svg += '<rect id="myopHoverZone" x="' + padLeft + '" y="' + padTop + '" width="' + plotW + '" height="' + plotH + '" fill="transparent" style="cursor:crosshair;"/>';
@@ -11528,6 +11745,53 @@
             renderUveitisLabContent();
         }
 
+        // ===== EGGER'S CHART TOOL =====
+
+        function renderEggersChartTool(el) {
+            var data = [
+                ['20/20', '0.00', '0.00'],
+                ['20/25', '0.25', '0.50'],
+                ['20/30', '0.50', '0.75'],
+                ['20/40', '0.75', '1.50'],
+                ['20/50', '1.00', '2.00'],
+                ['20/70', '1.50', '2.00'],
+                ['20/100', '2.00', '2.50'],
+                ['20/200', '2.50', '3.50']
+            ];
+
+            var html = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button></div>';
+
+            html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">'
+                + '<i class="ph-duotone ph-table" style="color:var(--accent);font-size:28px;"></i>'
+                + '<span style="font-size:20px;font-weight:700;color:var(--ink);">Egger\u2019s Chart</span></div>'
+                + '<div style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">Estimates dioptric blur from unaided Snellen acuity</div>';
+
+            html += '<div class="tools-card" style="padding:16px 20px;">'
+                + '<div style="overflow-x:auto;"><table class="bv-norms-table">'
+                + '<thead><tr>'
+                + '<th>Distance Visual Acuity</th>'
+                + '<th>Dioptric Blur,<br>Spherical Equivalent</th>'
+                + '<th>Simple WR<br>Astigmatism</th>'
+                + '</tr></thead><tbody>';
+
+            for (var i = 0; i < data.length; i++) {
+                var r = data[i];
+                html += '<tr><td style="font-weight:600;">' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>';
+            }
+
+            html += '</tbody></table></div>'
+                + '<div class="de-note" style="margin-top:12px;">'
+                + '<strong>WR Astigmatism</strong> = With-the-Rule astigmatism (minus cylinder axis near 180\u00B0). '
+                + 'Values represent the approximate refractive error expected to reduce acuity to each Snellen line. '
+                + 'Astigmatism causes greater blur per diopter than spherical defocus because the retinal image has no clear focal point.'
+                + '</div></div>';
+
+            el.innerHTML = html;
+        }
+
         // ===== MEDICATIONS TAB =====
 
         function renderMeds() {
@@ -11807,11 +12071,11 @@
             // Names
             html += `<div class="med-brand-name">${escMedHtml(med.brand_name)}</div>`;
             const isCombo = /combination/i.test(med.drug_class) && !/antibiotic|steroid|cortico/i.test(med.drug_class);
-            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#64748b;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
+            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#475569;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
             html += `<div class="med-drug-class">${escMedHtml(med.drug_class)}</div>`;
             html += `</div>`;
             // Prices (right side)
-            const ps = med.price_size ? ` <span style="font-size:11px;font-weight:400;color:#9ca3af">/${escMedHtml(med.price_size)}</span>` : '';
+            const ps = med.price_size ? ` <span style="font-size:11px;font-weight:400;color:#475569">/${escMedHtml(med.price_size)}</span>` : '';
             html += `<div class="med-price-side">`;
             html += `<div class="med-price-col"><div class="med-price-label">Brand</div><div class="med-price-value">$${formatMedPrice(med.avg_brand_price)}${ps}</div></div>`;
             if (med.avg_generic_price !== null) {
@@ -12455,8 +12719,8 @@
         // INIT
         render();
     </script>
-    <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#94a3b8;background:#ede6de;">
-        <div style="margin-bottom:4px;color:#94a3b8;">Built by an Optometrist, For Optometrists.</div>
+    <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:#ede6de;">
+        <div style="margin-bottom:4px;color:#475569;">Built by an Optometrist, For Optometrists.</div>
         <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
         <div>&copy; 2026 Pocket OD</div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
