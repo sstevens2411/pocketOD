@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55' stroke='%230d9488' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M33 55 Q60 28 87 55 Q60 82 33 55Z' stroke='%230d9488' stroke-width='5' fill='rgba(13,148,136,0.1)' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='55' r='9' fill='%230d9488'/%3E%3Ccircle cx='63.5' cy='52.5' r='2.8' fill='%231a2332'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web@2"></script>
     <style>
         :root {
@@ -2702,13 +2705,14 @@
             -webkit-overflow-scrolling: touch;
         }
         @media (max-width: 600px) {
-            .browse-scroll-wrap { overflow-x: auto; }
+            .browse-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .browse-filters { gap: 4px; }
             .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; }
             .browse-table { font-size: 12px; min-width: 640px; }
             .browse-table th { padding: 6px 6px; position: static; }
             .browse-table td { padding: 5px 6px; }
             .browse-type, .browse-sched { font-size: 8px; padding: 1px 3px; }
+            .browse-badges { display: none; }
         }
 
         /* TOOLS / IOP CALCULATOR */
@@ -9444,7 +9448,7 @@
             // Quick converter
             html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:12px 14px;background:#f1f0ee;border-radius:10px">';
             html += '<div class="sign-toggle"><button type="button" id="rcModeD" class="active-neg" onclick="rcSetMode(\'d\')" style="width:auto;padding:0 10px;font-size:12px;letter-spacing:0.02em">D</button><button type="button" id="rcModeMM" onclick="rcSetMode(\'mm\')" style="width:auto;padding:0 10px;font-size:12px;letter-spacing:0.02em">mm</button></div>';
-            html += '<input type="number" id="rcInput" placeholder="Enter value..." oninput="rcCalc()" step="0.01" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--mono,\'IBM Plex Mono\',monospace);background:#fff;color:var(--ink)">';
+            html += '<input type="number" id="rcInput" placeholder="Enter value..." oninput="rcCalc()" step="0.01" style="flex:1;min-width:0;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--mono,\'IBM Plex Mono\',monospace);background:#fff;color:var(--ink)">';
             html += '</div>';
             html += '<div id="rcResult" style="display:none;margin-bottom:12px;padding:14px;background:var(--accent-light);border-radius:10px;text-align:center;font-family:var(--mono,\'IBM Plex Mono\',monospace);font-size:15px;font-weight:600;color:var(--ink)"></div>';
             html += '<div id="rcResetWrap" style="display:none;text-align:center;margin-bottom:16px"><button onclick="rcReset()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:22px;line-height:1;transition:color 0.15s" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--ink-muted)\'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button></div>';
@@ -12359,7 +12363,7 @@
                     const axStr = l.axes || "\u2014";
                     const brandColor = brandColorMap[l.brand] || "var(--accent)";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.name}</span> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</td>
+                        <td><span class="browse-name">${l.name}</span><span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -12389,7 +12393,7 @@
                     const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "—";
                     const axStr = l.axes || "—";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.name}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</td>
+                        <td><span class="browse-name">${l.name}</span><span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -12423,6 +12427,7 @@
         <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
         <div>&copy; 2026 Pocket OD</div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
+        <div style="margin-top:4px;">If you find an error, please let me know!</div>
     </footer>
 </body>
 </html>
