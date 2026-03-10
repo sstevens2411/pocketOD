@@ -2594,6 +2594,7 @@
             padding: 8px 10px;
             border-bottom: 2px solid var(--border);
             z-index: 1;
+            white-space: nowrap;
         }
         .browse-brand-row td {
             padding: 10px 10px 6px;
@@ -2703,6 +2704,37 @@
         }
         .browse-scroll-wrap {
             -webkit-overflow-scrolling: touch;
+        }
+        .rotate-hint {
+            display: none;
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+        @media (max-width: 600px) and (orientation: portrait) {
+            .rotate-hint {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                margin-bottom: 8px;
+                padding: 4px 12px;
+                background: rgba(13,148,136,0.1);
+                border: 1px solid rgba(13,148,136,0.2);
+                border-radius: 16px;
+                font-size: 10.5px;
+                font-weight: 600;
+                color: var(--accent);
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .rotate-hint i {
+                font-size: 13px;
+                animation: wiggle 1.5s ease-in-out infinite;
+            }
         }
         @media (max-width: 600px) {
             .browse-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -12335,6 +12367,7 @@
             const mkClass = (s) => s ? ' class="browse-th-active"' : '';
             const clearSort = "browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;browseState.sortSph=null;browseState.sortCyl=null;browseState.sortCost=null;renderBrowse()";
 
+            html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view</div>`;
             html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
                 <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">DK${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
