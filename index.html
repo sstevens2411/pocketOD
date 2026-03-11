@@ -3917,6 +3917,16 @@
             return `~$${cost}/yr`;
         }
 
+        function calcMixedYearlyCost(primaryLens, companionName) {
+            const comp = LENSES.find(l => l.name === companionName);
+            if (!comp) return null;
+            const costA = calcYearlyCost(primaryLens);
+            const costB = calcYearlyCost(comp);
+            if (!costA || !costB) return null;
+            // Each lens covers 1 eye, so half the yearly cost of each
+            return Math.round(costA / 2 + costB / 2);
+        }
+
         function brandClass(brand) {
             if (brand === "Alcon") return "alcon";
             if (brand === "Bausch + Lomb") return "bl";
@@ -3949,12 +3959,7 @@
             if (needed === "sphere" && lens.type !== "sphere") return false;
             if (needed === "toric" && lens.type !== "toric") return false;
             if (needed === "multifocal" && lens.type !== "multifocal") return false;
-            if (needed === "multifocal-toric") {
-                const absCyl = Math.abs(cyl);
-                // Low cyl (≤ 0.75): also recommend non-toric multifocal lenses
-                if (absCyl <= 0.75 && lens.type === "multifocal") { /* allow */ }
-                else if (lens.type !== "multifocal-toric") return false;
-            }
+            if (needed === "multifocal-toric" && lens.type !== "multifocal-toric") return false;
 
             if (clSph < lens.sphMin || clSph > lens.sphMax) return false;
 
@@ -3969,6 +3974,39 @@
             return true;
         }
 
+        // Lens family grouping for cross-type mixed pairs (sphere+toric, MF+MF-toric)
+        function getLensFamily(lens) {
+            const overrides = {
+                "Ultra Monthly": "ultra|monthly",
+                "Ultra for Astigmatism": "ultra|monthly",
+                "Ultra for Presbyopia": "ultra|monthly",
+                "Ultra Multifocal for Astigmatism": "ultra|monthly",
+                "Acuvue Oasys (2-Week)": "oasys|biweekly",
+                "Acuvue Oasys for Astigmatism (2-Week)": "oasys|biweekly",
+                "Acuvue Oasys Multifocal (2-Week)": "oasys|biweekly",
+                "PureVision2": "purevision2|monthly",
+                "PureVision2 for Astigmatism": "purevision2|monthly",
+            };
+            if (overrides[lens.name]) return overrides[lens.name];
+            return lens.name
+                .replace(/ MF for Astigmatism$/, '')
+                .replace(/ Multifocal for Astigmatism$/, '')
+                .replace(/ for Astigmatism$/, '')
+                .replace(/ Toric Multifocal$/, '')
+                .replace(/ Toric XR$/, '')
+                .replace(/ Toric$/, '')
+                .replace(/ Multifocal$/, '')
+                + '|' + lens.modality;
+        }
+
+        // Build family index
+        const _lensFamilyMap = {};
+        LENSES.forEach(l => {
+            const f = getLensFamily(l);
+            if (!_lensFamilyMap[f]) _lensFamilyMap[f] = [];
+            _lensFamilyMap[f].push(l);
+        });
+
         function getCompatibleLenses() {
             const results = [];
             const seen = new Set();
@@ -3980,7 +4018,7 @@
                 const odOk = isLensCompatibleWithEye(lens, state.od);
                 const osOk = isLensCompatibleWithEye(lens, state.os);
 
-                // Check companion lens for the missing eye
+                // Check companion lens for the missing eye (e.g. Toric ↔ Toric XR)
                 let companionForOD = null;
                 let companionForOS = null;
                 if (lens.companion) {
@@ -3998,7 +4036,19 @@
                     }
                 }
 
-                // Both eyes have Rx: require full coverage (direct or via companion)
+                // Cross-type family pairing (e.g. Sphere ↔ Toric, MF ↔ MF-Toric)
+                if (!odOk && !companionForOD) {
+                    const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
+                    const match = siblings.find(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.od));
+                    if (match) companionForOD = match.name;
+                }
+                if (!osOk && !companionForOS) {
+                    const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
+                    const match = siblings.find(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.os));
+                    if (match) companionForOS = match.name;
+                }
+
+                // Both eyes have Rx: require full coverage (direct or via companion/family)
                 const bothEyesHaveRx = (state.od.sphere || state.od.cylinder) && (state.os.sphere || state.os.cylinder);
                 if (bothEyesHaveRx) {
                     const odCovered = odOk || !!companionForOD;
@@ -4020,11 +4070,22 @@
 
             // Suppress XR lenses that fit both eyes when their standard companion
             // already appears as a mixed pair (avoids redundant, pricier recommendation)
-            const filtered = withoutRedundant.filter(r => {
+            const afterXR = withoutRedundant.filter(r => {
                 if (!r.companion || !r.forOD || !r.forOS) return true;
-                // This lens covers both eyes directly; check if its companion
-                // is in results as a mixed pair that also covers both eyes
                 return !withoutRedundant.some(c => c.name === r.companion && (c.companionForOD || c.companionForOS));
+            });
+
+            // Deduplicate cross-type family pairs: keep the toric/MF-toric as primary,
+            // suppress the sphere/MF that lists the toric as its companion
+            const filtered = afterXR.filter(r => {
+                if (!r.companionForOD && !r.companionForOS) return true;
+                const compName = r.companionForOD || r.companionForOS;
+                // If the companion also appears as a primary result with this lens as ITS companion, keep the more specific one (toric > sphere)
+                const mirror = afterXR.find(c => c.name === compName && (c.companionForOD === r.name || c.companionForOS === r.name));
+                if (!mirror) return true;
+                // Keep the one with the more specific type (toric beats sphere, MF-toric beats MF)
+                const typeRank = { 'sphere':0, 'multifocal':1, 'toric':2, 'multifocal-toric':3 };
+                return (typeRank[r.type] || 0) >= (typeRank[mirror.type] || 0);
             });
 
             const dir = state.sortDir === "asc" ? 1 : -1;
@@ -4033,8 +4094,8 @@
                 if (state.sortBy === "brand") return a.brand.localeCompare(b.brand) * dir;
                 if (state.sortBy === "name") return a.name.localeCompare(b.name) * dir;
                 if (state.sortBy === "price") {
-                    const ca = calcYearlyCost(a);
-                    const cb = calcYearlyCost(b);
+                    const ca = (a.companionForOD || a.companionForOS) ? calcMixedYearlyCost(a, a.companionForOD || a.companionForOS) : calcYearlyCost(a);
+                    const cb = (b.companionForOD || b.companionForOS) ? calcMixedYearlyCost(b, b.companionForOD || b.companionForOS) : calcYearlyCost(b);
                     const va = ca || 99999;
                     const vb = cb || 99999;
                     return (va - vb) * dir;
@@ -4055,6 +4116,15 @@
                         if (!odOk && isLensCompatibleWithEye(comp, state.od)) companionForOD = true;
                         if (!osOk && isLensCompatibleWithEye(comp, state.os)) companionForOS = true;
                     }
+                }
+                // Also check family members for cross-type pairing
+                if (!odOk && !companionForOD) {
+                    const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
+                    if (siblings.some(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.od))) companionForOD = true;
+                }
+                if (!osOk && !companionForOS) {
+                    const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
+                    if (siblings.some(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.os))) companionForOS = true;
                 }
                 return (odOk || companionForOD) && (osOk || companionForOS);
             }
@@ -4527,22 +4597,49 @@
             const brandColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[bc];
             const hasCyl = lens.cylMin !== 0;
 
-            const specs = [
-                { label:"Dk", value:lens.dk },
-                { label:"BC", value:lens.bc },
-                { label:"Diam", value:lens.diam },
-                { label:"Power", value:`${lens.sphMin > 0 ? "+" : ""}${lens.sphMin} to ${lens.sphMax > 0 ? "+" : ""}${lens.sphMax}` },
-            ];
+            function buildSpecsForLens(l) {
+                const s = [
+                    { label:"Dk", value:l.dk },
+                    { label:"BC", value:l.bc },
+                    { label:"Diam", value:l.diam },
+                    { label:"Power", value:`${l.sphMin > 0 ? "+" : ""}${l.sphMin} to ${l.sphMax > 0 ? "+" : ""}${l.sphMax}` },
+                ];
+                const lHasCyl = l.cylMin !== 0;
+                if (lHasCyl) s.push({ label:"Cyl", value:`${l.cylMin} to ${l.cylMax}` });
+                if (l.axes) s.push({ label:"Axes", value:l.axes });
+                if (l.addTypes?.length) s.push({ label:"Adds", value:l.addTypes.join(", ") });
+                s.push({ label:"Wear", value:l.wear });
+                return s;
+            }
 
-            if (hasCyl) specs.push({ label:"Cyl", value:`${lens.cylMin} to ${lens.cylMax} (0.50 steps)` });
-            if (lens.axes) specs.push({ label:"Axes", value:lens.axes });
-            if (lens.addTypes?.length) specs.push({ label:"Adds", value:lens.addTypes.join(", ") });
-            specs.push({ label:"Wear", value:lens.wear });
+            let specsHtml;
+            const isMixed = lens.companionForOD || lens.companionForOS;
+            if (isMixed) {
+                const compName = lens.companionForOD || lens.companionForOS;
+                const compLens = LENSES.find(l => l.name === compName);
+                const odLens = lens.companionForOD ? compLens : lens;
+                const osLens = lens.companionForOS ? compLens : lens;
+                const renderRow = (eye, l) => {
+                    const s = buildSpecsForLens(l);
+                    return `<div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;padding:6px 0;${eye === 'OD' ? 'border-bottom:1px solid var(--rule);' : ''}">
+                        <div class="spec-item" style="min-width:28px;flex:0 0 auto;"><div class="spec-label">${eye}</div></div>
+                        ${s.map(sp => `<div class="spec-item"><div class="spec-label">${sp.label}</div><div class="spec-value">${sp.value}</div></div>`).join("")}
+                    </div>`;
+                };
+                specsHtml = renderRow('OD', odLens) + renderRow('OS', osLens);
+            } else {
+                const specs = buildSpecsForLens(lens);
+                specsHtml = specs.map(s => `<div class="spec-item">
+                    <div class="spec-label">${s.label}</div>
+                    <div class="spec-value">${s.value}</div>
+                </div>`).join("");
+            }
 
-            const specsHtml = specs.map(s => `<div class="spec-item">
-                <div class="spec-label">${s.label}</div>
-                <div class="spec-value">${s.value}</div>
-            </div>`).join("");
+            const lensAlias = (n) => {
+                if (n.startsWith('Clariti')) return ' <span style="color:var(--ink-muted);font-weight:400;font-size:0.8em">(Freshday)</span>';
+                if (n.startsWith('MyDay') && !n.includes('Energys')) return ' <span style="color:var(--ink-muted);font-weight:400;font-size:0.8em">(Reveal)</span>';
+                return '';
+            };
 
             return `<div class="lens-card">
                 <div class="brand-stripe" style="background:${brandColor}"></div>
@@ -4552,17 +4649,26 @@
                             <span class="badge badge-eye">${(lens.forOD || lens.companionForOD) && (lens.forOS || lens.companionForOS) ? 'OD OS' : lens.forOD || lens.companionForOD ? 'OD' : 'OS'}</span>
                             ${lens.companionForOD || lens.companionForOS ? '<span class="badge" style="background:var(--surface-hover);color:var(--text-muted);font-size:10px">Mixed Pair</span>' : ''}
                             <span class="badge badge-brand-${bc}">${lens.brand}</span>
-                            <span class="badge badge-modality">${lens.modality}</span>
+                            <span class="badge badge-modality">${lens.modality}</span>${lens.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:14px;margin-left:2px" title="Plastic Neutral"></i>' : ''}
                             <span class="badge badge-dk">Dk ${lens.dk}</span>
                         </div>
-                        ${lens.companionForOD || lens.companionForOS ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.4">${lens.companionForOD ? `OD: <span style="color:${brandColor};font-weight:600">${lens.companionForOD}</span>` : `OD: <span style="font-weight:600">${lens.name}</span>`} · ${lens.companionForOS ? `OS: <span style="color:${brandColor};font-weight:600">${lens.companionForOS}</span>` : `OS: <span style="font-weight:600">${lens.name}</span>`}</div>` : ''}
-                        <div class="lens-name">${lens.name}</div>
+                        ${lens.companionForOD || lens.companionForOS ? (() => {
+                            const odName = lens.companionForOD || lens.name;
+                            const osName = lens.companionForOS || lens.name;
+                            return `<div class="lens-name" style="font-size:15px;line-height:1.5">OD: ${odName}${lensAlias(odName)}, OS: ${osName}${lensAlias(osName)}</div>`;
+                        })() : `<div class="lens-name">${lens.name}${lensAlias(lens.name)}</div>`}
                         ${lens.note ? `<div class="lens-note">${lens.note}</div>` : ""}
+                        ${lens.name.startsWith('Clariti') ? '<div class="lens-note" style="color:#16a34a"><i class="ph-duotone ph-recycle" style="margin-right:3px"></i>Plastic Neutral</div>' : ''}
                     </div>
                     <div>
-                        <div class="lens-price">~${lens.price}</div>
+                        ${lens.companionForOD || lens.companionForOS ? (() => {
+                            const compName = lens.companionForOD || lens.companionForOS;
+                            const mixedCost = calcMixedYearlyCost(lens, compName);
+                            return `<div class="lens-price" style="font-size:11px;color:var(--ink-muted)">Mixed pricing</div>`
+                                + (mixedCost ? `<div class="lens-qty" style="color:var(--success);font-weight:600">~$${mixedCost}/yr</div>` : '');
+                        })() : `<div class="lens-price">~${lens.price}</div>
                         <div class="lens-qty">Qty: ${lens.qty}</div>
-                        <div class="lens-qty" style="color:var(--success);font-weight:600">${formatYearlyCost(lens)}</div>
+                        <div class="lens-qty" style="color:var(--success);font-weight:600">${formatYearlyCost(lens)}</div>`}
                     </div>
                 </div>
                 <div class="lens-specs">${specsHtml}</div>
@@ -4880,17 +4986,32 @@
             // Track companion lens used (if any) for specs section
             let companionLensUsed = null;
 
-            // Detect if this is a mixed-pair scenario (one eye needs companion)
+            // Detect if this is a mixed-pair scenario (one eye needs companion or family lens)
             let isMixedPair = false;
             let odCompLens = null;
             let osCompLens = null;
-            if (!odOk && lens.companion) {
-                const comp = LENSES.find(cl => cl.name === lens.companion);
-                if (comp && isLensCompatibleWithEye(comp, state.od)) { odCompLens = comp; isMixedPair = true; }
+            if (!odOk) {
+                // Try explicit companion first, then family members
+                if (lens.companion) {
+                    const comp = LENSES.find(cl => cl.name === lens.companion);
+                    if (comp && isLensCompatibleWithEye(comp, state.od)) { odCompLens = comp; isMixedPair = true; }
+                }
+                if (!odCompLens) {
+                    const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
+                    const fam = siblings.find(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.od));
+                    if (fam) { odCompLens = fam; isMixedPair = true; }
+                }
             }
-            if (!osOk && lens.companion) {
-                const comp = LENSES.find(cl => cl.name === lens.companion);
-                if (comp && isLensCompatibleWithEye(comp, state.os)) { osCompLens = comp; isMixedPair = true; }
+            if (!osOk) {
+                if (lens.companion) {
+                    const comp = LENSES.find(cl => cl.name === lens.companion);
+                    if (comp && isLensCompatibleWithEye(comp, state.os)) { osCompLens = comp; isMixedPair = true; }
+                }
+                if (!osCompLens) {
+                    const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
+                    const fam = siblings.find(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.os));
+                    if (fam) { osCompLens = fam; isMixedPair = true; }
+                }
             }
 
             if (odOk) {
@@ -4961,20 +5082,22 @@
             const bcs = lens.bc.split("/").map(s => s.trim());
             let sharedParams = [];
             if (companionLensUsed && (companionLensUsed.bc !== lens.bc || companionLensUsed.diam !== lens.diam)) {
-                // Different specs between primary and companion
+                // Different specs between primary and companion — use OD/OS labels
+                const odBc = odCompLens ? companionLensUsed.bc : lens.bc;
+                const osBc = osCompLens ? companionLensUsed.bc : lens.bc;
                 sharedParams.push({
                     label: "Base Curve",
-                    value: `${lens.bc} (${lens.name}) / ${companionLensUsed.bc} (${companionLensUsed.name})`,
-                    note: "BC differs between paired lenses",
-                    highlight: true
+                    value: odBc === osBc ? odBc : `OD: ${odBc} / OS: ${osBc}`,
+                    note: odBc !== osBc ? "BC differs between paired lenses" : null,
+                    highlight: odBc !== osBc
                 });
+                const odDiam = odCompLens ? companionLensUsed.diam : lens.diam;
+                const osDiam = osCompLens ? companionLensUsed.diam : lens.diam;
                 sharedParams.push({
                     label: "Diameter",
-                    value: lens.diam !== companionLensUsed.diam
-                        ? `${lens.diam} (${lens.name}) / ${companionLensUsed.diam} (${companionLensUsed.name})`
-                        : lens.diam,
-                    note: lens.diam !== companionLensUsed.diam ? "Diameter differs between paired lenses" : null,
-                    highlight: lens.diam !== companionLensUsed.diam
+                    value: odDiam === osDiam ? odDiam : `OD: ${odDiam} / OS: ${osDiam}`,
+                    note: odDiam !== osDiam ? "Diameter differs between paired lenses" : null,
+                    highlight: odDiam !== osDiam
                 });
             } else {
                 sharedParams.push({
@@ -12626,6 +12749,7 @@
             let notes = [];
             if (lens.note) notes.push(lens.note);
             if (bcs.length > 1) notes.push(`This lens comes in ${bcs.length} base curves.`);
+            if (lens.name.startsWith('Clariti')) notes.push('<i class="ph-duotone ph-recycle" style="color:#16a34a"></i> <span style="color:#16a34a;font-weight:600">Plastic Neutral</span>');
             const notesHtml = notes.length ? `<div class="order-note-box"><strong>\u26A0 Notes:</strong> ${notes.join(" ")}</div>` : "";
 
             const specsHtml = specs.map(p => `<div class="order-param${p.wide ? ' wide' : ''}"><div class="order-param-label">${p.label}</div><div class="order-param-value">${p.value}</div></div>`).join("");
@@ -12737,7 +12861,7 @@
                     const axStr = l.axes || "\u2014";
                     const brandColor = brandColorMap[l.brand] || "var(--accent)";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.name}</span><span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
+                        <td><span class="browse-name">${l.name}</span><span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -12767,7 +12891,7 @@
                     const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "—";
                     const axStr = l.axes || "—";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.name}</span><span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
+                        <td><span class="browse-name">${l.name}</span><span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
