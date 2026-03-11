@@ -1003,13 +1003,14 @@
 
         .order-grid {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 24px;
         }
 
         .order-param {
             flex: 1 1 0;
-            min-width: 0;
+            min-width: 90px;
             background: var(--surface-solid);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -3273,6 +3274,21 @@
             font-weight: 600; padding: 5px 12px; cursor: pointer;
         }
         .de-expand-btns button:hover { background: rgba(13,148,136,0.05); }
+        .de-refs-toggle {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: none; border: 1px solid var(--rule); border-radius: 6px;
+            color: var(--ink-muted); font-family: var(--sans); font-size: 11px;
+            font-weight: 600; padding: 4px 10px; cursor: pointer; margin-top: 10px;
+        }
+        .de-refs-toggle:hover { color: var(--accent); border-color: var(--accent); }
+        .de-refs-toggle i { font-size: 12px; transition: transform 0.2s; }
+        .de-refs-toggle.open i { transform: rotate(90deg); }
+        .de-refs-list {
+            margin: 8px 0 0 0; padding: 10px 14px; background: var(--surface-raised);
+            border: 1px solid var(--rule); border-radius: 8px;
+            font-size: 11px; line-height: 1.8; color: var(--ink-secondary);
+        }
+        .de-refs-list ol { margin: 0; padding-left: 18px; }
 
         /* Gonioscopy hotspot tooltips */
         .gonio-img-wrap { position: relative; display: block; width: 100%; }
@@ -3601,7 +3617,7 @@
             // J&J ACUVUE
             { name:"Acuvue Oasys 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$109 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)" },
             { name:"Acuvue Oasys 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:121, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$133 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"Acuvue Oasys Multifocal 1-Day", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:121, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$163 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)" },
+            { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:121, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$163 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)" },
             { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.75, cylSteps:[-1.00], addTypes:["Low","Mid","High"], qty:"30", price:"$80 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4789,8 +4805,8 @@
                     }
                 }
 
-                // Apply troubleshoot adjustments
-                if (state.tsAdjustment && state.tsAdjustment.overrides[eyeLabel]) {
+                // Apply troubleshoot adjustments (skip in non-adapt mode — always use initial Rx)
+                if (state.tsAdjustment && !state.nonAdaptFrom && state.tsAdjustment.overrides[eyeLabel]) {
                     const adj = state.tsAdjustment.overrides[eyeLabel];
                     if (adj.sphDelta !== undefined) {
                         const sphParam = params.find(p => p.label === "Sphere (SPH)");
@@ -8636,6 +8652,23 @@
             if (el) renderDryEyeTool(el);
         }
 
+        function toggleDeRefs(id) {
+            var el = document.getElementById('deRefs_' + id);
+            var btn = document.getElementById('deRefsBtn_' + id);
+            if (!el || !btn) return;
+            if (el.style.display === 'none') { el.style.display = 'block'; btn.classList.add('open'); }
+            else { el.style.display = 'none'; btn.classList.remove('open'); }
+        }
+
+        function deRefsCite(sectionId, refs) {
+            var items = '';
+            for (var i = 0; i < refs.length; i++) items += '<li>' + refs[i] + '</li>';
+            return '<button class="de-refs-toggle" id="deRefsBtn_' + sectionId + '" onclick="event.stopPropagation();toggleDeRefs(\'' + sectionId + '\')">'
+                + '<i class="ph-bold ph-caret-right"></i> References'
+                + '</button>'
+                + '<div class="de-refs-list" id="deRefs_' + sectionId + '" style="display:none;"><ol>' + items + '</ol></div>';
+        }
+
         function buildDeSection(id, icon, title, summary, content) {
             var exp = dryEyeExpanded[id];
             return '<div class="tools-card" style="padding:0;">'
@@ -8679,6 +8712,11 @@
                     ['Tear Meniscus Height','<span class="de-normal">\u22650.25 mm</span>','<span class="de-mild">0.20\u20130.25</span>','<span class="de-moderate">&lt;0.20</span>','<span class="de-severe">&lt;0.10</span>']
                 ])
                 + '<div class="de-note">Schirmer I measures total (reflex + basal) tear production. Schirmer II (with topical anesthesia) isolates basal secretion.</div>'
+                + deRefsCite('tearQty', [
+                    'Wolffsohn JS, Arita R, Chalmers R, et al. TFOS DEWS II Diagnostic Methodology Report. <em>Ocul Surf.</em> 2017;15(3):539\u2013574.',
+                    'Schirmer O. Studien zur Physiologie und Pathologie der Tr\u00e4nenabsonderung und Tr\u00e4nenabfuhr. <em>Graefes Arch Clin Exp Ophthalmol.</em> 1903;56:197\u2013291.',
+                    'Hamano H, Hori M, Hamano T, et al. A new method for measuring tears. <em>CLAO J.</em> 1983;9(3):281\u2013289.'
+                ])
             );
 
             // 2. Tear Stability & Quality
@@ -8690,6 +8728,11 @@
                     ['Lipid Layer (LipiView)','<span class="de-normal">\u226575 nm</span>','<span class="de-mild">60\u201375</span>','<span class="de-moderate">25\u201359</span>','<span class="de-severe">&lt;25</span>']
                 ])
                 + '<div class="de-note">Inter-eye osmolarity difference &gt;8 mOsm/L is also considered a positive marker for dry eye disease.</div>'
+                + deRefsCite('tearStab', [
+                    'Wolffsohn JS, Arita R, Chalmers R, et al. TFOS DEWS II Diagnostic Methodology Report. <em>Ocul Surf.</em> 2017;15(3):539\u2013574.',
+                    'Sullivan BD, Whitmer D, Nichols KK, et al. An objective approach to dry eye disease severity. <em>Invest Ophthalmol Vis Sci.</em> 2010;51(12):6125\u20136130.',
+                    'Lemp MA, Bron AJ, Baudouin C, et al. Tear osmolarity in the diagnosis and management of dry eye disease. <em>Am J Ophthalmol.</em> 2011;151(5):792\u2013798.'
+                ])
             );
 
             // 3. Ocular Surface Staining
@@ -8714,6 +8757,12 @@
                 + '<div class="de-note">3 zones (nasal conjunctiva, cornea, temporal conjunctiva), each scored 0\u20133. Max = 9. Abnormal \u22653.</div>'
                 + '<div class="de-subsection">SICCA OSS (Ocular Staining Score)</div>'
                 + '<div class="de-note">Cornea 0\u20136 + conjunctiva 0\u20136 = max 12/eye. Score \u22655 meets Sj\u00f6gren\u2019s criteria (per ACR).</div>';
+            stainingContent += deRefsCite('staining', [
+                    'Bron AJ, Evans VE, Smith JA. Grading of corneal and conjunctival staining in the context of other dry eye tests. <em>Cornea.</em> 2003;22(7):640\u2013650.',
+                    'Lemp MA. Report of the National Eye Institute/Industry Workshop on Clinical Trials in Dry Eyes. <em>CLAO J.</em> 1995;21(4):221\u2013232.',
+                    'van Bijsterveld OP. Diagnostic tests in the Sicca syndrome. <em>Arch Ophthalmol.</em> 1969;82(1):10\u201314.',
+                    'Whitcher JP, Shiboski CH, Shiboski SC, et al. A simplified quantitative method for assessing keratoconjunctivitis sicca from the Sj\u00f6gren\u2019s Syndrome International Registry. <em>Am J Ophthalmol.</em> 2010;149(3):405\u2013415.'
+                ]);
             html += buildDeSection('staining', 'ph-grid-four', 'Ocular Surface Staining', 'Oxford, NEI/Industry, van Bijsterveld, SICCA OSS', stainingContent);
 
             // 4. Meibomian Gland Assessment
@@ -8741,6 +8790,11 @@
                 ])
                 + '<div class="de-subsection">Lid Margin Abnormalities</div>'
                 + '<div class="de-note">Score 0\u20134 based on presence of: irregular lid margin, vascular engorgement, plugged meibomian gland orifices, anterior/posterior displacement of mucocutaneous junction (1 point each).</div>';
+            mgContent += deRefsCite('meibomian', [
+                    'Tomlinson A, Bron AJ, Korb DR, et al. The international workshop on meibomian gland dysfunction: report of the diagnosis subcommittee. <em>Invest Ophthalmol Vis Sci.</em> 2011;52(4):2006\u20132049.',
+                    'Arita R, Itoh K, Inoue K, Amano S. Noncontact infrared meibography to document age-related changes of the meibomian glands in a normal population. <em>Ophthalmology.</em> 2008;115(5):911\u2013915.',
+                    'Nichols KK, Foulks GN, Bron AJ, et al. The international workshop on meibomian gland dysfunction: executive summary. <em>Invest Ophthalmol Vis Sci.</em> 2011;52(4):1922\u20131929.'
+                ]);
             html += buildDeSection('meibomian', 'ph-eyedropper', 'Meibomian Gland Assessment', 'Expressibility, meibum quality, meibography, lid margin', mgContent);
 
             // 5. Inflammatory Markers
@@ -8753,6 +8807,11 @@
                 ])
                 + '<div class="de-subsection">Lactoferrin</div>'
                 + '<div class="de-note"><span class="de-moderate">&lt;1.0 mg/mL</span> = aqueous deficiency suspected. Normal \u22651.1 mg/mL.</div>';
+            inflammContent += deRefsCite('inflammatory', [
+                    'Sambursky R, Davitt WF III, Latkany R, et al. Sensitivity and specificity of a point-of-care matrix metalloproteinase 9 immunoassay for diagnosing inflammation related to dry eye. <em>JAMA Ophthalmol.</em> 2013;131(1):24\u201328.',
+                    'Sullivan BD, Whitmer D, Nichols KK, et al. An objective approach to dry eye disease severity. <em>Invest Ophthalmol Vis Sci.</em> 2010;51(12):6125\u20136130.',
+                    'Danjo Y, Lee M, Horimoto K, Hamano T. Ocular surface damage and tear lactoferrin in dry eye syndrome. <em>Acta Ophthalmol.</em> 1994;72(4):433\u2013437.'
+                ]);
             html += buildDeSection('inflammatory', 'ph-flame', 'Inflammatory Markers', 'MMP-9, osmolarity thresholds, lactoferrin', inflammContent);
 
             // 6. Symptom Questionnaires
@@ -8782,6 +8841,12 @@
                     ['10\u201320','<span class="de-mild">Borderline</span>'],
                     ['&gt;20','<span class="de-severe">Dry eye</span>']
                 ]);
+            sxContent += deRefsCite('symptoms', [
+                    'Schiffman RM, Christianson MD, Jacobsen G, et al. Reliability and validity of the Ocular Surface Disease Index. <em>Arch Ophthalmol.</em> 2000;118(5):615\u2013621.',
+                    'Ngo W, Situ P, Keir N, et al. Psychometric properties and validation of the Standard Patient Evaluation of Eye Dryness questionnaire. <em>Cornea.</em> 2013;32(9):1204\u20131210.',
+                    'Chalmers RL, Begley CG, Caffery B. Validation of the 5-Item Dry Eye Questionnaire (DEQ-5). <em>Cont Lens Anterior Eye.</em> 2010;33(2):55\u201360.',
+                    'McMonnies CW. Key questions in a dry eye history. <em>J Am Optom Assoc.</em> 1986;57(7):512\u2013517.'
+                ]);
             html += buildDeSection('symptoms', 'ph-clipboard-text', 'Symptom Questionnaires', 'OSDI, SPEED, DEQ-5, McMonnies', sxContent);
 
             // 7. DEWS II Classification
@@ -8806,6 +8871,12 @@
                 + '&nbsp;&nbsp;&bull; <strong>Evaporative</strong> \u2014 MGD, reduced lipid layer, blink abnormalities<br>'
                 + '&nbsp;&nbsp;&bull; <strong>Mixed</strong> \u2014 Features of both subtypes'
                 + '</div>';
+            dewsContent += deRefsCite('dews', [
+                    'Craig JP, Nichols KK, Akpek EK, et al. TFOS DEWS II Definition and Classification Report. <em>Ocul Surf.</em> 2017;15(3):276\u2013283.',
+                    'Wolffsohn JS, Arita R, Chalmers R, et al. TFOS DEWS II Diagnostic Methodology Report. <em>Ocul Surf.</em> 2017;15(3):539\u2013574.',
+                    'Jones L, Downie LE, Korb D, et al. TFOS DEWS II Management and Therapy Report. <em>Ocul Surf.</em> 2017;15(3):575\u2013628.',
+                    'Bron AJ, de Paiva CS, Chauhan SK, et al. TFOS DEWS II Pathophysiology Report. <em>Ocul Surf.</em> 2017;15(3):438\u2013510.'
+                ]);
             html += buildDeSection('dews', 'ph-chart-bar', 'DEWS II Classification', 'Severity matrix, diagnostic algorithm, subtypes', dewsContent);
 
             // 8. Lid & Blink Assessment
@@ -8829,6 +8900,11 @@
                 ])
                 + '<div class="de-subsection">Demodex</div>'
                 + '<div class="de-note"><span class="de-moderate">\u22652 cylindrical dandruff (collarettes) per lid = positive.</span> Consider tea tree oil or ivermectin-based treatment.</div>';
+            lidContent += deRefsCite('lidBlink', [
+                    'Korb DR, Herman JP, Blackie CA, et al. Prevalence of lid wiper epitheliopathy in subjects with dry eye signs and symptoms. <em>Cornea.</em> 2010;29(4):377\u2013383.',
+                    'H\u00f6h H, Schirra F, Kienecker C, Ruprecht KW. Lid-parallel conjunctival folds (LIPCOF) and dry eye: a diagnostic tool for the contactologist. <em>Contactologia.</em> 1995;17:104\u2013117.',
+                    'Wolffsohn JS, Arita R, Chalmers R, et al. TFOS DEWS II Diagnostic Methodology Report. <em>Ocul Surf.</em> 2017;15(3):539\u2013574.'
+                ]);
             html += buildDeSection('lidBlink', 'ph-eye', 'Lid & Blink Assessment', 'Blink rate, LWE, LIPCOF, Demodex', lidContent);
 
             el.innerHTML = html;
