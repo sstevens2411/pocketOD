@@ -3609,7 +3609,24 @@
             { name:"Clariti 1 Day Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:60, bc:"8.6", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$100 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"Fresh Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Toric",retailer:"Vision Source"},{name:"Ethos 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Toric",retailer:"America's Best"},{name:"Ray-Ban 1-Day for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day for Astigmatism",retailer:"Pearle Vision"},{name:"up & up 1 Day for Astigmatism",retailer:"Target"}] },
             { name:"Clariti 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}] },
             { name:"Proclear 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90", price:"$77 (90pk)", wear:"DW", material:"Omafilcon A" },
-            { name:"Proclear 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Single profile"], qty:"90", price:"$91 (90pk)", wear:"DW", material:"Omafilcon A", note:"Single aspheric center-near design, up to +2.50 add" },
+            { name:"Proclear 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Single profile"], qty:"90", price:"$91 (90pk)", wear:"DW", material:"Omafilcon A", note:"Single aspheric center-near design, up to +2.50 add", fittingGuide: {
+                sphBoost: {
+                    dominant: 0.50,
+                    nonDominant: [
+                        { addMin:0.75, addMax:1.00, boost:0 },
+                        { addMin:1.25, addMax:1.75, boost:0.75 },
+                        { addMin:2.00, addMax:2.50, boost:1.00 }
+                    ]
+                },
+                troubleshootSteps: {
+                    distance: [
+                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationale:"Perform trial lens over-refraction in 0.25D steps to dominant eye under binocular conditions." }
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Perform trial lens over-refraction in +0.25D steps to non-dominant eye under binocular conditions." }
+                    ]
+                }
+            }},
             { name:"Avaira Vitality", brand:"CooperVision", type:"sphere", modality:"biweekly", dk:90, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$43", wear:"DW", material:"Fanfilcon A (SiHy)", privateLabels:[{name:"Aquaclear 110",retailer:"Vision Source"},{name:"Ethos AquaTech 2 Week",retailer:"Visionworks"},{name:"Sofmed Breathables Advanced",retailer:"America's Best"},{name:"Pearle Vision 2 Week",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear",retailer:"Eyeglass World"},{name:"Serenity",retailer:"FYIdoctors"}] },
             { name:"Avaira Vitality Toric", brand:"CooperVision", type:"toric", modality:"biweekly", dk:90, bc:"8.5", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$49", wear:"DW", material:"Fanfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", privateLabels:[{name:"Aquaclear 110 Toric",retailer:"Vision Source"},{name:"Ethos AquaTech 2 Week for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables Advanced Toric",retailer:"America's Best"},{name:"Pearle Vision 2 Week for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear for Astigmatism",retailer:"Eyeglass World"},{name:"Serenity Toric",retailer:"FYIdoctors"}] },
             { name:"MiSight 1 day", brand:"CooperVision", type:"myopia-mgmt", modality:"daily", dk:27, bc:"8.7", diam:"14.2", sphMin:-7, sphMax:-0.5, cylMin:0, cylMax:0, addTypes:[], qty:"90, 180", price:"$155 (90pk)", wear:"DW", material:"Omafilcon A (Hydrogel)", note:"Myopia management for children 8\u201312" },
@@ -4521,7 +4538,17 @@
                 return `<div class="option-btn brand-btn brand-${bc} ${isActive ? "active" : ""}" onclick="toggleBrand('${brand}')">
                     <div class="check">${isActive ? "\u2713" : ""}</div>
                     <div class="title">${brand}</div>
-                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${LENSES.filter(l => l.brand === brand && (state.modality.length === 0 || state.modality.includes(l.modality)) && isLensCoveredForBothEyes(l)).length} compatible</div>
+                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${LENSES.filter(l => {
+                        if (l.brand !== brand) return false;
+                        if (state.modality.length > 0 && !state.modality.includes(l.modality)) return false;
+                        // When ADD is entered, only count multifocal-type lenses
+                        const odAdd = state.od.add && parseFloat(state.od.add) > 0;
+                        const osAdd = state.os.add && parseFloat(state.os.add) > 0;
+                        if (odAdd || osAdd) {
+                            if (l.type !== 'multifocal' && l.type !== 'multifocal-toric') return false;
+                        }
+                        return isLensCoveredForBothEyes(l);
+                    }).length} compatible</div>
                 </div>`;
             }).join("");
 
@@ -4839,6 +4866,28 @@
                         if (vertexApplied) parts.push(`Vertexed`);
                         parts.push(`SE adjusted ${seAdj > 0 ? "+" : ""}${seAdj.toFixed(2)} for cyl reduction`);
                         sphNote = parts.join("; ");
+                        sphHighlight = true;
+                    }
+                }
+
+                // Proclear-style sphBoost: automatic sphere adjustment based on dominance & ADD
+                if (l.fittingGuide && l.fittingGuide.sphBoost && isDominant !== null) {
+                    const sphBoost = l.fittingGuide.sphBoost;
+                    let boost = 0;
+                    let boostNote = '';
+                    if (isDominant) {
+                        boost = sphBoost.dominant;
+                        boostNote = `+${boost.toFixed(2)} dominant eye boost`;
+                    } else {
+                        const row = sphBoost.nonDominant.find(r => addP >= r.addMin && addP <= r.addMax);
+                        if (row) {
+                            boost = row.boost;
+                            boostNote = boost !== 0 ? `+${boost.toFixed(2)} non-dominant boost (ADD +${addP.toFixed(2)})` : '';
+                        }
+                    }
+                    if (boost !== 0) {
+                        finalSph = snapTo025(finalSph + boost);
+                        sphNote = sphNote ? `${sphNote}; ${boostNote}` : boostNote;
                         sphHighlight = true;
                     }
                 }
@@ -5767,6 +5816,22 @@
                 } else if (lens.type === "sphere" || lens.type === "multifocal") {
                     clSph = snapTo025(clSph + cyl / 2);
                 }
+                // Apply sphBoost if lens has it
+                if (lens.fittingGuide && lens.fittingGuide.sphBoost) {
+                    const isDom = eyeLabel === 'OD' ? odDominant : osDominant;
+                    if (isDom !== null) {
+                        const sb = lens.fittingGuide.sphBoost;
+                        let boost = 0;
+                        if (isDom) {
+                            boost = sb.dominant;
+                        } else {
+                            const addP = parseFloat(eye.add) || 0;
+                            const row = sb.nonDominant.find(r => addP >= r.addMin && addP <= r.addMax);
+                            if (row) boost = row.boost;
+                        }
+                        if (boost !== 0) clSph = snapTo025(clSph + boost);
+                    }
+                }
                 if (eyeLabel && state.tsAdjustment && state.tsAdjustment.overrides && state.tsAdjustment.overrides[eyeLabel] && state.tsAdjustment.overrides[eyeLabel].sphDelta !== undefined) {
                     clSph = snapTo025(clSph + state.tsAdjustment.overrides[eyeLabel].sphDelta);
                 }
@@ -5892,6 +5957,28 @@
                                         from: `${currentSph > 0 ? "+" : ""}${currentSph.toFixed(2)}`,
                                         to: `${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}`
                                     }]
+                                });
+                                break;
+                            }
+                            case "sphereAdjSelectBySign": {
+                                const currentSph = getCurrentSph(targetEye.eye, targetEye.label);
+                                const opts = currentSph >= 0 ? step.optionsPlus : step.optionsMinus;
+                                const defaultAmt = opts[0];
+                                const defaultNew = snapTo025(currentSph + defaultAmt);
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: `Add ${defaultAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
+                                    rationale: step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity (${currentSph >= 0 ? 'plus' : 'minus'} lens)`,
+                                    adjustments: { [targetEye.label]: { sphDelta: defaultAmt } },
+                                    changes: [{
+                                        eye: targetEye.label, param: "Sphere",
+                                        from: `${currentSph > 0 ? "+" : ""}${currentSph.toFixed(2)}`,
+                                        to: `${defaultNew > 0 ? "+" : ""}${defaultNew.toFixed(2)}`
+                                    }],
+                                    sphereAdjSelect: true,
+                                    selectOptions: opts,
+                                    selectEye: targetEye.label,
+                                    selectBaseSph: currentSph
                                 });
                                 break;
                             }
