@@ -1649,6 +1649,23 @@
             margin-top: 6px;
         }
 
+        /* Subtypes (brand family) */
+        .med-subtypes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .med-subtype-tag {
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: rgba(37,99,235,0.07);
+            color: #2563eb;
+            border: 1px solid rgba(37,99,235,0.18);
+        }
+
         /* Price comparison */
         .med-price-row {
             display: flex;
@@ -1746,6 +1763,22 @@
         }
         .med-notes-list li {
             margin-bottom: 1px;
+        }
+        .med-contraindication-box {
+            background: rgba(220,38,38,0.05);
+            border: 1px solid rgba(220,38,38,0.18);
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: #7f1d1d;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .med-contra-label {
+            color: #dc2626 !important;
         }
         .med-safety-box {
             background: rgba(59,130,246,0.06);
@@ -3784,10 +3817,10 @@
             {id:"med_003",brand_name:"Cequa",generic_name:"Cyclosporine 0.09%",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily (every 12 hours)",bottle_size:"0.25 mL single-use vials (60 count)",preservative_free:true,avg_brand_price:700,avg_generic_price:null,notes:"Uses nanomicellar technology for enhanced absorption. Higher concentration than Restasis.",price_size:"60-count box",route:"topical"},
             {id:"med_004",brand_name:"Tyrvaya",generic_name:"Varenicline 0.03 mg nasal spray",generic_available:false,drug_class:"Nicotinic acetylcholine receptor agonist",condition:"dry_eye",typical_dosing:"1 spray in each nostril twice daily",bottle_size:"4.7 mL nasal spray",preservative_free:false,avg_brand_price:650,avg_generic_price:null,notes:"Nasal spray, not an eye drop. Stimulates natural tear production via trigeminal nerve. Sneezing is a common side effect.",price_size:"4.7 mL",route:"nasal"},
             {id:"med_005",brand_name:"Vevye",generic_name:"Cyclosporine 0.1% (in perfluorobutylpentane)",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily",bottle_size:"2.5 mL / 5 mL multi-dose bottle",preservative_free:true,avg_brand_price:550,avg_generic_price:null,notes:"Water-free formulation. Significantly less burning/stinging on instillation compared to other cyclosporines.",price_size:"5 mL",route:"topical"},
-            {id:"med_006",brand_name:"Refresh Tears",generic_name:"Carboxymethylcellulose 0.5%",generic_available:true,drug_class:"Artificial tear / Lubricant",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"15 mL / 30 mL or 30 single-use vials",preservative_free:true,avg_brand_price:15,avg_generic_price:8,notes:"Good first-line OTC option. Available in preserved bottle and PF single-use vials.",price_size:"15 mL",route:"topical"},
-            {id:"med_007",brand_name:"Systane Ultra",generic_name:"Polyethylene glycol 0.4% / Propylene glycol 0.3%",generic_available:false,drug_class:"Artificial tear / Lubricant",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"10 mL / 20 mL or 24-30 single-use vials",preservative_free:true,avg_brand_price:18,avg_generic_price:null,notes:"Available in preserved and PF versions. Good for aqueous-deficient dry eye.",price_size:"10 mL",route:"topical"},
+            {id:"med_006",brand_name:"Refresh",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed (ointment at bedtime)",bottle_size:"Varies by product",preservative_free:true,avg_brand_price:null,avg_generic_price:null,notes:"Allergan / AbbVie. Many types available in preserved and PF formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Relieva","Digital","Optive","Optive Advanced","Optive Mega-3","Gel","PM (ointment)","Tears","Original","Plus","Liquigel","Celluvisc"]},
+            {id:"med_007",brand_name:"Systane",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed (ointment at bedtime)",bottle_size:"Varies by product",preservative_free:true,avg_brand_price:null,avg_generic_price:null,notes:"Alcon. Many types available in preserved and PF formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Ultra","Balance","Complete","Hydration","Pro","Gel Drops","Night (gel)","Nighttime (ointment)"]},
             {id:"med_008",brand_name:"Retaine MGD",generic_name:"Light mineral oil / Mineral oil",generic_available:false,drug_class:"Lipid-based artificial tear",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"30 single-use vials",preservative_free:true,avg_brand_price:22,avg_generic_price:null,notes:"Lipid-based drop, good for evaporative dry eye and MGD. Preservative-free.",price_size:"30-count box",route:"topical"},
-            {id:"med_009",brand_name:"Refresh Optive Mega-3",generic_name:"Carboxymethylcellulose 0.5% / Glycerin 1% / Castor oil",generic_available:false,drug_class:"Lipid-enhanced artificial tear",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"10 mL / 15 mL or 30-60 single-use vials",preservative_free:true,avg_brand_price:20,avg_generic_price:null,notes:"Addresses both aqueous and lipid layer deficiency. Good for mixed-mechanism dry eye.",price_size:"10 mL",route:"topical"},
+            {id:"med_009",brand_name:"Blink",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"Varies by product",preservative_free:true,avg_brand_price:null,avg_generic_price:null,notes:"Bausch + Lomb. Several types available in PF formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Tears","GelTears","Triple Care","Nourish","Boost","Contacts","Blink-n-Clean"]},
             {id:"med_010",brand_name:"Xalatan",generic_name:"Latanoprost 0.005%",generic_available:true,drug_class:"Prostaglandin analog",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily at bedtime",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:15,notes:"First-line glaucoma therapy. May cause iris darkening, eyelash growth, periorbital fat atrophy. Refrigerate before opening.",price_size:"2.5 mL",route:"topical"},
             {id:"med_011",brand_name:"Lumigan",generic_name:"Bimatoprost 0.01%",generic_available:true,drug_class:"Prostaglandin analog",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily at bedtime",bottle_size:"2.5 mL / 5 mL / 7.5 mL",preservative_free:false,avg_brand_price:220,avg_generic_price:25,notes:"Similar efficacy to latanoprost. Same class side effects. Also used cosmetically as Latisse for lash growth.",price_size:"2.5 mL",route:"topical"},
             {id:"med_012",brand_name:"Travatan Z",generic_name:"Travoprost 0.004%",generic_available:true,drug_class:"Prostaglandin analog",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily at bedtime",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:210,avg_generic_price:20,notes:"Uses sofZia preservative system (ionic buffered). No refrigeration needed. May be better tolerated on ocular surface.",price_size:"2.5 mL",route:"topical"},
@@ -3820,6 +3853,7 @@
             {id:"med_039",brand_name:"Durezol",generic_name:"Difluprednate 0.05%",generic_available:true,drug_class:"Corticosteroid (high potency)",condition:"inflammation_steroid",typical_dosing:"1 drop four times daily for 2 weeks, then twice daily for 1 week, then taper",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:350,avg_generic_price:50,notes:"Most potent topical ophthalmic steroid. Emulsion \u2014 no shaking needed. Excellent for post-surgical inflammation and uveitis. High IOP risk \u2014 monitor closely.",price_size:"5 mL",route:"topical"},
             {id:"med_040",brand_name:"FML",generic_name:"Fluorometholone 0.1%",generic_available:true,drug_class:"Corticosteroid (low-moderate potency)",condition:"inflammation_steroid",typical_dosing:"1 drop two to four times daily",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:150,avg_generic_price:20,notes:"Lower potency steroid. Lower IOP risk. Good for mild surface inflammation. Doesn\u2019t penetrate well \u2014 not for anterior chamber inflammation.",price_size:"5 mL",route:"topical"},
             {id:"med_041",brand_name:"Eysuvis",generic_name:"Loteprednol 0.25% (submicron)",generic_available:false,drug_class:"Corticosteroid (low-moderate potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops four times daily for up to 2 weeks",bottle_size:"5 mL / 10 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:null,notes:"FDA-approved specifically for short-term treatment of dry eye disease flares. Submicron formulation for enhanced penetration.",price_size:"5 mL",route:"topical"},
+            {id:"med_129",brand_name:"Triamcinolone Acetonide Cream",generic_name:"Triamcinolone acetonide 0.1%",generic_available:true,drug_class:"Corticosteroid (low-moderate potency)",condition:"inflammation_steroid",typical_dosing:"Apply thin film to eyelids 2-3 times daily for up to 10 days",bottle_size:"15 g / 80 g tube",preservative_free:false,avg_brand_price:30,avg_generic_price:11,notes:"Topical cream — NOT for ophthalmic (in-eye) use. Used for eyelid contact dermatitis. Prolonged use causes skin thinning — limit to short-term (10 days). Available OTC in 0.025% and Rx in 0.1% / 0.5%.",price_size:"15 g",route:"topical"},
             {id:"med_042",brand_name:"Prolensa",generic_name:"Bromfenac 0.07%",generic_available:true,drug_class:"NSAID",condition:"inflammation_nsaid",typical_dosing:"1 drop once daily starting 1 day before surgery, continuing 14 days post-op",bottle_size:"1.6 mL / 3 mL",preservative_free:false,avg_brand_price:280,avg_generic_price:40,notes:"Once-daily NSAID. Primarily for post-cataract surgery inflammation and CME prevention. Caution in NSAID-sensitive asthma patients.",price_size:"1.6 mL",route:"topical"},
             {id:"med_043",brand_name:"Ilevro",generic_name:"Nepafenac 0.3%",generic_available:true,drug_class:"NSAID",condition:"inflammation_nsaid",typical_dosing:"1 drop once daily starting 1 day before surgery, day of surgery, and 14 days post-op",bottle_size:"1.7 mL / 3 mL",preservative_free:false,avg_brand_price:260,avg_generic_price:35,notes:"Prodrug \u2014 converted to amfenac inside the eye. Once-daily dosing. Shake well (suspension).",price_size:"1.7 mL",route:"topical"},
             {id:"med_044",brand_name:"Ketorolac Ophthalmic",generic_name:"Ketorolac 0.5%",generic_available:true,drug_class:"NSAID",condition:"inflammation_nsaid",typical_dosing:"1 drop four times daily as needed",bottle_size:"3 mL / 5 mL / 10 mL",preservative_free:false,avg_brand_price:80,avg_generic_price:12,notes:"Very affordable generic NSAID. Stings on instillation. Also used for allergic conjunctivitis itch relief.",price_size:"5 mL",route:"topical"},
@@ -3941,10 +3975,10 @@
             med_003:"dry eye, keratoconjunctivitis sicca, KCS, ocular surface disease, tear deficiency",
             med_004:"dry eye, keratoconjunctivitis sicca, KCS, tear deficiency",
             med_005:"dry eye, keratoconjunctivitis sicca, KCS, ocular surface disease, tear deficiency",
-            med_006:"dry eye, contact lens dryness, ocular surface disease, tear supplement",
-            med_007:"dry eye, aqueous deficient dry eye, ocular surface disease, tear supplement",
+            med_006:"dry eye, contact lens dryness, ocular surface disease, tear supplement, relieva, digital, optive, optive advanced, optive mega-3, gel, pm, tears, original, plus, liquigel, celluvisc, refresh",
+            med_007:"dry eye, aqueous deficient dry eye, ocular surface disease, tear supplement, ultra, balance, complete, hydration, pro, gel drops, night, nighttime, systane",
             med_008:"dry eye, evaporative dry eye, meibomian gland dysfunction, MGD, tear supplement",
-            med_009:"dry eye, evaporative dry eye, mixed mechanism dry eye, tear supplement",
+            med_009:"dry eye, tear supplement, blink, tears, geltears, triple care, nourish, boost, contacts, blink-n-clean",
             med_089:"dry eye, evaporative dry eye, meibomian gland dysfunction, MGD",
             med_091:"dry eye, moderate to severe dry eye, keratoconjunctivitis sicca",
             med_092:"dry eye, vernal keratoconjunctivitis, VKC, allergic eye disease",
@@ -4025,6 +4059,7 @@
             med_039:"uveitis, iritis, anterior uveitis, inflammation, post-surgical, post-operative, severe inflammation",
             med_040:"episcleritis, mild inflammation, contact lens-related inflammation, superficial keratitis",
             med_041:"dry eye flare, inflammation, dry eye disease",
+            med_129:"contact dermatitis, eyelid dermatitis, eyelid inflammation, eczema, triamcinolone, kenalog, skin steroid",
             med_106:"uveitis, iritis, anterior uveitis, inflammation, post-surgical, post-operative, severe inflammation",
             med_107:"inflammation, episcleritis, mild anterior segment inflammation, superficial keratitis",
             med_108:"inflammation, episcleritis, moderate inflammation",
@@ -4081,151 +4116,152 @@
             med_127:"pain, severe ocular pain, corneal abrasion, trauma, post-operative pain",
         };
 
-        // Pediatric use and pregnancy safety for each medication
+        // Pediatric use, pregnancy safety, and contraindications for each medication
         const MED_SAFETY = {
             // Dry Eye
-            med_001:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — no adequate human studies; use only if benefit justifies risk"},
-            med_002:{pediatric:"Not established in children <17 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_003:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_004:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_005:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_006:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
-            med_007:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
-            med_008:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
-            med_009:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
-            med_089:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_091:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if benefit justifies risk"},
-            med_092:{pediatric:"Approved for VKC in patients ≥4 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_093:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_001:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — no adequate human studies; use only if benefit justifies risk",contraindication:"Contraindicated with active ocular infection. Remove contact lenses before instilling; may reinsert 15 minutes after."},
+            med_002:{pediatric:"Not established in children <17 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed. Remove contact lenses before use; reinsert after 15 minutes."},
+            med_003:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with active ocular infection. Remove contact lenses before instilling; may reinsert 15 minutes after."},
+            med_004:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed. Avoid in patients with hypersensitivity to varenicline."},
+            med_005:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to cyclosporine. Remove contact lenses before use; reinsert after 15 minutes."},
+            med_006:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption",contraindication:"Generally safe. Preserved formulations should not be used with contact lenses in (remove lenses first or use preservative-free)."},
+            med_007:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption",contraindication:"Generally safe. Preserved formulations should not be used with contact lenses in (remove lenses first or use preservative-free)."},
+            med_008:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption",contraindication:"Generally safe. No significant contraindications for preservative-free formulations."},
+            med_009:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption",contraindication:"Generally safe. Preserved formulations should not be used with contact lenses in (remove lenses first or use preservative-free)."},
+            med_089:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to any component. Remove contact lenses before use."},
+            med_091:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if benefit justifies risk",contraindication:"No absolute contraindications listed. Avoid in patients with hypersensitivity to hydroxypropyl cellulose."},
+            med_092:{pediatric:"Approved for VKC in patients ≥4 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with active ocular infection and known hypersensitivity to cyclosporine."},
+            med_093:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed beyond hypersensitivity to any component."},
             // Glaucoma
-            med_010:{pediatric:"Not established <16 years; used off-label in pediatric glaucoma",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_011:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_012:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_013:{pediatric:"Not established in children <16 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_014:{pediatric:"Use with caution — risk of bradycardia and bronchospasm in neonates/infants",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_015:{pediatric:"Contraindicated <2 years (CNS depression risk); use caution <6 years",pregnancy:"Cat B — use only if clearly needed"},
-            med_016:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_017:{pediatric:"Used off-label in pediatric glaucoma; monitor electrolytes",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_018:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_019:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_020:{pediatric:"Contraindicated <2 years; not recommended <6 years (brimonidine CNS risk)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_021:{pediatric:"Used off-label in pediatric glaucoma; caution with timolol component",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_094:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_095:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_096:{pediatric:"Not recommended <2 years; caution <6 years (brimonidine component)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_097:{pediatric:"Not established; caution in infants (CNS depression risk)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_098:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_099:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_100:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_101:{pediatric:"Used in pediatric glaucoma; may cause accommodative spasm",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_102:{pediatric:"Used in pediatric glaucoma; monitor electrolytes and growth",pregnancy:"Cat C — teratogenic in animal studies; avoid if possible"},
-            med_103:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_104:{pediatric:"Use with caution — systemic absorption risk in children",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_105:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_010:{pediatric:"Not established <16 years; used off-label in pediatric glaucoma",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to benzalkonium chloride or any component. Use caution with active intraocular inflammation (uveitis) or risk factors for macular edema."},
+            med_011:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to any component. Use caution with active intraocular inflammation (uveitis) or risk factors for macular edema."},
+            med_012:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to any component. Use caution with active intraocular inflammation (uveitis) or risk factors for macular edema."},
+            med_013:{pediatric:"Not established in children <16 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Hypersensitivity to any component. Same PGA cautions: uveitis history and macular edema risk."},
+            med_014:{pediatric:"Use with caution — risk of bradycardia and bronchospasm in neonates/infants",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, 2nd/3rd-degree AV block, overt heart failure, and cardiogenic shock."},
+            med_015:{pediatric:"Contraindicated <2 years (CNS depression risk); use caution <6 years",pregnancy:"Cat B — use only if clearly needed",contraindication:"Contraindicated in children <2 years and with concurrent MAOI therapy. Use caution with severe cardiovascular disease, hepatic/renal impairment."},
+            med_016:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known sulfonamide hypersensitivity. Use caution in patients with severe renal impairment."},
+            med_017:{pediatric:"Used off-label in pediatric glaucoma; monitor electrolytes",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known sulfonamide hypersensitivity. Use caution in patients with severe renal or hepatic impairment."},
+            med_018:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications beyond hypersensitivity. Use caution with pre-existing corneal endothelial disease."},
+            med_019:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in asthma/COPD (latanoprost + netarsudil has no beta-blocker, but use PGA cautions). Use caution with uveitis or macular edema risk."},
+            med_020:{pediatric:"Contraindicated <2 years; not recommended <6 years (brimonidine CNS risk)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, AV block, heart failure (timolol), children <2 years (brimonidine), and concurrent MAOI therapy."},
+            med_021:{pediatric:"Used off-label in pediatric glaucoma; caution with timolol component",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, AV block, heart failure (timolol component) and sulfonamide hypersensitivity (dorzolamide component)."},
+            med_094:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma/COPD (beta-1 selective, but selectivity not absolute). Use caution in sinus bradycardia and heart failure."},
+            med_095:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, 2nd/3rd-degree AV block, overt heart failure, and cardiogenic shock (non-selective beta-blocker)."},
+            med_096:{pediatric:"Not recommended <2 years; caution <6 years (brimonidine component)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in children <2 years (brimonidine CNS depression), concurrent MAOI therapy, and known sulfonamide hypersensitivity (brinzolamide)."},
+            med_097:{pediatric:"Not established; caution in infants (CNS depression risk)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with concurrent MAOI therapy. High tachyphylaxis and allergy rate with chronic use; not for long-term IOP control."},
+            med_098:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Hypersensitivity to latanoprost or any component. Use caution with active intraocular inflammation or macular edema risk."},
+            med_099:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to tafluprost or any component. Use caution with active uveitis or risk factors for macular edema."},
+            med_100:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Hypersensitivity to latanoprost or any component. Use caution with active intraocular inflammation or macular edema risk."},
+            med_101:{pediatric:"Used in pediatric glaucoma; may cause accommodative spasm",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active anterior uveitis/iritis (risk of posterior synechiae). Use caution with retinal detachment risk, history of retinal tears, or neovascular glaucoma."},
+            med_102:{pediatric:"Used in pediatric glaucoma; monitor electrolytes and growth",pregnancy:"Cat C — teratogenic in animal studies; avoid if possible",contraindication:"Contraindicated with sulfonamide hypersensitivity, severe renal/hepatic disease, adrenal insufficiency, and hyponatremia/hypokalemia. Avoid with high-dose aspirin (metabolic acidosis risk)."},
+            med_103:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with sulfonamide hypersensitivity and severe renal/hepatic insufficiency. Monitor electrolytes."},
+            med_104:{pediatric:"Use with caution — systemic absorption risk in children",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, 2nd/3rd-degree AV block, overt heart failure, and cardiogenic shock (non-selective beta-blocker)."},
+            med_105:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, 2nd/3rd-degree AV block, overt heart failure, and cardiogenic shock (non-selective beta-blocker)."},
             // Allergy
-            med_022:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_023:{pediatric:"Approved for ages ≥2 years (0.1%), ≥3 years (0.2%)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_024:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B — use only if clearly needed"},
-            med_025:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B (based on oral cetirizine data) — use only if clearly needed"},
-            med_026:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_060:{pediatric:"Approved for ages ≥3 years (OTC)",pregnancy:"Generally considered compatible; limited ophthalmic data"},
-            med_061:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_062:{pediatric:"Not established in children <2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_063:{pediatric:"Ages ≥6 years per OTC labeling",pregnancy:"Use with caution — naphazoline is a vasoconstrictor"},
-            med_064:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat B — use only if clearly needed"},
-            med_065:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B — use only if clearly needed"},
-            med_066:{pediatric:"Approved for ages ≥4 years",pregnancy:"Cat B — use only if clearly needed"},
-            med_067:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_068:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_022:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to olopatadine or any component. No other absolute contraindications."},
+            med_023:{pediatric:"Approved for ages ≥2 years (0.1%), ≥3 years (0.2%)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to olopatadine or any component. No other absolute contraindications."},
+            med_024:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B — use only if clearly needed",contraindication:"Hypersensitivity to alcaftadine or any component. No other absolute contraindications."},
+            med_025:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B (based on oral cetirizine data) — use only if clearly needed",contraindication:"Hypersensitivity to cetirizine, hydroxyzine, or any component. No other absolute contraindications."},
+            med_026:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active untreated viral (HSV, vaccinia, varicella), bacterial, fungal, or mycobacterial ocular infection. Monitor IOP with prolonged use."},
+            med_060:{pediatric:"Approved for ages ≥3 years (OTC)",pregnancy:"Generally considered compatible; limited ophthalmic data",contraindication:"Hypersensitivity to ketotifen or any component. No other absolute contraindications."},
+            med_061:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to bepotastine or any component. No other absolute contraindications."},
+            med_062:{pediatric:"Not established in children <2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to olopatadine or any component. No other absolute contraindications."},
+            med_063:{pediatric:"Ages ≥6 years per OTC labeling",pregnancy:"Use with caution — naphazoline is a vasoconstrictor",contraindication:"Contraindicated in narrow-angle glaucoma. Avoid chronic use due to rebound redness (rhinitis medicamentosa equivalent). Use caution with hypertension and cardiovascular disease."},
+            med_064:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat B — use only if clearly needed",contraindication:"Hypersensitivity to nedocromil or any component. No other absolute contraindications."},
+            med_065:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B — use only if clearly needed",contraindication:"Hypersensitivity to lodoxamide or any component. No other absolute contraindications."},
+            med_066:{pediatric:"Approved for ages ≥4 years",pregnancy:"Cat B — use only if clearly needed",contraindication:"Hypersensitivity to cromolyn or any component. No other absolute contraindications."},
+            med_067:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to epinastine or any component. No other absolute contraindications."},
+            med_068:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to azelastine or any component. No other absolute contraindications."},
             // Bacterial Infection — Topical
-            med_027:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_028:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_029:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_030:{pediatric:"Approved for ages ≥2 months",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_031:{pediatric:"Approved for neonates and all ages (newborn prophylaxis)",pregnancy:"Cat B — generally considered safe"},
-            med_032:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat B — use only if clearly needed"},
-            med_069:{pediatric:"Approved for ages ≥2 months",pregnancy:"Cat B — use only if clearly needed"},
-            med_070:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_071:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_072:{pediatric:"Use with caution in neonates; monitor for ototoxicity",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_073:{pediatric:"Safe for all ages",pregnancy:"Cat C — minimal systemic absorption"},
-            med_074:{pediatric:"Safe for all ages",pregnancy:"Cat C — minimal systemic absorption"},
-            med_075:{pediatric:"Safe for all ages; monitor for neomycin hypersensitivity",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_076:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_027:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to moxifloxacin, any fluoroquinolone, or any component. Rare risk of tendon disorders (systemic class effect)."},
+            med_028:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to besifloxacin, any fluoroquinolone, or any component."},
+            med_029:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to ciprofloxacin, any fluoroquinolone, or any component. May cause white crystalline corneal precipitate."},
+            med_030:{pediatric:"Approved for ages ≥2 months",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to trimethoprim, polymyxin B, or any component."},
+            med_031:{pediatric:"Approved for neonates and all ages (newborn prophylaxis)",pregnancy:"Cat B — generally considered safe",contraindication:"Contraindicated with known hypersensitivity to erythromycin or any macrolide antibiotic."},
+            med_032:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat B — use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to azithromycin, any macrolide antibiotic, or any component."},
+            med_069:{pediatric:"Approved for ages ≥2 months",pregnancy:"Cat B — use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to tobramycin, any aminoglycoside, or any component."},
+            med_070:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to ofloxacin, any fluoroquinolone, or any component."},
+            med_071:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to gatifloxacin, any fluoroquinolone, or any component."},
+            med_072:{pediatric:"Use with caution in neonates; monitor for ototoxicity",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to gentamicin, any aminoglycoside, or any component."},
+            med_073:{pediatric:"Safe for all ages",pregnancy:"Cat C — minimal systemic absorption",contraindication:"Contraindicated with known hypersensitivity to bacitracin. Very low allergy risk."},
+            med_074:{pediatric:"Safe for all ages",pregnancy:"Cat C — minimal systemic absorption",contraindication:"Contraindicated with known hypersensitivity to bacitracin or polymyxin B. No neomycin — lower allergy risk than triple antibiotic."},
+            med_075:{pediatric:"Safe for all ages; monitor for neomycin hypersensitivity",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to neomycin, polymyxin B, gramicidin, or any component. Neomycin allergy rate up to 10%."},
+            med_076:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to levofloxacin, any fluoroquinolone, or any component."},
             // Bacterial Infection — Oral
-            med_077:{pediatric:"Approved for all ages; weight-based dosing in children",pregnancy:"Cat B — generally considered safe"},
-            med_078:{pediatric:"Approved for all ages; weight-based dosing in children",pregnancy:"Cat B — generally considered safe"},
-            med_079:{pediatric:"Approved for ages ≥6 months; weight-based dosing",pregnancy:"Cat B — use only if clearly needed"},
-            med_080:{pediatric:"Contraindicated <8 years (permanent tooth discoloration)",pregnancy:"Cat D — contraindicated; causes fetal tooth/bone effects"},
-            med_081:{pediatric:"Approved for ages ≥2 months; weight-based dosing",pregnancy:"Cat D near term — avoid in 3rd trimester (kernicterus risk)"},
+            med_077:{pediatric:"Approved for all ages; weight-based dosing in children",pregnancy:"Cat B — generally considered safe",contraindication:"Contraindicated with known penicillin allergy (risk of anaphylaxis). Use caution with cephalosporin cross-reactivity and history of antibiotic-associated colitis."},
+            med_078:{pediatric:"Approved for all ages; weight-based dosing in children",pregnancy:"Cat B — generally considered safe",contraindication:"Contraindicated with known cephalosporin hypersensitivity. Use caution with severe penicillin allergy (low cross-reactivity ~1-2%)."},
+            med_079:{pediatric:"Approved for ages ≥6 months; weight-based dosing",pregnancy:"Cat B — use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to azithromycin, erythromycin, or any macrolide. Use caution with hepatic impairment and QT prolongation risk."},
+            med_080:{pediatric:"Contraindicated <8 years (permanent tooth discoloration)",pregnancy:"Cat D — contraindicated; causes fetal tooth/bone effects",contraindication:"Contraindicated in children <8 years (tooth discoloration), pregnancy, and known tetracycline hypersensitivity. Photosensitivity risk; avoid with isotretinoin (pseudotumor cerebri)."},
+            med_081:{pediatric:"Approved for ages ≥2 months; weight-based dosing",pregnancy:"Cat D near term — avoid in 3rd trimester (kernicterus risk)",contraindication:"Contraindicated with known sulfonamide or trimethoprim hypersensitivity, megaloblastic anemia due to folate deficiency, and severe hepatic/renal impairment."},
             // Viral Infection
-            med_033:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — may be teratogenic; use only if clearly needed"},
-            med_034:{pediatric:"Approved for ages ≥6 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_035:{pediatric:"Approved ≥2 years (chickenpox), ≥12 years (cold sores)",pregnancy:"Cat B — commonly used when benefit justifies risk"},
-            med_082:{pediatric:"Approved for ages ≥2 years; weight-based dosing",pregnancy:"Cat B — commonly used when benefit justifies risk"},
-            med_083:{pediatric:"Not approved for ages <18 years for recurrent herpes",pregnancy:"Cat B — use only if clearly needed"},
+            med_033:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — may be teratogenic; use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to ganciclovir, valganciclovir, acyclovir, or any component."},
+            med_034:{pediatric:"Approved for ages ≥6 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to trifluridine or any component. Epithelial toxicity with prolonged use beyond 21 days."},
+            med_035:{pediatric:"Approved ≥2 years (chickenpox), ≥12 years (cold sores)",pregnancy:"Cat B — commonly used when benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to valacyclovir or acyclovir. Adjust dose for renal impairment; risk of TTP/HUS at high doses in immunocompromised."},
+            med_082:{pediatric:"Approved for ages ≥2 years; weight-based dosing",pregnancy:"Cat B — commonly used when benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to acyclovir. Adjust dose for renal impairment; maintain adequate hydration (crystalluria risk)."},
+            med_083:{pediatric:"Not approved for ages <18 years for recurrent herpes",pregnancy:"Cat B — use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to famciclovir or penciclovir. Adjust dose for renal impairment."},
             // Fungal Infection
-            med_036:{pediatric:"Not established; used off-label in pediatric fungal keratitis",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_036:{pediatric:"Not established; used off-label in pediatric fungal keratitis",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to natamycin or any component. For topical ophthalmic use only; not for injection."},
             // Steroids
-            med_037:{pediatric:"Use with caution; monitor IOP. Risk of cataract with prolonged use",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_038:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_039:{pediatric:"Limited safety data; used off-label in pediatric uveitis",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_040:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_041:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_106:{pediatric:"Use with caution; monitor IOP in children",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_107:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_108:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_109:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_110:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_111:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_112:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_113:{pediatric:"Used in pediatric patients; monitor growth with prolonged use",pregnancy:"Cat C/D — 1st trimester cleft palate risk; use only if clearly needed"},
+            med_037:{pediatric:"Use with caution; monitor IOP. Risk of cataract with prolonged use",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_038:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_039:{pediatric:"Limited safety data; used off-label in pediatric uveitis",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_040:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_041:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_129:{pediatric:"Increased risk of HPA axis suppression; avoid prolonged use in children",pregnancy:"Cat C — no adequate human studies; use only if clearly needed",contraindication:"Not for ophthalmic (in-eye) use. Contraindicated with skin infections (bacterial, viral, fungal) at application site. Prolonged use causes skin atrophy."},
+            med_106:{pediatric:"Use with caution; monitor IOP in children",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_107:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_108:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_109:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_110:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_111:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with active, untreated viral (HSV dendritic keratitis, vaccinia, varicella), fungal, or mycobacterial ocular infection."},
+            med_112:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated with active ocular infection and known hypersensitivity to dexamethasone or any component."},
+            med_113:{pediatric:"Used in pediatric patients; monitor growth with prolonged use",pregnancy:"Cat C/D — 1st trimester cleft palate risk; use only if clearly needed",contraindication:"Contraindicated with systemic fungal infections. Prolonged use: risk of adrenal suppression, osteoporosis, hyperglycemia, immunosuppression, and GI ulceration."},
             // NSAIDs
-            med_042:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
-            med_043:{pediatric:"Not established in children <10 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
-            med_044:{pediatric:"Not established in children <3 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
-            med_114:{pediatric:"Approved for ages ≥10 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
-            med_115:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
-            med_116:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
-            med_117:{pediatric:"Not established in children <3 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_042:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity (cross-reactive bronchospasm/urticaria risk). Use caution with bleeding tendencies and compromised corneas."},
+            med_043:{pediatric:"Not established in children <10 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity (cross-reactive bronchospasm/urticaria risk). Use caution with bleeding tendencies and compromised corneas."},
+            med_044:{pediatric:"Not established in children <3 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity (cross-reactive bronchospasm/urticaria risk). Use caution with bleeding tendencies and compromised corneas."},
+            med_114:{pediatric:"Approved for ages ≥10 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity. Use caution with bleeding tendencies and compromised corneas."},
+            med_115:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity. Use caution with bleeding tendencies and compromised corneas."},
+            med_116:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity. Use caution with bleeding tendencies, compromised corneas, and complicated ocular surgery."},
+            med_117:{pediatric:"Not established in children <3 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)",contraindication:"Contraindicated with known NSAID or aspirin hypersensitivity. Use caution with bleeding tendencies and compromised corneas."},
             // Combination Antibiotic/Steroid
-            med_045:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_046:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_047:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_048:{pediatric:"Use with caution; neomycin hypersensitivity risk in children",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_084:{pediatric:"Approved for ages ≥6 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_085:{pediatric:"Use with caution in children",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_086:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_045:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral (HSV, vaccinia, varicella), fungal, or mycobacterial ocular infection, and hypersensitivity to tobramycin or dexamethasone."},
+            med_046:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral (HSV, vaccinia, varicella), fungal, or mycobacterial ocular infection, and hypersensitivity to tobramycin or dexamethasone."},
+            med_047:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral (HSV, vaccinia, varicella), fungal, or mycobacterial ocular infection, and hypersensitivity to tobramycin or loteprednol."},
+            med_048:{pediatric:"Use with caution; neomycin hypersensitivity risk in children",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral (HSV, vaccinia, varicella), fungal, or mycobacterial ocular infection, and hypersensitivity to neomycin, polymyxin B, or dexamethasone."},
+            med_084:{pediatric:"Approved for ages ≥6 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral/fungal/mycobacterial ocular infection, sulfonamide hypersensitivity (sulfacetamide component), and in infants <2 months."},
+            med_085:{pediatric:"Use with caution in children",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral/fungal/mycobacterial ocular infection and known hypersensitivity to neomycin, polymyxin B, or hydrocortisone."},
+            med_086:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with active viral/fungal/mycobacterial ocular infection and known hypersensitivity to gentamicin or prednisolone."},
             // Mydriatics & Cycloplegics
-            med_049:{pediatric:"Use 0.5% in infants; CNS toxicity risk in neonates with higher concentrations",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_050:{pediatric:"Use with caution in infants — systemic toxicity risk (fever, tachycardia, flushing)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_051:{pediatric:"Primary indication is pediatric myopia control (ages 4–16)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_052:{pediatric:"Use 2.5% only; 10% is contraindicated in infants (cardiovascular risk)",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_053:{pediatric:"Approved for all ages; preferred agent for pediatric dilation",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_054:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_087:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_088:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_049:{pediatric:"Use 0.5% in infants; CNS toxicity risk in neonates with higher concentrations",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in untreated narrow-angle (angle-closure) glaucoma and known hypersensitivity. Use caution in Down syndrome patients (increased sensitivity)."},
+            med_050:{pediatric:"Use with caution in infants — systemic toxicity risk (fever, tachycardia, flushing)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in untreated narrow-angle (angle-closure) glaucoma and with adhesions (synechiae) between iris and lens (unless for therapeutic use)."},
+            med_051:{pediatric:"Primary indication is pediatric myopia control (ages 4–16)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"No significant contraindications at low dose (0.01-0.05%). Minimal mydriatic/cycloplegic effect. Use caution in patients susceptible to angle closure."},
+            med_052:{pediatric:"Use 2.5% only; 10% is contraindicated in infants (cardiovascular risk)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"10% contraindicated in narrow-angle glaucoma, aneurysms, hypertension, thyrotoxicosis, and cardiac disease. 10% contraindicated in infants/elderly. Use 2.5% in routine practice."},
+            med_053:{pediatric:"Approved for all ages; preferred agent for pediatric dilation",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in untreated narrow-angle (angle-closure) glaucoma. Weak cycloplegic — not adequate for pediatric refraction."},
+            med_054:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in active anterior uveitis/iritis. Use caution with retinal detachment risk or retinal tears. May cause dim vision and headache from ciliary spasm."},
+            med_087:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in untreated narrow-angle (angle-closure) glaucoma. No other absolute contraindications."},
+            med_088:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed beyond hypersensitivity. Reversal agent only for pharmacologic mydriasis."},
             // Demodex
-            med_090:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_090:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed. Hypersensitivity to lotilaner or any component is the only stated restriction."},
             // Macular Degeneration / Anti-VEGF
-            med_056:{pediatric:"Not approved; used off-label for ROP in neonates",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm"},
-            med_057:{pediatric:"Not approved; used off-label in pediatric retinal conditions",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm"},
-            med_058:{pediatric:"Not established in pediatric patients",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm"},
-            med_059:{pediatric:"Not established in pediatric patients",pregnancy:"Potential risk — antiangiogenic agent; avoid unless clearly needed"},
+            med_056:{pediatric:"Not approved; used off-label for ROP in neonates",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm",contraindication:"Contraindicated with active ocular or periocular infection and known hypersensitivity to bevacizumab. Risk of endophthalmitis, retinal detachment, and arterial thromboembolic events."},
+            med_057:{pediatric:"Not approved; used off-label in pediatric retinal conditions",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm",contraindication:"Contraindicated with active ocular or periocular infection and known hypersensitivity to aflibercept. Risk of endophthalmitis, retinal detachment, and arterial thromboembolic events."},
+            med_058:{pediatric:"Not established in pediatric patients",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm",contraindication:"Contraindicated with active ocular or periocular infection and known hypersensitivity to ranibizumab. Risk of endophthalmitis, retinal detachment, and arterial thromboembolic events."},
+            med_059:{pediatric:"Not established in pediatric patients",pregnancy:"Potential risk — antiangiogenic agent; avoid unless clearly needed",contraindication:"Contraindicated with active ocular or periocular infection and known hypersensitivity to faricimab. Risk of endophthalmitis and intraocular inflammation."},
             // Miscellaneous
-            med_055:{pediatric:"Not recommended <5 years per OTC labeling",pregnancy:"No adequate human studies; negligible systemic absorption expected"},
-            med_118:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_119:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_120:{pediatric:"Safe for all ages (OTC hypertonic saline)",pregnancy:"Compatible — OTC, negligible systemic absorption"},
-            med_121:{pediatric:"Not approved in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
-            med_122:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_123:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
-            med_124:{pediatric:"Used off-label in pediatric patients",pregnancy:"Cat B (systemic) — use only if clearly needed"},
-            med_128:{pediatric:"Not recommended <2 years; approved ≥2 years (0.03%), ≥16 years (0.1%)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_055:{pediatric:"Not recommended <5 years per OTC labeling",pregnancy:"No adequate human studies; negligible systemic absorption expected",contraindication:"No significant contraindications (OTC low-dose brimonidine). Avoid chronic use of older decongestant drops (rebound redness)."},
+            med_118:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed. Does not treat neurogenic or myogenic ptosis. Use caution with unstable cardiovascular disease."},
+            med_119:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"No absolute contraindications listed. Must be stored frozen; thaw weekly. For neurotrophic keratitis only."},
+            med_120:{pediatric:"Safe for all ages (OTC hypertonic saline)",pregnancy:"Compatible — OTC, negligible systemic absorption",contraindication:"No significant contraindications (OTC hypertonic saline). Temporary stinging on instillation is expected."},
+            med_121:{pediatric:"Not approved in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to bimatoprost or any component. Apply to lash line only, not in the eye. May darken iris/periorbital skin permanently."},
+            med_122:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in active anterior uveitis/iritis. Use caution with retinal detachment risk. May cause dim vision and headache."},
+            med_123:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in active anterior uveitis/iritis. Use caution with retinal detachment risk."},
+            med_124:{pediatric:"Used off-label in pediatric patients",pregnancy:"Cat B (systemic) — use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to acetylcysteine. Strong sulfur odor. For topical ophthalmic use only (compounded)."},
+            med_128:{pediatric:"Not recommended <2 years; approved ≥2 years (0.03%), ≥16 years (0.1%)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to tacrolimus. Avoid direct contact with ocular surface. Do not use on infected skin; may increase infection risk."},
             // Oral Analgesics
-            med_125:{pediatric:"Contraindicated <12 years (FDA black box — respiratory depression risk)",pregnancy:"Cat C — risk of neonatal opioid withdrawal syndrome"},
-            med_126:{pediatric:"Contraindicated <12 years; not recommended <18 years post-tonsillectomy",pregnancy:"Cat C — risk of neonatal withdrawal; avoid prolonged use"},
-            med_127:{pediatric:"Not recommended <18 years for outpatient use",pregnancy:"Cat C — risk of neonatal opioid withdrawal syndrome"},
+            med_125:{pediatric:"Contraindicated <12 years (FDA black box — respiratory depression risk)",pregnancy:"Cat C — risk of neonatal opioid withdrawal syndrome",contraindication:"Contraindicated in children <12 years, respiratory depression, acute/severe asthma, GI obstruction, and known hypersensitivity to codeine or acetaminophen."},
+            med_126:{pediatric:"Contraindicated <12 years; not recommended <18 years post-tonsillectomy",pregnancy:"Cat C — risk of neonatal withdrawal; avoid prolonged use",contraindication:"Contraindicated in children <12 years, concurrent MAOI therapy, seizure disorders (lowers threshold), and severe respiratory depression. Risk of serotonin syndrome."},
+            med_127:{pediatric:"Not recommended <18 years for outpatient use",pregnancy:"Cat C — risk of neonatal opioid withdrawal syndrome",contraindication:"Contraindicated in severe respiratory depression, acute/severe asthma, GI obstruction, and known hypersensitivity. Schedule II — restricted prescribing authority for most ODs."},
         };
 
         const MED_CONDITIONS = {
@@ -8113,6 +8149,16 @@
             html += '</div>';
             html += '</div>';
 
+            // Cumulative dose
+            var dur = parseFloat(plaqState.duration);
+            var cumGrams = (dur && dur > 0) ? (dose * dur * 365.25) / 1000 : null;
+            if (cumGrams !== null) {
+                html += '<div style="background:rgba(0,0,0,0.02);border-radius:8px;padding:10px;margin-bottom:12px;">';
+                html += '<div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">Estimated Cumulative Dose</div>';
+                html += '<div style="font-family:var(--mono);font-size:14px;font-weight:600;' + (cumGrams >= 1000 ? 'color:var(--danger);' : '') + '">' + cumGrams.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' g</div>';
+                html += '</div>';
+            }
+
             if (ibw && ibw < wKg) {
                 html += '<div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:8px;"><i class="ph-duotone ph-info" style="color:var(--accent);vertical-align:-1px;margin-right:3px;"></i>Using ideal body weight (' + ibw.toFixed(1) + ' kg) because it is lower than actual weight \u2014 HCQ distributes in lean tissue.</div>';
             }
@@ -8122,9 +8168,9 @@
             if (plaqState.renal) riskFlags.push('Renal impairment (~2\u00D7 risk)');
             if (plaqState.tamoxifen) riskFlags.push('Concurrent tamoxifen (OR 4.59)');
             if (effectiveMgKg > 5.0) riskFlags.push('Dose exceeds 5.0 mg/kg/day');
-            var dur = parseFloat(plaqState.duration);
             if (dur > 5) riskFlags.push('Duration > 5 years');
             if (dur > 10) riskFlags.push('Duration > 10 years \u2014 risk rises significantly');
+            if (cumGrams !== null && cumGrams >= 1000) riskFlags.push('Cumulative dose \u2265 1,000 g');
 
             if (riskFlags.length > 0) {
                 html += '<div style="background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:10px 12px;margin-bottom:10px;">';
@@ -8140,7 +8186,7 @@
             if (dur && dur <= 5 && riskFlags.length === 0) {
                 screenRec = 'Baseline exam recommended. Annual screening may be deferred for first 5 years if no risk factors.';
             } else {
-                screenRec = 'Annual screening with SD-OCT and wide-field FAF is recommended.';
+                screenRec = 'Annual screening with SD-OCT, FAF, and VF 10-2 is recommended.';
             }
             html += '<div style="font-size:12px;color:var(--ink-secondary);margin-top:6px;"><i class="ph-duotone ph-calendar-check" style="color:var(--accent);vertical-align:-1px;margin-right:3px;"></i><strong>Screening:</strong> ' + screenRec + '</div>';
 
@@ -8256,7 +8302,7 @@
                 </div>
 
                 <div class="tools-card">
-                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Retinopathy Risk by Dose &amp; Duration</div>
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Maculopathy Risk by Dose &amp; Duration</div>
                     <div class="tools-card-desc">Approximate cumulative risk of HCQ retinopathy at recommended dosing (\u22645.0 mg/kg/day).</div>
                     <div class="iop-table-wrap">
                         <table class="iop-ref-table">
@@ -8278,6 +8324,11 @@
                                 <tr><td style="font-weight:600;">Risk factors present</td><td>Annual screening from initiation</td></tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div style="margin-top:14px;padding:10px 14px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:8px;font-size:12.5px;line-height:1.6;color:var(--ink-secondary);">
+                        <div style="font-weight:700;color:var(--ink);margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;"><i class="ph-duotone ph-eye" style="margin-right:4px;"></i>Primary Screening Tools</div>
+                        <div><strong>SD-OCT</strong> and <strong>FAF</strong> are the primary, objective tools for detecting HCQ maculopathy.</div>
+                        <div style="margin-top:4px;"><strong>VF 10-2</strong> should be used as a secondary, confirmatory test.</div>
                     </div>
                 </div>
             `;
@@ -12783,23 +12834,30 @@
             html += `</div>`;
             // Names
             html += `<div class="med-brand-name">${escMedHtml(med.brand_name)}</div>`;
-            const isCombo = /combination/i.test(med.drug_class) && !/antibiotic|steroid|cortico/i.test(med.drug_class);
-            html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#475569;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
-            html += `<div class="med-drug-class">${escMedHtml(med.drug_class)}</div>`;
-            html += `</div>`;
-            // Prices (right side)
-            const ps = med.price_size ? ` <span style="font-size:11px;font-weight:400;color:#475569">/${escMedHtml(med.price_size)}</span>` : '';
-            html += `<div class="med-price-side">`;
-            html += `<div class="med-price-col"><div class="med-price-label">Brand</div><div class="med-price-value">$${formatMedPrice(med.avg_brand_price)}${ps}</div></div>`;
-            if (med.avg_generic_price !== null) {
-                const savings = Math.round((1 - med.avg_generic_price / med.avg_brand_price) * 100);
-                html += `<div class="med-price-col"><div class="med-price-label">Generic</div><div class="med-price-value">$${formatMedPrice(med.avg_generic_price)}${ps}</div>`;
-                if (savings > 0) html += `<div class="med-price-savings">Save ${savings}%</div>`;
-                html += `</div>`;
+            if (med.subtypes) {
+                html += `<div class="med-subtypes">${med.subtypes.map(s => `<span class="med-subtype-tag">${escMedHtml(s)}</span>`).join('')}</div>`;
+                html += `<div class="med-drug-class">${escMedHtml(med.drug_class)}</div>`;
             } else {
-                html += `<div class="med-price-col"><div class="med-price-label">Generic</div><div class="med-price-value" style="color:var(--ink-muted);font-size:12px">N/A</div></div>`;
+                const isCombo = /combination/i.test(med.drug_class) && !/antibiotic|steroid|cortico/i.test(med.drug_class);
+                html += `<div class="med-generic-name">${escMedHtml(med.generic_name)}${isCombo ? ' <span style="font-size:10px;font-weight:600;color:#475569;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px;margin-left:4px">COMBO</span>' : ''}</div>`;
+                html += `<div class="med-drug-class">${escMedHtml(med.drug_class)}</div>`;
             }
             html += `</div>`;
+            // Prices (right side) — hide for brand family cards
+            if (!med.subtypes) {
+                const ps = med.price_size ? ` <span style="font-size:11px;font-weight:400;color:#475569">/${escMedHtml(med.price_size)}</span>` : '';
+                html += `<div class="med-price-side">`;
+                html += `<div class="med-price-col"><div class="med-price-label">Brand</div><div class="med-price-value">$${formatMedPrice(med.avg_brand_price)}${ps}</div></div>`;
+                if (med.avg_generic_price !== null) {
+                    const savings = Math.round((1 - med.avg_generic_price / med.avg_brand_price) * 100);
+                    html += `<div class="med-price-col"><div class="med-price-label">Generic</div><div class="med-price-value">$${formatMedPrice(med.avg_generic_price)}${ps}</div>`;
+                    if (savings > 0) html += `<div class="med-price-savings">Save ${savings}%</div>`;
+                    html += `</div>`;
+                } else {
+                    html += `<div class="med-price-col"><div class="med-price-label">Generic</div><div class="med-price-value" style="color:var(--ink-muted);font-size:12px">N/A</div></div>`;
+                }
+                html += `</div>`;
+            }
             // Fav button
             html += `<button class="med-fav-btn ${isFav?'favorited':''}" onclick="event.stopPropagation();toggleMedFavorite('${med.id}')" title="${isFav?'Remove from favorites':'Add to favorites'}"><i class="ph-duotone ph-star"></i></button>`;
             html += `</div>`;
@@ -12810,7 +12868,7 @@
 
             // Dosing
             html += `<div class="med-dosing"><span class="med-dosing-label">Dosing: </span>${escMedHtml(med.typical_dosing)}</div>`;
-            html += `<div class="med-bottle">Size: ${escMedHtml(med.bottle_size)}</div>`;
+            if (!med.subtypes) html += `<div class="med-bottle">Size: ${escMedHtml(med.bottle_size)}</div>`;
 
             // Notes — always shown
             if (med.notes) {
@@ -12822,9 +12880,14 @@
                 }
             }
 
-            // Safety info (pediatric & pregnancy)
+            // Safety info (contraindication, pediatric & pregnancy)
             const safety = MED_SAFETY[med.id];
             if (safety) {
+                if (safety.contraindication) {
+                    html += `<div class="med-contraindication-box">`;
+                    html += `<div class="med-safety-row"><span class="med-safety-label med-contra-label"><i class="ph-duotone ph-warning" style="font-size:11px;vertical-align:-1px;margin-right:2px"></i>Contra</span><span>${escMedHtml(safety.contraindication)}</span></div>`;
+                    html += `</div>`;
+                }
                 html += `<div class="med-safety-box">`;
                 html += `<div class="med-safety-row"><span class="med-safety-label">Pediatric</span><span>${escMedHtml(safety.pediatric)}</span></div>`;
                 html += `<div class="med-safety-row"><span class="med-safety-label">Pregnancy</span><span>${escMedHtml(safety.pregnancy)}</span></div>`;
@@ -12918,6 +12981,7 @@
                 .replace(/Alpha-2 adrenergic agonist/i, 'Alpha-2 agonist')
                 .replace(/Carbonic anhydrase inhibitor/i, 'CAI')
                 .replace(/Nicotinic acetylcholine receptor agonist/i, 'nAChR agonist')
+                .replace(/Artificial Tears — Brand Family/i, 'Artificial Tears')
                 .replace(/Lipid-enhanced artificial tear/i, 'Lipid-enhanced tear')
                 .replace(/Lipid-based artificial tear/i, 'Lipid-based tear')
                 .replace(/Artificial tear \/ Lubricant/i, 'Artificial tear')
