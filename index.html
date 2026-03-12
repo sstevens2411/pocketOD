@@ -3713,7 +3713,9 @@
             { name:"Biofinity Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"3, 6", price:"$75 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Biofinity Toric XR", privateLabels:[{name:"Aquaclear Toric",retailer:"Vision Source"},{name:"Voyant Monthly Toric",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables XW Toric",retailer:"America's Best"},{name:"LensCrafters Monthly for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision Monthly for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW for Astigmatism",retailer:"Eyeglass World"},] },
             { name:"Biofinity Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:128, bc:"8.7", diam:"14.5", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$153", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Biofinity Toric" },
             { name:"Proclear Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-8, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$68 (6pk)", wear:"DW", material:"Omafilcon B", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Proclear Toric XR" },
-            { name:"Proclear Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$185 (6pk)", wear:"DW", material:"Omafilcon B", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Proclear Toric" },
+            { name:"Proclear Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$185 (6pk)", wear:"DW", material:"Omafilcon B", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Proclear Toric", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026." },
+            { name:"Proclear Multifocal XR", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:25, bc:"8.4 / 8.7", diam:"14.4", sphMin:-20, sphMax:20, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$140 (6pk)", wear:"DW", material:"Omafilcon B (Hydrogel)", note:"D lens (center-distance) for dominant eye, N lens (center-near) for non-dominant. Extended range: sph to \u00B120.00, adds to +4.00. PC Technology for hydration.", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026." },
+            { name:"Proclear Multifocal Toric", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$190 (6pk)", wear:"DW", material:"Omafilcon B (Hydrogel)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Combines toric correction with D/N multifocal design. PC Technology for hydration.", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026." },
             { name:"Biofinity Multifocal", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:128, bc:"8.6", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"3, 6", price:"$97 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", privateLabels:[{name:"Aquaclear Multifocal",retailer:"Vision Source"},{name:"Voyant Monthly Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathables XW Multifocal",retailer:"America's Best"},{name:"LensCrafters Monthly Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Multifocal",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW Multifocal",retailer:"Eyeglass World"},], fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"+1.00", dominant:"D", nonDominant:"D" },
@@ -3749,11 +3751,39 @@
             }},
             { name:"MyDay", brand:"CooperVision", type:"sphere", modality:"daily", dk:80, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90, 180", price:"$99 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", privateLabels:[{name:"Reveal 1 Day",retailer:"Vision Source"},{name:"Voyant 1 Day Premium",retailer:"Vision Source"},{name:"Ethos Aquell 1 Day",retailer:"Visionworks"},{name:"Sofmed Breathable Ultimate 1 Day",retailer:"America's Best"},{name:"LensCrafters One Day Premium",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Premium",retailer:"Pearle Vision"},{name:"Kirkland Signature Premium Daily",retailer:"Costco"},{name:"up & up 1 Day Performance",retailer:"Target"},{name:"Natural Eyes HydraWear Ultimate 1-Day",retailer:"Eyeglass World"},{name:"Oliver Peoples One Day",retailer:"Oliver Peoples"},] },
             { name:"MyDay Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:80, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"90", price:"$90\u2013113 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", privateLabels:[{name:"Reveal 1 Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Premium Toric",retailer:"Vision Source"},{name:"Ethos Aquell 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathable Ultimate 1 Day Toric",retailer:"America's Best"},{name:"LensCrafters One Day Premium for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Premium for Astigmatism",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear Ultimate 1-Day for Astigmatism",retailer:"Eyeglass World"},{name:"Oliver Peoples One Day Toric",retailer:"Oliver Peoples"},] },
-            { name:"MyDay Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:80, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$149 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", privateLabels:[{name:"Reveal 1 Day Multifocal",retailer:"Vision Source"},{name:"Voyant 1 Day Premium Multifocal",retailer:"Vision Source"},{name:"Ethos Aquell 1 Day Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathable Ultimate 1 Day Multifocal",retailer:"America's Best"},{name:"LensCrafters One Day Premium Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Premium Multifocal",retailer:"Pearle Vision"}] },
+            { name:"MyDay Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:80, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$149 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", privateLabels:[{name:"Reveal 1 Day Multifocal",retailer:"Vision Source"},{name:"Voyant 1 Day Premium Multifocal",retailer:"Vision Source"},{name:"Ethos Aquell 1 Day Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathable Ultimate 1 Day Multifocal",retailer:"America's Best"},{name:"LensCrafters One Day Premium Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Premium Multifocal",retailer:"Pearle Vision"}], fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.50, specAddMax:1.75, clAdd:"Med", dominant:"Low", nonDominant:"Med" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"Low", nonDominant:"High" }
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
+                    ]
+                }
+            }},
             { name:"MyDay Energys", brand:"CooperVision", type:"sphere", modality:"daily", dk:80, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90", price:"$119 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", note:"Digital Zone Optics for screen use", privateLabels:[{name:"Reveal Premium",retailer:"Vision Source"},{name:"Ethos Aquell Evolve 1 Day",retailer:"Visionworks"},{name:"up & up 1 Day Performance+",retailer:"Target"}] },
             { name:"Clariti 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-10, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$77 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day",retailer:"Vision Source"},{name:"Voyant 1 Day",retailer:"Vision Source"},{name:"Ethos 1 Day",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day",retailer:"America's Best"},{name:"Ray-Ban 1-Day",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear 1-Day",retailer:"Eyeglass World"}] },
             { name:"Clariti 1 Day Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:60, bc:"8.6", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$100 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"Fresh Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Toric",retailer:"Vision Source"},{name:"Ethos 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Toric",retailer:"America's Best"},{name:"Ray-Ban 1-Day for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day for Astigmatism",retailer:"Pearle Vision"},{name:"up & up 1 Day for Astigmatism",retailer:"Target"}] },
-            { name:"Clariti 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}] },
+            { name:"Clariti 1 Day Multifocal 3 ADD", brand:"CooperVision", type:"multifocal", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}], fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.50, specAddMax:1.75, clAdd:"Med", dominant:"Low", nonDominant:"Med" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"Low", nonDominant:"High" }
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
+                    ]
+                }
+            }},
             { name:"Proclear 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90", price:"$77 (90pk)", wear:"DW", material:"Omafilcon A" },
             { name:"Proclear 1 Day Multifocal", brand:"CooperVision", type:"multifocal", modality:"daily", dk:28, bc:"8.7", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Single profile"], qty:"90", price:"$91 (90pk)", wear:"DW", material:"Omafilcon A", note:"Single aspheric center-near design, up to +2.50 add", fittingGuide: {
                 sphBoost: {
@@ -5132,7 +5162,8 @@
                             const odName = lens.companionForOD || lens.name;
                             const osName = lens.companionForOS || lens.name;
                             return `<div class="lens-name" style="font-size:15px;line-height:1.5">OD: ${odName}${lensAlias(odName)}, OS: ${osName}${lensAlias(osName)}</div>`;
-                        })() : `<div class="lens-name">${lens.name}${lensAlias(lens.name)}</div>`}
+                        })() : `<div class="lens-name">${lens.name}${lensAlias(lens.name)}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;" title="Discontinuing"></i>' : ''}</div>`}
+                        ${lens.discontinuing ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-warning" style="margin-right:3px"></i>${lens.discontinuing}</div>` : ''}
                         ${lens.note ? `<div class="lens-note">${lens.note}</div>` : ""}
                         ${lens.name.startsWith('Clariti') ? '<div class="lens-note" style="color:#16a34a"><i class="ph-duotone ph-recycle" style="margin-right:3px"></i>Plastic Neutral</div>' : ''}
                     </div>
@@ -5657,9 +5688,10 @@
                         return `<div class="order-lens-name" style="font-size:16px;line-height:1.5">OD: <span style="color:${brandColor}">${odName}</span><br>OS: <span style="color:${brandColor}">${osName}</span></div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`;
                     })()
-                    : `<div class="order-lens-name">${lens.name}</div>
+                    : `<div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                     <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`}
 
+                ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
                 ${adjBanner}${nonAdaptBanner}
 
                 ${(lens.type === 'multifocal' || lens.type === 'multifocal-toric') && !state.dominantEye ? `
@@ -6414,10 +6446,11 @@
                                 const opts = currentSph >= 0 ? step.optionsPlus : step.optionsMinus;
                                 const defaultAmt = opts[0];
                                 const defaultNew = snapTo025(currentSph + defaultAmt);
+                                const signRationale = step.rationaleBySign ? (currentSph >= 0 ? step.rationaleBySign.plus : step.rationaleBySign.minus) : null;
                                 suggestions.push({
                                     tsStepIdx: stepIdx,
                                     title: `Add ${defaultAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
-                                    rationale: step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity (${currentSph >= 0 ? 'plus' : 'minus'} lens)`,
+                                    rationale: signRationale || step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity (${currentSph >= 0 ? 'plus' : 'minus'} lens)`,
                                     adjustments: { [targetEye.label]: { sphDelta: defaultAmt } },
                                     changes: [{
                                         eye: targetEye.label, param: "Sphere",
@@ -13347,8 +13380,9 @@
 
             return `<div class="order-detail">
                 <button class="order-back-btn" onclick="closeBrowseLens()"><i class="ph-duotone ph-arrow-left"></i> Back to Browse</button>
-                <div class="order-lens-name">${lens.name}</div>
+                <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
+                ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${specsHtml}</div>
                 <div class="order-section-title">Lens Details</div>
@@ -13447,7 +13481,7 @@
                     const axStr = l.axes || "\u2014";
                     const brandColor = brandColorMap[l.brand] || "var(--accent)";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.name}</span><span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
+                        <td><span class="browse-name">${l.name}</span>${l.discontinuing ? '<i class="ph-fill ph-star" style="color:#dc2626;font-size:9px;vertical-align:2px;margin-left:3px" title="Discontinuing"></i>' : ''}<span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -13477,7 +13511,7 @@
                     const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "—";
                     const axStr = l.axes || "—";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.name}</span><span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
+                        <td><span class="browse-name">${l.name}</span>${l.discontinuing ? '<i class="ph-fill ph-star" style="color:#dc2626;font-size:9px;vertical-align:2px;margin-left:3px" title="Discontinuing"></i>' : ''}<span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
