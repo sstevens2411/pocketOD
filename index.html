@@ -12906,7 +12906,7 @@
             ).join('');
 
             const allActive = !tf && !mf;
-            const allBtn = `<button class="browse-filter-btn bf-all${allActive ? ' active' : ''}" onclick="browseState.typeFilter=null;browseState.modalityFilter=null;renderBrowse()">ALL</button>`;
+            const allBtn = `<button class="browse-filter-btn bf-all${allActive ? ' active' : ''}" onclick="resetBrowseState();renderBrowse()">ALL</button>`;
             const typeBtns = typeFilters.map(f =>
                 `<button class="browse-filter-btn bf-${f.cls}${tf === f.key ? ' active' : ''}" onclick="toggleBrowseType('${f.key}')">${f.label}</button>`
             ).join('');
