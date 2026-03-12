@@ -1453,6 +1453,7 @@
         .med-search-wrap {
             position: relative;
             margin-bottom: 16px;
+            z-index: 70;
         }
         .med-search-input {
             width: 100%;
@@ -1571,6 +1572,7 @@
         }
         .med-card:hover {
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-2px) scale(1.01);
         }
         .tier-stripe {
             position: absolute;
@@ -1673,7 +1675,6 @@
             font-weight: 700;
             color: var(--ink);
             margin-top: 2px;
-            white-space: nowrap;
             text-align: left;
             font-variant-numeric: tabular-nums;
         }
@@ -1745,6 +1746,32 @@
         }
         .med-notes-list li {
             margin-bottom: 1px;
+        }
+        .med-safety-box {
+            background: rgba(59,130,246,0.06);
+            border: 1px solid rgba(59,130,246,0.15);
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: #334155;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .med-safety-row {
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+        }
+        .med-safety-label {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            flex-shrink: 0;
+            min-width: 72px;
         }
 
         /* Favorite star */
@@ -3267,6 +3294,92 @@
         .de-severe { color: #dc2626; font-weight: 600; }
         .de-subsection { margin: 12px 0 6px 0; font-weight: 700; font-size: 13px; color: var(--accent); }
         .de-note { font-size: 12px; color: var(--ink-muted); margin: 6px 0; line-height: 1.5; }
+        /* Uveitis lab expanded card styles */
+        .uv-lab-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .uv-lab-section {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--rule);
+        }
+        .uv-lab-section:last-child { border-bottom: none; }
+        .uv-lab-pill {
+            display: inline-block;
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            line-height: 1.4;
+        }
+        .uv-lab-pill-normal {
+            background: rgba(34,197,94,0.1);
+            color: #15803d;
+        }
+        .uv-lab-pill-abnormal {
+            background: rgba(239,68,68,0.08);
+            color: #dc2626;
+        }
+        .uv-lab-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 2px;
+        }
+        .uv-lab-chip {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(13,148,136,0.08);
+            color: #1e293b;
+            border: 1px solid rgba(13,148,136,0.18);
+        }
+        .uv-lab-notes {
+            border-left: 3px solid var(--accent);
+            background: rgba(13,148,136,0.04);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 12.5px;
+            color: #334155;
+            line-height: 1.55;
+            margin-top: 2px;
+        }
+        .uv-lab-ref-details {
+            padding-top: 10px;
+        }
+        .uv-lab-ref-toggle {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
+        }
+        .uv-lab-ref-toggle::-webkit-details-marker { display: none; }
+        .uv-lab-ref-toggle::after {
+            content: '\25B6';
+            font-size: 8px;
+            transition: transform 0.15s;
+        }
+        details[open] > .uv-lab-ref-toggle::after {
+            transform: rotate(90deg);
+        }
+        .uv-lab-ref-text {
+            font-size: 11px;
+            color: var(--ink-muted);
+            font-style: italic;
+            margin-top: 6px;
+            padding-left: 21px;
+            line-height: 1.5;
+        }
         .de-expand-btns { display: flex; gap: 8px; margin-top: 6px; }
         .de-expand-btns button {
             background: none; border: 1px solid var(--rule); border-radius: 8px;
@@ -3715,12 +3828,12 @@
             {id:"med_047",brand_name:"Zylet",generic_name:"Tobramycin 0.3% / Loteprednol 0.5%",generic_available:true,drug_class:"Aminoglycoside antibiotic / Corticosteroid combination",condition:"combination",typical_dosing:"1-2 drops every 4-6 hours",bottle_size:"10 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:50,notes:"Uses loteprednol instead of dexamethasone \u2014 lower IOP risk. Good option for steroid responders who need a combo drop.",price_size:"10 mL",route:"topical"},
             {id:"med_048",brand_name:"Maxitrol",generic_name:"Neomycin / Polymyxin B / Dexamethasone",generic_available:true,drug_class:"Combination antibiotic / Corticosteroid",condition:"combination",typical_dosing:"1-2 drops every 3-4 hours",bottle_size:"5 mL / 10 mL",preservative_free:false,avg_brand_price:130,avg_generic_price:15,notes:"Inexpensive generic. Neomycin allergy risk (up to 10% of patients). Suspension \u2014 shake well.",price_size:"5 mL",route:"topical"},
             {id:"med_049",brand_name:"Cyclopentolate",generic_name:"Cyclopentolate 1%",generic_available:true,drug_class:"Cycloplegic / Mydriatic",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop, may repeat in 5-10 minutes if needed",bottle_size:"2 mL / 5 mL / 15 mL",preservative_free:false,avg_brand_price:40,avg_generic_price:15,notes:"Standard cycloplegic for pediatric refractions. Onset 30-60 min, recovery 6-24 hours. Can cause transient stinging and CNS effects in children.",price_size:"15 mL",route:"topical"},
-            {id:"med_050",brand_name:"Atropine 1%",generic_name:"Atropine sulfate 1%",generic_available:true,drug_class:"Cycloplegic / Mydriatic (long-acting)",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop one to two times daily (for cycloplegia/treatment); varies for myopia control",bottle_size:"2 mL / 5 mL / 15 mL",preservative_free:false,avg_brand_price:30,avg_generic_price:10,notes:"Strongest cycloplegic. Used for uveitis treatment, penalization therapy, and amblyopia. Recovery 1-2 weeks.",price_size:"5 mL",route:"topical"},
+            {id:"med_050",brand_name:"Atropine 1%",generic_name:"Atropine sulfate 1%",generic_available:true,drug_class:"Cycloplegic / Mydriatic (long-acting)",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop one to two times daily (for cycloplegia/treatment); varies for myopia control",bottle_size:"2 mL / 5 mL / 15 mL",preservative_free:false,avg_brand_price:30,avg_generic_price:10,notes:"Strongest cycloplegic. Used for uveitis treatment, penalization therapy, and amblyopia. Can be used (sometimes in combo w/ phenylephrine 10%) to break posterior synechiae. Recovery 1-2 weeks.",price_size:"5 mL",route:"topical"},
             {id:"med_051",brand_name:"Low-dose Atropine (compounded)",generic_name:"Atropine 0.01% - 0.05%",generic_available:true,drug_class:"Cycloplegic (low-dose) / Myopia control",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop in each eye at bedtime",bottle_size:"varies (compounded)",preservative_free:true,avg_brand_price:50,avg_generic_price:30,notes:"Used for myopia control in children. Must be compounded. 0.05% may be more effective than 0.01% per LAMP study. Minimal side effects at low doses.",price_size:"per bottle",route:"topical"},
             {id:"med_052",brand_name:"Phenylephrine 2.5%",generic_name:"Phenylephrine 2.5%",generic_available:true,drug_class:"Mydriatic (sympathomimetic)",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop, may repeat in 15 minutes",bottle_size:"2 mL / 5 mL / 15 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:10,notes:"Mydriasis without cycloplegia. Use 2.5% (not 10%) in routine practice \u2014 10% has cardiovascular risks especially in elderly and children.",price_size:"15 mL",route:"topical"},
             {id:"med_053",brand_name:"Tropicamide 1%",generic_name:"Tropicamide 1%",generic_available:true,drug_class:"Mydriatic / Short-acting cycloplegic",condition:"mydriatic_cycloplegic",typical_dosing:"1-2 drops, may repeat in 5 minutes",bottle_size:"2 mL / 15 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:8,notes:"Fastest onset and shortest recovery mydriatic (4-6 hours). Weak cycloplegic \u2014 not adequate for pediatric refractions. Standard for dilated fundus exams.",price_size:"15 mL",route:"topical"},
-            {id:"med_054",brand_name:"Vuity",generic_name:"Pilocarpine 1.25%",generic_available:false,drug_class:"Miotic / Parasympathomimetic",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop in each eye once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:80,avg_generic_price:null,notes:"FDA-approved for presbyopia. Creates pinhole effect for improved near vision. Headache and dim vision are common side effects. Effects last 6-8 hours.",price_size:"2.5 mL",route:"topical"},
-            {id:"med_055",brand_name:"Lumify",generic_name:"Brimonidine 0.025%",generic_available:false,drug_class:"Alpha-2 adrenergic agonist (low dose) / Decongestant",condition:"miscellaneous",typical_dosing:"1 drop in affected eye(s) every 6-8 hours as needed",bottle_size:"2.5 mL / 7.5 mL / 15 mL",preservative_free:false,avg_brand_price:12,avg_generic_price:null,notes:"OTC redness reliever. Low-dose brimonidine \u2014 less rebound redness than older decongestants (Visine, Clear Eyes). Onset within 1 minute, lasts 8 hours.",price_size:"7.5 mL",route:"topical"},
+            {id:"med_054",brand_name:"Vuity",generic_name:"Pilocarpine 1.25%",generic_available:false,drug_class:"Miotic / Parasympathomimetic",condition:"presbyopia",typical_dosing:"1 drop in each eye once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:80,avg_generic_price:null,notes:"FDA-approved for presbyopia. Creates pinhole effect for improved near vision. Headache and dim vision are common side effects. Effects last 6-8 hours.",price_size:"2.5 mL",route:"topical"},
+            {id:"med_055",brand_name:"Lumify",generic_name:"Brimonidine 0.025%",generic_available:false,drug_class:"Alpha-2 adrenergic agonist (low dose) / Decongestant",condition:"cosmetic",typical_dosing:"1 drop in affected eye(s) every 6-8 hours as needed",bottle_size:"2.5 mL / 7.5 mL / 15 mL",preservative_free:false,avg_brand_price:12,avg_generic_price:null,notes:"OTC redness reliever. Low-dose brimonidine \u2014 less rebound redness than older decongestants (Visine, Clear Eyes). Onset within 1 minute, lasts 8 hours.",price_size:"7.5 mL",route:"topical"},
             {id:"med_056",brand_name:"Avastin (off-label)",generic_name:"Bevacizumab (compounded for intravitreal injection)",generic_available:false,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-8 weeks (retina specialist)",bottle_size:"compounded dose",preservative_free:true,avg_brand_price:60,avg_generic_price:null,notes:"Off-label but widely used for wet AMD and DME. Compounded from IV formulation. Most cost-effective anti-VEGF. Administered by retina specialist.",price_size:"per dose",route:"intravitreal"},
             {id:"med_057",brand_name:"Eylea",generic_name:"Aflibercept 2 mg intravitreal injection",generic_available:false,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-8 weeks (retina specialist)",bottle_size:"single-use vial",preservative_free:true,avg_brand_price:1850,avg_generic_price:null,notes:"FDA-approved for wet AMD, DME, RVO, and DR. Longer duration than ranibizumab. Extended dosing (Eylea HD 8mg) now available for less frequent injections.",price_size:"per dose",route:"intravitreal"},
             {id:"med_058",brand_name:"Lucentis",generic_name:"Ranibizumab 0.5 mg intravitreal injection",generic_available:true,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4 weeks (retina specialist)",bottle_size:"single-use vial",preservative_free:true,avg_brand_price:1170,avg_generic_price:800,notes:"FDA-approved for wet AMD, DME, RVO, and myopic CNV. Biosimilars now available (Cimerli, Byooviz). Administered by retina specialist.",price_size:"per dose",route:"intravitreal"},
@@ -3805,19 +3918,315 @@
             {id:"med_117",brand_name:"Acuvail",generic_name:"Ketorolac tromethamine 0.45% (preservative-free)",generic_available:true,drug_class:"NSAID (preservative-free)",condition:"inflammation_nsaid",typical_dosing:"1 drop twice daily to affected eye starting 1 day before surgery through 14 days post-op",bottle_size:"0.4 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:40,notes:"Preservative-free ketorolac in unit-dose vials. Slightly lower concentration than Acular (0.45% vs 0.5%) but PF. Good for patients with ocular surface disease needing an NSAID.",price_size:"30-count box",route:"topical"},
 
             // === Miscellaneous Medications ===
-            {id:"med_118",brand_name:"Upneeq",generic_name:"Oxymetazoline HCl 0.1%",generic_available:false,drug_class:"Alpha-adrenergic agonist (topical)",condition:"miscellaneous",typical_dosing:"1 drop in affected eye(s) once daily",bottle_size:"0.5 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:null,notes:"FDA-approved for acquired ptosis. Stimulates Mueller\u2019s muscle to elevate upper eyelid 1-2 mm. Effects last 6-8 hours. Does not treat neurogenic or myogenic ptosis.",price_size:"30-count box",route:"topical"},
+            {id:"med_118",brand_name:"Upneeq",generic_name:"Oxymetazoline HCl 0.1%",generic_available:false,drug_class:"Alpha-adrenergic agonist (topical)",condition:"cosmetic",typical_dosing:"1 drop in affected eye(s) once daily",bottle_size:"0.5 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:null,notes:"FDA-approved for acquired ptosis. Stimulates Mueller\u2019s muscle to elevate upper eyelid 1-2 mm. Effects last 6-8 hours. Does not treat neurogenic or myogenic ptosis.",price_size:"30-count box",route:"topical"},
             {id:"med_119",brand_name:"Oxervate",generic_name:"Cenegermin-bkbj 0.002%",generic_available:false,drug_class:"Recombinant nerve growth factor",condition:"miscellaneous",typical_dosing:"1 drop in affected eye six times daily (every 2 hours) for 8 weeks",bottle_size:"7 single-use vials per weekly carton",preservative_free:true,avg_brand_price:9000,avg_generic_price:null,notes:"For neurotrophic keratitis (stages 2-3). Recombinant human nerve growth factor. Must store frozen; thaw weekly supply in fridge. Very expensive specialty medication.",price_size:"per weekly carton",route:"topical"},
             {id:"med_120",brand_name:"Muro-128 (OTC)",generic_name:"Sodium chloride 2-5% solution or ointment",generic_available:true,drug_class:"Hyperosmotic agent",condition:"miscellaneous",typical_dosing:"1-2 drops every 3-4 hours; ointment at bedtime",bottle_size:"15-30 mL (solution) / 3.5 g (ointment)",preservative_free:false,avg_brand_price:15,avg_generic_price:10,notes:"OTC hyperosmotic for corneal edema (Fuchs dystrophy, post-surgical). 5% solution during the day, 5% ointment at bedtime. Temporary stinging on instillation.",price_size:"15 mL",route:"topical"},
-            {id:"med_121",brand_name:"Latisse",generic_name:"Bimatoprost 0.03%",generic_available:true,drug_class:"Prostaglandin analog (cosmetic)",condition:"miscellaneous",typical_dosing:"1 drop applied to upper eyelash line once daily at bedtime (using applicator)",bottle_size:"3 mL / 5 mL",preservative_free:false,avg_brand_price:180,avg_generic_price:50,notes:"FDA-approved for eyelash hypotrichosis. Same drug as Lumigan (glaucoma) at different concentration. Apply to lash line only, not in the eye. May darken iris/periorbital skin.",price_size:"3 mL",route:"topical"},
-            {id:"med_122",brand_name:"Qlosi",generic_name:"Pilocarpine HCl 0.4%",generic_available:false,drug_class:"Cholinergic agonist / Miotic (low-dose)",condition:"miscellaneous",typical_dosing:"1 drop in each eye twice daily",bottle_size:"0.25 mL single-use vials (30-60 count)",preservative_free:true,avg_brand_price:80,avg_generic_price:null,notes:"Low-dose pilocarpine for presbyopia. Creates a pinhole effect to improve near vision. Preservative-free unit-dose vials. Lower concentration than Vuity (0.4% vs 1.25%).",price_size:"30-count box",route:"topical"},
-            {id:"med_123",brand_name:"Vizz",generic_name:"Aceclidine HCl 1.44%",generic_available:false,drug_class:"Cholinergic agonist / Miotic",condition:"miscellaneous",typical_dosing:"2 drops (2 minutes apart) in each eye once daily",bottle_size:"0.25 mL single-use vials (25 count)",preservative_free:true,avg_brand_price:80,avg_generic_price:null,notes:"Cholinergic miotic for presbyopia. Different mechanism than pilocarpine. Preservative-free single-use vials. Two-drop dosing protocol with 2-minute wait.",price_size:"25-count box",route:"topical"},
+            {id:"med_121",brand_name:"Latisse",generic_name:"Bimatoprost 0.03%",generic_available:true,drug_class:"Prostaglandin analog (cosmetic)",condition:"cosmetic",typical_dosing:"1 drop applied to upper eyelash line once daily at bedtime (using applicator)",bottle_size:"3 mL / 5 mL",preservative_free:false,avg_brand_price:180,avg_generic_price:50,notes:"FDA-approved for eyelash hypotrichosis. Same drug as Lumigan (glaucoma) at different concentration. Apply to lash line only, not in the eye. May darken iris/periorbital skin.",price_size:"3 mL",route:"topical"},
+            {id:"med_122",brand_name:"Qlosi",generic_name:"Pilocarpine HCl 0.4%",generic_available:false,drug_class:"Cholinergic agonist / Miotic (low-dose)",condition:"presbyopia",typical_dosing:"1 drop in each eye twice daily",bottle_size:"0.25 mL single-use vials (30-60 count)",preservative_free:true,avg_brand_price:80,avg_generic_price:null,notes:"Low-dose pilocarpine for presbyopia. Creates a pinhole effect to improve near vision. Preservative-free unit-dose vials. Lower concentration than Vuity (0.4% vs 1.25%).",price_size:"30-count box",route:"topical"},
+            {id:"med_123",brand_name:"Vizz",generic_name:"Aceclidine HCl 1.44%",generic_available:false,drug_class:"Cholinergic agonist / Miotic",condition:"presbyopia",typical_dosing:"2 drops (2 minutes apart) in each eye once daily",bottle_size:"0.25 mL single-use vials (25 count)",preservative_free:true,avg_brand_price:80,avg_generic_price:null,notes:"Cholinergic miotic for presbyopia. Different mechanism than pilocarpine. Preservative-free single-use vials. Two-drop dosing protocol with 2-minute wait.",price_size:"25-count box",route:"topical"},
             {id:"med_124",brand_name:"Mucomyst (compounded)",generic_name:"Acetylcysteine 5-20%",generic_available:true,drug_class:"Mucolytic agent",condition:"miscellaneous",typical_dosing:"1 drop four times daily",bottle_size:"4-15 mL (compounded)",preservative_free:true,avg_brand_price:50,avg_generic_price:20,notes:"Compounded mucolytic for filamentary keratitis and mucus plaques. Must be compounded from respiratory formulation. Refrigerate. Strong sulfur smell.",price_size:"per bottle",route:"topical"},
+            {id:"med_128",brand_name:"Protopic",generic_name:"Tacrolimus 0.1% ointment",generic_available:true,drug_class:"Calcineurin inhibitor (topical immunomodulator)",condition:"miscellaneous",typical_dosing:"Apply thin layer to affected eyelid skin twice daily until improvement, then reduce to once daily or PRN",bottle_size:"30 g / 60 g tube",preservative_free:true,avg_brand_price:350,avg_generic_price:60,notes:"Off-label for eyelid eczema/atopic dermatitis. Calcineurin inhibitor — does not cause skin atrophy like topical steroids, making it preferred for long-term periocular use. Avoid direct contact with ocular surface. Common side effects: burning/stinging on initial application (usually resolves). FDA black box warning regarding theoretical lymphoma risk, though clinical significance is debated.",price_size:"30 g tube",route:"topical"},
 
             // === Oral Analgesic Medications ===
             {id:"med_125",brand_name:"Tylenol #3",generic_name:"Codeine 30 mg / Acetaminophen 300 mg tablet",generic_available:true,drug_class:"Opioid analgesic (Schedule III)",condition:"oral_analgesic",typical_dosing:"1-2 tablets PO every 4-6 hours as needed",bottle_size:"12-24 tablets",preservative_free:false,avg_brand_price:30,avg_generic_price:8,notes:"Schedule III. Commonly prescribed post-trauma or corneal abrasion pain. Prescribing authority varies by state for ODs. Constipation, nausea, sedation are common.",price_size:"12 tablets",route:"oral"},
             {id:"med_126",brand_name:"Ultram / Tramadol",generic_name:"Tramadol HCl 50 mg tablet",generic_available:true,drug_class:"Opioid-like analgesic (Schedule IV)",condition:"oral_analgesic",typical_dosing:"50-100 mg PO every 4-6 hours as needed (max 400 mg/day)",bottle_size:"12-24 tablets",preservative_free:false,avg_brand_price:30,avg_generic_price:5,notes:"Schedule IV. Lower abuse potential than traditional opioids. Dual mechanism: weak opioid + serotonin/norepinephrine reuptake inhibition. Risk of seizures and serotonin syndrome.",price_size:"12 tablets",route:"oral"},
             {id:"med_127",brand_name:"Norco / Lortab",generic_name:"Hydrocodone 5-10 mg / Acetaminophen 325 mg tablet",generic_available:true,drug_class:"Opioid analgesic (Schedule II)",condition:"oral_analgesic",typical_dosing:"1-2 tablets PO every 4-6 hours as needed",bottle_size:"8-16 tablets",preservative_free:false,avg_brand_price:40,avg_generic_price:8,notes:"Schedule II (reclassified from III in 2014). Most ODs cannot prescribe Schedule II \u2014 check state scope of practice. For severe ocular/periorbital pain only.",price_size:"8 tablets",route:"oral"},
         ];
+
+        // Searchable indications/conditions for each medication
+        const MED_INDICATIONS = {
+            // Dry Eye
+            med_001:"dry eye, keratoconjunctivitis sicca, KCS, ocular surface disease, tear deficiency",
+            med_002:"dry eye, keratoconjunctivitis sicca, KCS, ocular surface disease, tear deficiency",
+            med_003:"dry eye, keratoconjunctivitis sicca, KCS, ocular surface disease, tear deficiency",
+            med_004:"dry eye, keratoconjunctivitis sicca, KCS, tear deficiency",
+            med_005:"dry eye, keratoconjunctivitis sicca, KCS, ocular surface disease, tear deficiency",
+            med_006:"dry eye, contact lens dryness, ocular surface disease, tear supplement",
+            med_007:"dry eye, aqueous deficient dry eye, ocular surface disease, tear supplement",
+            med_008:"dry eye, evaporative dry eye, meibomian gland dysfunction, MGD, tear supplement",
+            med_009:"dry eye, evaporative dry eye, mixed mechanism dry eye, tear supplement",
+            med_089:"dry eye, evaporative dry eye, meibomian gland dysfunction, MGD",
+            med_091:"dry eye, moderate to severe dry eye, keratoconjunctivitis sicca",
+            med_092:"dry eye, vernal keratoconjunctivitis, VKC, allergic eye disease",
+            med_093:"dry eye, tear deficiency",
+            // Glaucoma
+            med_010:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_011:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_012:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_013:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_014:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_015:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_016:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_017:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_018:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_019:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_020:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_021:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_094:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_095:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_096:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_097:"glaucoma, ocular hypertension, IOP spike, post-laser IOP, SLT, YAG",
+            med_098:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_099:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_100:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_101:"glaucoma, ocular hypertension, angle closure glaucoma, IOP, intraocular pressure",
+            med_102:"glaucoma, acute glaucoma, IOP spike, intraocular pressure, angle closure",
+            med_103:"glaucoma, acute glaucoma, IOP spike, intraocular pressure",
+            med_104:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_105:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            // Allergy
+            med_022:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
+            med_023:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
+            med_024:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
+            med_025:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy",
+            med_060:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
+            med_061:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy",
+            med_062:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
+            med_063:"allergic conjunctivitis, eye allergy, itchy eyes, red eyes, redness",
+            med_064:"allergic conjunctivitis, eye allergy, seasonal allergy, vernal keratoconjunctivitis, VKC",
+            med_065:"allergic conjunctivitis, eye allergy, vernal keratoconjunctivitis, VKC, giant papillary conjunctivitis, GPC",
+            med_066:"allergic conjunctivitis, eye allergy, seasonal allergy, vernal keratoconjunctivitis",
+            med_067:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy",
+            med_068:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy",
+            // Allergy Steroid
+            med_026:"allergic conjunctivitis, severe allergy, eye allergy, seasonal allergic conjunctivitis",
+            // Bacterial Infection — Topical
+            med_027:"bacterial conjunctivitis, pink eye, corneal ulcer, keratitis, blepharitis, post-surgical prophylaxis",
+            med_028:"bacterial conjunctivitis, pink eye, corneal ulcer, keratitis",
+            med_029:"bacterial conjunctivitis, pink eye, corneal ulcer, keratitis",
+            med_030:"bacterial conjunctivitis, pink eye",
+            med_031:"bacterial conjunctivitis, pink eye, blepharitis, stye, hordeolum, newborn prophylaxis",
+            med_032:"bacterial conjunctivitis, blepharitis, meibomian gland dysfunction, MGD, posterior blepharitis",
+            med_069:"bacterial conjunctivitis, pink eye, keratitis, blepharitis, stye, hordeolum",
+            med_070:"bacterial conjunctivitis, pink eye, corneal ulcer, keratitis",
+            med_071:"bacterial conjunctivitis, pink eye, corneal ulcer, keratitis",
+            med_072:"bacterial conjunctivitis, corneal ulcer, keratitis",
+            med_073:"bacterial conjunctivitis, blepharitis, stye, hordeolum, chalazion",
+            med_074:"bacterial conjunctivitis, blepharitis, stye, hordeolum",
+            med_075:"bacterial conjunctivitis, pink eye",
+            med_076:"bacterial conjunctivitis, pink eye, corneal ulcer, keratitis",
+            // Bacterial Infection — Oral
+            med_077:"preseptal cellulitis, dacryocystitis, orbital cellulitis, lacrimal infection, lid infection",
+            med_078:"preseptal cellulitis, dacryocystitis, orbital cellulitis, lid infection",
+            med_079:"preseptal cellulitis, chlamydial conjunctivitis, blepharitis",
+            med_080:"blepharitis, meibomian gland dysfunction, MGD, posterior blepharitis, rosacea, ocular rosacea, chalazion, stye, hordeolum",
+            med_081:"preseptal cellulitis, MRSA, dacryocystitis, lid infection",
+            // Viral Infection
+            med_033:"herpes simplex keratitis, HSV keratitis, dendritic ulcer, herpetic eye disease",
+            med_034:"herpes simplex keratitis, HSV keratitis, dendritic ulcer, herpetic eye disease",
+            med_035:"herpes simplex keratitis, herpes zoster ophthalmicus, HZO, shingles, herpetic eye disease",
+            med_082:"herpes simplex keratitis, herpes zoster ophthalmicus, HZO, shingles, herpetic eye disease",
+            med_083:"herpes simplex keratitis, herpes zoster ophthalmicus, HZO, shingles, herpetic eye disease",
+            // Fungal Infection
+            med_036:"fungal keratitis, corneal ulcer, fusarium, aspergillus, fungal infection",
+            // Steroids
+            med_037:"uveitis, iritis, anterior uveitis, inflammation, post-surgical, post-operative, scleritis, episcleritis, corneal graft rejection",
+            med_038:"uveitis, iritis, inflammation, post-surgical, post-operative, episcleritis",
+            med_039:"uveitis, iritis, anterior uveitis, inflammation, post-surgical, post-operative, severe inflammation",
+            med_040:"episcleritis, mild inflammation, contact lens-related inflammation, superficial keratitis",
+            med_041:"dry eye flare, inflammation, dry eye disease",
+            med_106:"uveitis, iritis, anterior uveitis, inflammation, post-surgical, post-operative, severe inflammation",
+            med_107:"inflammation, episcleritis, mild anterior segment inflammation, superficial keratitis",
+            med_108:"inflammation, episcleritis, moderate inflammation",
+            med_109:"post-surgical, post-operative, cataract surgery, inflammation",
+            med_110:"uveitis, iritis, inflammation, post-surgical, post-operative, episcleritis",
+            med_111:"inflammation, post-surgical, post-operative, episcleritis",
+            med_112:"post-surgical, post-operative, cataract surgery, inflammation",
+            med_113:"uveitis, optic neuritis, giant cell arteritis, GCA, temporal arteritis, severe inflammation, scleritis, orbital inflammation",
+            // NSAIDs
+            med_042:"post-surgical, post-operative, cataract surgery, cystoid macular edema, CME, inflammation",
+            med_043:"post-surgical, post-operative, cataract surgery, cystoid macular edema, CME, inflammation",
+            med_044:"post-surgical, post-operative, allergic conjunctivitis, pain, inflammation",
+            med_114:"post-surgical, post-operative, cataract surgery, cystoid macular edema, CME, inflammation",
+            med_115:"post-surgical, post-operative, cataract surgery, cystoid macular edema, CME, inflammation",
+            med_116:"post-surgical, post-operative, pain, allergic conjunctivitis, inflammation",
+            med_117:"post-surgical, post-operative, cataract surgery, cystoid macular edema, CME, inflammation",
+            // Combination Antibiotic/Steroid
+            med_045:"blepharitis, conjunctivitis, infection with inflammation, post-surgical, stye, hordeolum, chalazion",
+            med_046:"blepharitis, conjunctivitis, infection with inflammation, post-surgical, stye, hordeolum, chalazion",
+            med_047:"blepharitis, conjunctivitis, infection with inflammation, post-surgical, stye, hordeolum, chalazion",
+            med_048:"blepharitis, conjunctivitis, infection with inflammation, stye, hordeolum, chalazion",
+            med_084:"blepharitis, conjunctivitis, mild inflammation with infection",
+            med_085:"blepharitis, conjunctivitis, infection with inflammation, stye, hordeolum",
+            med_086:"blepharitis, conjunctivitis, infection with inflammation, keratitis",
+            // Mydriatics & Cycloplegics
+            med_049:"dilation, cycloplegia, pediatric refraction, amblyopia workup",
+            med_050:"cycloplegia, uveitis, iritis, amblyopia, penalization therapy, severe inflammation",
+            med_051:"myopia control, myopia management, pediatric myopia, progressive myopia",
+            med_052:"dilation, mydriasis, dilated fundus exam, DFE",
+            med_053:"dilation, mydriasis, dilated fundus exam, DFE",
+            med_054:"presbyopia, near vision, reading difficulty",
+            med_087:"dilation, mydriasis, dilated fundus exam, DFE, Horner syndrome",
+            med_088:"dilation reversal, reverse dilation",
+            // Demodex
+            med_090:"demodex blepharitis, blepharitis, demodex mites, eyelid mites, lid disease",
+            // Macular Degeneration / Anti-VEGF
+            med_056:"wet AMD, macular degeneration, age-related macular degeneration, diabetic macular edema, DME, retinal vein occlusion, RVO, diabetic retinopathy",
+            med_057:"wet AMD, macular degeneration, age-related macular degeneration, diabetic macular edema, DME, retinal vein occlusion, RVO, diabetic retinopathy",
+            med_058:"wet AMD, macular degeneration, age-related macular degeneration, diabetic macular edema, DME, retinal vein occlusion, RVO, myopic CNV",
+            med_059:"wet AMD, macular degeneration, age-related macular degeneration, diabetic macular edema, DME, retinal vein occlusion, RVO, diabetic retinopathy",
+            // Miscellaneous
+            med_055:"red eye, redness, bloodshot eyes, eye whitening",
+            med_118:"ptosis, droopy eyelid, acquired ptosis, eyelid droop",
+            med_119:"neurotrophic keratitis, corneal nerve damage, persistent epithelial defect",
+            med_120:"corneal edema, Fuchs dystrophy, Fuchs endothelial dystrophy, post-surgical edema",
+            med_121:"eyelash hypotrichosis, short eyelashes, thin eyelashes, eyelash growth",
+            med_122:"presbyopia, near vision, reading difficulty",
+            med_123:"presbyopia, near vision, reading difficulty",
+            med_124:"filamentary keratitis, mucus plaques, corneal filaments",
+            med_128:"eyelid eczema, atopic dermatitis, eyelid dermatitis, periocular dermatitis, contact dermatitis, eyelid inflammation",
+            // Oral Analgesics
+            med_125:"pain, ocular pain, corneal abrasion, trauma, post-operative pain",
+            med_126:"pain, ocular pain, corneal abrasion, trauma, post-operative pain",
+            med_127:"pain, severe ocular pain, corneal abrasion, trauma, post-operative pain",
+        };
+
+        // Pediatric use and pregnancy safety for each medication
+        const MED_SAFETY = {
+            // Dry Eye
+            med_001:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — no adequate human studies; use only if benefit justifies risk"},
+            med_002:{pediatric:"Not established in children <17 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_003:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_004:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_005:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_006:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
+            med_007:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
+            med_008:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
+            med_009:{pediatric:"Safe for all ages (OTC artificial tear)",pregnancy:"Compatible — OTC artificial tear, negligible systemic absorption"},
+            med_089:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_091:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if benefit justifies risk"},
+            med_092:{pediatric:"Approved for VKC in patients ≥4 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_093:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            // Glaucoma
+            med_010:{pediatric:"Not established <16 years; used off-label in pediatric glaucoma",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_011:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_012:{pediatric:"Not established in children <16 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_013:{pediatric:"Not established in children <16 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_014:{pediatric:"Use with caution — risk of bradycardia and bronchospasm in neonates/infants",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_015:{pediatric:"Contraindicated <2 years (CNS depression risk); use caution <6 years",pregnancy:"Cat B — use only if clearly needed"},
+            med_016:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_017:{pediatric:"Used off-label in pediatric glaucoma; monitor electrolytes",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_018:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_019:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_020:{pediatric:"Contraindicated <2 years; not recommended <6 years (brimonidine CNS risk)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_021:{pediatric:"Used off-label in pediatric glaucoma; caution with timolol component",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_094:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_095:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_096:{pediatric:"Not recommended <2 years; caution <6 years (brimonidine component)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_097:{pediatric:"Not established; caution in infants (CNS depression risk)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_098:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_099:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_100:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_101:{pediatric:"Used in pediatric glaucoma; may cause accommodative spasm",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_102:{pediatric:"Used in pediatric glaucoma; monitor electrolytes and growth",pregnancy:"Cat C — teratogenic in animal studies; avoid if possible"},
+            med_103:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_104:{pediatric:"Use with caution — systemic absorption risk in children",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_105:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            // Allergy
+            med_022:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_023:{pediatric:"Approved for ages ≥2 years (0.1%), ≥3 years (0.2%)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_024:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B — use only if clearly needed"},
+            med_025:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B (based on oral cetirizine data) — use only if clearly needed"},
+            med_026:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_060:{pediatric:"Approved for ages ≥3 years (OTC)",pregnancy:"Generally considered compatible; limited ophthalmic data"},
+            med_061:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_062:{pediatric:"Not established in children <2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_063:{pediatric:"Ages ≥6 years per OTC labeling",pregnancy:"Use with caution — naphazoline is a vasoconstrictor"},
+            med_064:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat B — use only if clearly needed"},
+            med_065:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat B — use only if clearly needed"},
+            med_066:{pediatric:"Approved for ages ≥4 years",pregnancy:"Cat B — use only if clearly needed"},
+            med_067:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_068:{pediatric:"Approved for ages ≥3 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            // Bacterial Infection — Topical
+            med_027:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_028:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_029:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_030:{pediatric:"Approved for ages ≥2 months",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_031:{pediatric:"Approved for neonates and all ages (newborn prophylaxis)",pregnancy:"Cat B — generally considered safe"},
+            med_032:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat B — use only if clearly needed"},
+            med_069:{pediatric:"Approved for ages ≥2 months",pregnancy:"Cat B — use only if clearly needed"},
+            med_070:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_071:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_072:{pediatric:"Use with caution in neonates; monitor for ototoxicity",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_073:{pediatric:"Safe for all ages",pregnancy:"Cat C — minimal systemic absorption"},
+            med_074:{pediatric:"Safe for all ages",pregnancy:"Cat C — minimal systemic absorption"},
+            med_075:{pediatric:"Safe for all ages; monitor for neomycin hypersensitivity",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_076:{pediatric:"Approved for ages ≥1 year",pregnancy:"Cat C — use only if benefit justifies risk"},
+            // Bacterial Infection — Oral
+            med_077:{pediatric:"Approved for all ages; weight-based dosing in children",pregnancy:"Cat B — generally considered safe"},
+            med_078:{pediatric:"Approved for all ages; weight-based dosing in children",pregnancy:"Cat B — generally considered safe"},
+            med_079:{pediatric:"Approved for ages ≥6 months; weight-based dosing",pregnancy:"Cat B — use only if clearly needed"},
+            med_080:{pediatric:"Contraindicated <8 years (permanent tooth discoloration)",pregnancy:"Cat D — contraindicated; causes fetal tooth/bone effects"},
+            med_081:{pediatric:"Approved for ages ≥2 months; weight-based dosing",pregnancy:"Cat D near term — avoid in 3rd trimester (kernicterus risk)"},
+            // Viral Infection
+            med_033:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — may be teratogenic; use only if clearly needed"},
+            med_034:{pediatric:"Approved for ages ≥6 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_035:{pediatric:"Approved ≥2 years (chickenpox), ≥12 years (cold sores)",pregnancy:"Cat B — commonly used when benefit justifies risk"},
+            med_082:{pediatric:"Approved for ages ≥2 years; weight-based dosing",pregnancy:"Cat B — commonly used when benefit justifies risk"},
+            med_083:{pediatric:"Not approved for ages <18 years for recurrent herpes",pregnancy:"Cat B — use only if clearly needed"},
+            // Fungal Infection
+            med_036:{pediatric:"Not established; used off-label in pediatric fungal keratitis",pregnancy:"Cat C — use only if benefit justifies risk"},
+            // Steroids
+            med_037:{pediatric:"Use with caution; monitor IOP. Risk of cataract with prolonged use",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_038:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_039:{pediatric:"Limited safety data; used off-label in pediatric uveitis",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_040:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_041:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_106:{pediatric:"Use with caution; monitor IOP in children",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_107:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_108:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_109:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_110:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_111:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_112:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_113:{pediatric:"Used in pediatric patients; monitor growth with prolonged use",pregnancy:"Cat C/D — 1st trimester cleft palate risk; use only if clearly needed"},
+            // NSAIDs
+            med_042:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_043:{pediatric:"Not established in children <10 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_044:{pediatric:"Not established in children <3 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_114:{pediatric:"Approved for ages ≥10 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_115:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_116:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            med_117:{pediatric:"Not established in children <3 years",pregnancy:"Cat C — avoid after 30 weeks (premature ductus arteriosus closure)"},
+            // Combination Antibiotic/Steroid
+            med_045:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_046:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_047:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_048:{pediatric:"Use with caution; neomycin hypersensitivity risk in children",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_084:{pediatric:"Approved for ages ≥6 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_085:{pediatric:"Use with caution in children",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_086:{pediatric:"Not established in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            // Mydriatics & Cycloplegics
+            med_049:{pediatric:"Use 0.5% in infants; CNS toxicity risk in neonates with higher concentrations",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_050:{pediatric:"Use with caution in infants — systemic toxicity risk (fever, tachycardia, flushing)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_051:{pediatric:"Primary indication is pediatric myopia control (ages 4–16)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_052:{pediatric:"Use 2.5% only; 10% is contraindicated in infants (cardiovascular risk)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_053:{pediatric:"Approved for all ages; preferred agent for pediatric dilation",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_054:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_087:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_088:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            // Demodex
+            med_090:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            // Macular Degeneration / Anti-VEGF
+            med_056:{pediatric:"Not approved; used off-label for ROP in neonates",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm"},
+            med_057:{pediatric:"Not approved; used off-label in pediatric retinal conditions",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm"},
+            med_058:{pediatric:"Not established in pediatric patients",pregnancy:"Contraindicated — antiangiogenic; may cause fetal harm"},
+            med_059:{pediatric:"Not established in pediatric patients",pregnancy:"Potential risk — antiangiogenic agent; avoid unless clearly needed"},
+            // Miscellaneous
+            med_055:{pediatric:"Not recommended <5 years per OTC labeling",pregnancy:"No adequate human studies; negligible systemic absorption expected"},
+            med_118:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_119:{pediatric:"Not established in children <18 years",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_120:{pediatric:"Safe for all ages (OTC hypertonic saline)",pregnancy:"Compatible — OTC, negligible systemic absorption"},
+            med_121:{pediatric:"Not approved in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk"},
+            med_122:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_123:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed"},
+            med_124:{pediatric:"Used off-label in pediatric patients",pregnancy:"Cat B (systemic) — use only if clearly needed"},
+            med_128:{pediatric:"Not recommended <2 years; approved ≥2 years (0.03%), ≥16 years (0.1%)",pregnancy:"Cat C — use only if benefit justifies risk"},
+            // Oral Analgesics
+            med_125:{pediatric:"Contraindicated <12 years (FDA black box — respiratory depression risk)",pregnancy:"Cat C — risk of neonatal opioid withdrawal syndrome"},
+            med_126:{pediatric:"Contraindicated <12 years; not recommended <18 years post-tonsillectomy",pregnancy:"Cat C — risk of neonatal withdrawal; avoid prolonged use"},
+            med_127:{pediatric:"Not recommended <18 years for outpatient use",pregnancy:"Cat C — risk of neonatal opioid withdrawal syndrome"},
+        };
 
         const MED_CONDITIONS = {
             dry_eye: { label:"Dry Eye", icon:'<i class="ph-duotone ph-drop"></i>' },
@@ -3835,6 +4244,8 @@
             allergy_steroid: { label:"Allergy / Steroid", icon:'<i class="ph-duotone ph-flower-tulip"></i>' },
             miscellaneous: { label:"Miscellaneous", icon:'<i class="ph-duotone ph-package"></i>' },
             oral_analgesic: { label:"Oral Analgesic", icon:'<i class="ph-duotone ph-pill"></i>' },
+            cosmetic: { label:"Cosmetic", icon:'<i class="ph-duotone ph-sparkle"></i>' },
+            presbyopia: { label:"Presbyopia", icon:'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" style="vertical-align:-0.125em"><path d="M200,40a8,8,0,0,0,0,16,16,16,0,0,1,16,16v58.08A44,44,0,0,0,145.68,152H110.32A44,44,0,0,0,40,130.08V72A16,16,0,0,1,56,56a8,8,0,0,0,0-16A32,32,0,0,0,24,72v92a44,44,0,0,0,87.81,4h32.38A44,44,0,0,0,232,164V72A32,32,0,0,0,200,40ZM68,192a28,28,0,1,1,28-28A28,28,0,0,1,68,192Zm120,0a28,28,0,1,1,28-28A28,28,0,0,1,188,192Z"></path></svg>' },
         };
 
         const MED_CONDITION_GROUPS = [
@@ -3847,6 +4258,8 @@
             { id:"mydriatic_cycloplegic", label:"Mydriatics & Cycloplegics", icon:'<i class="ph-duotone ph-sun"></i>', conditions:["mydriatic_cycloplegic"] },
             { id:"demodex", label:"Demodex", icon:'<i class="ph-duotone ph-magnifying-glass"></i>', conditions:["demodex"] },
             { id:"macular_degeneration", label:"Macular Degeneration", icon:'<i class="ph-duotone ph-syringe"></i>', conditions:["macular_degeneration"] },
+            { id:"presbyopia", label:"Presbyopia", icon:'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" style="vertical-align:-0.125em"><path d="M200,40a8,8,0,0,0,0,16,16,16,0,0,1,16,16v58.08A44,44,0,0,0,145.68,152H110.32A44,44,0,0,0,40,130.08V72A16,16,0,0,1,56,56a8,8,0,0,0,0-16A32,32,0,0,0,24,72v92a44,44,0,0,0,87.81,4h32.38A44,44,0,0,0,232,164V72A32,32,0,0,0,200,40ZM68,192a28,28,0,1,1,28-28A28,28,0,0,1,68,192Zm120,0a28,28,0,1,1,28-28A28,28,0,0,1,188,192Z"></path></svg>', conditions:["presbyopia"] },
+            { id:"cosmetic", label:"Cosmetic", icon:'<i class="ph-duotone ph-sparkle"></i>', conditions:["cosmetic"] },
             { id:"miscellaneous", label:"Miscellaneous", icon:'<i class="ph-duotone ph-package"></i>', conditions:["miscellaneous","oral_analgesic"] },
         ];
 
@@ -6806,6 +7219,7 @@
         let clSubTab = 'prescribe';
 
         function switchTab(tab) {
+            window.scrollTo(0, 0);
             document.getElementById('subnavLenses').classList.toggle('active', tab === 'lenses');
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
             document.getElementById('subnavTools').classList.toggle('active', tab === 'tools');
@@ -11935,7 +12349,9 @@
 
         function uveitisLabToggle(labId) {
             uveitisLabState.expanded[labId] = !uveitisLabState.expanded[labId];
+            var scrollY = window.scrollY;
             renderUveitisLabContent();
+            window.scrollTo(0, scrollY);
         }
 
         function uveitisLabSearch(val) {
@@ -11957,25 +12373,25 @@
 
         function renderUveitisLabCard(lab) {
             var exp = uveitisLabState.expanded[lab.id];
-            var html = '<div class="tools-card' + (exp ? ' tools-card-expanded' : '') + '" style="padding:0;">'
+            var html = '<div class="tools-card' + (exp ? ' tools-card-expanded' : '') + '" style="padding:0;" data-labid="' + lab.id + '">'
                 + '<div class="de-section-header" onclick="uveitisLabToggle(\'' + lab.id + '\')" style="padding:16px 20px;">'
                 + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
                 + '<div style="flex:1;"><div class="de-section-title">' + lab.name + (lab.abbr !== lab.name ? ' <span style="opacity:0.6;font-weight:500;">(' + lab.abbr + ')</span>' : '') + '</div>'
                 + '<div class="de-section-summary">' + lab.summary + '</div></div>'
                 + '</div>';
             if (exp) {
-                html += '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">';
-                html += '<div class="de-subsection"><strong>Normal Range:</strong> ' + lab.normalRange + '</div>';
-                html += '<div class="de-subsection"><strong>Abnormal / Positive Indicates:</strong> ' + lab.abnormalMeaning + '</div>';
+                html += '<div style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">';
+                html += '<div class="uv-lab-section"><div class="uv-lab-label">Normal Range</div><span class="uv-lab-pill uv-lab-pill-normal">' + lab.normalRange + '</span></div>';
+                html += '<div class="uv-lab-section"><div class="uv-lab-label">Abnormal / Positive Indicates</div><span class="uv-lab-pill uv-lab-pill-abnormal" style="white-space:normal;text-align:left;">' + lab.abnormalMeaning + '</span></div>';
                 if (lab.associatedConditions && lab.associatedConditions.length) {
-                    html += '<div class="de-subsection"><strong>Associated Conditions:</strong><ul style="margin:4px 0 0 0;padding-left:20px;">';
+                    html += '<div class="uv-lab-section"><div class="uv-lab-label">Associated Conditions</div><div class="uv-lab-chips">';
                     for (var c = 0; c < lab.associatedConditions.length; c++) {
-                        html += '<li>' + lab.associatedConditions[c] + '</li>';
+                        html += '<span class="uv-lab-chip">' + lab.associatedConditions[c] + '</span>';
                     }
-                    html += '</ul></div>';
+                    html += '</div></div>';
                 }
-                html += '<div class="de-subsection"><strong>Clinical Notes:</strong> ' + lab.clinicalNotes + '</div>';
-                html += '<div class="de-note" style="margin-top:10px;font-size:11px;opacity:0.7;"><em>Ref: ' + lab.reference + '</em></div>';
+                html += '<div class="uv-lab-section"><div class="uv-lab-label">Clinical Notes</div><div class="uv-lab-notes">' + lab.clinicalNotes + '</div></div>';
+                html += '<details class="uv-lab-ref-details"><summary class="uv-lab-ref-toggle">Reference</summary><div class="uv-lab-ref-text">' + lab.reference + '</div></details>';
                 html += '</div>';
             }
             html += '</div>';
@@ -12102,11 +12518,16 @@
             }
             if (medsState.searchQuery.trim()) {
                 const q = medsState.searchQuery.trim().toLowerCase();
-                results = results.filter(m =>
-                    m.brand_name.toLowerCase().includes(q) ||
-                    m.generic_name.toLowerCase().includes(q) ||
-                    m.drug_class.toLowerCase().includes(q)
-                );
+                results = results.filter(m => {
+                    const condLabel = (MED_CONDITIONS[m.condition] && MED_CONDITIONS[m.condition].label) || '';
+                    const indications = MED_INDICATIONS[m.id] || '';
+                    return m.brand_name.toLowerCase().includes(q) ||
+                        m.generic_name.toLowerCase().includes(q) ||
+                        m.drug_class.toLowerCase().includes(q) ||
+                        (m.notes && m.notes.toLowerCase().includes(q)) ||
+                        condLabel.toLowerCase().includes(q) ||
+                        indications.toLowerCase().includes(q);
+                });
             }
             return results;
         }
@@ -12114,10 +12535,15 @@
         function getMedAutocomplete(query) {
             if (!query || query.length < 2) return [];
             const q = query.toLowerCase();
-            return MEDS.filter(m =>
-                m.brand_name.toLowerCase().includes(q) ||
-                m.generic_name.toLowerCase().includes(q)
-            ).slice(0, 8);
+            return MEDS.filter(m => {
+                const condLabel = (MED_CONDITIONS[m.condition] && MED_CONDITIONS[m.condition].label) || '';
+                const indications = MED_INDICATIONS[m.id] || '';
+                return m.brand_name.toLowerCase().includes(q) ||
+                    m.generic_name.toLowerCase().includes(q) ||
+                    (m.notes && m.notes.toLowerCase().includes(q)) ||
+                    condLabel.toLowerCase().includes(q) ||
+                    indications.toLowerCase().includes(q);
+            }).slice(0, 8);
         }
 
         // === Prescribing Aid ===
@@ -12394,6 +12820,15 @@
                 } else {
                     html += `<div class="med-notes-content">${escMedHtml(med.notes)}</div>`;
                 }
+            }
+
+            // Safety info (pediatric & pregnancy)
+            const safety = MED_SAFETY[med.id];
+            if (safety) {
+                html += `<div class="med-safety-box">`;
+                html += `<div class="med-safety-row"><span class="med-safety-label">Pediatric</span><span>${escMedHtml(safety.pediatric)}</span></div>`;
+                html += `<div class="med-safety-row"><span class="med-safety-label">Pregnancy</span><span>${escMedHtml(safety.pregnancy)}</span></div>`;
+                html += `</div>`;
             }
 
             html += `</div>`; // end expanded content
