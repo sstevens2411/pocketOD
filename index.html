@@ -1132,7 +1132,7 @@
 
         /* NAV BUTTONS */
         .nav-row {
-            display: flex;
+            display: none;
             justify-content: space-between;
             padding: 16px 0 0;
             margin-top: 16px;
@@ -1433,9 +1433,23 @@
             transition: all 0.15s;
         }
 
+        @keyframes wrench-shake {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(-12deg); }
+            40% { transform: rotate(10deg); }
+            60% { transform: rotate(-8deg); }
+            80% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
         .troubleshoot-btn:hover {
             background: #ff8c00;
             color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(255,140,0,0.3);
+        }
+        .troubleshoot-btn:hover i[class*="ph-"] {
+            animation: wrench-shake 0.4s ease;
+            display: inline-block;
         }
 
         @media (max-width: 380px) {
@@ -1713,6 +1727,11 @@
             color: var(--success);
             margin-top: 2px;
             text-align: left;
+        }
+        .med-price-size {
+            font-size: 11px;
+            font-weight: 400;
+            color: #475569;
         }
         /* Dosing */
         .med-dosing {
@@ -2297,10 +2316,9 @@
                 gap: 6px;
             }
             .sort-btn {
-                padding: 10px 18px;
-                font-size: 13px;
-                min-height: 40px;
-                border-radius: 8px;
+                padding: 5px 10px;
+                font-size: 10px;
+                border-radius: 5px;
             }
 
             /* --- Results header --- */
@@ -2354,14 +2372,23 @@
                 gap: 8px;
             }
             .order-grid .order-param {
-                flex: 1 1 calc(50% - 8px);
-                min-width: calc(50% - 8px);
+                flex: 0 1 calc(50% - 4px);
+                min-width: calc(50% - 4px);
+                max-width: calc(50% - 4px);
             }
             .order-param {
                 padding: 10px;
             }
             .order-param-value {
                 font-size: 16px;
+            }
+            .order-section-title {
+                text-transform: none;
+                letter-spacing: 0.02em;
+            }
+            .troubleshoot-btn {
+                margin-left: auto;
+                margin-right: auto;
             }
             .order-lens-info {
                 grid-template-columns: repeat(2, 1fr);
@@ -2505,6 +2532,10 @@
             .med-price-savings {
                 font-size: 11px;
             }
+            .med-price-size {
+                display: block;
+                margin-top: 1px;
+            }
 
             /* Favorite button */
             .med-fav-btn {
@@ -2565,6 +2596,7 @@
                 font-size: 12px;
                 padding: 14px;
             }
+
         }
 
         /* ===== EXTRA-SMALL PHONES ===== */
@@ -3371,6 +3403,19 @@
             letter-spacing: 0.06em; color: var(--accent); margin: 10px 0 3px;
         }
         .bk-bubble-text { font-size: 12.5px; color: var(--ink); line-height: 1.45; }
+        @media (max-width: 640px) {
+            .bk-bubble {
+                position: fixed;
+                left: 0; right: 0; top: auto; bottom: 0;
+                width: 100%; max-height: 70vh;
+                overflow-y: auto;
+                border-radius: 16px 16px 0 0;
+                margin-top: 0;
+                transform: translateY(20px);
+            }
+            .bk-bubble.open { transform: translateY(0); }
+            .bk-bubble-arrow { display: none; }
+        }
         @media (hover: hover) {
             .bk-grid, .bk-grid * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 256 256'%3E%3Cpath d='M192,64V77.33a8,8,0,0,1-1.6,4.8l-20.8,27.74a8,8,0,0,0-1.6,4.8V224a8,8,0,0,1-8,8H96a8,8,0,0,1-8-8V114.67a8,8,0,0,0-1.6-4.8L65.6,82.13a8,8,0,0,1-1.6-4.8V64Z' fill='%23333' opacity='0.4'/%3E%3Cpath d='M184,16H72A16,16,0,0,0,56,32V77.33a16.12,16.12,0,0,0,3.2,9.6L80,114.67V224a16,16,0,0,0,16,16h64a16,16,0,0,0,16-16V114.67l20.8-27.74a16.12,16.12,0,0,0,3.2-9.6V32A16,16,0,0,0,184,16ZM72,32H184V56H72V32Zm91.2,73.07a16.12,16.12,0,0,0-3.2,9.6V224H96V114.67a16.12,16.12,0,0,0-3.2-9.6L72,77.33V72H184v5.33ZM136,120v32a8,8,0,0,1-16,0V120a8,8,0,0,1,16,0Z' fill='%23000'/%3E%3C/svg%3E") 16 32, pointer; }
             .bk-cover { opacity: 1; transition: opacity 0.3s ease; }
@@ -4022,7 +4067,7 @@
             {id:"med_050",brand_name:"Atropine 1%",generic_name:"Atropine sulfate 1%",generic_available:true,drug_class:"Cycloplegic / Mydriatic (long-acting)",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop one to two times daily (for cycloplegia/treatment); varies for myopia control",bottle_size:"2 mL / 5 mL / 15 mL",preservative_free:false,avg_brand_price:30,avg_generic_price:10,notes:"Strongest cycloplegic. Used for uveitis treatment, penalization therapy, and amblyopia. Can be used (sometimes in combo w/ phenylephrine 10%) to break posterior synechiae. Recovery 1-2 weeks.",price_size:"5 mL",route:"topical"},
             {id:"med_051",brand_name:"Low-dose Atropine (compounded)",generic_name:"Atropine 0.01% - 0.05%",generic_available:true,drug_class:"Cycloplegic (low-dose) / Myopia control",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop in each eye at bedtime",bottle_size:"varies (compounded)",preservative_free:true,avg_brand_price:50,avg_generic_price:30,notes:"Used for myopia control in children. Must be compounded. 0.05% may be more effective than 0.01% per LAMP study. Minimal side effects at low doses.",price_size:"per bottle",route:"topical"},
             {id:"med_052",brand_name:"Phenylephrine 2.5%",generic_name:"Phenylephrine 2.5%",generic_available:true,drug_class:"Mydriatic (sympathomimetic)",condition:"mydriatic_cycloplegic",typical_dosing:"1 drop, may repeat in 15 minutes",bottle_size:"2 mL / 5 mL / 15 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:10,notes:"Mydriasis without cycloplegia. Use 2.5% (not 10%) in routine practice \u2014 10% has cardiovascular risks especially in elderly and children.",price_size:"15 mL",route:"topical"},
-            {id:"med_053",brand_name:"Tropicamide 1%",generic_name:"Tropicamide 1%",generic_available:true,drug_class:"Mydriatic / Short-acting cycloplegic",condition:"mydriatic_cycloplegic",typical_dosing:"1-2 drops, may repeat in 5 minutes",bottle_size:"2 mL / 15 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:8,notes:"Fastest onset and shortest recovery mydriatic (4-6 hours). Weak cycloplegic \u2014 not adequate for pediatric refractions. Standard for dilated fundus exams.",price_size:"15 mL",route:"topical"},
+            {id:"med_053",brand_name:"Tropicamide 1%",generic_name:"Tropicamide 1%",generic_available:true,drug_class:"Mydriatic / Short-acting cycloplegic",condition:"mydriatic_cycloplegic",typical_dosing:"1-2 drops, may repeat in 5 minutes",bottle_size:"2 mL / 15 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:8,notes:"Fastest onset and shortest recovery mydriatic (4-6 hours). Weak cycloplegic \u2014 not adequate for pediatric refractions. Standard for dilated fundus exams. Also available in 0.5%.",price_size:"15 mL",route:"topical"},
             {id:"med_054",brand_name:"Vuity",generic_name:"Pilocarpine 1.25%",generic_available:false,drug_class:"Miotic / Parasympathomimetic",condition:"presbyopia",typical_dosing:"1 drop in each eye once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:80,avg_generic_price:null,notes:"FDA-approved for presbyopia. Creates pinhole effect for improved near vision. Headache and dim vision are common side effects. Effects last 6-8 hours.",price_size:"2.5 mL",route:"topical"},
             {id:"med_055",brand_name:"Lumify",generic_name:"Brimonidine 0.025%",generic_available:false,drug_class:"Alpha-2 adrenergic agonist (low dose) / Decongestant",condition:"cosmetic",typical_dosing:"1 drop in affected eye(s) every 6-8 hours as needed",bottle_size:"2.5 mL / 7.5 mL / 15 mL",preservative_free:false,avg_brand_price:12,avg_generic_price:null,notes:"OTC redness reliever. Low-dose brimonidine \u2014 less rebound redness than older decongestants (Visine, Clear Eyes). Onset within 1 minute, lasts 8 hours.",price_size:"7.5 mL",route:"topical"},
             {id:"med_056",brand_name:"Avastin (off-label)",generic_name:"Bevacizumab (compounded for intravitreal injection)",generic_available:false,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-8 weeks (retina specialist)",bottle_size:"compounded dose",preservative_free:true,avg_brand_price:60,avg_generic_price:null,notes:"Off-label but widely used for wet AMD and DME. Compounded from IV formulation. Most cost-effective anti-VEGF. Administered by retina specialist.",price_size:"per dose",route:"intravitreal"},
@@ -4948,14 +4993,21 @@
             const foldCyl = cyl !== 0 && Math.abs(cyl) === 0.50;
             const hasAdd = eye.add && addP > 0;
             if (sph === 0 && !hasCyl && !foldCyl && !hasAdd) return "";
+            // Vertex convert both meridians, derive new sph & cyl
             let clSph = vertexConvert(sph);
+            let clCyl = cyl;
+            if (hasCyl) {
+                const meridian2 = sph + cyl;
+                const vMeridian2 = vertexConvert(meridian2);
+                clCyl = snapTo025(vMeridian2 - clSph);
+            }
             if (foldCyl) clSph = snapTo025(clSph + cyl / 2);
             const needed = getNeededTypeForEye(eye);
             const typeLabel = { sphere:"Spherical", toric:"Toric", multifocal:"Multifocal", "multifocal-toric":"MF Toric" }[needed];
 
             const sphStr = `${clSph > 0 ? "+" : ""}${clSph.toFixed(2)}`;
             const parts = [sphStr];
-            if (hasCyl) parts.push(`${cyl.toFixed(2)}`);
+            if (hasCyl) parts.push(`${clCyl.toFixed(2)}`);
             const displayAxis = eye.cylSign === '+' ? eye.transposedAxis : eye.axis;
             if (hasCyl && displayAxis) parts.push(`x ${displayAxis}\u00B0`);
             const rxStr = parts.join(" ");
@@ -4978,9 +5030,11 @@
             let vertexHtml = "";
             if (hasData) {
                 const transposed = state.od.cylSign === '+' || state.os.cylSign === '+';
-                const odSph = Math.abs(parseFloat(state.od.sphere) || 0);
-                const osSph = Math.abs(parseFloat(state.os.sphere) || 0);
-                const wasVertexed = odSph >= 4 || osSph >= 4;
+                const odSph = parseFloat(state.od.sphere) || 0;
+                const odCyl = parseFloat(state.od.cylinder) || 0;
+                const osSph = parseFloat(state.os.sphere) || 0;
+                const osCyl = parseFloat(state.os.cylinder) || 0;
+                const wasVertexed = Math.abs(odSph) >= 4 || Math.abs(odSph + odCyl) >= 4 || Math.abs(osSph) >= 4 || Math.abs(osSph + osCyl) >= 4;
                 const vertexLabel = "Contact Lens Rx" + (wasVertexed && transposed ? " (Vertexed & Transposed)" : wasVertexed ? " (Vertexed)" : transposed ? " (Transposed)" : "");
                 vertexHtml = `<div class="vertex-box fade-in">
                     <div class="vertex-label">${vertexLabel}</div>
@@ -5006,6 +5060,7 @@
                         <div class="input-row" style="gap:8px">
                             <button type="button" id="domRight" class="dom-toggle ${state.dominantEye === 'right' ? 'active-right' : ''}" style="flex:1">Right</button>
                             <button type="button" id="domLeft" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1">Left</button>
+                            <button type="button" id="domRandom" class="dom-toggle" style="flex:0.8;opacity:0.45;font-size:11px;border-style:dashed">Assign Randomly</button>
                         </div>
                     </div>
                 </div>
@@ -5065,7 +5120,12 @@
                 // Auto-populate OS ADD when OD ADD changes
                 state.os.addAbs = val;
             });
-            bindEyeInputs("os", state.os);
+            bindEyeInputs("os", state.os, (val) => {
+                // Auto-populate OD ADD when OS ADD changes and OD ADD is empty
+                if (!state.od.addAbs || state.od.addAbs === "0.00") {
+                    state.od.addAbs = val;
+                }
+            });
 
             const copyBtn = document.getElementById("copyOdToOs");
             if (copyBtn) copyBtn.addEventListener("click", () => {
@@ -5077,6 +5137,8 @@
             const domRight = document.getElementById("domRight");
             if (domLeft) domLeft.addEventListener("click", () => { state.dominantEye = state.dominantEye === 'left' ? null : 'left'; rerender(); });
             if (domRight) domRight.addEventListener("click", () => { state.dominantEye = state.dominantEye === 'right' ? null : 'right'; rerender(); });
+            const domRandom = document.getElementById("domRandom");
+            if (domRandom) domRandom.addEventListener("click", () => { state.dominantEye = Math.random() < 0.5 ? 'left' : 'right'; rerender(); });
 
             const clearBtn = document.getElementById("clearRx");
             if (clearBtn) clearBtn.addEventListener("click", () => {
@@ -5499,26 +5561,32 @@
                 const sph = parseFloat(eye.sphere) || 0;
                 const cyl = parseFloat(eye.cylinder) || 0;
                 const addP = parseFloat(eye.add) || 0;
+                // Vertex convert both principal meridians, derive new sph & cyl
                 let clSph = snapTo025(vertexConvert(sph));
-                const vertexApplied = Math.abs(sph) >= 4;
+                let vCyl = cyl;
+                if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                    const vMeridian2 = vertexConvert(sph + cyl);
+                    vCyl = snapTo025(snapTo025(vMeridian2) - clSph);
+                }
+                const vertexApplied = Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4;
                 const foldCyl = cyl !== 0 && (l.type === "sphere" || l.type === "multifocal");
 
                 // SE adjustment: fold cyl into sphere for non-toric lenses
                 if (foldCyl) {
-                    clSph = snapTo025(clSph + cyl / 2);
+                    clSph = snapTo025(clSph + vCyl / 2);
                 }
 
                 let params = [];
                 let finalSph = clSph;
                 const notes = [];
                 if (vertexApplied) notes.push(`Vertexed`);
-                if (foldCyl) notes.push(`SE: ${cyl.toFixed(2)} cyl folded in`);
+                if (foldCyl) notes.push(`SE: ${vCyl.toFixed(2)} cyl folded in`);
                 let sphNote = notes.length > 0 ? notes.join("; ") : null;
                 let sphHighlight = vertexApplied || foldCyl;
 
                 if (l.type === "toric" || l.type === "multifocal-toric") {
-                    const clCyl = snapCyl(cyl, l);
-                    const cylDiff = clCyl - cyl;
+                    const clCyl = snapCyl(vCyl, l);
+                    const cylDiff = clCyl - vCyl;
                     if (Math.abs(cylDiff) > 0.01) {
                         const seAdj = snapTo025(-cylDiff / 2);
                         finalSph = snapTo025(clSph + seAdj);
@@ -5560,12 +5628,15 @@
                 });
 
                 if (l.type === "toric" || l.type === "multifocal-toric") {
-                    const clCyl = snapCyl(cyl, l);
-                    const cylChanged = clCyl !== cyl;
+                    const clCyl = snapCyl(vCyl, l);
+                    const cylChanged = Math.abs(clCyl - cyl) > 0.01;
+                    const cylNote = [];
+                    if (vertexApplied && Math.abs(vCyl - cyl) > 0.01) cylNote.push(`Vertexed from ${cyl.toFixed(2)}`);
+                    if (Math.abs(clCyl - vCyl) > 0.01) cylNote.push(`Snapped from ${vCyl.toFixed(2)}`);
                     params.push({
                         label: "Cylinder (CYL)",
                         value: clCyl.toFixed(2),
-                        note: cylChanged ? `Reduced from Rx ${cyl.toFixed(2)}` : null,
+                        note: cylNote.length > 0 ? cylNote.join('; ') : null,
                         highlight: cylChanged
                     });
 
@@ -5890,6 +5961,7 @@
                     <div class="input-row" style="gap:8px;max-width:280px;">
                         <button type="button" id="domLeftResult" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1" onclick="state.dominantEye='left';render();">Left (OS)</button>
                         <button type="button" id="domRightResult" class="dom-toggle ${state.dominantEye === 'right' ? 'active-right' : ''}" style="flex:1" onclick="state.dominantEye='right';render();">Right (OD)</button>
+                        <button type="button" class="dom-toggle" style="flex:0.8;opacity:0.45;font-size:11px;border-style:dashed" onclick="state.dominantEye=Math.random()<0.5?'left':'right';render();">Assign Randomly</button>
                     </div>
                 </div>` : ''}
 
@@ -9555,8 +9627,9 @@
             var html = '';
             html += '<div style="padding:4px 0 8px;display:flex;align-items:center;gap:10px;">';
             html += '<button onclick="toolsActiveTool=null;renderTools();" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:22px;padding:4px;display:flex;align-items:center;"><i class="ph-bold ph-arrow-left"></i></button>';
-            html += '<div><div style="font-size:18px;font-weight:800;color:var(--ink);">BV Disorder Calculator</div>';
+            html += '<div style="flex:1;"><div style="font-size:18px;font-weight:800;color:var(--ink);">BV Disorder Calculator</div>';
             html += '<div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">Step-wise binocular vision disorder identifier</div></div>';
+            if (bvDxState.step > 1) html += '<button onclick="bvDxReset()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:18px;line-height:1;transition:color 0.15s" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--ink-muted)\'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>';
             html += '</div>';
 
             var totalSteps = BVDX_STEPS.length;
@@ -10106,13 +10179,13 @@
                 + '<figcaption style="font-size:11px;color:var(--ink-muted);margin-top:4px;font-style:italic;line-height:1.4;">Angle structures seen on gonioscopy. Top: clinical photographs. Bottom: corresponding cross-section diagram showing Schwalbe\'s line (SL), trabecular meshwork (TM), scleral spur (SS), and ciliary body band (CB). <strong style="color:var(--accent);">Hover or tap numbers for labels.</strong></figcaption>'
                 + '</figure>'
                 + '<div style="margin-top:14px;font-weight:700;font-size:13px;color:var(--accent);">Structures (anterior \u2192 posterior)</div>'
-                + '<div style="margin-top:8px;font-size:13px;line-height:2;color:var(--ink);">'
-                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">1.</span> <strong>Schwalbe\u2019s line (SL)</strong> \u2014 Junction of corneal endothelium &amp; TM</div>'
-                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">2.</span> <strong>Non-pigmented TM</strong> \u2014 Anterior, less pigmented meshwork</div>'
-                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">3.</span> <strong>Pigmented TM</strong> \u2014 Posterior, overlies Schlemm\u2019s canal</div>'
-                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">4.</span> <strong>Scleral spur (SS)</strong> \u2014 White line between TM &amp; ciliary body</div>'
-                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">5.</span> <strong>Ciliary body band (CB)</strong> \u2014 Most posterior; brown/gray band</div>'
-                + '<div style="display:flex;align-items:center;gap:8px;"><span style="font-weight:700;color:var(--ink);">6.</span> <strong>Iris root</strong> \u2014 Peripheral iris insertion</div>'
+                + '<div style="margin-top:10px;display:flex;flex-direction:column;gap:10px;">'
+                + '<div><div style="font-size:13px;font-weight:700;color:var(--ink);">Schwalbe\u2019s line (SL)</div><div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.4;">Junction of corneal endothelium &amp; TM</div></div>'
+                + '<div><div style="font-size:13px;font-weight:700;color:var(--ink);">Non-pigmented TM</div><div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.4;">Anterior, less pigmented meshwork</div></div>'
+                + '<div><div style="font-size:13px;font-weight:700;color:var(--ink);">Pigmented TM</div><div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.4;">Posterior, overlies Schlemm\u2019s canal</div></div>'
+                + '<div><div style="font-size:13px;font-weight:700;color:var(--ink);">Scleral spur (SS)</div><div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.4;">White line between TM &amp; ciliary body</div></div>'
+                + '<div><div style="font-size:13px;font-weight:700;color:var(--ink);">Ciliary body band (CB)</div><div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.4;">Most posterior; brown/gray band</div></div>'
+                + '<div><div style="font-size:13px;font-weight:700;color:var(--ink);">Iris root</div><div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.4;">Peripheral iris insertion</div></div>'
                 + '</div>';
             html += buildGonioSection('anatomy', 'ph-eye', 'Angle Anatomy', 'Gonioscopic landmarks from anterior to posterior', anatomyContent);
 
@@ -10769,6 +10842,12 @@
         }
 
         function switchClSub(sub) {
+            if (sub === 'prescribe' && clSubTab === 'prescribe') {
+                resetAll();
+                render();
+                window.scrollTo(0, 0);
+                return;
+            }
             if (clSubTab === 'browse' && sub !== 'browse') resetBrowseState();
             clSubTab = sub;
             document.getElementById('clSubPrescribe').classList.toggle('active', sub === 'prescribe');
@@ -10780,6 +10859,7 @@
             document.getElementById('vertexPage').style.display = sub === 'vertex' ? '' : 'none';
             document.getElementById('radiusPage').style.display = sub === 'radius' ? '' : 'none';
             document.querySelector('main.main').style.paddingBottom = sub === 'prescribe' ? '' : '0';
+            if (sub === 'prescribe') { resetAll(); render(); window.scrollTo(0, 0); }
             if (sub === 'browse') renderBrowse();
             if (sub === 'vertex') renderVertexChart();
             if (sub === 'radius') renderRadiusChart();
@@ -12994,7 +13074,14 @@
                 + '<strong>WR Astigmatism</strong> = With-the-Rule astigmatism (minus cylinder axis near 180\u00B0). '
                 + 'Values represent the approximate refractive error expected to reduce acuity to each Snellen line. '
                 + 'Astigmatism causes greater blur per diopter than spherical defocus because the retinal image has no clear focal point.'
-                + '</div></div>';
+                + '</div>'
+                + '<div class="ref-toggle-wrap" style="margin:12px 0 0 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + '<div style="font-size:11.5px;color:var(--ink-secondary);line-height:1.6;">'
+                + 'Eggers HM. Estimation of uncorrected visual acuity in malingerers. <em>Arch Ophthalmol.</em> 1945;33(1):23\u201327.'
+                + '</div></div></div>'
+                + '</div>';
 
             el.innerHTML = html;
         }
@@ -13177,6 +13264,14 @@
                 + '<div class="tools-card-title"><i class="ph-duotone ph-flashlight"></i> Bruckner Screening</div>'
                 + '<div class="tools-card-desc">Simultaneous red reflex comparison. Illuminate both eyes at ~1 m with a direct ophthalmoscope. Tap a condition for details.</div>'
                 + '<div id="brucknerContent"></div>'
+                + '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + '<div style="font-size:11.5px;color:var(--ink-secondary);line-height:1.6;">'
+                + 'Bruckner GT. Illuminated Near Dissociation Test. <em>Am J Ophthalmol.</em> 1962;54:293\u2013294.<br>'
+                + 'AAP Section on Ophthalmology. Red Reflex Examination in Neonates, Infants, and Children. <em>Pediatrics.</em> 2008;122(6):1401\u20131404.<br>'
+                + 'Tongue AC, Cibis GW. Bruckner test. <em>Ophthalmology.</em> 1981;88(10):1041\u20131044.'
+                + '</div></div></div>'
                 + '</div>';
             brucknerExpanded = null;
             renderBrucknerContent();
@@ -13491,7 +13586,7 @@
             html += `</div>`;
             // Prices (right side) — hide for brand family cards
             if (!med.subtypes) {
-                const ps = med.price_size ? ` <span style="font-size:11px;font-weight:400;color:#475569">/${escMedHtml(med.price_size)}</span>` : '';
+                const ps = med.price_size ? ` <span class="med-price-size">/${escMedHtml(med.price_size)}</span>` : '';
                 html += `<div class="med-price-side">`;
                 html += `<div class="med-price-col"><div class="med-price-label">Brand</div><div class="med-price-value">$${formatMedPrice(med.avg_brand_price)}${ps}</div></div>`;
                 if (med.avg_generic_price !== null) {
@@ -14070,7 +14165,7 @@
             const mkClass = (s) => s ? ' class="browse-th-active"' : '';
             const clearSort = "browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;browseState.sortSph=null;browseState.sortCyl=null;browseState.sortCost=null;renderBrowse()";
 
-            html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view</div>`;
+            html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view, or scroll right.</div>`;
             html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
                 <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">DK${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
@@ -14168,9 +14263,16 @@
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:#ede6de;">
         <div style="margin-bottom:4px;color:#475569;">Built by an Optometrist, For Optometrists.</div>
         <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
-        <div>&copy; 2026 Pocket OD</div>
+        <div>&copy; 2026 Pocket OD &middot; <a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a></div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
         <div style="margin-top:4px;">If you find an error, please let me know!</div>
     </footer>
+    <div id="disclaimerModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;padding:24px;">
+        <div style="background:#fff;border-radius:12px;padding:28px 28px 24px;max-width:520px;width:100%;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+            <button onclick="document.getElementById('disclaimerModal').style.display='none'" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;line-height:1;padding:4px;">&times;</button>
+            <div style="font-size:16px;font-weight:700;color:#1a2332;margin-bottom:14px;">Disclaimer</div>
+            <p style="font-size:13px;line-height:1.7;color:#475569;margin:0;">Pocket OD is provided for educational and clinical reference purposes only. It is not a substitute for professional training or independent clinical judgment. Pocket OD does not engage in the practice of prescribing. All lens parameters, medication information, and clinical data should be verified independently before use. Each patient situation is unique &mdash; all treatment decisions should be individualized accordingly. Pocket OD cannot warrant the accuracy or completeness of information provided.</p>
+        </div>
+    </div>
 </body>
 </html>
