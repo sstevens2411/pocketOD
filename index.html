@@ -121,6 +121,7 @@
             gap: 0;
             align-items: stretch;
             height: 56px;
+            position: relative;
         }
 
         .subnav-item {
@@ -131,7 +132,6 @@
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
             transition: color 0.2s;
         }
 
@@ -140,8 +140,18 @@
         }
 
         .subnav-item.active {
-            color: #fff;
-            border-bottom-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .subnav-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: #0d9488;
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(13,148,136,0.6), 0 0 16px rgba(13,148,136,0.3);
+            transition: left 0.3s ease, width 0.3s ease;
+            pointer-events: none;
         }
 
         /* CL sub-tabs — rendered in content area */
@@ -586,6 +596,7 @@
 
         .option-btn:hover {
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
         }
 
         .option-btn.active {
@@ -792,6 +803,7 @@
 
         .lens-card:hover {
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-2px) scale(1.01);
         }
 
         .lens-card .brand-stripe {
@@ -1777,8 +1789,22 @@
             flex-direction: column;
             gap: 3px;
         }
-        .med-contra-label {
-            color: #dc2626 !important;
+        .med-contra-icon {
+            color: #dc2626;
+            font-size: 18px;
+            vertical-align: -3px;
+            margin-right: 6px;
+            display: inline-block;
+            animation: contraShake 0.5s ease-in-out;
+        }
+        @keyframes contraShake {
+            0%, 100% { transform: rotate(0deg); }
+            15% { transform: rotate(-12deg); }
+            30% { transform: rotate(10deg); }
+            45% { transform: rotate(-8deg); }
+            60% { transform: rotate(6deg); }
+            75% { transform: rotate(-3deg); }
+            90% { transform: rotate(1deg); }
         }
         .med-safety-box {
             background: rgba(59,130,246,0.06);
@@ -2675,8 +2701,15 @@
         .browse-name {
             font-weight: 500;
         }
-        .browse-table tbody tr:hover {
-            background: rgba(0,0,0,0.02);
+        .browse-table tbody tr:not(.browse-brand-row) {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .browse-table tbody tr:not(.browse-brand-row):hover {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transform: translateY(-1px);
+            border-left: 3px solid #0d9488;
         }
         .browse-type {
             display: inline-block;
@@ -3072,25 +3105,26 @@
         /* Tools menu: bigger cards on desktop + hover glow */
         #toolsContent .option-btn,
         #medsContent .option-btn {
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
+            border-left: 2px solid rgba(13,148,136,0.25);
         }
         #toolsContent .option-btn .icon,
         #medsContent .option-btn .icon {
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             transform-origin: left center;
             display: inline-block;
         }
         #toolsContent .option-btn:hover,
         #medsContent .option-btn:hover {
-            background: rgba(13,148,136,0.06);
+            background: #ffffff;
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transform: translateY(-2px);
+            border-left: 3px solid var(--accent);
         }
         #toolsContent .option-btn:hover .icon,
         #medsContent .option-btn:hover .icon {
-            color: var(--accent);
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 8px rgba(13,148,136,0.3));
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 6px rgba(13,148,136,0.25));
         }
         #toolsContent .option-btn:hover .title,
         #medsContent .option-btn:hover .title {
@@ -3281,6 +3315,54 @@
             border-color: var(--accent);
             background: rgba(13,148,136,0.1);
             color: var(--accent);
+        }
+        .bk-card { cursor: pointer; }
+        .bk-card:hover {
+            border-color: var(--accent) !important;
+            background: rgba(13,148,136,0.05) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .bk-card.bk-sel:hover {
+            background: rgba(13,148,136,0.10) !important;
+        }
+        .bk-cover { opacity: 0; }
+        .bk-cell { position: relative; }
+        .bk-cell.bk-has-bubble { z-index: 50; }
+        .bk-bubble {
+            position: absolute;
+            top: 100%; left: 0;
+            width: 100%;
+            margin-top: 10px;
+            z-index: 50;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            padding: 16px 18px;
+            box-sizing: border-box;
+            opacity: 0; transform: scale(0.95);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .bk-bubble.open { opacity: 1; transform: scale(1); }
+        .bk-bubble-arrow {
+            position: absolute; top: -8px;
+            width: 0; height: 0;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-bottom: 9px solid #fff;
+        }
+        .bk-bubble-title {
+            font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 10px;
+        }
+        .bk-bubble-section {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.06em; color: var(--accent); margin: 10px 0 3px;
+        }
+        .bk-bubble-text { font-size: 12.5px; color: var(--ink); line-height: 1.45; }
+        @media (hover: hover) {
+            .bk-grid, .bk-grid * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 256 256'%3E%3Cpath d='M192,64V77.33a8,8,0,0,1-1.6,4.8l-20.8,27.74a8,8,0,0,0-1.6,4.8V224a8,8,0,0,1-8,8H96a8,8,0,0,1-8-8V114.67a8,8,0,0,0-1.6-4.8L65.6,82.13a8,8,0,0,1-1.6-4.8V64Z' fill='%23333' opacity='0.4'/%3E%3Cpath d='M184,16H72A16,16,0,0,0,56,32V77.33a16.12,16.12,0,0,0,3.2,9.6L80,114.67V224a16,16,0,0,0,16,16h64a16,16,0,0,0,16-16V114.67l20.8-27.74a16.12,16.12,0,0,0,3.2-9.6V32A16,16,0,0,0,184,16ZM72,32H184V56H72V32Zm91.2,73.07a16.12,16.12,0,0,0-3.2,9.6V224H96V114.67a16.12,16.12,0,0,0-3.2-9.6L72,77.33V72H184v5.33ZM136,120v32a8,8,0,0,1-16,0V120a8,8,0,0,1,16,0Z' fill='%23000'/%3E%3C/svg%3E") 16 32, pointer; }
+            .bk-cover { opacity: 1; transition: opacity 0.3s ease; }
+            .bk-card:hover .bk-cover { opacity: 0; }
         }
         .bv-result-box {
             margin-top: 18px;
@@ -3482,6 +3564,12 @@
             background: rgba(13,148,136,0.06);
             border-color: rgba(13,148,136,0.25);
         }
+        @keyframes vf-highlight-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(13,148,136,0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(13,148,136,0); }
+            100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); }
+        }
+        .vf-defect-row.vf-pulse { animation: vf-highlight-pulse 0.6s ease-out; }
         .vf-defect-label {
             font-size: 12px; font-weight: 600; color: var(--ink-secondary);
             line-height: 1.3; flex: 1;
@@ -3542,10 +3630,11 @@
                 </svg>
                 <div class="logo-text">Pocket OD</div>
             </div>
-            <nav class="subnav">
+            <nav class="subnav" id="subnav">
                 <div class="subnav-item active" id="subnavLenses" onclick="switchTab('lenses')">Contact Lenses</div>
                 <div class="subnav-item" id="subnavMeds" onclick="switchTab('meds')">Medications</div>
                 <div class="subnav-item" id="subnavTools" onclick="switchTab('tools')">Clinical Tools</div>
+                <div class="subnav-indicator" id="subnavIndicator"></div>
             </nav>
         </div>
     </header>
@@ -3600,6 +3689,31 @@
         // Force scroll to top on page load/refresh
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
+        var _skipPush = false;
+        history.replaceState({view:'lenses'}, '');
+        window.addEventListener('popstate', function(e) {
+            var s = e.state;
+            if (!s) return;
+            _skipPush = true;
+            if (s.view === 'medCategory') {
+                medsState.selectedConditionGroup = s.groupId;
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+                medsState.categorySearch = "";
+                medsState.paStep = 1;
+                switchTab('meds');
+            }
+            else if (s.view === 'lenses') { switchTab('lenses'); }
+            else if (s.view === 'meds') {
+                medsState.paStep = 0;
+                medsState.selectedConditionGroup = null;
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+                medsState.categorySearch = "";
+                medsState.expandedCards = {};
+                switchTab('meds');
+            }
+            else if (s.view === 'tools') { switchTab('tools'); }
+            _skipPush = false;
+        });
 
         // LENS DATABASE
         const LENSES = [
@@ -3648,8 +3762,8 @@
                     ]
                 }
             }},
-            { name:"DAILIES AquaComfort Plus", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-15, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$90 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)" },
-            { name:"DAILIES AquaComfort Plus Toric", brand:"Alcon", type:"toric", modality:"daily", dk:26, bc:"8.8", diam:"14.4", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:[], qty:"30, 90", price:"$115 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
+            { name:"DAILIES AquaComfort Plus", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-15, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$90 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", discontinuing:"Trial lenses discontinued. Patients can still order lenses." },
+            { name:"DAILIES AquaComfort Plus Toric", brand:"Alcon", type:"toric", modality:"daily", dk:26, bc:"8.8", diam:"14.4", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:[], qty:"30, 90", price:"$115 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", discontinuing:"Trial lenses discontinued. Patients can still order lenses." },
             { name:"DAILIES AquaComfort Plus Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$130 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)" },
             { name:"DAILIES Colors", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.6", diam:"13.8", sphMin:-8, sphMax:0, cylMin:0, cylMax:0, addTypes:[], qty:"30", price:"$45 (30pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", note:"Color cosmetic lens. Tints: Mystic Blue, Mystic Hazel, Mystic Grey, Mystic Green. 0.50 steps over \u22126.00D" },
 
@@ -3759,17 +3873,17 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
+                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], optionsMinus:[-0.25, -0.50, -0.75, -1.00, -1.25, -1.50], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
                     ]
                 }
             }},
             { name:"MyDay Energys", brand:"CooperVision", type:"sphere", modality:"daily", dk:80, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90", price:"$119 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", note:"Digital Zone Optics for screen use", privateLabels:[{name:"Reveal Premium",retailer:"Vision Source"},{name:"Ethos Aquell Evolve 1 Day",retailer:"Visionworks"},{name:"up & up 1 Day Performance+",retailer:"Target"}] },
             { name:"Clariti 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-10, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$77 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day",retailer:"Vision Source"},{name:"Voyant 1 Day",retailer:"Vision Source"},{name:"Ethos 1 Day",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day",retailer:"America's Best"},{name:"Ray-Ban 1-Day",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear 1-Day",retailer:"Eyeglass World"}] },
             { name:"Clariti 1 Day Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:60, bc:"8.6", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$100 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"Fresh Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Toric",retailer:"Vision Source"},{name:"Ethos 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Toric",retailer:"America's Best"},{name:"Ray-Ban 1-Day for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day for Astigmatism",retailer:"Pearle Vision"},{name:"up & up 1 Day for Astigmatism",retailer:"Target"}] },
-            { name:"Clariti 1 Day Multifocal 3 ADD", brand:"CooperVision", type:"multifocal", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}], fittingGuide: {
+            { name:"Clariti 1 Day Multifocal 3 ADD", brand:"CooperVision", type:"multifocal", modality:"daily", dk:60, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", infoBanner:"Replacing Clariti 1 Day 2 ADD which will be fully discontinued on 10/31/26.", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}], fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"Med", dominant:"Low", nonDominant:"Med" },
@@ -3777,10 +3891,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
+                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], optionsMinus:[-0.25, -0.50, -0.75, -1.00, -1.25, -1.50], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
                     ]
                 }
             }},
@@ -4370,6 +4484,7 @@
             troubleshoot: null,
             tsAdjustment: null,
             nonAdaptFrom: null,
+            fullCylFrom: null,
             sortBy: "dk",
             sortDir: "desc",
         };
@@ -4638,10 +4753,11 @@
         }
 
         function countByModality(mod) {
-            return LENSES.filter(l => {
-                if (l.modality !== mod) return false;
-                return isLensCoveredForBothEyes(l);
-            }).length;
+            const saved = state.modality;
+            state.modality = [mod];
+            const count = getCompatibleLenses().length;
+            state.modality = saved;
+            return count;
         }
 
         // RENDERING
@@ -5017,17 +5133,13 @@
                 return `<div class="option-btn brand-btn brand-${bc} ${isActive ? "active" : ""}" onclick="toggleBrand('${brand}')">
                     <div class="check">${isActive ? "\u2713" : ""}</div>
                     <div class="title">${brand}</div>
-                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${LENSES.filter(l => {
-                        if (l.brand !== brand) return false;
-                        if (state.modality.length > 0 && !state.modality.includes(l.modality)) return false;
-                        // When ADD is entered, only count multifocal-type lenses
-                        const odAdd = state.od.add && parseFloat(state.od.add) > 0;
-                        const osAdd = state.os.add && parseFloat(state.os.add) > 0;
-                        if (odAdd || osAdd) {
-                            if (l.type !== 'multifocal' && l.type !== 'multifocal-toric') return false;
-                        }
-                        return isLensCoveredForBothEyes(l);
-                    }).length} compatible</div>
+                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${(() => {
+                        const saved = state.brands;
+                        state.brands = [brand];
+                        const count = getCompatibleLenses().length;
+                        state.brands = saved;
+                        return count;
+                    })()} compatible</div>
                 </div>`;
             }).join("");
 
@@ -5165,6 +5277,7 @@
                         })() : `<div class="lens-name">${lens.name}${lensAlias(lens.name)}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;" title="Discontinuing"></i>' : ''}</div>`}
                         ${lens.discontinuing ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-warning" style="margin-right:3px"></i>${lens.discontinuing}</div>` : ''}
                         ${lens.note ? `<div class="lens-note">${lens.note}</div>` : ""}
+                        ${lens.infoBanner ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-info" style="margin-right:3px"></i>${lens.infoBanner}</div>` : ''}
                         ${lens.name.startsWith('Clariti') ? '<div class="lens-note" style="color:#16a34a"><i class="ph-duotone ph-recycle" style="margin-right:3px"></i>Plastic Neutral</div>' : ''}
                     </div>
                     <div>
@@ -5207,6 +5320,7 @@
             state.tsAdjustment = null;
             state.tsRotation = null;
             state.nonAdaptFrom = null;
+            state.fullCylFrom = null;
             render();
         }
 
@@ -5252,6 +5366,56 @@
             }
 
             return -best;
+        }
+
+        function getFullCylInfo(eye, lens) {
+            const cyl = parseFloat(eye.cylinder) || 0;
+            if (cyl === 0) return null;
+            const absCyl = Math.abs(cyl);
+
+            // Check if snapping actually reduced the cylinder
+            const snappedCyl = snapCyl(cyl, lens);
+            if (Math.abs(Math.abs(snappedCyl) - absCyl) < 0.01) return null; // no snap occurred
+
+            // Check if Rx cyl is a valid CL step
+            // Standard CL steps: 0.75, 1.25, 1.75, 2.25, 2.75... i.e. (|cyl| - 0.75) % 0.50 === 0
+            let isValidStep = false;
+            if (lens.cylSteps) {
+                isValidStep = lens.cylSteps.some(s => Math.abs(Math.abs(s) - absCyl) < 0.01);
+                // Also check standard pattern if not in custom steps
+                if (!isValidStep) {
+                    const rem = Math.round((absCyl - 0.75) * 100) % 50;
+                    isValidStep = (rem === 0) && absCyl >= 0.75;
+                }
+            } else {
+                const rem = Math.round((absCyl - 0.75) * 100) % 50;
+                isValidStep = (rem === 0) && absCyl >= 0.75;
+            }
+            if (!isValidStep) return null;
+
+            // Check if current lens has this cyl step available
+            const steps = [];
+            if (lens.cylSteps) {
+                lens.cylSteps.forEach(s => steps.push(Math.abs(s)));
+            } else {
+                const absMin = Math.abs(lens.cylMin);
+                const absMax = Math.abs(lens.cylMax);
+                for (let s = absMin; s <= absMax + 0.01; s += 0.50) {
+                    steps.push(Math.round(s * 100) / 100);
+                }
+            }
+            const lensHasStep = steps.some(s => Math.abs(s - absCyl) < 0.01);
+
+            // fullCylSph: vertex-converted sphere with NO SE adjustment
+            const sph = parseFloat(eye.sphere) || 0;
+            const fullCylSph = snapTo025(vertexConvert(sph));
+
+            return {
+                rxCyl: cyl,
+                snappedCyl: snappedCyl,
+                fullCylSph: fullCylSph,
+                lensHasStep: lensHasStep
+            };
         }
 
         function snapAxis(patientAxis, lens) {
@@ -5477,7 +5641,9 @@
                         if (sphParam) {
                             const oldVal = sphParam.value;
                             sphParam.value = `${adj.sphOverride > 0 ? "+" : ""}${adj.sphOverride.toFixed(2)}`;
-                            sphParam.note = `Cross-cyl adjusted from ${oldVal}`;
+                            sphParam.note = state.tsAdjustment.complaint === 'fullcyl'
+                                ? `Vertex-converted only (SE revert from ${oldVal})`
+                                : `Cross-cyl adjusted from ${oldVal}`;
                             sphParam.highlight = true;
                         }
                     }
@@ -5486,7 +5652,9 @@
                         if (cylParam) {
                             const oldVal = cylParam.value;
                             cylParam.value = adj.cylOverride.toFixed(2);
-                            cylParam.note = `Cross-cyl adjusted from ${oldVal}`;
+                            cylParam.note = state.tsAdjustment.complaint === 'fullcyl'
+                                ? `Full Rx cylinder (was reduced to ${oldVal})`
+                                : `Cross-cyl adjusted from ${oldVal}`;
                             cylParam.highlight = true;
                         }
                     }
@@ -5671,12 +5839,16 @@
 
             const isAdjusted = state.tsAdjustment !== null;
             const isNonAdapt = state.nonAdaptFrom !== null;
+            const isFullCyl = state.fullCylFrom !== null;
             const hasLensDrop = isAdjusted && state.tsAdjustment.overrides && Object.values(state.tsAdjustment.overrides).some(o => o.lensDropTo);
             const adjBanner = isAdjusted ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Adjusted Order:</strong> ${state.tsAdjustment.title}</div>` : '';
             const nonAdaptBanner = isNonAdapt ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Non-Adapt Conversion:</strong> Cylinder folded into sphere via spherical equivalent</div>` : '';
+            const fullCylBanner = isFullCyl ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Full Cylinder:</strong> Using Rx cylinder with vertex-only sphere</div>` : '';
 
             return `<div class="order-detail">
-                ${isNonAdapt
+                ${isFullCyl
+                    ? `<button class="order-back-btn" onclick="backToFullCyl()"><i class="ph-duotone ph-arrow-left"></i> Back to Troubleshooting</button>`
+                    : isNonAdapt
                     ? `<button class="order-back-btn" onclick="backToNonAdapt()"><i class="ph-duotone ph-arrow-left"></i> Back to Troubleshooting</button>`
                     : isAdjusted
                     ? `<button class="order-back-btn" onclick="backToTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> Back to Troubleshooting</button>`
@@ -5692,7 +5864,8 @@
                     <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`}
 
                 ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
-                ${adjBanner}${nonAdaptBanner}
+                ${lens.infoBanner ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-info" style="margin-right:4px;"></i>${lens.infoBanner}</div>` : ''}
+                ${adjBanner}${nonAdaptBanner}${fullCylBanner}
 
                 ${(lens.type === 'multifocal' || lens.type === 'multifocal-toric') && !state.dominantEye ? `
                 <div style="margin:16px 0;padding:14px 16px;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.15);border-radius:10px;">
@@ -6266,6 +6439,135 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        function applyFullCylAdjustment() {
+            const lens = LENSES.find(l => l.name === state.selectedLens);
+            if (!lens) return;
+            const odOk = isLensCompatibleWithEye(lens, state.od);
+            const osOk = isLensCompatibleWithEye(lens, state.os);
+            const odDominant = state.dominantEye === 'right' ? true : state.dominantEye === 'left' ? false : null;
+            const osDominant = state.dominantEye === 'left' ? true : state.dominantEye === 'right' ? false : null;
+
+            const overrides = {};
+            [{ eye: state.od, label: "OD", ok: odOk, isDom: odDominant },
+             { eye: state.os, label: "OS", ok: osOk, isDom: osDominant }].forEach(({ eye, label, ok, isDom }) => {
+                if (!ok) return;
+                const info = getFullCylInfo(eye, lens);
+                if (!info) return;
+                let sph = info.fullCylSph;
+                // Apply sphBoost if lens has it
+                if (lens.fittingGuide && lens.fittingGuide.sphBoost && isDom !== null) {
+                    const sb = lens.fittingGuide.sphBoost;
+                    let boost = 0;
+                    if (isDom) {
+                        boost = sb.dominant;
+                    } else {
+                        const addP = parseFloat(eye.add) || 0;
+                        const row = sb.nonDominant.find(r => addP >= r.addMin && addP <= r.addMax);
+                        if (row) boost = row.boost;
+                    }
+                    if (boost !== 0) sph = snapTo025(sph + boost);
+                }
+                overrides[label] = {
+                    sphOverride: sph,
+                    cylOverride: info.rxCyl
+                };
+            });
+
+            state.tsAdjustment = {
+                complaint: 'fullcyl',
+                title: 'Full Cylinder — SE revert, using Rx cylinder',
+                overrides: overrides
+            };
+            state.troubleshoot = null;
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function getFullCylLenses() {
+            const results = [];
+            LENSES.forEach(lens => {
+                if (lens.type !== "toric" && lens.type !== "multifocal-toric") return;
+                if (state.modality.length > 0 && !state.modality.includes(lens.modality)) return;
+                if (!state.brands.includes(lens.brand)) return;
+
+                let odOk = false, osOk = false;
+
+                const odSph = parseFloat(state.od.sphere) || 0;
+                const odCyl = parseFloat(state.od.cylinder) || 0;
+                const odAdd = parseFloat(state.od.add) || 0;
+                const odAbsCyl = Math.abs(odCyl);
+                if (odCyl !== 0) {
+                    const clSph = snapTo025(vertexConvert(odSph));
+                    // Build lens cyl steps
+                    const steps = [];
+                    if (lens.cylSteps) { lens.cylSteps.forEach(s => steps.push(Math.abs(s))); }
+                    else { for (let s = Math.abs(lens.cylMin); s <= Math.abs(lens.cylMax) + 0.01; s += 0.50) steps.push(Math.round(s * 100) / 100); }
+                    const hasCylStep = steps.some(s => Math.abs(s - odAbsCyl) < 0.01);
+                    const sphInRange = clSph >= lens.sphMin && clSph <= lens.sphMax;
+                    if (odAdd > 0) {
+                        odOk = hasCylStep && sphInRange && lens.type === "multifocal-toric";
+                    } else {
+                        odOk = hasCylStep && sphInRange && lens.type === "toric";
+                    }
+                }
+
+                const osSph = parseFloat(state.os.sphere) || 0;
+                const osCyl = parseFloat(state.os.cylinder) || 0;
+                const osAdd = parseFloat(state.os.add) || 0;
+                const osAbsCyl = Math.abs(osCyl);
+                if (osCyl !== 0) {
+                    const clSph = snapTo025(vertexConvert(osSph));
+                    const steps = [];
+                    if (lens.cylSteps) { lens.cylSteps.forEach(s => steps.push(Math.abs(s))); }
+                    else { for (let s = Math.abs(lens.cylMin); s <= Math.abs(lens.cylMax) + 0.01; s += 0.50) steps.push(Math.round(s * 100) / 100); }
+                    const hasCylStep = steps.some(s => Math.abs(s - osAbsCyl) < 0.01);
+                    const sphInRange = clSph >= lens.sphMin && clSph <= lens.sphMax;
+                    if (osAdd > 0) {
+                        osOk = hasCylStep && sphInRange && lens.type === "multifocal-toric";
+                    } else {
+                        osOk = hasCylStep && sphInRange && lens.type === "toric";
+                    }
+                }
+
+                if (odOk || osOk) {
+                    results.push({ ...lens, forOD: odOk, forOS: osOk });
+                }
+            });
+
+            const dir = state.sortDir === "asc" ? 1 : -1;
+            return results.sort((a, b) => {
+                if (state.sortBy === "dk") return (a.dk - b.dk) * dir;
+                if (state.sortBy === "brand") return a.brand.localeCompare(b.brand) * dir;
+                if (state.sortBy === "name") return a.name.localeCompare(b.name) * dir;
+                if (state.sortBy === "price") {
+                    const va = calcYearlyCost(a) || 99999;
+                    const vb = calcYearlyCost(b) || 99999;
+                    return (va - vb) * dir;
+                }
+                return 0;
+            });
+        }
+
+        function selectFullCylLens(name) {
+            state.fullCylFrom = state.selectedLens;
+            state.selectedLens = name;
+            state.troubleshoot = null;
+            state.tsAdjustment = null;
+            // Auto-apply the full cyl adjustment on the new lens
+            setTimeout(() => {
+                applyFullCylAdjustment();
+            }, 0);
+        }
+
+        function backToFullCyl() {
+            state.selectedLens = state.fullCylFrom;
+            state.fullCylFrom = null;
+            state.tsAdjustment = null;
+            state.troubleshoot = 'fullcyl';
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
         function renderTroubleshootStep() {
             const lens = LENSES.find(l => l.name === state.selectedLens);
             if (!lens) {
@@ -6340,6 +6642,12 @@
             const maxCyl = Math.max(odOk ? odCylAbs : 0, osOk ? osCylAbs : 0);
             const showNonAdapt = isToric && maxCyl > 0;
 
+            // Check if full cyl option should show
+            const odFullCylInfo = odOk ? getFullCylInfo(state.od, lens) : null;
+            const osFullCylInfo = osOk ? getFullCylInfo(state.os, lens) : null;
+            const alreadyFullCyl = state.fullCylFrom || (state.tsAdjustment && state.tsAdjustment.complaint === 'fullcyl');
+            const showFullCyl = isToric && !alreadyFullCyl && (odFullCylInfo !== null || osFullCylInfo !== null);
+
             // Complaint selection cards
             let complaintHtml = `
                 <div style="margin-bottom:20px">
@@ -6364,6 +6672,10 @@
                         ${showNonAdapt ? `<div class="option-btn ${state.troubleshoot === 'nonadapt' ? 'active' : ''}" onclick="setTroubleshoot('nonadapt')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></span><span class="title">Non-Adapt to Toric</span></div>
                             <div class="desc">Convert to spherical equivalent</div>
+                        </div>` : ''}
+                        ${showFullCyl ? `<div class="option-btn ${state.troubleshoot === 'fullcyl' ? 'active' : ''}" onclick="setTroubleshoot('fullcyl')">
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-vertical"></i></span><span class="title">Switch to Full Cylinder</span></div>
+                            <div class="desc">Use Rx cylinder, revert SE adjustment</div>
                         </div>` : ''}
                     </div>
                 </div>`;
@@ -6819,7 +7131,7 @@
                     }).join("");
                 } else {
                     suggestionsHtml = `<div style="padding:20px;text-align:center;color:var(--ink-muted);font-size:13px">
-                        No additional adjustments available for this lens type.
+                        Per manufacturer fitting guide, there are no other recommendations for adjustments. Alter as you see fit.
                     </div>`;
                 }
             }
@@ -7189,8 +7501,53 @@
                     ${listHtml}`;
             }
 
+            // SWITCH TO FULL CYLINDER
+            if (state.troubleshoot === 'fullcyl') {
+                const eyeEntries = [];
+                if (odOk) eyeEntries.push({ eye: state.od, label: "OD", info: odFullCylInfo });
+                if (osOk) eyeEntries.push({ eye: state.os, label: "OS", info: osFullCylInfo });
+
+                // Check if all eyes with full cyl info have the step in current lens
+                const allAvailable = eyeEntries.every(e => !e.info || e.info.lensHasStep);
+
+                // Summary of changes
+                let summaryHtml = '<div class="vertex-box fade-in" style="margin-bottom:20px"><div class="vertex-label">Full Cylinder Conversion</div>';
+                eyeEntries.forEach(e => {
+                    if (!e.info) {
+                        summaryHtml += `<div style="margin-top:8px"><strong>${e.label}:</strong> No change needed</div>`;
+                        return;
+                    }
+                    const snappedStr = e.info.snappedCyl.toFixed(2);
+                    const rxCylStr = e.info.rxCyl.toFixed(2);
+                    const fullSphStr = `${e.info.fullCylSph > 0 ? "+" : ""}${e.info.fullCylSph.toFixed(2)}`;
+                    summaryHtml += `<div style="margin-top:8px"><strong>${e.label}:</strong> Sph → <span style="font-family:var(--mono);font-weight:700;color:var(--accent)">${fullSphStr}</span> (vertex only) · Cyl <span style="font-family:var(--mono)">${snappedStr}</span> → <span style="font-family:var(--mono);font-weight:700;color:var(--accent)">${rxCylStr}</span></div>`;
+                });
+                summaryHtml += '</div>';
+
+                if (allAvailable) {
+                    // Case A: current lens supports the full cyl
+                    suggestionsHtml = `${summaryHtml}
+                        <button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyFullCylAdjustment()">View Full Cylinder Order \u2192</button>`;
+                } else {
+                    // Case B: need different lens - show filtered list
+                    const fullCylLenses = getFullCylLenses();
+                    let listHtml2;
+                    if (fullCylLenses.length === 0) {
+                        listHtml2 = `<div class="empty"><div class="empty-icon"><i class="ph-duotone ph-magnifying-glass"></i></div><div class="empty-title">No toric lenses support this cylinder value</div><div class="empty-desc">Try expanding your brand or modality selection</div></div>`;
+                    } else {
+                        listHtml2 = `<div class="lens-list">${fullCylLenses.map(l => renderLensCard(l).replace(/selectLens\(/g, 'selectFullCylLens(')).join("")}</div>`;
+                    }
+                    suggestionsHtml = `${summaryHtml}
+                        <div class="order-note-box" style="background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning)"><strong>Note:</strong> ${lens.name} does not offer the full Rx cylinder. Select a lens below that does.</div>
+                        <div class="results-header"><div>
+                            <div class="results-count">${fullCylLenses.length} Compatible Toric Lens${fullCylLenses.length !== 1 ? 'es' : ''}</div>
+                        </div></div>
+                        ${listHtml2}`;
+                }
+            }
+
             return `<div class="order-detail">
-                <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> ${state.nonAdaptFrom ? 'Back to Order' : 'Back to Results'}</button>
+                <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> ${(state.nonAdaptFrom || state.fullCylFrom) ? 'Back to Order' : 'Back to Results'}</button>
                 <div class="order-lens-name">${lens.name}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${complaintHtml}
@@ -7207,6 +7564,8 @@
                 state.tsRotation = null;
                 state.overRefraction = null;
                 state.orRotation = null;
+                state.nonAdaptFrom = null;
+                state.fullCylFrom = null;
                 state.step--;
                 render();
                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -7287,11 +7646,24 @@
 
         let clSubTab = 'prescribe';
 
+        function positionTabIndicator() {
+            var active = document.querySelector('.subnav-item.active');
+            var nav = document.getElementById('subnav');
+            var ind = document.getElementById('subnavIndicator');
+            if (!active || !nav || !ind) return;
+            var navRect = nav.getBoundingClientRect();
+            var tabRect = active.getBoundingClientRect();
+            ind.style.left = (tabRect.left - navRect.left) + 'px';
+            ind.style.width = tabRect.width + 'px';
+        }
+
         function switchTab(tab) {
+            if (!_skipPush) history.pushState({view:tab}, '');
             window.scrollTo(0, 0);
             document.getElementById('subnavLenses').classList.toggle('active', tab === 'lenses');
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
             document.getElementById('subnavTools').classList.toggle('active', tab === 'tools');
+            positionTabIndicator();
             document.getElementById('clSubtabs').style.display = tab === 'lenses' ? '' : 'none';
 
             // Reset meds state when navigating away
@@ -7510,6 +7882,8 @@
                 renderUveitisLabTool(el);
             } else if (toolsActiveTool === 'eggers') {
                 renderEggersChartTool(el);
+            } else if (toolsActiveTool === 'bruckner') {
+                renderBrucknerTool(el);
             }
         }
 
@@ -7518,7 +7892,7 @@
 
         var TOOLS_CATEGORIES = [
             { id:'glaucoma', label:'Glaucoma', tools:['iop','glaucoma'] },
-            { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx'] },
+            { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx','bruckner'] },
             { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter'] },
             { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks'] },
             { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve'] }
@@ -7588,7 +7962,9 @@
             { id:'uveitislab', icon:'ph-flask', title:'Uveitis Lab Guide', desc:'Searchable lab reference for uveitis work-up',
               keywords:'uveitis lab workup hla-b27 ana antinuclear rf rheumatoid factor ace angiotensin lysozyme rpr vdrl fta-abs syphilis cbc esr crp quantiferon ppd tuberculosis chest xray anca lyme toxoplasma hsv vzv cmv hla-a29 toxocara sarcoidosis ankylosing spondylitis lupus granulomatosis birdshot' },
             { id:'eggers', icon:'ph-table', title:"Egger's Chart", desc:'Visual acuity to dioptric blur & astigmatism conversion',
-              keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' }
+              keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' },
+            { id:'bruckner', icon:'ph-flashlight', title:'Bruckner Screening', desc:'Red reflex comparison & interpretation guide',
+              keywords:'bruckner red reflex screening myopia hyperopia anisometropia astigmatism media opacity strabismus leukocoria pediatric retinoscopy' }
         ];
 
         function onToolsSearch(val) {
@@ -7621,13 +7997,23 @@
                 });
             }
 
+            var toolIconColors = {
+                iop:'#0f766e', glaucoma:'#0f766e', opticnerve:'#0f766e', gonio:'#0f766e', vanherick:'#0f766e',
+                myopia:'#16a34a', amblyopia:'#16a34a', colorvision:'#16a34a',
+                bv:'#2563eb', bvdx:'#2563eb', parks:'#2563eb', prentice:'#2563eb', hofstetter:'#2563eb',
+                vfindex:'#64748b', pupilcn:'#64748b', anisocoria:'#64748b', rapd:'#64748b',
+                dr:'#b45309', amd:'#b45309', uveitislab:'#b45309', keratoconus:'#b45309',
+                plaquenil:'#7c3aed', dryeye:'#0284c7',
+                va:'#475569', iol:'#475569', clparam:'#0d9488', eggers:'#475569', bruckner:'#16a34a'
+            };
             var cards = '';
             for (var i = 0; i < filtered.length; i++) {
                 var t = filtered[i];
+                var ic = toolIconColors[t.id] || 'var(--accent)';
                 var iconHtml = t.svgIcon
-                    ? '<span class="icon" style="font-size:inherit;">' + t.svgIcon + '</span>'
-                    : '<span class="icon"><i class="ph-duotone ' + t.icon + '"></i></span>';
-                cards += '<button class="option-btn" onclick="openTool(\'' + t.id + '\')">' +
+                    ? '<span class="icon" style="font-size:inherit;color:' + ic + ';">' + t.svgIcon.replace(/color:var\(--accent\)/g, 'color:' + ic) + '</span>'
+                    : '<span class="icon"><i class="ph-duotone ' + t.icon + '" style="color:' + ic + ';"></i></span>';
+                cards += '<button class="option-btn" style="border-left-color:' + ic + '22;" onclick="openTool(\'' + t.id + '\')">' +
                     '<div class="title-row">' + iconHtml + '<span class="title">' + t.title + '</span></div>' +
                     '<div class="desc">' + t.desc + '</div>' +
                     '</button>';
@@ -7642,16 +8028,20 @@
 
             // Category filter buttons
             var catColors = { glaucoma:'#0d9488', pediatrics:'#7c3aed', bv:'#2563eb', neuro:'#c2410c', oculardz:'#b45309' };
-            var catBtns = '<div style="display:flex;flex-wrap:' + (window.innerWidth <= 640 ? 'nowrap' : 'wrap') + ';gap:6px;margin-bottom:12px;">';
+            var catBtns = '<div style="display:flex;flex-wrap:' + (window.innerWidth <= 640 ? 'nowrap' : 'wrap') + ';gap:6px;margin-bottom:12px;' + (window.innerWidth > 640 ? 'justify-content:center;' : '') + '">';
             var allActive = !activeCat;
-            catBtns += '<button onclick="toggleToolsCategory(null)" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (allActive ? 'var(--accent)' : 'var(--border)') + ';background:' + (allActive ? 'rgba(13,148,136,0.1)' : 'var(--surface)') + ';color:' + (allActive ? 'var(--accent)' : 'var(--ink)') + ';transition:all 0.15s;">All</button>';
+            var _catDesk = window.innerWidth > 640;
+            var _catPad = _catDesk ? '6px 14px' : '3px 8px';
+            var _catFs = _catDesk ? '12px' : '10px';
+            var _catRad = _catDesk ? '12px' : '10px';
+            catBtns += '<button onclick="toggleToolsCategory(null)" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:600;font-family:var(--sans);cursor:pointer;border:1px solid ' + (allActive ? 'var(--accent)' : 'rgba(0,0,0,0.1)') + ';background:' + (allActive ? 'rgba(13,148,136,0.08)' : 'transparent') + ';color:' + (allActive ? 'var(--accent)' : 'var(--ink-muted)') + ';transition:all 0.15s;letter-spacing:0.02em;">All</button>';
             for (var j = 0; j < TOOLS_CATEGORIES.length; j++) {
                 var cat = TOOLS_CATEGORIES[j];
                 var isActive = activeCat === cat.id;
                 var cc = catColors[cat.id] || 'var(--accent)';
                 var isMobile = window.innerWidth <= 640;
                 var displayLabel = (isMobile && cat.shortLabel) ? cat.shortLabel : cat.label;
-                catBtns += '<button onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;font-family:var(--sans);cursor:pointer;border:1.5px solid ' + (isActive ? cc : 'var(--border)') + ';background:' + (isActive ? cc + '18' : 'var(--surface)') + ';color:' + (isActive ? cc : 'var(--ink)') + ';transition:all 0.15s;white-space:nowrap;">' + displayLabel + '</button>';
+                catBtns += '<button onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:600;font-family:var(--sans);cursor:pointer;border:1px solid ' + (isActive ? cc : 'rgba(0,0,0,0.1)') + ';background:' + (isActive ? cc + '12' : 'transparent') + ';color:' + (isActive ? cc : 'var(--ink-muted)') + ';transition:all 0.15s;white-space:nowrap;letter-spacing:0.02em;">' + displayLabel + '</button>';
             }
             catBtns += '</div>';
 
@@ -10548,7 +10938,22 @@
             if (vfDebugMode) return; // disable selection clicks while dragging
             vfActiveDefect = (vfActiveDefect === idx) ? null : idx;
             var el = document.getElementById('toolsContent');
-            if (el) renderVfIndexTool(el);
+            if (el) {
+                renderVfIndexTool(el);
+                if (vfActiveDefect !== null) {
+                    setTimeout(function() {
+                        var rows = el.querySelectorAll('.vf-defect-row');
+                        var activeRow = rows[vfActiveDefect];
+                        if (activeRow) {
+                            activeRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            activeRow.classList.add('vf-pulse');
+                            activeRow.addEventListener('animationend', function() {
+                                activeRow.classList.remove('vf-pulse');
+                            }, { once: true });
+                        }
+                    }, 50);
+                }
+            }
         }
 
         function toggleVfDebug() {
@@ -12579,6 +12984,190 @@
             el.innerHTML = html;
         }
 
+        // ===== BRUCKNER SCREENING TOOL =====
+
+        var brucknerExpanded = null;
+
+        function buildBrucknerEyeSvg(condition, uid) {
+            function ep(cx, cy) {
+                return 'M'+(cx-26)+','+cy+' Q'+cx+','+(cy-20)+' '+(cx+26)+','+cy+' Q'+cx+','+(cy+20)+' '+(cx-26)+','+cy+'Z';
+            }
+            var rCx = 44, lCx = 116, eCy = 32;
+            var o = '<svg viewBox="0 0 160 64" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">';
+
+            o += '<defs>';
+            o += '<clipPath id="bkRc'+uid+'"><path d="'+ep(rCx,eCy)+'"/></clipPath>';
+            o += '<clipPath id="bkLc'+uid+'"><path d="'+ep(lCx,eCy)+'"/></clipPath>';
+            o += '<radialGradient id="bkNorm'+uid+'" cx="50%" cy="50%" r="50%">';
+            o += '<stop offset="0%" stop-color="#ff6633"/><stop offset="60%" stop-color="#cc3300"/><stop offset="100%" stop-color="#881100"/></radialGradient>';
+            o += '<radialGradient id="bkLight'+uid+'" cx="50%" cy="50%" r="50%">';
+            o += '<stop offset="0%" stop-color="#ff9966"/><stop offset="60%" stop-color="#ee6644"/><stop offset="100%" stop-color="#cc5522"/></radialGradient>';
+            o += '<radialGradient id="bkLightOff'+uid+'" cx="65%" cy="40%" r="50%">';
+            o += '<stop offset="0%" stop-color="#ff9966"/><stop offset="60%" stop-color="#ee6644"/><stop offset="100%" stop-color="#cc5522"/></radialGradient>';
+            o += '<clipPath id="bkCrR'+uid+'"><circle cx="'+rCx+'" cy="'+eCy+'" r="8.5"/></clipPath>';
+            o += '<clipPath id="bkCrL'+uid+'"><circle cx="'+lCx+'" cy="'+eCy+'" r="8.5"/></clipPath>';
+            o += '<filter id="bkBlur'+uid+'"><feGaussianBlur stdDeviation="1.2"/></filter>';
+            o += '<radialGradient id="bkDec'+uid+'" cx="35%" cy="45%" r="55%">';
+            o += '<stop offset="0%" stop-color="#ffaa44"/><stop offset="50%" stop-color="#ff6633"/><stop offset="100%" stop-color="#cc3300"/></radialGradient>';
+            o += '<radialGradient id="bkOpac'+uid+'" cx="50%" cy="50%" r="50%">';
+            o += '<stop offset="0%" stop-color="#222"/><stop offset="50%" stop-color="#222" stop-opacity="0.8"/><stop offset="100%" stop-color="#222" stop-opacity="0"/></radialGradient>';
+            o += '</defs>';
+
+            var odR, osR, odX = '', osX = '', odIx = 0;
+            switch (condition) {
+                case 'myopia': odR='#ffcc88'; osR='#ffcc88';
+                    odX='<circle cx="'+rCx+'" cy="'+(eCy-3)+'" r="8.5" fill="url(#bkNorm'+uid+')" clip-path="url(#bkCrR'+uid+')" filter="url(#bkBlur'+uid+')"/>';
+                    osX='<circle cx="'+lCx+'" cy="'+(eCy-3)+'" r="8.5" fill="url(#bkNorm'+uid+')" clip-path="url(#bkCrL'+uid+')" filter="url(#bkBlur'+uid+')"/>'; break;
+                case 'hyperopia': odR='#ffcc88'; osR='#ffcc88';
+                    odX='<circle cx="'+rCx+'" cy="'+(eCy+3)+'" r="8.5" fill="url(#bkNorm'+uid+')" clip-path="url(#bkCrR'+uid+')" filter="url(#bkBlur'+uid+')"/>';
+                    osX='<circle cx="'+lCx+'" cy="'+(eCy+3)+'" r="8.5" fill="url(#bkNorm'+uid+')" clip-path="url(#bkCrL'+uid+')" filter="url(#bkBlur'+uid+')"/>'; break;
+                case 'anisometropia': odR='url(#bkLight'+uid+')'; osR='url(#bkNorm'+uid+')'; break;
+                case 'astigmatism': odR='#ffcc88'; osR='#ffcc88';
+                    odX='<circle cx="'+(rCx+1.9)+'" cy="'+(eCy-3.5)+'" r="8.5" fill="url(#bkNorm'+uid+')" clip-path="url(#bkCrR'+uid+')" filter="url(#bkBlur'+uid+')"/>';
+                    osX='<circle cx="'+(lCx-1.9)+'" cy="'+(eCy-3.5)+'" r="8.5" fill="url(#bkNorm'+uid+')" clip-path="url(#bkCrL'+uid+')" filter="url(#bkBlur'+uid+')"/>'; break;
+                case 'media': odR='url(#bkNorm'+uid+')'; osR='url(#bkNorm'+uid+')';
+                    odX='<circle cx="'+rCx+'" cy="'+(eCy+1)+'" r="4.5" fill="url(#bkOpac'+uid+')"/>'; break;
+                case 'strabismus': odR='url(#bkLightOff'+uid+')'; osR='url(#bkNorm'+uid+')'; odIx=5; break;
+                default: odR='url(#bkNorm'+uid+')'; osR='url(#bkNorm'+uid+')';
+            }
+
+            // OD
+            var odCx = rCx + odIx;
+            o += '<path d="'+ep(rCx,eCy)+'" fill="none" stroke="#aaa" stroke-width="1.2"/>';
+            o += '<g clip-path="url(#bkRc'+uid+')">';
+            o += '<circle cx="'+odCx+'" cy="'+eCy+'" r="12" fill="#8B6914" opacity="0.9"/>';
+            o += '<circle cx="'+odCx+'" cy="'+eCy+'" r="8.5" fill="'+odR+'"/>';
+            o += odX;
+            o += '<circle class="bk-cover" cx="'+odCx+'" cy="'+eCy+'" r="8.5" fill="#111"/>';
+            o += '</g>';
+            // OS
+            o += '<path d="'+ep(lCx,eCy)+'" fill="none" stroke="#aaa" stroke-width="1.2"/>';
+            o += '<g clip-path="url(#bkLc'+uid+')">';
+            o += '<circle cx="'+lCx+'" cy="'+eCy+'" r="12" fill="#8B6914" opacity="0.9"/>';
+            o += '<circle cx="'+lCx+'" cy="'+eCy+'" r="8.5" fill="'+osR+'"/>';
+            o += osX;
+            o += '<circle class="bk-cover" cx="'+lCx+'" cy="'+eCy+'" r="8.5" fill="#111"/>';
+            o += '</g>';
+
+            o += '</svg>';
+            return o;
+        }
+
+        var BRUCKNER_CONDITIONS = [
+            { key:'normal', label:'Normal',
+              text:'Both red reflexes are equal in color, brightness, and size.',
+              significance:'Normal finding. No further action required.',
+              next:'Routine follow-up per age-appropriate schedule.' },
+            { key:'myopia', label:'Myopia',
+              text:'The more myopic eye shows a brighter, more intense orange reflex.',
+              significance:'A brighter reflex corresponds to greater refractive error.',
+              next:'Cycloplegic retinoscopy to quantify. Consider myopia management if progressive.' },
+            { key:'hyperopia', label:'Hyperopia',
+              text:'The affected eye shows a brighter reflex with a whitish or pale center.',
+              significance:'Significant hyperopia produces a lighter, whiter reflex. Asymmetry suggests anisohyperopia.',
+              next:'Cycloplegic refraction. Prescribe if amblyogenic (\u22653.50 D bilateral or \u22651.50 D aniso).' },
+            { key:'anisometropia', label:'Anisometropia',
+              text:'One eye is distinctly brighter while the other appears dimmer, indicating unequal refractive error.',
+              significance:'Leading cause of amblyopia. Even 1\u20131.5 D can be significant in young children.',
+              next:'Cycloplegic retinoscopy. Early correction is critical.' },
+            { key:'astigmatism', label:'Astigmatism',
+              text:'The affected eye shows a crescent-shaped brightness rather than a uniform glow.',
+              significance:'A crescent reflex indicates significant astigmatism. Orientation correlates with axis.',
+              next:'Cycloplegic retinoscopy for axis and magnitude. Prescribe if amblyogenic (\u22651.50 D).' },
+            { key:'media', label:'Media Opacity',
+              text:'A dark area within or obscuring the red reflex. May appear as a dark spot, shadow, or absent reflex.',
+              significance:'Suggests cataract, corneal opacity, vitreous hemorrhage, or retinoblastoma (leukocoria). Most critical Bruckner finding.',
+              next:'Urgent ophthalmology referral. Leukocoria requires retinoblastoma rule-out. Do not delay.' },
+            { key:'strabismus', label:'Strabismus',
+              text:'The reflex in the deviated eye appears off-center compared to the fellow eye\u2019s centered reflex.',
+              significance:'Decentered reflex localizes the deviated eye. Bright crescent shifts opposite to deviation direction.',
+              next:'Cover test to confirm tropia direction and magnitude. Refer for full sensorimotor exam.' }
+        ];
+
+        function toggleBrucknerDetail(key, evt) {
+            if (evt) evt.stopPropagation();
+            if (brucknerExpanded === key) {
+                closeBrucknerBubble();
+            } else {
+                brucknerExpanded = key;
+                renderBrucknerContent();
+                // Position bubble after DOM update
+                requestAnimationFrame(function() { positionBrucknerBubble(key); });
+            }
+        }
+
+        function positionBrucknerBubble() {
+            var bubble = document.getElementById('bkBubble');
+            if (!bubble) return;
+            var arrow = bubble.querySelector('.bk-bubble-arrow');
+            if (arrow) arrow.style.left = 'calc(50% - 9px)';
+            requestAnimationFrame(function() { bubble.classList.add('open'); });
+        }
+
+        function closeBrucknerBubble() {
+            brucknerExpanded = null;
+            renderBrucknerContent();
+        }
+
+        function _bkOutsideClick(e) {
+            if (!brucknerExpanded) return;
+            var bubble = document.getElementById('bkBubble');
+            var card = document.querySelector('.bk-card.bk-sel');
+            if (bubble && bubble.contains(e.target)) return;
+            if (card && card.contains(e.target)) return;
+            closeBrucknerBubble();
+        }
+
+        function renderBrucknerContent() {
+            var el = document.getElementById('brucknerContent');
+            if (!el) return;
+
+            var html = '<div class="bk-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow:visible;">';
+            for (var i = 0; i < BRUCKNER_CONDITIONS.length; i++) {
+                var c = BRUCKNER_CONDITIONS[i];
+                var sel = brucknerExpanded === c.key;
+                var bc = sel ? 'var(--accent)' : 'var(--rule)';
+                var tc = sel ? 'var(--accent)' : 'var(--ink)';
+                var bg = sel ? 'rgba(13,148,136,0.10)' : 'var(--surface)';
+                html += '<div class="bk-cell' + (sel ? ' bk-has-bubble' : '') + '">';
+                html += '<div class="bk-card' + (sel ? ' bk-sel' : '') + '" onclick="toggleBrucknerDetail(\'' + c.key + '\', event)" style="border:1.5px solid '+bc+';border-radius:10px;padding:10px 8px 8px;background:'+bg+';text-align:center;transition:all 0.15s;">';
+                html += buildBrucknerEyeSvg(c.key, i);
+                html += '<div style="font-size:12px;font-weight:700;color:'+tc+';margin-top:4px;">' + c.label + '</div>';
+                html += '</div>';
+                if (sel) {
+                    html += '<div class="bk-bubble" id="bkBubble">';
+                    html += '<div class="bk-bubble-arrow" style="left:calc(50% - 9px);"></div>';
+                    html += '<div class="bk-bubble-title">' + c.label + '</div>';
+                    html += '<div class="bk-bubble-section">Description</div>';
+                    html += '<div class="bk-bubble-text">' + c.text + '</div>';
+                    html += '<div class="bk-bubble-section">Significance</div>';
+                    html += '<div class="bk-bubble-text">' + c.significance + '</div>';
+                    html += '<div class="bk-bubble-section">Next Steps</div>';
+                    html += '<div class="bk-bubble-text">' + c.next + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+            el.innerHTML = html;
+        }
+
+        function renderBrucknerTool(el) {
+            el.innerHTML = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '</div>'
+                + '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-flashlight"></i> Bruckner Screening</div>'
+                + '<div class="tools-card-desc">Simultaneous red reflex comparison. Illuminate both eyes at ~1 m with a direct ophthalmoscope. Tap a condition for details.</div>'
+                + '<div id="brucknerContent"></div>'
+                + '</div>';
+            brucknerExpanded = null;
+            renderBrucknerContent();
+            document.addEventListener('click', _bkOutsideClick);
+        }
+
         // ===== MEDICATIONS TAB =====
 
         function renderMeds() {
@@ -12671,12 +13260,20 @@
                     return html;
                 }
             }
+            const medCatColors = {
+                dry_eye:'#0284c7', glaucoma:'#0f766e', allergy:'#7c3aed', infection:'#dc2626',
+                inflammation:'#ea580c', combination:'#1e3a8a', mydriatic_cycloplegic:'#16a34a',
+                demodex:'#78716c', macular_degeneration:'#b45309', presbyopia:'#6366f1',
+                cosmetic:'#db2777', miscellaneous:'#475569'
+            };
             html += `<div class="option-grid med-condition-grid">`;
             MED_CONDITION_GROUPS.forEach(g => {
                 const count = MEDS.filter(m => g.conditions.includes(m.condition)).length;
                 const active = medsState.selectedConditionGroup === g.id;
-                html += `<div class="option-btn ${active ? 'active' : ''} ${count===0?'zero':''}" onclick="selectMedCondition('${g.id}')">
-                    <div class="title-row"><span class="icon">${g.icon}</span><span class="title">${g.label}</span></div>
+                const mc = medCatColors[g.id] || 'var(--accent)';
+                const iconStyled = g.icon.replace(/<i /, `<i style="color:${mc};" `).replace(/<svg /, `<svg style="color:${mc};" `);
+                html += `<div class="option-btn ${active ? 'active' : ''} ${count===0?'zero':''}" style="border-left-color:${mc}22;" onclick="selectMedCondition('${g.id}')">
+                    <div class="title-row"><span class="icon">${iconStyled}</span><span class="title">${g.label}</span></div>
                     <div class="count">${count} med${count!==1?'s':''}</div>
                 </div>`;
             });
@@ -12771,6 +13368,7 @@
                 filtered.forEach(med => { html += renderMedCard(med, true); });
                 html += `</div>`;
             }
+            html += `<div style="margin-top:16px"><button class="order-back-btn" onclick="goMedBack()" style="margin-bottom:0"><i class="ph-duotone ph-arrow-left"></i> Back</button></div>`;
             return html;
         }
 
@@ -12917,9 +13515,13 @@
             const safety = MED_SAFETY[med.id];
             if (safety) {
                 if (safety.contraindication) {
-                    html += `<div class="med-contraindication-box">`;
-                    html += `<div class="med-safety-row"><span class="med-safety-label med-contra-label"><i class="ph-duotone ph-warning" style="font-size:11px;vertical-align:-1px;margin-right:2px"></i>Contra</span><span>${escMedHtml(safety.contraindication)}</span></div>`;
-                    html += `</div>`;
+                    var cTxt = safety.contraindication;
+                    var isGeneric = /^Generally safe/i.test(cTxt) || /^No (absolute|significant) contraindications/i.test(cTxt) || (/No other absolute contraindications\.?\s*$/i.test(cTxt) && !/asthma|COPD|angle.closure|infection|uveitis|iritis|retinal/i.test(cTxt)) || /^Contraindicated with known hypersensitivity to any component\.\s*Remove contact/i.test(cTxt);
+                    if (!isGeneric) {
+                        html += `<div class="med-contraindication-box">`;
+                        html += `<div class="med-safety-row"><i class="ph-duotone ph-warning med-contra-icon"></i><span>${escMedHtml(cTxt)}</span></div>`;
+                        html += `</div>`;
+                    }
                 }
                 html += `<div class="med-safety-box">`;
                 html += `<div class="med-safety-row"><span class="med-safety-label">Pediatric</span><span>${escMedHtml(safety.pediatric)}</span></div>`;
@@ -13077,9 +13679,7 @@
 
         function goMedBack() {
             if (medsState.paStep > 0) {
-                medsState.paStep = 0;
-                medsState.categorySearch = "";
-                renderMeds();
+                history.back();
             }
         }
 
@@ -13088,6 +13688,7 @@
             medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
             medsState.categorySearch = "";
             medsState.paStep = 1;
+            history.pushState({view:'medCategory', groupId:groupId}, '');
             renderMeds();
         }
 
@@ -13383,6 +13984,7 @@
                 <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
+                ${lens.infoBanner ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-info" style="margin-right:4px;"></i>${lens.infoBanner}</div>` : ''}
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${specsHtml}</div>
                 <div class="order-section-title">Lens Details</div>
@@ -13539,6 +14141,13 @@
 
         // INIT
         render();
+        (function() {
+            var ind = document.getElementById('subnavIndicator');
+            if (ind) ind.style.transition = 'none';
+            positionTabIndicator();
+            if (ind) requestAnimationFrame(function() { ind.style.transition = ''; });
+        })();
+        window.addEventListener('resize', positionTabIndicator);
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:#ede6de;">
         <div style="margin-bottom:4px;color:#475569;">Built by an Optometrist, For Optometrists.</div>
