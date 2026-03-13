@@ -3102,6 +3102,18 @@
             font-weight: 400;
         }
 
+        .tools-cat-btn {
+            transition: all 0.2s ease;
+        }
+        .tools-cat-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .tools-cat-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
         /* Tools menu: bigger cards on desktop + hover glow */
         #toolsContent .option-btn,
         #medsContent .option-btn {
@@ -3859,7 +3871,8 @@
                         { action:"textOnly", title:"To Improve Distance", textMinus:"Perform hand-held trial lens over-refraction. Push minus in \u22120.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye).", textPlus:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye)." }
                     ],
                     near: [
-                        { action:"textOnly", title:"To Improve Near", text:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the sphere of the eye that results in greatest improvement in near vision (most likely non-dominant eye). Manufacturer recommends against changing the ADD power." }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
+                        { action:"raiseAdd", eye:"nonDominant" }
                     ]
                 }
             }},
@@ -3926,7 +3939,7 @@
             { name:"Acuvue Oasys Max 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$120 (90pk)", wear:"DW", material:"Senofilcon A HVO (SiHy)" },
             { name:"Acuvue Oasys 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:121, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$133 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
             { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:121, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$163 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)" },
-            { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.75, cylSteps:[-1.00], addTypes:["Low","Mid","High"], qty:"30", price:"$80 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+            { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.75, cylSteps:[-1.00, -1.75], addTypes:["Low","Mid","High"], qty:"30", price:"$80 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
@@ -4965,7 +4978,10 @@
             let vertexHtml = "";
             if (hasData) {
                 const transposed = state.od.cylSign === '+' || state.os.cylSign === '+';
-                const vertexLabel = transposed ? "Contact Lens Rx (Vertexed & Transposed)" : "Contact Lens Rx (Vertexed)";
+                const odSph = Math.abs(parseFloat(state.od.sphere) || 0);
+                const osSph = Math.abs(parseFloat(state.os.sphere) || 0);
+                const wasVertexed = odSph >= 4 || osSph >= 4;
+                const vertexLabel = "Contact Lens Rx" + (wasVertexed && transposed ? " (Vertexed & Transposed)" : wasVertexed ? " (Vertexed)" : transposed ? " (Transposed)" : "");
                 vertexHtml = `<div class="vertex-box fade-in">
                     <div class="vertex-label">${vertexLabel}</div>
                     <div class="vertex-values" style="flex-direction:column;gap:8px">
@@ -6651,7 +6667,6 @@
             // Complaint selection cards
             let complaintHtml = `
                 <div style="margin-bottom:20px">
-                    <div class="order-section-title">Select Vision Complaint</div>
                     <div class="option-grid">
                         ${lens.type === 'multifocal' || lens.type === 'multifocal-toric' ? `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
@@ -8034,14 +8049,14 @@
             var _catPad = _catDesk ? '6px 14px' : '3px 8px';
             var _catFs = _catDesk ? '12px' : '10px';
             var _catRad = _catDesk ? '12px' : '10px';
-            catBtns += '<button onclick="toggleToolsCategory(null)" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:600;font-family:var(--sans);cursor:pointer;border:1px solid ' + (allActive ? 'var(--accent)' : 'rgba(0,0,0,0.1)') + ';background:' + (allActive ? 'rgba(13,148,136,0.08)' : 'transparent') + ';color:' + (allActive ? 'var(--accent)' : 'var(--ink-muted)') + ';transition:all 0.15s;letter-spacing:0.02em;">All</button>';
+            catBtns += '<button class="tools-cat-btn" onclick="toggleToolsCategory(null)" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:' + (allActive ? '800' : '600') + ';font-family:var(--sans);cursor:pointer;border:1px solid ' + (allActive ? 'var(--accent)' : 'rgba(0,0,0,0.1)') + ';background:' + (allActive ? 'rgba(13,148,136,0.08)' : 'transparent') + ';color:var(--ink);letter-spacing:0.02em;">All</button>';
             for (var j = 0; j < TOOLS_CATEGORIES.length; j++) {
                 var cat = TOOLS_CATEGORIES[j];
                 var isActive = activeCat === cat.id;
                 var cc = catColors[cat.id] || 'var(--accent)';
                 var isMobile = window.innerWidth <= 640;
                 var displayLabel = (isMobile && cat.shortLabel) ? cat.shortLabel : cat.label;
-                catBtns += '<button onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:600;font-family:var(--sans);cursor:pointer;border:1px solid ' + (isActive ? cc : 'rgba(0,0,0,0.1)') + ';background:' + (isActive ? cc + '12' : 'transparent') + ';color:' + (isActive ? cc : 'var(--ink-muted)') + ';transition:all 0.15s;white-space:nowrap;letter-spacing:0.02em;">' + displayLabel + '</button>';
+                catBtns += '<button class="tools-cat-btn" onclick="toggleToolsCategory(\'' + cat.id + '\')" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:' + (isActive ? '800' : '600') + ';font-family:var(--sans);cursor:pointer;border:1px solid ' + (isActive ? cc : 'rgba(0,0,0,0.1)') + ';background:' + (isActive ? cc + '12' : 'transparent') + ';color:var(--ink);white-space:nowrap;letter-spacing:0.02em;">' + displayLabel + '</button>';
             }
             catBtns += '</div>';
 
@@ -13690,6 +13705,7 @@
             medsState.paStep = 1;
             history.pushState({view:'medCategory', groupId:groupId}, '');
             renderMeds();
+            window.scrollTo(0, 0);
         }
 
         function toggleMedFilter(key) {
