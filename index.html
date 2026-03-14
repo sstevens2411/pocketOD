@@ -1605,6 +1605,18 @@
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transform: translateY(-2px) scale(1.01);
         }
+        .med-expand-hint {
+            position: absolute;
+            bottom: 6px;
+            right: 10px;
+            font-size: 30px;
+            color: #94a3b8;
+            transition: transform 0.2s ease;
+            pointer-events: none;
+        }
+        .med-card.expanded .med-expand-hint {
+            transform: rotate(180deg);
+        }
         .tier-stripe {
             position: absolute;
             left: 0;
@@ -1725,6 +1737,7 @@
             margin-top: 2px;
             text-align: left;
             font-variant-numeric: tabular-nums;
+            white-space: nowrap;
         }
         .med-price-savings {
             font-size: 10.5px;
@@ -1945,6 +1958,7 @@
             border-color: var(--accent); background: var(--accent-light);
             color: var(--accent); font-weight: 600;
         }
+        .med-pf-label-short { display: none; }
         /* Bottle-top color coded drug class chips */
         .med-filter-chip .dc-dot {
             display: inline-block;
@@ -1987,6 +2001,139 @@
         .med-filter-chip.dc-immuno.active { background: rgba(5,150,105,0.1); border-color: #059669; color: #047857; }
         .med-filter-chip.dc-tear.active { background: rgba(13,148,136,0.1); border-color: #0d9488; color: #0d9488; }
         .med-filter-chip.dc-fungal.active { background: rgba(101,163,13,0.1); border-color: #65a30d; color: #4d7c0f; }
+
+        /* Dropdown filter row */
+        .med-filter-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .med-dropdown-wrap {
+            position: relative;
+        }
+        .med-dropdown-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 13px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ink-muted);
+            background: var(--surface-solid);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: border-color 0.15s, color 0.15s, background 0.15s;
+            min-height: 36px;
+        }
+        .med-dropdown-btn:hover {
+            border-color: var(--accent);
+            color: var(--ink);
+        }
+        .med-dropdown-btn.has-selection {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(13,148,136,0.06);
+        }
+        .med-dropdown-btn .dd-arrow {
+            font-size: 10px;
+            opacity: 0.6;
+            transition: transform 0.15s;
+        }
+        .med-dropdown-btn.open .dd-arrow {
+            transform: rotate(180deg);
+        }
+        .med-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            min-width: 200px;
+            max-height: 260px;
+            overflow-y: auto;
+            background: var(--surface-solid);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            z-index: 100;
+            padding: 4px;
+        }
+        .med-dropdown-menu.open {
+            display: block;
+        }
+        .med-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            font-size: 12.5px;
+            color: var(--ink);
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.12s;
+            white-space: nowrap;
+        }
+        .med-dropdown-item:hover {
+            background: var(--surface-hover, rgba(0,0,0,0.04));
+        }
+        .med-dropdown-item.active {
+            background: rgba(13,148,136,0.08);
+            font-weight: 600;
+        }
+        .med-dropdown-item.active::before {
+            content: '\2713';
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: -4px;
+        }
+        .med-dropdown-item .dd-count {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--ink-muted);
+            opacity: 0.7;
+        }
+
+        /* Active filter pills */
+        .med-active-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .med-active-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(13,148,136,0.08);
+            border: 1px solid rgba(13,148,136,0.2);
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .med-active-pill .pill-x {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            font-size: 11px;
+            line-height: 1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.12s;
+            color: var(--accent);
+        }
+        .med-active-pill .pill-x:hover {
+            background: rgba(13,148,136,0.15);
+        }
 
         /* Price slider */
         .med-price-filter {
@@ -2480,6 +2627,26 @@
                 margin-right: 6px;
             }
 
+            /* Dropdown filters — mobile */
+            .med-dropdown-btn {
+                min-height: 38px;
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            .med-dropdown-menu {
+                min-width: 180px;
+                max-height: 50vh;
+            }
+            .med-dropdown-item {
+                padding: 10px 14px;
+                min-height: 40px;
+                font-size: 13px;
+            }
+            .med-active-pill {
+                font-size: 12.5px;
+                padding: 6px 12px;
+            }
+
             /* Med cards — better stacking */
             .med-card {
                 padding: 16px;
@@ -2538,8 +2705,7 @@
                 font-size: 11px;
             }
             .med-price-size {
-                display: block;
-                margin-top: 1px;
+                display: inline;
             }
 
             /* Favorite button */
@@ -2549,6 +2715,8 @@
                 font-size: 16px;
                 min-width: 32px;
             }
+            .med-pf-label { display: none; }
+            .med-pf-label-short { display: inline; }
 
             /* Copy Rx — 44px tap target */
             .med-copy-btn {
@@ -3760,7 +3928,7 @@
             _skipPush = true;
             if (s.view === 'medCategory') {
                 medsState.selectedConditionGroup = s.groupId;
-                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
                 medsState.categorySearch = "";
                 medsState.paStep = 1;
                 switchTab('meds');
@@ -3769,7 +3937,7 @@
             else if (s.view === 'meds') {
                 medsState.paStep = 0;
                 medsState.selectedConditionGroup = null;
-                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
                 medsState.categorySearch = "";
                 medsState.expandedCards = {};
                 switchTab('meds');
@@ -4600,7 +4768,7 @@
             expandedNotes: {},
             paStep: 0,
             selectedConditionGroup: null,
-            filters: { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null },
+            filters: { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] },
             expandedCards: {},
             categorySearch: "",
             favorites: JSON.parse(localStorage.getItem('medFavorites') || '[]'),
@@ -7971,7 +8139,7 @@
             if (tab !== 'meds') {
                 medsState.paStep = 0;
                 medsState.selectedConditionGroup = null;
-                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
                 medsState.categorySearch = "";
                 medsState.searchQuery = "";
                 medsState.showFavoritesOnly = false;
@@ -14011,28 +14179,13 @@
                 <button class="order-back-btn" onclick="goMedBack()" style="margin-bottom:0;flex-shrink:0"><i class="ph-duotone ph-arrow-left"></i> Back</button>
                 <div><div class="card-title" style="margin-bottom:0">${group.icon} ${escMedHtml(group.label)}</div></div>
             </div>`;
-            html += `<div class="card" style="margin-bottom:16px">`;
-
-            // Category search bar
+            // Category search bar (no card wrapper)
             html += `<div class="med-search-wrap" style="margin-bottom:12px">
                 <span class="med-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
                 <input type="text" class="med-search-input" id="medCategorySearch" placeholder="Search within ${escMedHtml(group.label)}\u2026" value="${escMedHtml(medsState.categorySearch)}" autocomplete="off">
             </div>`;
 
-            // Sub-condition chips for grouped conditions (skip for inflammation which uses class chips instead)
-            if (group.conditions.length > 1 && group.id !== 'inflammation') {
-                html += `<div class="med-subcondition-section"><div class="med-subcondition-label">Use</div><div class="med-filter-chips">`;
-                html += `<button class="med-filter-chip ${medsState.filters.subCondition===null?'active':''}" onclick="toggleMedSubCondition(null)">All</button>`;
-                group.conditions.forEach(c => {
-                    const info = MED_CONDITIONS[c];
-                    const cnt = MEDS.filter(m => m.condition === c).length;
-                    html += `<button class="med-filter-chip ${medsState.filters.subCondition===c?'active':''}" onclick="toggleMedSubCondition('${c}')">${info.icon} ${info.label} (${cnt})</button>`;
-                });
-                html += `</div></div>`;
-            }
-
-            // All filter chips in one row — grouped by broad drug class
-            html += `<div class="med-subcondition-section"><div class="med-subcondition-label">Class</div><div class="med-filter-chips">`;
+            // Build filter data
             const dcGroups = {};
             allMeds.forEach(m => {
                 const g = drugClassGroup(m.drug_class);
@@ -14041,29 +14194,70 @@
                 dcGroups[g].count++;
             });
             const groupNames = Object.keys(dcGroups);
-            if (groupNames.length > 1) {
-                html += `<button class="med-filter-chip ${medsState.filters.drugClass===null?'active':''}" onclick="toggleMedDrugClass(null)">All</button>`;
-                const sorted = groupNames.map(g => ({ g, color: getDrugClassColor(dcGroups[g].sample) })).sort((a, b) => a.color.order - b.color.order);
-                sorted.forEach(({ g, color }) => {
-                    const active = medsState.filters.drugClass === g;
-                    html += `<button class="med-filter-chip ${color.cls} ${active?'active':''}" onclick="toggleMedDrugClass(this.dataset.dc)" data-dc="${escMedHtml(g)}"><span class="dc-dot ${color.dot}"></span>${escMedHtml(g)} (${dcGroups[g].count})</button>`;
-                });
-            }
-            html += `<button class="med-filter-chip ${medsState.filters.preservativeFree?'active':''}" onclick="toggleMedFilter('preservativeFree')">Preservative-free</button>`;
-            html += `</div></div>`;
-
-            // Route filter chips
             const routes = {};
             allMeds.forEach(m => { const r = m.route || 'topical'; routes[r] = (routes[r]||0) + 1; });
             const routeKeys = Object.keys(routes);
+            const routeLabels = { topical:'Topical', oral:'Oral', intravitreal:'Injection', nasal:'Nasal', insert:'Insert' };
+            const routeIcons = { topical:'<i class="ph-duotone ph-drop"></i>', oral:'<i class="ph-duotone ph-pill"></i>', intravitreal:'<i class="ph-duotone ph-syringe"></i>', nasal:'<i class="ph-duotone ph-wind"></i>', insert:'<i class="ph-duotone ph-square"></i>' };
+            const routeOrder = ['topical','oral','intravitreal','nasal','insert'];
+
+            // Dropdown filter row
+            html += `<div class="med-filter-row">`;
+
+            // Use dropdown (conditional)
+            if (group.conditions.length > 1 && group.id !== 'inflammation') {
+                const selUse = medsState.filters.subCondition;
+                const hasUse = selUse.length > 0;
+                const useLabel = hasUse ? `Use (${selUse.length})` : 'Use';
+                html += `<div class="med-dropdown-wrap">
+                    <button class="med-dropdown-btn ${hasUse ? 'has-selection' : ''}" onclick="toggleMedDropdown('use')">
+                        ${escMedHtml(useLabel)} <span class="dd-arrow"><i class="ph-bold ph-caret-down"></i></span>
+                    </button>
+                    <div class="med-dropdown-menu" id="medDropdownUse">`;
+                group.conditions.forEach(c => {
+                    const info = MED_CONDITIONS[c];
+                    const cnt = MEDS.filter(m => m.condition === c).length;
+                    html += `<div class="med-dropdown-item ${selUse.includes(c)?'active':''}" onclick="event.stopPropagation();toggleMedSubCondition('${c}')">
+                        ${info.icon} ${escMedHtml(info.label)} <span class="dd-count">${cnt}</span>
+                    </div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            // Class dropdown (conditional)
+            if (groupNames.length > 1) {
+                const selClass = medsState.filters.drugClass;
+                const hasClass = selClass.length > 0;
+                const classLabel = hasClass ? `Class (${selClass.length})` : 'Class';
+                const sorted = groupNames.map(g => ({ g, color: getDrugClassColor(dcGroups[g].sample) })).sort((a, b) => a.color.order - b.color.order);
+                html += `<div class="med-dropdown-wrap">
+                    <button class="med-dropdown-btn ${hasClass ? 'has-selection' : ''}" onclick="toggleMedDropdown('class')">
+                        ${escMedHtml(classLabel)} <span class="dd-arrow"><i class="ph-bold ph-caret-down"></i></span>
+                    </button>
+                    <div class="med-dropdown-menu" id="medDropdownClass">`;
+                sorted.forEach(({ g, color }) => {
+                    html += `<div class="med-dropdown-item ${selClass.includes(g)?'active':''}" onclick="event.stopPropagation();toggleMedDrugClass(this.dataset.dc)" data-dc="${escMedHtml(g)}" style="color:${color.hex}">
+                        ${escMedHtml(g)} <span class="dd-count">${dcGroups[g].count}</span>
+                    </div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            // Route dropdown (conditional)
             if (routeKeys.length > 1) {
-                const routeLabels = { topical:'<i class="ph-duotone ph-drop"></i> Topical', oral:'<i class="ph-duotone ph-pill"></i> Oral', intravitreal:'<i class="ph-duotone ph-syringe"></i> Injection', nasal:'<i class="ph-duotone ph-wind"></i> Nasal', insert:'<i class="ph-duotone ph-square"></i> Insert' };
-                const routeOrder = ['topical','oral','intravitreal','nasal','insert'];
-                html += `<div class="med-subcondition-section"><div class="med-subcondition-label">Route</div><div class="med-filter-chips">`;
-                html += `<button class="med-filter-chip ${medsState.filters.route===null?'active':''}" onclick="toggleMedRoute(null)">All</button>`;
+                const selRoute = medsState.filters.route;
+                const hasRoute = selRoute.length > 0;
+                const routeLabel = hasRoute ? `Route (${selRoute.length})` : 'Route';
+                html += `<div class="med-dropdown-wrap">
+                    <button class="med-dropdown-btn ${hasRoute ? 'has-selection' : ''}" onclick="toggleMedDropdown('route')">
+                        ${escMedHtml(routeLabel)} <span class="dd-arrow"><i class="ph-bold ph-caret-down"></i></span>
+                    </button>
+                    <div class="med-dropdown-menu" id="medDropdownRoute">`;
                 routeOrder.forEach(r => {
                     if (routes[r]) {
-                        html += `<button class="med-filter-chip ${medsState.filters.route===r?'active':''}" onclick="toggleMedRoute('${r}')">${routeLabels[r]||r} (${routes[r]})</button>`;
+                        html += `<div class="med-dropdown-item ${selRoute.includes(r)?'active':''}" onclick="event.stopPropagation();toggleMedRoute('${r}')">
+                            ${routeIcons[r]||''} ${routeLabels[r]||r} <span class="dd-count">${routes[r]}</span>
+                        </div>`;
                     }
                 });
                 html += `</div></div>`;
@@ -14071,10 +14265,42 @@
 
             html += `</div>`;
 
+            // Active filter pills
+            const activePills = [];
+            medsState.filters.subCondition.forEach(c => {
+                const info = MED_CONDITIONS[c];
+                if (info) {
+                    const cnt = MEDS.filter(m => m.condition === c && group.conditions.includes(m.condition)).length;
+                    activePills.push({ label: info.label, count: cnt, clear: `removeMedSubCondition('${c}')` });
+                }
+            });
+            medsState.filters.drugClass.forEach(dc => {
+                const cnt = dcGroups[dc] ? dcGroups[dc].count : 0;
+                activePills.push({ label: dc, count: cnt, clear: `removeMedDrugClass('${escMedHtml(dc).replace(/'/g,"\\'")}')` });
+            });
+            medsState.filters.route.forEach(r => {
+                const cnt = routes[r] || 0;
+                activePills.push({ label: routeLabels[r] || r, count: cnt, clear: `removeMedRoute('${r}')` });
+            });
+            if (medsState.filters.preservativeFree) {
+                const cnt = allMeds.filter(m => m.preservative_free).length;
+                activePills.push({ label: 'Preservative-free', count: cnt, clear: "toggleMedFilter('preservativeFree')" });
+            }
+            if (activePills.length > 0) {
+                html += `<div class="med-active-pills">`;
+                activePills.forEach(p => {
+                    html += `<span class="med-active-pill">${escMedHtml(p.label)} (${p.count}) <span class="pill-x" onclick="${p.clear}">&times;</span></span>`;
+                });
+                html += `</div>`;
+            }
+
             // Medication list
             const filtered = getMedFilteredResults();
-            html += `<div class="results-header" style="margin-top:16px;display:flex;align-items:center;justify-content:flex-end;">
+            html += `<div style="margin-top:8px;margin-bottom:4px;display:flex;justify-content:flex-end;">
                 <div style="display:flex;gap:4px;">
+                    <button class="med-sort-btn ${medsState.filters.preservativeFree?'active':''}" onclick="toggleMedFilter('preservativeFree')" title="Preservative-free only">
+                        <i class="ph-duotone ph-drop-slash" style="font-size:13px;vertical-align:-1px;"></i> <span class="med-pf-label">Preservative-free</span><span class="med-pf-label-short">PF</span>
+                    </button>
                     ${medsState.selectedConditionGroup !== 'macular_degeneration' ? `<button class="med-sort-btn ${medsState.sortMode==='class'?'active':''}" onclick="toggleMedSort('class')" title="Sort by class">
                         <i class="ph-duotone ph-list-numbers" style="font-size:13px;vertical-align:-1px;"></i> Generation ${medsState.sortMode==='class' ? '<i class="ph-bold ph-arrow-'+(medsState.sortAsc?'up':'down')+'" style="font-size:11px;vertical-align:-1px;margin-left:2px;"></i>' : ''}
                     </button>` : ''}
@@ -14121,11 +14347,11 @@
                     m.drug_class.toLowerCase().includes(q)
                 );
             }
-            if (medsState.filters.subCondition) {
-                results = results.filter(m => m.condition === medsState.filters.subCondition);
+            if (medsState.filters.subCondition.length > 0) {
+                results = results.filter(m => medsState.filters.subCondition.includes(m.condition));
             }
-            if (medsState.filters.drugClass) {
-                results = results.filter(m => drugClassGroup(m.drug_class) === medsState.filters.drugClass);
+            if (medsState.filters.drugClass.length > 0) {
+                results = results.filter(m => medsState.filters.drugClass.includes(drugClassGroup(m.drug_class)));
             }
             if (medsState.filters.genericOnly) {
                 results = results.filter(m => m.generic_available);
@@ -14133,8 +14359,8 @@
             if (medsState.filters.preservativeFree) {
                 results = results.filter(m => m.preservative_free);
             }
-            if (medsState.filters.route) {
-                results = results.filter(m => (m.route || 'topical') === medsState.filters.route);
+            if (medsState.filters.route.length > 0) {
+                results = results.filter(m => medsState.filters.route.includes(m.route || 'topical'));
             }
             var dir = medsState.sortAsc ? 1 : -1;
             if (medsState.sortMode === 'price') {
@@ -14252,6 +14478,7 @@
             }
 
             html += `</div>`; // end expanded content
+            if (condensed) html += `<span class="med-expand-hint"><i class="ph-duotone ph-caret-down"></i></span>`;
             html += `</div>`; // end med-card
             return html;
         }
@@ -14293,27 +14520,27 @@
 
         function getDrugClassColor(dc) {
             const d = dc.toLowerCase();
-            if (/combination/.test(d) && !/antibiotic|steroid|cortico/i.test(d)) return { cls: 'dc-combo', dot: 'dc-dot-combo', order: 7 };
-            if (/prostaglandin/.test(d)) return { cls: 'dc-pga', dot: 'dc-dot-pga', order: 1 };
-            if (/beta.*(blocker|selective)/.test(d)) return { cls: 'dc-beta', dot: 'dc-dot-beta', order: 2 };
-            if (/carbonic anhydrase|^cai/.test(d)) return { cls: 'dc-cai', dot: 'dc-dot-cai', order: 3 };
-            if (/alpha.*agonist/.test(d)) return { cls: 'dc-alpha', dot: 'dc-dot-alpha', order: 4 };
-            if (/rho kinase|rock/.test(d)) return { cls: 'dc-rock', dot: 'dc-dot-rock', order: 5 };
-            if (/miotic|cholinergic|parasympathomimetic/.test(d)) return { cls: 'dc-miotic', dot: 'dc-dot-miotic', order: 6 };
-            if (/fluoroquinolone/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', order: 8 };
-            if (/aminoglycoside(?!.*steroid|.*cortico)/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', order: 8 };
-            if (/macrolide/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', order: 8 };
-            if (/penicillin|cephalosporin|sulfonamide|tetracycline/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', order: 8 };
-            if (/antihistamine|mast cell/.test(d)) return { cls: 'dc-hist', dot: 'dc-dot-hist', order: 9 };
-            if (/corticosteroid|steroid/.test(d)) return { cls: 'dc-steroid', dot: 'dc-dot-steroid', order: 10 };
-            if (/nsaid/.test(d)) return { cls: 'dc-nsaid', dot: 'dc-dot-nsaid', order: 11 };
-            if (/antiviral/.test(d)) return { cls: 'dc-viral', dot: 'dc-dot-viral', order: 12 };
-            if (/anti-vegf/.test(d)) return { cls: 'dc-vegf', dot: 'dc-dot-vegf', order: 13 };
-            if (/immunomodulator|calcineurin/.test(d)) return { cls: 'dc-immuno', dot: 'dc-dot-immuno', order: 14 };
-            if (/artificial tear|lubricant|lipid/.test(d)) return { cls: 'dc-tear', dot: 'dc-dot-tear', order: 15 };
-            if (/antifungal/.test(d)) return { cls: 'dc-fungal', dot: 'dc-dot-fungal', order: 16 };
-            if (/combination|combo/.test(d)) return { cls: 'dc-combo', dot: 'dc-dot-combo', order: 7 };
-            return { cls: '', dot: '', order: 99 };
+            if (/combination/.test(d) && !/antibiotic|steroid|cortico/i.test(d)) return { cls: 'dc-combo', dot: 'dc-dot-combo', hex: '#1e3a8a', order: 7 };
+            if (/prostaglandin/.test(d)) return { cls: 'dc-pga', dot: 'dc-dot-pga', hex: '#0d9488', order: 1 };
+            if (/beta.*(blocker|selective)/.test(d)) return { cls: 'dc-beta', dot: 'dc-dot-beta', hex: '#a16207', order: 2 };
+            if (/carbonic anhydrase|^cai/.test(d)) return { cls: 'dc-cai', dot: 'dc-dot-cai', hex: '#ea580c', order: 3 };
+            if (/alpha.*agonist/.test(d)) return { cls: 'dc-alpha', dot: 'dc-dot-alpha', hex: '#7c3aed', order: 4 };
+            if (/rho kinase|rock/.test(d)) return { cls: 'dc-rock', dot: 'dc-dot-rock', hex: '#6b7280', order: 5 };
+            if (/miotic|cholinergic|parasympathomimetic/.test(d)) return { cls: 'dc-miotic', dot: 'dc-dot-miotic', hex: '#16a34a', order: 6 };
+            if (/fluoroquinolone/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', hex: '#e11d48', order: 8 };
+            if (/aminoglycoside(?!.*steroid|.*cortico)/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', hex: '#e11d48', order: 8 };
+            if (/macrolide/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', hex: '#e11d48', order: 8 };
+            if (/penicillin|cephalosporin|sulfonamide|tetracycline/.test(d)) return { cls: 'dc-abx', dot: 'dc-dot-abx', hex: '#e11d48', order: 8 };
+            if (/antihistamine|mast cell/.test(d)) return { cls: 'dc-hist', dot: 'dc-dot-hist', hex: '#0284c7', order: 9 };
+            if (/corticosteroid|steroid/.test(d)) return { cls: 'dc-steroid', dot: 'dc-dot-steroid', hex: '#d97706', order: 10 };
+            if (/nsaid/.test(d)) return { cls: 'dc-nsaid', dot: 'dc-dot-nsaid', hex: '#4f46e5', order: 11 };
+            if (/antiviral/.test(d)) return { cls: 'dc-viral', dot: 'dc-dot-viral', hex: '#64748b', order: 12 };
+            if (/anti-vegf/.test(d)) return { cls: 'dc-vegf', dot: 'dc-dot-vegf', hex: '#a21caf', order: 13 };
+            if (/immunomodulator|calcineurin/.test(d)) return { cls: 'dc-immuno', dot: 'dc-dot-immuno', hex: '#059669', order: 14 };
+            if (/artificial tear|lubricant|lipid/.test(d)) return { cls: 'dc-tear', dot: 'dc-dot-tear', hex: '#0d9488', order: 15 };
+            if (/antifungal/.test(d)) return { cls: 'dc-fungal', dot: 'dc-dot-fungal', hex: '#65a30d', order: 16 };
+            if (/combination|combo/.test(d)) return { cls: 'dc-combo', dot: 'dc-dot-combo', hex: '#1e3a8a', order: 7 };
+            return { cls: '', dot: '', hex: 'var(--ink)', order: 99 };
         }
 
         function shortenDrugClass(dc) {
@@ -14407,7 +14634,7 @@
 
         function selectMedCondition(groupId) {
             medsState.selectedConditionGroup = groupId;
-            medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:null, subCondition:null, route:null };
+            medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
             medsState.categorySearch = "";
             medsState.paStep = 1;
             history.pushState({view:'medCategory', groupId:groupId}, '');
@@ -14421,18 +14648,77 @@
         }
 
         function toggleMedSubCondition(condId) {
-            medsState.filters.subCondition = medsState.filters.subCondition === condId ? null : condId;
+            if (condId === null) {
+                medsState.filters.subCondition = [];
+            } else {
+                const arr = medsState.filters.subCondition;
+                const idx = arr.indexOf(condId);
+                if (idx >= 0) arr.splice(idx, 1); else arr.push(condId);
+            }
             renderMeds();
         }
 
         function toggleMedDrugClass(dc) {
-            medsState.filters.drugClass = medsState.filters.drugClass === dc ? null : dc;
+            if (dc === null) {
+                medsState.filters.drugClass = [];
+            } else {
+                const arr = medsState.filters.drugClass;
+                const idx = arr.indexOf(dc);
+                if (idx >= 0) arr.splice(idx, 1); else arr.push(dc);
+            }
             renderMeds();
         }
 
         function toggleMedRoute(route) {
-            medsState.filters.route = medsState.filters.route === route ? null : route;
+            if (route === null) {
+                medsState.filters.route = [];
+            } else {
+                const arr = medsState.filters.route;
+                const idx = arr.indexOf(route);
+                if (idx >= 0) arr.splice(idx, 1); else arr.push(route);
+            }
             renderMeds();
+        }
+
+        function removeMedSubCondition(condId) {
+            const arr = medsState.filters.subCondition;
+            const idx = arr.indexOf(condId);
+            if (idx >= 0) arr.splice(idx, 1);
+            renderMeds();
+        }
+
+        function removeMedDrugClass(dc) {
+            const arr = medsState.filters.drugClass;
+            const idx = arr.indexOf(dc);
+            if (idx >= 0) arr.splice(idx, 1);
+            renderMeds();
+        }
+
+        function removeMedRoute(route) {
+            const arr = medsState.filters.route;
+            const idx = arr.indexOf(route);
+            if (idx >= 0) arr.splice(idx, 1);
+            renderMeds();
+        }
+
+        function toggleMedDropdown(which) {
+            const ids = { use: 'medDropdownUse', class: 'medDropdownClass', route: 'medDropdownRoute' };
+            // Close all other dropdowns first
+            Object.entries(ids).forEach(([key, id]) => {
+                const menu = document.getElementById(id);
+                if (menu && key !== which) {
+                    menu.classList.remove('open');
+                    const btn = menu.parentElement.querySelector('.med-dropdown-btn');
+                    if (btn) btn.classList.remove('open');
+                }
+            });
+            // Toggle the target dropdown
+            const target = document.getElementById(ids[which]);
+            if (target) {
+                const isOpen = target.classList.toggle('open');
+                const btn = target.parentElement.querySelector('.med-dropdown-btn');
+                if (btn) btn.classList.toggle('open', isOpen);
+            }
         }
 
         function toggleMedExpand(medId) {
@@ -14469,6 +14755,14 @@
                 const input = document.getElementById('medSearchInput');
                 if (ac && input && !ac.contains(e.target) && e.target !== input) {
                     ac.style.display = 'none';
+                }
+                // Close med filter dropdowns when clicking outside
+                if (!e.target.closest('.med-dropdown-wrap')) {
+                    document.querySelectorAll('.med-dropdown-menu.open').forEach(m => {
+                        m.classList.remove('open');
+                        const btn = m.parentElement.querySelector('.med-dropdown-btn');
+                        if (btn) btn.classList.remove('open');
+                    });
                 }
             });
         }
