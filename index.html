@@ -1416,9 +1416,9 @@
         .troubleshoot-btn {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
-            margin-top: 16px;
-            margin-bottom: 8px;
+            margin: 16px auto 8px;
             width: fit-content;
             padding: 10px 20px;
             border-radius: 8px;
@@ -1444,11 +1444,17 @@
             background: #ff8c00;
             color: #fff;
             transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(255,140,0,0.3);
+            box-shadow: 0 3px 16px rgba(255,140,0,0.45), 0 0 24px rgba(255,140,0,0.25);
         }
         .troubleshoot-btn:hover i[class*="ph-"] {
-            animation: wrench-shake 0.4s ease;
-            display: inline-block;
+            display: none;
+        }
+        .troubleshoot-btn:hover::after {
+            content: "\2192";
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-left: 4px;
         }
 
         @media (max-width: 380px) {
@@ -2787,6 +2793,7 @@
             padding: 40px 20px;
             font-size: 14px;
         }
+        .browse-main { overflow-x: hidden; }
         @media (min-width: 601px) {
             .browse-main { max-width: 1100px; }
         }
@@ -2811,19 +2818,19 @@
         }
         .browse-filter-btn.bf-all, .browse-filter-btn.bf-mod { color: #334155; border-color: rgba(0,0,0,0.22); }
         .browse-filter-btn.bf-all:hover, .browse-filter-btn.bf-mod:hover { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.3); color: var(--ink); }
-        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.35); color: var(--ink); font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-all.active, .browse-filter-btn.bf-mod.active { background: #334155; border-color: #334155; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
         .browse-filter-btn.bf-sphere { color: #2563eb; border-color: rgba(37,99,235,0.3); }
         .browse-filter-btn.bf-sphere:hover { background: rgba(37,99,235,0.08); border-color: #2563eb; color: #2563eb; }
-        .browse-filter-btn.bf-sphere.active { background: rgba(37,99,235,0.12); border-color: #2563eb; color: #2563eb; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-sphere.active { background: #2563eb; border-color: #2563eb; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(37,99,235,0.35); }
         .browse-filter-btn.bf-toric { color: #d97706; border-color: rgba(217,119,6,0.3); }
         .browse-filter-btn.bf-toric:hover { background: rgba(217,119,6,0.08); border-color: #d97706; color: #d97706; }
-        .browse-filter-btn.bf-toric.active { background: rgba(217,119,6,0.12); border-color: #d97706; color: #b45309; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-toric.active { background: #d97706; border-color: #d97706; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(217,119,6,0.35); }
         .browse-filter-btn.bf-multifocal { color: #0d9488; border-color: rgba(13,148,136,0.3); }
         .browse-filter-btn.bf-multifocal:hover { background: rgba(13,148,136,0.08); border-color: #0d9488; color: #0d9488; }
-        .browse-filter-btn.bf-multifocal.active { background: rgba(13,148,136,0.12); border-color: #0d9488; color: #0d9488; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-multifocal.active { background: #0d9488; border-color: #0d9488; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(13,148,136,0.35); }
         .browse-filter-btn.bf-mftoric { color: #7c3aed; border-color: rgba(124,58,237,0.3); }
         .browse-filter-btn.bf-mftoric:hover { background: rgba(124,58,237,0.08); border-color: #7c3aed; color: #7c3aed; }
-        .browse-filter-btn.bf-mftoric.active { background: rgba(124,58,237,0.12); border-color: #7c3aed; color: #7c3aed; font-weight: 800; box-shadow: none; }
+        .browse-filter-btn.bf-mftoric.active { background: #7c3aed; border-color: #7c3aed; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(124,58,237,0.35); }
         .browse-table th.browse-th-active {
             color: var(--accent);
         }
@@ -3776,19 +3783,88 @@
             // ALCON
             { name:"Air Optix plus HydraGlyde", brand:"Alcon", type:"sphere", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$75", wear:"EW", material:"Lotrafilcon B (SiHy)", therapeutic:true },
             { name:"Air Optix plus HydraGlyde for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:108, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$90", wear:"EW", material:"Lotrafilcon B (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"Air Optix plus HydraGlyde Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$120", wear:"EW", material:"Lotrafilcon B (SiHy)" },
+            { name:"Air Optix plus HydraGlyde Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$120", wear:"EW", material:"Lotrafilcon B (SiHy)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
+                    { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
+                    { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
+                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                            { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ]
+                }
+            }},
             { name:"Air Optix Night & Day Aqua", brand:"Alcon", type:"sphere", modality:"monthly", dk:175, bc:"8.4 / 8.6", diam:"13.8", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$115", wear:"EW 30-night", material:"Lotrafilcon A (SiHy)", therapeutic:true },
             { name:"Air Optix Colors", brand:"Alcon", type:"sphere", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-8, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"2, 6", price:"$110", wear:"DW", material:"Lotrafilcon B (SiHy)", note:"Color cosmetic lens" },
             { name:"Dailies Total 1", brand:"Alcon", type:"sphere", modality:"daily", dk:156, bc:"8.5", diam:"14.1", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$130 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)" },
             { name:"Dailies Total 1 for Astigmatism", brand:"Alcon", type:"toric", modality:"daily", dk:127, bc:"8.6", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$155 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"Dailies Total 1 Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:156, bc:"8.5", diam:"14.1", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$160 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)" },
+            { name:"Dailies Total 1 Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:156, bc:"8.5", diam:"14.1", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$160 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
+                    { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
+                    { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
+                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                            { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ]
+                }
+            }},
             { name:"Precision1", brand:"Alcon", type:"sphere", modality:"daily", dk:100, bc:"8.3", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$90 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)" },
             { name:"Precision1 for Astigmatism", brand:"Alcon", type:"toric", modality:"daily", dk:90, bc:"8.5", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$115 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
             { name:"Precision7", brand:"Alcon", type:"sphere", modality:"weekly", dk:149, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"12, 27", price:"$100 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)" },
             { name:"Precision7 for Astigmatism", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"12, 27", price:"$125 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
             { name:"Total30", brand:"Alcon", type:"sphere", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$75 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)" },
             { name:"Total30 for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$85", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"Total30 Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$110", wear:"DW", material:"Lehfilcon A (SiHy)" },
+            { name:"Total30 Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$110", wear:"DW", material:"Lehfilcon A (SiHy)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
+                    { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
+                    { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
+                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                            { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ]
+                }
+            }},
             { name:"Total30 Multifocal for Astigmatism", brand:"Alcon", type:"multifocal-toric", modality:"monthly", dk:122, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:["Lo","Med","Hi"], qty:"6", price:"$150", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Lo", dominant:"Lo", nonDominant:"Lo" },
@@ -3797,20 +3873,15 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdj", eye:"dominant", amount:+0.25 },
-                        { action:"lowerAdd", eye:"dominant" },
-                        { action:"addTableSwap", label:"Enhanced distance vision", table: [
+                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
                         ]}
                     ],
                     near: [
-                        { action:"addTableSwap", label:"Enhanced near vision \u2014 Add +0.50 to non-dominant eye", sphereAdj: { eye:"nonDominant", amount:+0.50 }, table: [
-                            { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
-                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
-                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" }
-                        ]},
-                        { action:"addTableSwap", label:"Enhanced near vision \u2014 Step B", table: [
+                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
+                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
@@ -3820,7 +3891,30 @@
             }},
             { name:"DAILIES AquaComfort Plus", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-15, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$90 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", discontinuing:"Trial lenses discontinued. Patients can still order lenses." },
             { name:"DAILIES AquaComfort Plus Toric", brand:"Alcon", type:"toric", modality:"daily", dk:26, bc:"8.8", diam:"14.4", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:[], qty:"30, 90", price:"$115 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", discontinuing:"Trial lenses discontinued. Patients can still order lenses." },
-            { name:"DAILIES AquaComfort Plus Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$130 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)" },
+            { name:"DAILIES AquaComfort Plus Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$130 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
+                    { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Med" },
+                    { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Hi" },
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ],
+                    near: [
+                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
+                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
+                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                            { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
+                            { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
+                            { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
+                        ]}
+                    ]
+                }
+            }},
             { name:"DAILIES Colors", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.6", diam:"13.8", sphMin:-8, sphMax:0, cylMin:0, cylMax:0, addTypes:[], qty:"30", price:"$45 (30pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", note:"Color cosmetic lens. Tints: Mystic Blue, Mystic Hazel, Mystic Grey, Mystic Green. 0.50 steps over \u22126.00D" },
 
             // BAUSCH + LOMB
@@ -5301,7 +5395,7 @@
 
             function buildSpecsForLens(l) {
                 const s = [
-                    { label:"Dk", value:l.dk },
+                    { label:"Dk/t", value:l.dk },
                     { label:"BC", value:l.bc },
                     { label:"Diam", value:l.diam },
                     { label:"Power", value:`${l.sphMin > 0 ? "+" : ""}${l.sphMin} to ${l.sphMax > 0 ? "+" : ""}${l.sphMax}` },
@@ -5352,7 +5446,7 @@
                             ${lens.companionForOD || lens.companionForOS ? '<span class="badge" style="background:var(--surface-hover);color:var(--text-muted);font-size:10px">Mixed Pair</span>' : ''}
                             <span class="badge badge-brand-${bc}">${lens.brand}</span>
                             <span class="badge badge-modality">${lens.modality}</span>${lens.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:14px;margin-left:2px" title="Plastic Neutral"></i>' : ''}
-                            <span class="badge badge-dk">Dk ${lens.dk}</span>
+                            <span class="badge badge-dk">Dk/t ${lens.dk}</span>
                         </div>
                         ${lens.companionForOD || lens.companionForOS ? (() => {
                             const odName = lens.companionForOD || lens.name;
@@ -6048,13 +6142,24 @@
             const newSph = snapTo025(baseSph + amt);
             const changesEl = document.getElementById('tsSelectChanges_' + index);
             if (changesEl) {
-                changesEl.innerHTML = `<div class="ts-change">
+                let html = `<div class="ts-change">
                     <span class="ts-change-eye">${s.selectEye}</span>
                     <span class="ts-change-param">Sphere:</span>
                     <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
                     <span class="ts-change-arrow">\u2192</span>
                     <span class="ts-change-to">${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}</span>
                 </div>`;
+                if (s.selectBothEyes) {
+                    const newSph2 = snapTo025(s.selectBaseSph2 + amt);
+                    html += `<div class="ts-change">
+                        <span class="ts-change-eye">${s.selectEye2}</span>
+                        <span class="ts-change-param">Sphere:</span>
+                        <span class="ts-change-from">${s.selectBaseSph2 > 0 ? "+" : ""}${s.selectBaseSph2.toFixed(2)}</span>
+                        <span class="ts-change-arrow">\u2192</span>
+                        <span class="ts-change-to">${newSph2 > 0 ? "+" : ""}${newSph2.toFixed(2)}</span>
+                    </div>`;
+                }
+                changesEl.innerHTML = html;
             }
         }
 
@@ -6064,6 +6169,7 @@
             const sel = document.getElementById('tsSelectAmt_' + index);
             const amt = sel ? parseFloat(sel.value) : s.selectOptions[0];
             s.adjustments[s.selectEye] = { sphDelta: amt };
+            if (s.selectBothEyes) s.adjustments[s.selectEye2] = { sphDelta: amt };
             applyTsAdjustment(index);
         }
 
@@ -6141,8 +6247,8 @@
                         const cur2 = getAdjSph(targetEye.eye, targetEye.label);
                         const defAmt = step.options[0];
                         const defNxt = snapTo025(cur2 + defAmt);
-                        return {
-                            title: `Add ${defAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
+                        const saSug2 = {
+                            title: step.title || `Add ${defAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
                             rationale: step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`,
                             adjustments: { [targetEye.label]: { sphDelta: defAmt } },
                             changes: [{ eye: targetEye.label, param: "Sphere", from: `${cur2 > 0 ? "+" : ""}${cur2.toFixed(2)}`, to: `${defNxt > 0 ? "+" : ""}${defNxt.toFixed(2)}` }],
@@ -6152,6 +6258,19 @@
                             selectEye: targetEye.label,
                             selectBaseSph: cur2
                         };
+                        if (step.both) {
+                            const otherEye2 = step.eye === "dominant" ? nonDomEye : domEye;
+                            if (otherEye2) {
+                                const otherSph2 = getAdjSph(otherEye2.eye, otherEye2.label);
+                                const otherNxt2 = snapTo025(otherSph2 + defAmt);
+                                saSug2.adjustments[otherEye2.label] = { sphDelta: defAmt };
+                                saSug2.changes.push({ eye: otherEye2.label, param: "Sphere", from: `${otherSph2 > 0 ? "+" : ""}${otherSph2.toFixed(2)}`, to: `${otherNxt2 > 0 ? "+" : ""}${otherNxt2.toFixed(2)}` });
+                                saSug2.selectBothEyes = true;
+                                saSug2.selectEye2 = otherEye2.label;
+                                saSug2.selectBaseSph2 = otherSph2;
+                            }
+                        }
+                        return saSug2;
                     }
                     case "lowerAdd": {
                         const addTypes = lens.addTypes;
@@ -6293,13 +6412,24 @@
             const newSph = snapTo025(baseSph + amt);
             const el = document.getElementById('tsNextSelectChanges');
             if (el) {
-                el.innerHTML = `<div class="ts-change">
+                let html = `<div class="ts-change">
                     <span class="ts-change-eye">${s.selectEye}</span>
                     <span class="ts-change-param">Sphere:</span>
                     <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
                     <span class="ts-change-arrow">\u2192</span>
                     <span class="ts-change-to">${newSph > 0 ? "+" : ""}${newSph.toFixed(2)}</span>
                 </div>`;
+                if (s.selectBothEyes) {
+                    const newSph2 = snapTo025(s.selectBaseSph2 + amt);
+                    html += `<div class="ts-change">
+                        <span class="ts-change-eye">${s.selectEye2}</span>
+                        <span class="ts-change-param">Sphere:</span>
+                        <span class="ts-change-from">${s.selectBaseSph2 > 0 ? "+" : ""}${s.selectBaseSph2.toFixed(2)}</span>
+                        <span class="ts-change-arrow">\u2192</span>
+                        <span class="ts-change-to">${newSph2 > 0 ? "+" : ""}${newSph2.toFixed(2)}</span>
+                    </div>`;
+                }
+                el.innerHTML = html;
             }
         }
 
@@ -6309,6 +6439,7 @@
             const sel = document.getElementById('tsNextSelectAmt');
             const amt = sel ? parseFloat(sel.value) : s.selectOptions[0];
             s.adjustments[s.selectEye] = { sphDelta: amt };
+            if (s.selectBothEyes) s.adjustments[s.selectEye2] = { sphDelta: amt };
             applyNextTsStep();
         }
 
@@ -6614,6 +6745,7 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+
         function renderTroubleshootStep() {
             const lens = LENSES.find(l => l.name === state.selectedLens);
             if (!lens) {
@@ -6667,7 +6799,10 @@
                 return clSph;
             }
 
-            function getCurrentAdd(eye, isDominant) {
+            function getCurrentAdd(eye, isDominant, eyeLabel) {
+                if (eyeLabel && state.tsAdjustment && state.tsAdjustment.overrides && state.tsAdjustment.overrides[eyeLabel] && state.tsAdjustment.overrides[eyeLabel].addOverride !== undefined) {
+                    return state.tsAdjustment.overrides[eyeLabel].addOverride;
+                }
                 const addP = parseFloat(eye.add) || 0;
                 if (lens.type !== "multifocal" && lens.type !== "multifocal-toric") return null;
                 if (lens.fittingGuide && lens.fittingGuide.addTable) {
@@ -6701,6 +6836,7 @@
             // Complaint selection cards
             let complaintHtml = `
                 <div style="margin-bottom:20px">
+                    <div class="order-section-title">Vision Complaint</div>
                     <div class="option-grid">
                         ${lens.type === 'multifocal' || lens.type === 'multifocal-toric' ? `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
@@ -6747,7 +6883,7 @@
                 if (odOk) eyes.push({ eye: state.od, label: "OD", isDominant: odDominant });
                 if (osOk) eyes.push({ eye: state.os, label: "OS", isDominant: osDominant });
 
-                // Stepwise troubleshoot for MF-toric lenses with fitting guide steps
+                // Stepwise troubleshoot for lenses with fitting guide steps
                 if (lens.fittingGuide && lens.fittingGuide.troubleshootSteps) {
                     const tsSteps = isDistance ? lens.fittingGuide.troubleshootSteps.distance : lens.fittingGuide.troubleshootSteps.near;
                     const domEye = eyes.find(e => e.isDominant === true);
@@ -6838,9 +6974,9 @@
                                 const defaultAmt = step.options[0];
                                 const defaultNew = snapTo025(currentSph + defaultAmt);
                                 const defaultLabel = defaultAmt > 0 ? `+${defaultAmt.toFixed(2)}` : defaultAmt.toFixed(2);
-                                suggestions.push({
+                                const saSug = {
                                     tsStepIdx: stepIdx,
-                                    title: `Add ${defaultAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
+                                    title: step.title || `Add ${defaultAmt > 0 ? 'plus' : 'minus'} to ${targetEye.label} sphere`,
                                     rationale: step.rationale || `Adjust ${eyeLabel} eye sphere for ${isDistance ? 'distance' : 'near'} clarity`,
                                     adjustments: { [targetEye.label]: { sphDelta: defaultAmt } },
                                     changes: [{
@@ -6852,7 +6988,20 @@
                                     selectOptions: step.options,
                                     selectEye: targetEye.label,
                                     selectBaseSph: currentSph
-                                });
+                                };
+                                if (step.both) {
+                                    const otherEye = step.eye === "dominant" ? nonDomEye : domEye;
+                                    if (otherEye) {
+                                        const otherSph = getCurrentSph(otherEye.eye, otherEye.label);
+                                        const otherNew = snapTo025(otherSph + defaultAmt);
+                                        saSug.adjustments[otherEye.label] = { sphDelta: defaultAmt };
+                                        saSug.changes.push({ eye: otherEye.label, param: "Sphere", from: `${otherSph > 0 ? "+" : ""}${otherSph.toFixed(2)}`, to: `${otherNew > 0 ? "+" : ""}${otherNew.toFixed(2)}` });
+                                        saSug.selectBothEyes = true;
+                                        saSug.selectEye2 = otherEye.label;
+                                        saSug.selectBaseSph2 = otherSph;
+                                    }
+                                }
+                                suggestions.push(saSug);
                                 break;
                             }
                             case "lowerAdd": {
@@ -6966,10 +7115,12 @@
                                 }
                                 if (!tsHasChange) break;
                                 const tsComplaint = isDistance ? "distance" : "near";
+                                const tsDisclaimer = (tsChanges.some(c => c.param === "Add" && c.from === "Hi" && c.to === "Med")) ? `Yes, this is correct. MED ADD can help reduce ghosting at ${isDistance ? 'distance' : 'near'}, and yes, the fitting guide suggests MED on the non-dominant eye.` : null;
                                 suggestions.push({
                                     tsStepIdx: stepIdx,
                                     title: step.label || `Adjust add power for enhanced ${tsComplaint} vision`,
                                     rationale: null,
+                                    disclaimer: tsDisclaimer,
                                     adjustments: tsAdj, changes: tsChanges
                                 });
                                 break;
@@ -7144,10 +7295,28 @@
                                 const nv = snapTo025(baseSph + amt);
                                 return `<option value="${amt}">${amt > 0 ? '+' : ''}${amt.toFixed(2)}</option>`;
                             }).join('');
+                            const saTitle = s.title || `Add ${sIsPlus ? 'plus' : 'minus'} to ${eye} sphere`;
+                            let saInitChanges = `<div class="ts-change">
+                                            <span class="ts-change-eye">${eye}</span>
+                                            <span class="ts-change-param">Sphere:</span>
+                                            <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
+                                            <span class="ts-change-arrow">\u2192</span>
+                                            <span class="ts-change-to">${snapTo025(baseSph + s.selectOptions[0]) > 0 ? "+" : ""}${snapTo025(baseSph + s.selectOptions[0]).toFixed(2)}</span>
+                                        </div>`;
+                            if (s.selectBothEyes) {
+                                const defNew2 = snapTo025(s.selectBaseSph2 + s.selectOptions[0]);
+                                saInitChanges += `<div class="ts-change">
+                                            <span class="ts-change-eye">${s.selectEye2}</span>
+                                            <span class="ts-change-param">Sphere:</span>
+                                            <span class="ts-change-from">${s.selectBaseSph2 > 0 ? "+" : ""}${s.selectBaseSph2.toFixed(2)}</span>
+                                            <span class="ts-change-arrow">\u2192</span>
+                                            <span class="ts-change-to">${defNew2 > 0 ? "+" : ""}${defNew2.toFixed(2)}</span>
+                                        </div>`;
+                            }
                             return `<div class="troubleshoot-suggestion fade-in">
                                 <div class="ts-step">${i + 1}</div>
                                 <div class="ts-body">
-                                    <div class="ts-title">Add ${sIsPlus ? 'plus' : 'minus'} to ${eye} sphere</div>
+                                    <div class="ts-title">${saTitle}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
                                     <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                                         <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);">Patient accepted:</span>
@@ -7156,13 +7325,7 @@
                                         </select>
                                     </div>
                                     <div class="ts-changes" id="tsSelectChanges_${i}">
-                                        <div class="ts-change">
-                                            <span class="ts-change-eye">${eye}</span>
-                                            <span class="ts-change-param">Sphere:</span>
-                                            <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
-                                            <span class="ts-change-arrow">\u2192</span>
-                                            <span class="ts-change-to">${snapTo025(baseSph + s.selectOptions[0]) > 0 ? "+" : ""}${snapTo025(baseSph + s.selectOptions[0]).toFixed(2)}</span>
-                                        </div>
+                                        ${saInitChanges}
                                     </div>
                                     <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsSelectAdjustment(${i})">View Adjusted Results \u2192</button>
                                 </div>
@@ -7183,6 +7346,7 @@
                                 <div class="ts-title">${s.title}</div>
                                 ${s.rationale ? `<div class="ts-rationale">${s.rationale}</div>` : ''}
                                 <div class="ts-changes">${changesHtml}</div>
+                                ${s.disclaimer ? `<div style="margin-top:8px;padding:8px 12px;background:rgba(13,148,136,0.06);border:1px solid rgba(13,148,136,0.15);border-radius:8px;font-size:12px;color:var(--accent);line-height:1.5;font-weight:500"><i class="ph-duotone ph-info" style="margin-right:4px;font-size:13px;vertical-align:-1px"></i>${s.disclaimer}</div>` : ''}
                                 <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsAdjustment(${i})">View Adjusted Results \u2192</button>
                             </div>
                         </div>`;
@@ -7820,7 +7984,7 @@
             if (tab !== 'tools') {
                 toolsActiveTool = null;
                 toolsSearchQuery = '';
-                toolsCategoryFilter = null;
+                toolsCategoryFilter = [];
             }
 
             // Reset browse state when navigating away from lenses
@@ -7956,9 +8120,63 @@
         }
 
         function toolsBack() {
+            resetToolStates();
             toolsActiveTool = null;
             toolsSearchQuery = '';
             renderTools();
+        }
+
+        function resetToolStates() {
+            // IOP
+            iopState = { tonometer:'goldmann', od:{ iop:'', cct:'' }, os:{ iop:'', cct:'' } };
+            // Glaucoma
+            glaucState = { age:null, iop:null, cct:null, vcdr:null, vfType:'psd', vf:null };
+            // Plaquenil
+            plaqState = { weightVal:'', weightUnit:'lbs', heightFt:'', heightIn:'', sex:'', dailyDose:'', duration:'', renal:false, tamoxifen:false };
+            // Myopia
+            myopState.age = ''; myopState.rx = ''; myopState.sex = ''; myopState.ethnicity = 'caucasian'; myopState.treatment = 'none';
+            _myopChartData = null;
+            // BV Parks
+            bvParks = { step1:null, step2:null, step3:null };
+            // BV Dx
+            bvDxState = { step:1, coverTest:null, dnRelation:null, npc:null, vergFacility:null, vergAmplitude:null, baf:null, maf:null, mem:null, accAmp:null };
+            // Dry Eye
+            dryEyeExpanded = { tearQty:false, tearStab:false, staining:false, meibomian:false, inflammatory:false, symptoms:false, dews:false, lidBlink:false };
+            // Gonio
+            gonioExpanded = { anatomy:true, shaffer:true };
+            // Amblyopia
+            amblyopiaState = { odSph:null, odCyl:null, odSphSign:'+', odCylSign:'\u2212', osSph:null, osCyl:null, osSphSign:'+', osCylSign:'\u2212' };
+            // AMD
+            amdState = { od_drusen:false, od_pigment:false, os_drusen:false, os_pigment:false, rpd:false };
+            amdExpanded = { calculator:true, drusen:true, beckman:true, late:false, biomarkers:false };
+            // DR
+            drState = { ma:false, hemorrhages:false, hem_quads:0, hard_exudates:false, cws:false, venous_beading:false, vb_quads:0, irma:false, nv:false, vit_hem:false };
+            drExpanded = { grader:true, reference:true, dme:false };
+            // VF Index
+            vfActiveDefect = null;
+            // Color Vision
+            cvExpanded = { overview:true, ishihara:true, hrr:true, d15:true, acquired:false };
+            // VA
+            vaState = { value:'', format:'snellen' };
+            // Prentice
+            prenticeState = { power:'', decentration:'' };
+            // Hofstetter
+            hofstetterState = { age:'' };
+            // IOL
+            iolState = { al:'', avgK:'', aConst:'118.4', targetRx:'0' };
+            // Keratoconus
+            kcState = { steepK:'', flatK:'', pachy:'', isVal:'' };
+            // CL Param
+            clParamState = { flatK:'', steepK:'' };
+            // Anisocoria
+            anisoState = { s1:null, s2:null, s3:null, s4:null };
+            // Bruckner
+            brucknerExpanded = null;
+            // HVF
+            hvfExpanded = { reliability:false, globalIndices:false, ght:false, artifacts:false, patterns:false };
+            hvfGhtSelection = null;
+            // Slab-Off
+            slabOffState = { odPower:'', osPower:'', readingDrop:'10' };
         }
 
         function renderTools() {
@@ -8021,22 +8239,35 @@
                 renderEggersChartTool(el);
             } else if (toolsActiveTool === 'bruckner') {
                 renderBrucknerTool(el);
+            } else if (toolsActiveTool === 'hvf') {
+                renderHvfTool(el);
+            } else if (toolsActiveTool === 'slaboff') {
+                renderSlabOffTool(el);
             }
         }
 
         var toolsSearchQuery = '';
-        var toolsCategoryFilter = null;
+        var toolsCategoryFilter = [];
 
         var TOOLS_CATEGORIES = [
-            { id:'glaucoma', label:'Glaucoma', tools:['iop','glaucoma'] },
+            { id:'glaucoma', label:'Glaucoma', tools:['iop','glaucoma','hvf'] },
             { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx','bruckner'] },
-            { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter'] },
-            { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks'] },
-            { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve'] }
+            { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter','slaboff'] },
+            { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks','hvf'] },
+            { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve','hvf'] }
         ];
 
         function toggleToolsCategory(catId) {
-            toolsCategoryFilter = toolsCategoryFilter === catId ? null : catId;
+            if (catId === null) {
+                toolsCategoryFilter = [];
+            } else {
+                var idx = toolsCategoryFilter.indexOf(catId);
+                if (idx >= 0) {
+                    toolsCategoryFilter.splice(idx, 1);
+                } else {
+                    toolsCategoryFilter.push(catId);
+                }
+            }
             toolsSearchQuery = '';
             var el = document.getElementById('toolsContent');
             if (el && !toolsActiveTool) renderToolsMenu(el);
@@ -8101,23 +8332,35 @@
             { id:'eggers', icon:'ph-table', title:"Egger's Chart", desc:'Visual acuity to dioptric blur & astigmatism conversion',
               keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' },
             { id:'bruckner', icon:'ph-flashlight', title:'Bruckner Screening', desc:'Red reflex comparison & interpretation guide',
-              keywords:'bruckner red reflex screening myopia hyperopia anisometropia astigmatism media opacity strabismus leukocoria pediatric retinoscopy' }
+              keywords:'bruckner red reflex screening myopia hyperopia anisometropia astigmatism media opacity strabismus leukocoria pediatric retinoscopy' },
+            { id:'hvf', icon:'ph-chart-scatter', title:'HVF Interpreter',
+              desc:'Systematic Humphrey visual field interpretation guide',
+              keywords:'humphrey visual field hvf perimetry reliability fixation loss false positive false negative md psd vfi ght glaucoma hemifield test pattern deviation total deviation arcuate scotoma artifact' },
+            { id:'slaboff', icon:'ph-arrows-vertical', title:'Slab-Off Calculator',
+              desc:'Vertical imbalance & slab-off prism for anisometropia',
+              keywords:'slab off slab-off vertical imbalance prism anisometropia bifocal progressive prentice differential prismatic effect bicentric grind reading near' }
         ];
 
         function onToolsSearch(val) {
             toolsSearchQuery = val;
-            if (val.trim()) toolsCategoryFilter = null;
+            if (val.trim()) toolsCategoryFilter = [];
             var el = document.getElementById('toolsContent');
             if (el && !toolsActiveTool) renderToolsMenu(el);
         }
 
         function renderToolsMenu(el) {
             var q = toolsSearchQuery.trim().toLowerCase();
-            var activeCat = toolsCategoryFilter;
+            var activeCats = toolsCategoryFilter;
             var catToolIds = null;
-            if (activeCat) {
+            if (activeCats.length > 0) {
+                catToolIds = [];
                 for (var ci = 0; ci < TOOLS_CATEGORIES.length; ci++) {
-                    if (TOOLS_CATEGORIES[ci].id === activeCat) { catToolIds = TOOLS_CATEGORIES[ci].tools; break; }
+                    if (activeCats.indexOf(TOOLS_CATEGORIES[ci].id) >= 0) {
+                        var tools = TOOLS_CATEGORIES[ci].tools;
+                        for (var ti2 = 0; ti2 < tools.length; ti2++) {
+                            if (catToolIds.indexOf(tools[ti2]) < 0) catToolIds.push(tools[ti2]);
+                        }
+                    }
                 }
             }
 
@@ -8141,7 +8384,8 @@
                 vfindex:'#64748b', pupilcn:'#64748b', anisocoria:'#64748b', rapd:'#64748b',
                 dr:'#b45309', amd:'#b45309', uveitislab:'#b45309', keratoconus:'#b45309',
                 plaquenil:'#7c3aed', dryeye:'#0284c7',
-                va:'#475569', iol:'#475569', clparam:'#0d9488', eggers:'#475569', bruckner:'#16a34a'
+                va:'#475569', iol:'#475569', clparam:'#0d9488', eggers:'#475569', bruckner:'#16a34a',
+                hvf:'#64748b', slaboff:'#2563eb'
             };
             var cards = '';
             for (var i = 0; i < filtered.length; i++) {
@@ -8166,7 +8410,7 @@
             // Category filter buttons
             var catColors = { glaucoma:'#0d9488', pediatrics:'#7c3aed', bv:'#2563eb', neuro:'#c2410c', oculardz:'#b45309' };
             var catBtns = '<div style="display:flex;flex-wrap:' + (window.innerWidth <= 640 ? 'nowrap' : 'wrap') + ';gap:6px;margin-bottom:12px;' + (window.innerWidth > 640 ? 'justify-content:center;' : '') + '">';
-            var allActive = !activeCat;
+            var allActive = activeCats.length === 0;
             var _catDesk = window.innerWidth > 640;
             var _catPad = _catDesk ? '6px 14px' : '3px 8px';
             var _catFs = _catDesk ? '12px' : '10px';
@@ -8174,7 +8418,7 @@
             catBtns += '<button class="tools-cat-btn" onclick="toggleToolsCategory(null)" style="padding:' + _catPad + ';border-radius:' + _catRad + ';font-size:' + _catFs + ';font-weight:' + (allActive ? '800' : '600') + ';font-family:var(--sans);cursor:pointer;border:1px solid ' + (allActive ? 'var(--accent)' : 'rgba(0,0,0,0.1)') + ';background:' + (allActive ? 'rgba(13,148,136,0.08)' : 'transparent') + ';color:var(--ink);letter-spacing:0.02em;">All</button>';
             for (var j = 0; j < TOOLS_CATEGORIES.length; j++) {
                 var cat = TOOLS_CATEGORIES[j];
-                var isActive = activeCat === cat.id;
+                var isActive = activeCats.indexOf(cat.id) >= 0;
                 var cc = catColors[cat.id] || 'var(--accent)';
                 var isMobile = window.innerWidth <= 640;
                 var displayLabel = (isMobile && cat.shortLabel) ? cat.shortLabel : cat.label;
@@ -8955,9 +9199,9 @@
             return points;
         }
 
-        var myopDesktopOrder = ['myopAgeInput', 'myopRxInput', 'myopSex', 'myopEth', 'myopTx'];
+        var myopDesktopOrder = ['myopAgeSel', 'myopRxSel', 'myopSex', 'myopEth', 'myopTx'];
         var myopMobileOrder = ['myopAgeSel', 'myopRxSel', 'myopSex', 'myopEth', 'myopTx'];
-        var myopAutoLen = { myopAgeInput: 2 };
+        var myopAutoLen = {};
 
         function onMyopInput(field, val) {
             myopState[field] = val;
@@ -9281,19 +9525,13 @@
                     <div class="iop-form-grid">
                         <div class="iop-form-group">
                             <label>Current Age</label>
-                            <input type="number" class="myop-desktop-only" id="myopAgeInput" placeholder="e.g. 9" min="6" max="17" step="1"
-                                value="${myopState.age}"
-                                oninput="onMyopInput('age',this.value)">
-                            <select class="myop-mobile-only" id="myopAgeSel" onchange="onMyopInput('age',this.value)">
+                            <select id="myopAgeSel" onchange="onMyopInput('age',this.value)">
                                 ${buildMyopAgeOptions()}
                             </select>
                         </div>
                         <div class="iop-form-group">
                             <label>Current Rx \u2014 Spherical Equiv. (D)</label>
-                            <input type="number" class="myop-desktop-only" id="myopRxInput" placeholder="e.g. -1.50" min="-10" max="0" step="0.25"
-                                value="${myopState.rx}"
-                                oninput="onMyopInput('rx',this.value)">
-                            <select class="myop-mobile-only" id="myopRxSel" onchange="onMyopInput('rx',this.value)">
+                            <select id="myopRxSel" onchange="onMyopInput('rx',this.value)">
                                 ${buildMyopRxOptions()}
                             </select>
                         </div>
@@ -9398,8 +9636,8 @@
                 if (hyper === 'right') rIy = -6;
                 if (hyper === 'left') lIy = -6;
             } else if (step === 3 && tilt) {
-                if (tilt === 'right') rIy = -6;
-                if (tilt === 'left') lIy = -6;
+                if (hyper === 'right') rIy = -6;
+                if (hyper === 'left') lIy = -6;
             }
             var ps = (step === 2 && gaze) ? (gaze === 'left' ? 6 : -6) : 0;
             var rot = (step >= 3 && tilt) ? (tilt === 'right' ? -8 : 8) : 0;
@@ -13325,6 +13563,333 @@
             document.addEventListener('click', _bkOutsideClick);
         }
 
+        // ===== HVF INTERPRETER TOOL =====
+
+        var hvfExpanded = { reliability:false, globalIndices:false, ght:false, artifacts:false, patterns:false };
+        var hvfGhtSelection = null;
+
+        var HVF_GHT_DATA = {
+            wnl: { label:'Within Normal Limits', detail:'No significant asymmetry between superior and inferior hemifields.',
+                clinical:'The overall pattern of sensitivity falls within the expected range. No statistically significant difference between corresponding zones in the superior and inferior hemifields. This is the expected result in healthy eyes, but does not rule out early disease\u2014always correlate with structural findings.' },
+            borderline: { label:'Borderline', detail:'Marginal asymmetry that does not meet statistical significance.',
+                clinical:'The pattern of sensitivity shows some asymmetry between hemifields, but does not reach the threshold for abnormality. Requires close follow-up with repeat testing. Consider structural correlation (OCT RNFL/GCC). A single borderline result in isolation is not diagnostic.' },
+            onl: { label:'Outside Normal Limits', detail:'Statistically significant hemifield asymmetry detected.',
+                clinical:'A statistically significant difference exists between corresponding zones in the superior and inferior hemifields. This is the hallmark GHT result in glaucoma. Must be reproducible on at least 2\u20133 tests before confirming true defect. Correlate with optic nerve and OCT findings.' },
+            grs: { label:'General Reduction of Sensitivity', detail:'Diffuse sensitivity loss across the entire field.',
+                clinical:'Overall depression of sensitivity without a specific hemifield pattern. Differential diagnosis includes media opacity (cataract, corneal edema), small pupil (<2 mm), uncorrected refractive error, or diffuse retinal/optic nerve disease. Check MD value\u2014if significantly depressed with normal PSD, consider non-glaucomatous cause.' },
+            ahs: { label:'Abnormally High Sensitivity', detail:'Sensitivity values higher than normative database.',
+                clinical:'One or more zones show sensitivity above expected norms. Most commonly caused by a trigger-happy patient (high false positive rate). Check FP rate\u2014if >15%, the field is unreliable. Can also occur in young patients or those with naturally high sensitivity. Rarely clinically significant.' }
+        };
+
+        var HVF_ARTIFACTS = [
+            { name:'Lid/Brow Artifact', desc:'Superior field depression from ptotic lid or prominent brow. Appears as a dense defect along the superior arcuate region. Tape the lid or re-test with the lid held to confirm.' },
+            { name:'Lens Rim Artifact', desc:'Ring-shaped scotoma from trial lens rim positioned too far from the eye. Usually appears as a circular or crescent-shaped defect at ~25\u201330\u00b0 eccentricity. Reposition the trial lens closer to the eye.' },
+            { name:'Trial Lens Artifact', desc:'Incorrect trial lens power causes generalized depression. Ensure correct near correction for patient\u2019s age is in the lens holder. Check that the prescription is current.' },
+            { name:'Learning Effect', desc:'First-time test takers often show artifactually depressed fields, especially peripherally. Repeat test on a second visit before diagnosing true defects. Most significant on the initial test.' },
+            { name:'Fatigue Effect', desc:'Progressive sensitivity loss during the test, worse in the second half (typically the upper hemifield, tested last in most strategies). Look for an asymmetry between the first-tested and last-tested hemifield. Shorten test or use SITA Faster.' },
+            { name:'Trigger-Happy Patient', desc:'Abnormally high sensitivity and high false positive rate (>15%). The patient presses the button even without seeing the stimulus. Results in white scotomas (areas of impossibly high sensitivity) and an unreliable test. GHT may read "Abnormally High Sensitivity."' },
+            { name:'Inattentive Patient', desc:'High fixation losses and/or high false negative rate. Generalized depression with an irregular, noisy pattern. Encourage the patient and allow rest breaks. Consider re-testing with SITA Faster or a smaller test grid.' }
+        ];
+
+        var HVF_PATTERNS = [
+            { pattern:'Arcuate (Bjerrum) Scotoma', significance:'Follows the arcuate nerve fiber bundle from the blind spot, arching above or below fixation to the nasal raphe.', category:'Glaucoma' },
+            { pattern:'Nasal Step', significance:'Sensitivity difference across the nasal horizontal meridian. Results from asymmetric damage to arcuate nerve fibers above vs. below.', category:'Glaucoma' },
+            { pattern:'Paracentral Scotoma', significance:'Isolated depressed point(s) within 10\u00b0 of fixation in the Bjerrum region. Often an early glaucomatous sign.', category:'Glaucoma' },
+            { pattern:'Generalized Depression', significance:'Diffuse sensitivity loss across all regions. Consider cataract, small pupil, uncorrected refractive error, or diffuse optic neuropathy.', category:'Optic Nerve' },
+            { pattern:'Enlarged Blind Spot', significance:'Expansion of the physiologic blind spot. Seen in papilledema, optic disc drusen, peripapillary atrophy, or tilted disc syndrome.', category:'Optic Nerve' },
+            { pattern:'Central Scotoma', significance:'Defect at or near fixation. Suggests optic neuritis, macular disease, toxic/nutritional optic neuropathy, or compressive lesion.', category:'Optic Nerve' },
+            { pattern:'Centrocecal Scotoma', significance:'Defect connecting fixation to the blind spot. Classic for toxic/nutritional optic neuropathy (e.g., ethambutol, B12 deficiency) or optic neuritis.', category:'Optic Nerve' },
+            { pattern:'Altitudinal Defect', significance:'Dense defect respecting the horizontal meridian (superior or inferior). Suggests anterior ischemic optic neuropathy (AION) or branch retinal artery occlusion.', category:'Vascular' },
+            { pattern:'Bitemporal Hemianopia', significance:'Defect in both temporal hemifields respecting the vertical meridian. Localizes to the optic chiasm (e.g., pituitary adenoma, craniopharyngioma).', category:'Neuro' },
+            { pattern:'Homonymous Hemianopia', significance:'Defect in the same hemifield of both eyes respecting the vertical meridian. Localizes to the retrochiasmal pathway (tract, LGN, radiation, or cortex).', category:'Neuro' },
+            { pattern:'Quadrantanopia (Superior)', significance:'Homonymous defect limited to a superior quadrant. Suggests a lesion in the contralateral temporal lobe (Meyer\u2019s loop) or inferior occipital cortex.', category:'Neuro' },
+            { pattern:'Quadrantanopia (Inferior)', significance:'Homonymous defect limited to an inferior quadrant. Suggests a lesion in the contralateral parietal lobe (upper optic radiation) or superior occipital cortex.', category:'Neuro' }
+        ];
+
+        function toggleHvfSection(key) {
+            hvfExpanded[key] = !hvfExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderHvfTool(el);
+        }
+
+        function hvfExpandAll() {
+            for (var k in hvfExpanded) hvfExpanded[k] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderHvfTool(el);
+        }
+
+        function hvfCollapseAll() {
+            for (var k in hvfExpanded) hvfExpanded[k] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderHvfTool(el);
+        }
+
+        function hvfSelectGht(val) {
+            hvfGhtSelection = hvfGhtSelection === val ? null : val;
+            var el = document.getElementById('toolsContent');
+            if (el) renderHvfTool(el);
+        }
+
+        function buildHvfSection(id, icon, title, summary, content) {
+            var exp = hvfExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleHvfSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function renderHvfTool(el) {
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="hvfExpandAll()">Expand All</button><button onclick="hvfCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+
+            // 1. Reliability Indices
+            var reliabilityContent = deTable(
+                ['Index', 'Reliable', 'Suspect', 'Unreliable'],
+                [
+                    ['Fixation Losses (FL)', '<span style="color:var(--success);">&lt;20%</span>', '<span style="color:#d97706;">20\u201333%</span>', '<span style="color:var(--error);">&gt;33%</span>'],
+                    ['False Positives (FP)', '<span style="color:var(--success);">&lt;15%</span>', '<span style="color:#d97706;">15\u201333%</span>', '<span style="color:var(--error);">&gt;33%</span>'],
+                    ['False Negatives (FN)', '<span style="color:var(--success);">&lt;33%</span>', '<span style="color:#d97706;">\u2014</span>', '<span style="color:var(--error);">&gt;33%</span>'],
+                    ['Short-term Fluctuation (SF)', '<span style="color:var(--success);">&lt;2.0 dB</span>', '<span style="color:#d97706;">2.0\u20134.0 dB</span>', '<span style="color:var(--error);">&gt;4.0 dB</span>']
+                ]
+            );
+            reliabilityContent += '<div style="margin-top:10px;font-size:12px;color:var(--ink-secondary);line-height:1.6;">'
+                + '<strong>Note:</strong> Modern SITA strategies estimate FN differently and may not report SF. '
+                + 'High FP (>15%) is the most critical reliability indicator\u2014it can create artifactually normal or "white" scotomas. '
+                + 'High FN may reflect true advanced disease rather than poor reliability.'
+                + '</div>';
+            html += buildHvfSection('reliability', 'ph-check-circle', 'Reliability Indices', 'FL, FP, FN & SF thresholds', reliabilityContent);
+
+            // 2. Global Indices
+            var globalContent = '<div style="font-size:13px;color:var(--ink-secondary);line-height:1.6;margin-bottom:12px;">'
+                + '<strong>MD (Mean Deviation):</strong> Overall average deviation from age-normal sensitivity. Negative values indicate field loss.'
+                + '</div>';
+            globalContent += deTable(
+                ['MD Range', 'Severity'],
+                [
+                    ['0 to \u22122.0 dB', '<span style="color:var(--success);">Normal</span>'],
+                    ['\u22122.01 to \u22126.0 dB', '<span style="color:#d97706;">Early defect</span>'],
+                    ['\u22126.01 to \u221212.0 dB', '<span style="color:#ea580c;">Moderate defect</span>'],
+                    ['< \u221212.0 dB', '<span style="color:var(--error);">Advanced/Severe defect</span>']
+                ]
+            );
+            globalContent += '<div style="margin-top:14px;font-size:13px;color:var(--ink-secondary);line-height:1.6;">'
+                + '<strong>PSD (Pattern Standard Deviation):</strong> Measures localized (focal) loss independent of overall depression. '
+                + 'A high PSD with near-normal MD suggests an early focal defect. A low PSD with depressed MD suggests diffuse loss (e.g., cataract).'
+                + '</div>';
+            globalContent += '<div style="margin-top:10px;font-size:13px;color:var(--ink-secondary);line-height:1.6;">'
+                + '<strong>VFI (Visual Field Index):</strong> Percentage of remaining visual field (0\u2013100%). Center-weighted. '
+                + 'Used for staging and rate-of-progression analysis. VFI 100% = full field; VFI &lt;50% = severe loss.'
+                + '</div>';
+            globalContent += '<div style="margin-top:10px;font-size:13px;color:var(--ink-secondary);line-height:1.6;">'
+                + '<strong>Probability symbols:</strong> p&lt;5% (lightly shaded), p&lt;2% (moderately shaded), p&lt;1% (darkly shaded), p&lt;0.5% (black). '
+                + 'These appear on Total Deviation and Pattern Deviation probability plots.'
+                + '</div>';
+            html += buildHvfSection('globalIndices', 'ph-chart-bar', 'Global Indices', 'MD, PSD, VFI & probability symbols', globalContent);
+
+            // 3. GHT
+            var ghtContent = '<div style="font-size:13px;color:var(--ink-secondary);line-height:1.6;margin-bottom:12px;">'
+                + 'The Glaucoma Hemifield Test compares 5 corresponding zones in the superior and inferior hemifields. Select a result for interpretation:'
+                + '</div>';
+            ghtContent += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">';
+            var ghtKeys = ['wnl','borderline','onl','grs','ahs'];
+            for (var gi = 0; gi < ghtKeys.length; gi++) {
+                var gk = ghtKeys[gi];
+                var gd = HVF_GHT_DATA[gk];
+                ghtContent += '<button class="bv-opt-btn' + (hvfGhtSelection === gk ? ' selected' : '') + '" onclick="hvfSelectGht(\'' + gk + '\')">' + gd.label + '</button>';
+            }
+            ghtContent += '</div>';
+            if (hvfGhtSelection && HVF_GHT_DATA[hvfGhtSelection]) {
+                var sel = HVF_GHT_DATA[hvfGhtSelection];
+                ghtContent += '<div class="iop-result-box" style="margin-top:0;">'
+                    + '<div style="font-weight:600;margin-bottom:6px;color:var(--ink);">' + sel.label + '</div>'
+                    + '<div style="font-size:13px;color:var(--ink-secondary);margin-bottom:8px;font-style:italic;">' + sel.detail + '</div>'
+                    + '<div style="font-size:13px;color:var(--ink-secondary);line-height:1.6;">' + sel.clinical + '</div>'
+                    + '</div>';
+            }
+            html += buildHvfSection('ght', 'ph-chart-pie-slice', 'Glaucoma Hemifield Test (GHT)', '5 hemifield comparison results', ghtContent);
+
+            // 4. Common Artifacts
+            var artifactContent = '';
+            for (var ai = 0; ai < HVF_ARTIFACTS.length; ai++) {
+                var a = HVF_ARTIFACTS[ai];
+                artifactContent += '<div style="margin-bottom:' + (ai < HVF_ARTIFACTS.length - 1 ? '12' : '0') + 'px;">'
+                    + '<div style="font-weight:600;font-size:13px;color:var(--ink);margin-bottom:2px;">' + a.name + '</div>'
+                    + '<div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.5;">' + a.desc + '</div>'
+                    + '</div>';
+            }
+            html += buildHvfSection('artifacts', 'ph-warning', 'Common Artifacts', 'Lid, lens rim, learning, fatigue & more', artifactContent);
+
+            // 5. Pattern Recognition
+            var catColors = { Glaucoma:'#0f766e', Vascular:'#dc2626', 'Optic Nerve':'#7c3aed', Neuro:'#c2410c' };
+            var patternRows = [];
+            for (var pi = 0; pi < HVF_PATTERNS.length; pi++) {
+                var p = HVF_PATTERNS[pi];
+                var cc = catColors[p.category] || 'var(--ink-secondary)';
+                patternRows.push([
+                    '<strong>' + p.pattern + '</strong>',
+                    p.significance,
+                    '<span style="background:' + cc + '18;color:' + cc + ';padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap;">' + p.category + '</span>'
+                ]);
+            }
+            var patternContent = deTable(['Pattern', 'Significance', 'Category'], patternRows);
+            html += buildHvfSection('patterns', 'ph-scan', 'Pattern Recognition', '12 classic visual field defect patterns', patternContent);
+
+            // References
+            html += '<div class="ref-toggle-wrap" style="margin-top:14px;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + '<div style="font-size:11.5px;color:var(--ink-secondary);line-height:1.6;">'
+                + 'Heijl A, Patella VM, Bengtsson B. <em>The Field Analyzer Primer: Effective Perimetry.</em> 4th ed. Carl Zeiss Meditec; 2012.<br>'
+                + 'Kanski JJ, Bowling B. <em>Clinical Ophthalmology: A Systematic Approach.</em> 8th ed. Elsevier; 2016.<br>'
+                + 'Asman P, Heijl A. Glaucoma Hemifield Test: automated visual field evaluation. <em>Arch Ophthalmol.</em> 1992;110(6):812\u2013819.<br>'
+                + 'Hodapp E, Parrish RK, Anderson DR. <em>Clinical Decisions in Glaucoma.</em> Mosby; 1993.<br>'
+                + 'AAO Basic and Clinical Science Course, Section 10: Glaucoma. 2023\u20132024.'
+                + '</div></div></div>';
+
+            el.innerHTML = html;
+        }
+
+        // ===== SLAB-OFF CALCULATOR TOOL =====
+
+        var slabOffState = { odPower:'', osPower:'', readingDrop:'10' };
+
+        function slabOffCalc() {
+            var od = parseFloat(slabOffState.odPower);
+            var os = parseFloat(slabOffState.osPower);
+            var drop = parseFloat(slabOffState.readingDrop);
+            if (isNaN(od) || isNaN(os) || isNaN(drop) || drop <= 0) return null;
+
+            var dropCm = drop / 10;
+            var prismOD = Math.abs(od * dropCm);
+            var prismOS = Math.abs(os * dropCm);
+            var dirOD = od < 0 ? 'BU' : (od > 0 ? 'BD' : '\u2014');
+            var dirOS = os < 0 ? 'BU' : (os > 0 ? 'BD' : '\u2014');
+
+            // For differential, compute signed vertical prism (minus = BU, plus = BD)
+            var signedOD = od < 0 ? prismOD : -prismOD; // BU positive, BD negative
+            var signedOS = os < 0 ? prismOS : -prismOS;
+            var diff = Math.abs(signedOD - signedOS);
+            diff = Math.round(diff * 100) / 100;
+
+            var severity, sevColor;
+            if (diff < 0.5) { severity = 'No clinical significance'; sevColor = 'var(--success)'; }
+            else if (diff <= 1.0) { severity = 'Usually tolerated'; sevColor = '#d97706'; }
+            else if (diff <= 1.5) { severity = 'May cause symptoms'; sevColor = '#ea580c'; }
+            else { severity = 'Likely symptomatic \u2014 slab-off recommended'; sevColor = 'var(--error)'; }
+
+            // Slab-off goes on the more minus (or less plus) lens
+            var slabOffEye = null;
+            if (od !== os) {
+                slabOffEye = od < os ? 'OD' : 'OS';
+            }
+
+            return {
+                prismOD: prismOD, dirOD: dirOD,
+                prismOS: prismOS, dirOS: dirOS,
+                differential: diff,
+                severity: severity, sevColor: sevColor,
+                slabOffEye: slabOffEye
+            };
+        }
+
+        function slabOffUpdateResult() {
+            var box = document.getElementById('slabOffResultBox');
+            if (!box) return;
+            var r = slabOffCalc();
+            if (!r) { box.style.display = 'none'; return; }
+
+            box.style.display = 'block';
+            var h = '<div style="font-weight:600;margin-bottom:10px;color:var(--ink);">Vertical Prismatic Effect at Near</div>';
+            h += '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:10px;">';
+            h += '<tr style="border-bottom:1px solid var(--rule);"><td style="padding:6px 0;color:var(--ink-secondary);">OD</td><td style="padding:6px 0;text-align:right;font-weight:600;">' + r.prismOD.toFixed(2) + '\u0394 ' + r.dirOD + '</td></tr>';
+            h += '<tr style="border-bottom:1px solid var(--rule);"><td style="padding:6px 0;color:var(--ink-secondary);">OS</td><td style="padding:6px 0;text-align:right;font-weight:600;">' + r.prismOS.toFixed(2) + '\u0394 ' + r.dirOS + '</td></tr>';
+            h += '<tr><td style="padding:8px 0;color:var(--ink);font-weight:600;">Differential</td><td style="padding:8px 0;text-align:right;font-weight:700;font-size:16px;">' + r.differential.toFixed(2) + '\u0394</td></tr>';
+            h += '</table>';
+
+            h += '<div style="display:inline-block;padding:4px 12px;border-radius:10px;font-size:12px;font-weight:600;background:' + r.sevColor + '18;color:' + r.sevColor + ';">' + r.severity + '</div>';
+
+            if (r.slabOffEye && r.differential >= 1.0) {
+                h += '<div style="margin-top:14px;padding:12px 14px;background:var(--surface-alt,var(--surface));border-radius:8px;border:1px solid var(--rule);">'
+                    + '<div style="font-weight:600;font-size:13px;color:var(--ink);margin-bottom:8px;">Management Options</div>'
+                    + '<div style="font-size:12.5px;color:var(--ink-secondary);line-height:1.7;">'
+                    + '\u2022 <strong>Slab-off (bicentric grind)</strong> on ' + r.slabOffEye + ' (more minus / less plus lens)<br>'
+                    + '\u2022 <strong>Reverse slab-off</strong> on ' + (r.slabOffEye === 'OD' ? 'OS' : 'OD') + ' (cosmetically smoother)<br>'
+                    + '\u2022 <strong>Fresnel press-on prism</strong> for trial or temporary correction<br>'
+                    + '\u2022 <strong>Dissimilar progressives</strong> (different add powers or corridor lengths)<br>'
+                    + '\u2022 <strong>Contact lenses</strong> (eliminates prismatic effect at near)<br>'
+                    + '\u2022 <strong>Two pairs of single vision glasses</strong> (distance + near)'
+                    + '</div></div>';
+            }
+
+            box.innerHTML = h;
+        }
+
+        function renderSlabOffTool(el) {
+            var s = slabOffState;
+            var html = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button></div>';
+
+            html += '<div class="tools-card">'
+                + '<div class="tools-card-title"><i class="ph-duotone ph-arrows-vertical"></i> Slab-Off Calculator</div>'
+                + '<div class="tools-card-desc">Calculates differential vertical prismatic effect at the near reading position using Prentice\u2019s Rule. Enter the vertical meridian power (sphere + cylinder power in the 90\u00b0 meridian) for each eye.</div>'
+                + '<div class="iop-form-grid" style="margin-top:14px;">'
+                + '<div class="iop-form-group"><label>OD Vertical Power (D)</label>'
+                + '<input type="number" step="0.25" placeholder="e.g. -4.00" value="' + s.odPower + '" oninput="slabOffState.odPower=this.value;slabOffUpdateResult()"></div>'
+                + '<div class="iop-form-group"><label>OS Vertical Power (D)</label>'
+                + '<input type="number" step="0.25" placeholder="e.g. -1.50" value="' + s.osPower + '" oninput="slabOffState.osPower=this.value;slabOffUpdateResult()"></div>'
+                + '<div class="iop-form-group full-width"><label>Reading Drop (mm below OC)</label>'
+                + '<input type="number" step="1" min="1" placeholder="10" value="' + s.readingDrop + '" oninput="slabOffState.readingDrop=this.value;slabOffUpdateResult()"></div>'
+                + '</div>'
+                + '<div style="margin-top:8px;font-size:11.5px;color:var(--ink-muted);line-height:1.5;">'
+                + '<strong>How to determine:</strong> Measure the vertical distance from the distance optical center (or fitting cross) down to where the patient reads through the near segment. Typically 8\u201312 mm for flat-top bifocals, 14\u201318 mm for progressives. Default 10 mm is a standard bifocal estimate.'
+                + '</div>'
+                + '<div class="iop-result-box" id="slabOffResultBox" style="margin-top:18px;display:none;"></div>'
+                + '</div>';
+
+            // Significance thresholds reference
+            html += '<div class="tools-card" style="margin-top:10px;">'
+                + '<div style="font-weight:600;font-size:13.5px;color:var(--ink);margin-bottom:10px;">Significance Thresholds</div>';
+            var thresholds = [
+                { range:'< 0.5\u0394', label:'No clinical significance', color:'var(--success)' },
+                { range:'0.5 \u2013 1.0\u0394', label:'Usually tolerated', color:'#d97706' },
+                { range:'1.0 \u2013 1.5\u0394', label:'May cause symptoms', color:'#ea580c' },
+                { range:'> 1.5\u0394', label:'Likely symptomatic', color:'var(--error)' }
+            ];
+            for (var ti = 0; ti < thresholds.length; ti++) {
+                var t = thresholds[ti];
+                html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:' + (ti < 3 ? '8' : '0') + 'px;font-size:13px;">'
+                    + '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + t.color + ';flex-shrink:0;"></span>'
+                    + '<span style="color:var(--ink-secondary);min-width:90px;font-weight:600;">' + t.range + '</span>'
+                    + '<span style="color:var(--ink-secondary);">' + t.label + '</span>'
+                    + '</div>';
+            }
+            html += '</div>';
+
+            // References
+            html += '<div class="ref-toggle-wrap" style="margin-top:14px;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + '<div style="font-size:11.5px;color:var(--ink-secondary);line-height:1.6;">'
+                + 'Brooks CW, Borish IM. <em>System for Ophthalmic Dispensing.</em> 3rd ed. Butterworth-Heinemann; 2007.<br>'
+                + 'Jalie M. <em>Ophthalmic Lenses and Dispensing.</em> 3rd ed. Butterworth-Heinemann; 2008.<br>'
+                + 'Fannin TE, Grosvenor T. <em>Clinical Optics.</em> 2nd ed. Butterworth-Heinemann; 1996.'
+                + '</div></div></div>';
+
+            el.innerHTML = html;
+            slabOffUpdateResult();
+        }
+
         // ===== MEDICATIONS TAB =====
 
         function renderMeds() {
@@ -14049,12 +14614,12 @@
         const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null, sortBc: null, sortDia: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
 
         function toggleBrowseType(type) {
-            browseState.typeFilter = type;
+            browseState.typeFilter = browseState.typeFilter === type ? null : type;
             renderBrowse();
         }
 
         function toggleBrowseModality(mod) {
-            browseState.modalityFilter = mod;
+            browseState.modalityFilter = browseState.modalityFilter === mod ? null : mod;
             renderBrowse();
         }
 
@@ -14214,7 +14779,7 @@
 
             html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view, or scroll right.</div>`;
             html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
-                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">DK${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
+                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk/t${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
 
             let totalShown = 0;
