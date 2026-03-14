@@ -1048,9 +1048,8 @@
         }
 
         .order-param-note {
-
-            font-size: 9px;
-            color: var(--ink-secondary);
+            font-size: 12px;
+            color: #475569;
             margin-top: 2px;
         }
 
@@ -3913,11 +3912,11 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"textOnly", title:"To Improve Distance", textMinus:"Perform hand-held trial lens over-refraction. Push minus in \u22120.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye).", textPlus:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye)." }
+                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationaleBySign:{ plus:"Add +0.25 to dominant eye using handheld trial lenses, evaluating vision binocularly in normal room illumination.", minus:"Add \u22120.25 to dominant eye using handheld trial lenses, evaluating vision binocularly in normal room illumination." } }
                     ],
                     near: [
                         { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
-                        { action:"raiseAdd", eye:"nonDominant" }
+                        { action:"raiseAdd", eye:"nonDominant", rationale:"To improve near vision, add +0.50D to the ADD power of the non-dominant eye (from {from} to {to})." }
                     ]
                 }
             }},
@@ -4018,11 +4017,11 @@
             {id:"med_002",brand_name:"Xiidra",generic_name:"Lifitegrast 5%",generic_available:false,drug_class:"LFA-1 antagonist",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily (every 12 hours)",bottle_size:"0.2 mL single-use vials (60 count)",preservative_free:true,avg_brand_price:650,avg_generic_price:null,notes:"May notice improvement in as little as 2 weeks. Dysgeusia (altered taste) is a common side effect.",price_size:"60-count box",route:"topical"},
             {id:"med_003",brand_name:"Cequa",generic_name:"Cyclosporine 0.09%",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily (every 12 hours)",bottle_size:"0.25 mL single-use vials (60 count)",preservative_free:true,avg_brand_price:700,avg_generic_price:null,notes:"Uses nanomicellar technology for enhanced absorption. Higher concentration than Restasis.",price_size:"60-count box",route:"topical"},
             {id:"med_004",brand_name:"Tyrvaya",generic_name:"Varenicline 0.03 mg nasal spray",generic_available:false,drug_class:"Nicotinic acetylcholine receptor agonist",condition:"dry_eye",typical_dosing:"1 spray in each nostril twice daily",bottle_size:"4.7 mL nasal spray",preservative_free:false,avg_brand_price:650,avg_generic_price:null,notes:"Nasal spray, not an eye drop. Stimulates natural tear production via trigeminal nerve. Sneezing is a common side effect.",price_size:"4.7 mL",route:"nasal"},
-            {id:"med_005",brand_name:"Vevye",generic_name:"Cyclosporine 0.1% (in perfluorobutylpentane)",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily",bottle_size:"2.5 mL / 5 mL multi-dose bottle",preservative_free:true,avg_brand_price:550,avg_generic_price:null,notes:"Water-free formulation. Significantly less burning/stinging on instillation compared to other cyclosporines.",price_size:"5 mL",route:"topical"},
-            {id:"med_006",brand_name:"Refresh",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed (ointment at bedtime)",bottle_size:"Varies by product",preservative_free:true,avg_brand_price:null,avg_generic_price:null,notes:"Allergan / AbbVie. Many types available in preserved and PF formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Relieva","Digital","Optive","Optive Advanced","Optive Mega-3","Gel","PM (ointment)","Tears","Original","Plus","Liquigel","Celluvisc"]},
-            {id:"med_007",brand_name:"Systane",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed (ointment at bedtime)",bottle_size:"Varies by product",preservative_free:true,avg_brand_price:null,avg_generic_price:null,notes:"Alcon. Many types available in preserved and PF formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Ultra","Balance","Complete","Hydration","Pro","Gel Drops","Night (gel)","Nighttime (ointment)"]},
+            {id:"med_005",brand_name:"Vevye",generic_name:"Cyclosporine 0.1% (in perfluorohexyloctane)",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily",bottle_size:"2.5 mL / 5 mL multi-dose bottle",preservative_free:true,avg_brand_price:550,avg_generic_price:null,notes:"Water-free formulation. Significantly less burning/stinging on instillation compared to other cyclosporines.",price_size:"5 mL",route:"topical"},
+            {id:"med_006",brand_name:"Refresh",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed (ointment at bedtime)",bottle_size:"Varies by product",preservative_free:false,avg_brand_price:null,avg_generic_price:null,notes:"Allergan / AbbVie. Available in both preserved (Purite) and preservative-free formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Relieva","Digital","Optive","Optive Advanced","Optive Mega-3","Gel","PM (ointment)","Tears","Original","Plus","Liquigel","Celluvisc"]},
+            {id:"med_007",brand_name:"Systane",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed (ointment at bedtime)",bottle_size:"Varies by product",preservative_free:false,avg_brand_price:null,avg_generic_price:null,notes:"Alcon. Available in both preserved (Polyquad) and preservative-free formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Ultra","Balance","Complete","Hydration","Pro","Gel Drops","Night (gel)","Nighttime (ointment)"]},
             {id:"med_008",brand_name:"Retaine MGD",generic_name:"Light mineral oil / Mineral oil",generic_available:false,drug_class:"Lipid-based artificial tear",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"30 single-use vials",preservative_free:true,avg_brand_price:22,avg_generic_price:null,notes:"Lipid-based drop, good for evaporative dry eye and MGD. Preservative-free.",price_size:"30-count box",route:"topical"},
-            {id:"med_009",brand_name:"Blink",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"Varies by product",preservative_free:true,avg_brand_price:null,avg_generic_price:null,notes:"Bausch + Lomb. Several types available in PF formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Tears","GelTears","Triple Care","Nourish","Boost","Contacts","Blink-n-Clean"]},
+            {id:"med_009",brand_name:"Blink",generic_name:"Active ingredients vary by product",generic_available:false,drug_class:"Artificial Tears — Brand Family",condition:"dry_eye",typical_dosing:"1-2 drops as needed",bottle_size:"Varies by product",preservative_free:false,avg_brand_price:null,avg_generic_price:null,notes:"Bausch + Lomb. Available in both preserved and preservative-free formulations. Choose based on dry eye severity and mechanism.",price_size:null,route:"topical",subtypes:["Tears","GelTears","Triple Care","Nourish","Boost","Contacts","Blink-n-Clean"]},
             {id:"med_010",brand_name:"Xalatan",generic_name:"Latanoprost 0.005%",generic_available:true,drug_class:"Prostaglandin analog",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily at bedtime",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:15,notes:"First-line glaucoma therapy. May cause iris darkening, eyelash growth, periorbital fat atrophy. Refrigerate before opening.",price_size:"2.5 mL",route:"topical"},
             {id:"med_011",brand_name:"Lumigan",generic_name:"Bimatoprost 0.01%",generic_available:true,drug_class:"Prostaglandin analog",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily at bedtime",bottle_size:"2.5 mL / 5 mL / 7.5 mL",preservative_free:false,avg_brand_price:220,avg_generic_price:25,notes:"Similar efficacy to latanoprost. Same class side effects. Also used cosmetically as Latisse for lash growth.",price_size:"2.5 mL",route:"topical"},
             {id:"med_012",brand_name:"Travatan Z",generic_name:"Travoprost 0.004%",generic_available:true,drug_class:"Prostaglandin analog",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily at bedtime",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:210,avg_generic_price:20,notes:"Uses sofZia preservative system (ionic buffered). No refrigeration needed. May be better tolerated on ocular surface.",price_size:"2.5 mL",route:"topical"},
@@ -4049,7 +4048,7 @@
             {id:"med_033",brand_name:"Zirgan",generic_name:"Ganciclovir 0.15% gel",generic_available:true,drug_class:"Antiviral (nucleoside analog)",condition:"viral_infection",typical_dosing:"1 drop five times daily until ulcer heals, then three times daily for 7 days",bottle_size:"5 g tube",preservative_free:false,avg_brand_price:500,avg_generic_price:250,notes:"For herpes simplex keratitis. Gel formulation \u2014 better retention. Replaced trifluridine (Viroptic) as preferred topical antiviral.",price_size:"5 g tube",route:"topical"},
             {id:"med_034",brand_name:"Viroptic",generic_name:"Trifluridine 1%",generic_available:true,drug_class:"Antiviral (nucleoside analog)",condition:"viral_infection",typical_dosing:"1 drop every 2 hours while awake (max 9 drops/day) for 14 days",bottle_size:"7.5 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:200,notes:"Older antiviral. Must refrigerate. Epithelial toxicity with prolonged use. Largely replaced by ganciclovir gel.",price_size:"7.5 mL",route:"topical"},
             {id:"med_035",brand_name:"Valtrex",generic_name:"Valacyclovir 500 mg / 1000 mg tablet",generic_available:true,drug_class:"Antiviral (oral nucleoside analog)",condition:"viral_infection",typical_dosing:"500 mg two to three times daily for acute; 500 mg daily for prophylaxis",bottle_size:"30 tablets",preservative_free:false,avg_brand_price:400,avg_generic_price:15,notes:"Oral antiviral for HSV keratitis and HZO. Prophylactic dosing important in recurrent cases. Adjust dose for renal impairment.",price_size:"30 tablets",route:"oral"},
-            {id:"med_036",brand_name:"Natamycin 5%",generic_name:"Natamycin 5% suspension",generic_available:false,drug_class:"Antifungal (polyene)",condition:"fungal_infection",typical_dosing:"1 drop every 1-2 hours initially, then taper over weeks",bottle_size:"15 mL",preservative_free:false,avg_brand_price:800,avg_generic_price:null,notes:"Only commercially available topical ophthalmic antifungal. Shake vigorously. Primarily for filamentary fungi (Fusarium). Very expensive.",price_size:"15 mL",route:"topical"},
+            {id:"med_036",brand_name:"Natacyn",generic_name:"Natamycin 5% suspension",generic_available:false,drug_class:"Antifungal (polyene)",condition:"fungal_infection",typical_dosing:"1 drop every 1-2 hours initially, then taper over weeks",bottle_size:"15 mL",preservative_free:false,avg_brand_price:800,avg_generic_price:null,notes:"Only commercially available topical ophthalmic antifungal. Shake vigorously. Primarily for filamentary fungi (Fusarium). Very expensive.",price_size:"15 mL",route:"topical"},
             {id:"med_037",brand_name:"Pred Forte",generic_name:"Prednisolone acetate 1%",generic_available:true,drug_class:"Corticosteroid (high potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops two to four times daily; taper based on response",bottle_size:"1 mL / 5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:220,avg_generic_price:25,notes:"Gold standard ophthalmic steroid. Shake well (suspension). Monitor IOP \u2014 steroid response can occur in 2-4 weeks. Generic pred acetate may have variable bioavailability.",price_size:"5 mL",route:"topical"},
             {id:"med_038",brand_name:"Lotemax (gel)",generic_name:"Loteprednol 0.5% gel",generic_available:true,drug_class:"Corticosteroid (moderate potency)",condition:"inflammation_steroid",typical_dosing:"1 drop four times daily",bottle_size:"5 mL / 10 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:45,notes:"Retrometabolized steroid \u2014 lower risk of IOP spike than prednisolone. Gel formulation doesn\u2019t require shaking. Good for post-op and surface inflammation.",price_size:"5 mL",route:"topical"},
             {id:"med_039",brand_name:"Durezol",generic_name:"Difluprednate 0.05%",generic_available:true,drug_class:"Corticosteroid (high potency)",condition:"inflammation_steroid",typical_dosing:"1 drop four times daily for 2 weeks, then twice daily for 1 week, then taper",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:350,avg_generic_price:50,notes:"Most potent topical ophthalmic steroid. Emulsion \u2014 no shaking needed. Excellent for post-surgical inflammation and uveitis. High IOP risk \u2014 monitor closely.",price_size:"5 mL",route:"topical"},
@@ -4071,7 +4070,7 @@
             {id:"med_054",brand_name:"Vuity",generic_name:"Pilocarpine 1.25%",generic_available:false,drug_class:"Miotic / Parasympathomimetic",condition:"presbyopia",typical_dosing:"1 drop in each eye once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:80,avg_generic_price:null,notes:"FDA-approved for presbyopia. Creates pinhole effect for improved near vision. Headache and dim vision are common side effects. Effects last 6-8 hours.",price_size:"2.5 mL",route:"topical"},
             {id:"med_055",brand_name:"Lumify",generic_name:"Brimonidine 0.025%",generic_available:false,drug_class:"Alpha-2 adrenergic agonist (low dose) / Decongestant",condition:"cosmetic",typical_dosing:"1 drop in affected eye(s) every 6-8 hours as needed",bottle_size:"2.5 mL / 7.5 mL / 15 mL",preservative_free:false,avg_brand_price:12,avg_generic_price:null,notes:"OTC redness reliever. Low-dose brimonidine \u2014 less rebound redness than older decongestants (Visine, Clear Eyes). Onset within 1 minute, lasts 8 hours.",price_size:"7.5 mL",route:"topical"},
             {id:"med_056",brand_name:"Avastin (off-label)",generic_name:"Bevacizumab (compounded for intravitreal injection)",generic_available:false,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-8 weeks (retina specialist)",bottle_size:"compounded dose",preservative_free:true,avg_brand_price:60,avg_generic_price:null,notes:"Off-label but widely used for wet AMD and DME. Compounded from IV formulation. Most cost-effective anti-VEGF. Administered by retina specialist.",price_size:"per dose",route:"intravitreal"},
-            {id:"med_057",brand_name:"Eylea",generic_name:"Aflibercept 2 mg intravitreal injection",generic_available:false,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-8 weeks (retina specialist)",bottle_size:"single-use vial",preservative_free:true,avg_brand_price:1850,avg_generic_price:null,notes:"FDA-approved for wet AMD, DME, RVO, and DR. Longer duration than ranibizumab. Extended dosing (Eylea HD 8mg) now available for less frequent injections.",price_size:"per dose",route:"intravitreal"},
+            {id:"med_057",brand_name:"Eylea",generic_name:"Aflibercept 2 mg intravitreal injection",generic_available:true,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-8 weeks (retina specialist)",bottle_size:"single-use vial",preservative_free:true,avg_brand_price:1850,avg_generic_price:null,notes:"FDA-approved for wet AMD, DME, RVO, and DR. Longer duration than ranibizumab. Extended dosing (Eylea HD 8mg) now available for less frequent injections. Multiple biosimilars FDA-approved (Yesafili, Opuviz, others).",price_size:"per dose",route:"intravitreal"},
             {id:"med_058",brand_name:"Lucentis",generic_name:"Ranibizumab 0.5 mg intravitreal injection",generic_available:true,drug_class:"Anti-VEGF",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4 weeks (retina specialist)",bottle_size:"single-use vial",preservative_free:true,avg_brand_price:1170,avg_generic_price:800,notes:"FDA-approved for wet AMD, DME, RVO, and myopic CNV. Biosimilars now available (Cimerli, Byooviz). Administered by retina specialist.",price_size:"per dose",route:"intravitreal"},
             {id:"med_059",brand_name:"Vabysmo",generic_name:"Faricimab 6 mg intravitreal injection",generic_available:false,drug_class:"Bispecific anti-VEGF / anti-Ang-2",condition:"macular_degeneration",typical_dosing:"Intravitreal injection every 4-16 weeks (retina specialist)",bottle_size:"single-use vial",preservative_free:true,avg_brand_price:2190,avg_generic_price:null,notes:"First bispecific antibody for the eye \u2014 blocks VEGF-A and Ang-2. Can be dosed up to every 16 weeks. Administered by retina specialist.",price_size:"per dose",route:"intravitreal"},
 
@@ -4080,8 +4079,8 @@
             {id:"med_061",brand_name:"Bepreve",generic_name:"Bepotastine besilate 1.5%",generic_available:true,drug_class:"Antihistamine / Mast cell stabilizer",condition:"allergy",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"5 mL / 10 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:40,notes:"Prescription dual-action antihistamine + mast cell stabilizer. Well-tolerated with mild taste. Good option when OTC agents are insufficient.",price_size:"5 mL",route:"topical"},
             {id:"med_062",brand_name:"Pataday Extra Strength (OTC)",generic_name:"Olopatadine 0.7%",generic_available:false,drug_class:"Antihistamine / Mast cell stabilizer",condition:"allergy",typical_dosing:"1 drop in affected eye(s) once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:null,notes:"OTC. Formerly Pazeo. Highest concentration olopatadine. Once daily, strongest OTC allergy drop available.",price_size:"2.5 mL",route:"topical"},
             {id:"med_063",brand_name:"Opcon-A / Naphcon-A (OTC)",generic_name:"Naphazoline 0.025% / Pheniramine 0.3%",generic_available:true,drug_class:"Antihistamine / Decongestant",condition:"allergy",typical_dosing:"1-2 drops in affected eye(s) up to four times daily",bottle_size:"15 mL",preservative_free:false,avg_brand_price:12,avg_generic_price:8,notes:"OTC. Contains a decongestant (vasoconstrictor) + antihistamine. Short-term use only \u2014 risk of rebound redness with chronic use. Not preferred long-term.",price_size:"15 mL",route:"topical"},
-            {id:"med_064",brand_name:"Alocril",generic_name:"Nedocromil sodium 2%",generic_available:true,drug_class:"Mast cell stabilizer",condition:"allergy",typical_dosing:"1-2 drops in affected eye(s) twice daily",bottle_size:"5 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:30,notes:"Pure mast cell stabilizer. Requires consistent use for full prophylactic effect (1-2 weeks). Best for seasonal allergy prevention.",price_size:"5 mL",route:"topical"},
-            {id:"med_065",brand_name:"Alomide",generic_name:"Lodoxamide tromethamine 0.1%",generic_available:true,drug_class:"Mast cell stabilizer",condition:"allergy",typical_dosing:"1-2 drops in affected eye(s) four times daily",bottle_size:"10 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:25,notes:"Mast cell stabilizer. May be especially useful for vernal keratoconjunctivitis. Requires consistent dosing for prophylactic benefit.",price_size:"10 mL",route:"topical"},
+            {id:"med_064",brand_name:"Alocril (discontinued)",generic_name:"Nedocromil sodium 2%",generic_available:false,drug_class:"Mast cell stabilizer",condition:"allergy",typical_dosing:"1-2 drops in affected eye(s) twice daily",bottle_size:"5 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:null,notes:"Brand discontinued; no generic available. Pure mast cell stabilizer. Requires consistent use for full prophylactic effect (1-2 weeks). Best for seasonal allergy prevention.",price_size:"5 mL",route:"topical"},
+            {id:"med_065",brand_name:"Alomide (discontinued)",generic_name:"Lodoxamide tromethamine 0.1%",generic_available:false,drug_class:"Mast cell stabilizer",condition:"allergy",typical_dosing:"1-2 drops in affected eye(s) four times daily",bottle_size:"10 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:null,notes:"Brand discontinued; no generic available in US. Mast cell stabilizer. May be especially useful for vernal keratoconjunctivitis. Requires consistent dosing for prophylactic benefit.",price_size:"10 mL",route:"topical"},
             {id:"med_066",brand_name:"Crolom",generic_name:"Cromolyn sodium 4%",generic_available:true,drug_class:"Mast cell stabilizer",condition:"allergy",typical_dosing:"1-2 drops in affected eye(s) four to six times daily",bottle_size:"10 mL",preservative_free:false,avg_brand_price:150,avg_generic_price:20,notes:"First-generation mast cell stabilizer. Requires frequent dosing (4-6x daily). Largely replaced by newer dual-action agents but still available.",price_size:"10 mL",route:"topical"},
             {id:"med_067",brand_name:"Elestat",generic_name:"Epinastine HCl 0.05%",generic_available:true,drug_class:"Antihistamine / Mast cell stabilizer",condition:"allergy",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"5 mL",preservative_free:false,avg_brand_price:250,avg_generic_price:30,notes:"Dual-action H1 antihistamine + mast cell stabilizer. Also has anti-leukotriene and anti-PAF activity. Generic available.",price_size:"5 mL",route:"topical"},
             {id:"med_068",brand_name:"Optivar",generic_name:"Azelastine HCl 0.05%",generic_available:true,drug_class:"Antihistamine / Mast cell stabilizer",condition:"allergy",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"6 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:20,notes:"Dual-action antihistamine + mast cell stabilizer. Also available as nasal spray (Astelin). Generic available.",price_size:"6 mL",route:"topical"},
@@ -4098,7 +4097,7 @@
 
             // === Oral Antibiotics ===
             {id:"med_077",brand_name:"Augmentin (oral)",generic_name:"Amoxicillin / Clavulanate 875 mg tablet",generic_available:true,drug_class:"Penicillin / Beta-lactamase inhibitor (oral)",condition:"bacterial_infection",typical_dosing:"875 mg PO twice daily for 10 days",bottle_size:"20 tablets",preservative_free:false,avg_brand_price:80,avg_generic_price:15,notes:"First-line oral antibiotic for preseptal cellulitis, dacryocystitis, and infected lacrimal system. Ask about penicillin allergy.",price_size:"20 tablets",route:"oral"},
-            {id:"med_078",brand_name:"Keflex (oral)",generic_name:"Cephalexin 500 mg capsule",generic_available:true,drug_class:"Cephalosporin (1st generation, oral)",condition:"bacterial_infection",typical_dosing:"500 mg PO every 12 hours for 5-7 days",bottle_size:"20 capsules",preservative_free:false,avg_brand_price:60,avg_generic_price:10,notes:"Alternative oral antibiotic for preseptal cellulitis if penicillin-intolerant (caution with severe penicillin allergy \u2014 cross-reactivity). Very affordable.",price_size:"20 capsules",route:"oral"},
+            {id:"med_078",brand_name:"Keflex (oral)",generic_name:"Cephalexin 500 mg capsule",generic_available:true,drug_class:"Cephalosporin (1st generation, oral)",condition:"bacterial_infection",typical_dosing:"500 mg PO every 6 hours (QID) for 7-10 days",bottle_size:"20 capsules",preservative_free:false,avg_brand_price:60,avg_generic_price:10,notes:"Alternative oral antibiotic for preseptal cellulitis if penicillin-intolerant (caution with severe penicillin allergy \u2014 cross-reactivity). Very affordable.",price_size:"20 capsules",route:"oral"},
             {id:"med_079",brand_name:"Z-Pak (oral)",generic_name:"Azithromycin 250 mg tablet (6-pack)",generic_available:true,drug_class:"Macrolide antibiotic (oral)",condition:"bacterial_infection",typical_dosing:"500 mg PO day 1, then 250 mg PO daily for 4 days",bottle_size:"6 tablets (Z-Pak)",preservative_free:false,avg_brand_price:60,avg_generic_price:10,notes:"Convenient 5-day course. Used for preseptal cellulitis (if penicillin-allergic), chlamydial conjunctivitis (1g single dose). Also used off-label for blepharitis.",price_size:"6 tablets",route:"oral"},
             {id:"med_080",brand_name:"Doxycycline (oral)",generic_name:"Doxycycline 50-100 mg capsule",generic_available:true,drug_class:"Tetracycline antibiotic (oral)",condition:"bacterial_infection",typical_dosing:"100 mg PO twice daily; 50 mg daily for maintenance (MGD)",bottle_size:"30-60 capsules",preservative_free:false,avg_brand_price:50,avg_generic_price:10,notes:"Widely used for posterior blepharitis, MGD, and rosacea-related eye disease. Anti-inflammatory at sub-antimicrobial doses (20-50 mg). Photosensitivity and GI upset are common.",price_size:"30 capsules",route:"oral"},
             {id:"med_081",brand_name:"Bactrim DS (oral)",generic_name:"Sulfamethoxazole 800 mg / Trimethoprim 160 mg tablet",generic_available:true,drug_class:"Sulfonamide combination (oral)",condition:"bacterial_infection",typical_dosing:"1 tablet PO every 12 hours for 10 days",bottle_size:"20 tablets",preservative_free:false,avg_brand_price:40,avg_generic_price:8,notes:"Alternative oral antibiotic for preseptal cellulitis with MRSA concerns. Ask about sulfa allergy. Very affordable generic.",price_size:"20 tablets",route:"oral"},
@@ -4120,8 +4119,8 @@
             {id:"med_089",brand_name:"Miebo",generic_name:"Perfluorohexyloctane 100%",generic_available:false,drug_class:"Anti-evaporative (semifluorinated alkane)",condition:"dry_eye",typical_dosing:"1 drop in each eye four times daily",bottle_size:"3 mL / 5 mL",preservative_free:true,avg_brand_price:400,avg_generic_price:null,notes:"Novel non-aqueous eye drop. Forms a monolayer on tear film to reduce evaporation. For evaporative dry eye / MGD. No water, no preservatives.",price_size:"3 mL",route:"topical"},
             {id:"med_090",brand_name:"Xdemvy",generic_name:"Lotilaner 0.25%",generic_available:false,drug_class:"Parasiticide (isoxazoline)",condition:"demodex",typical_dosing:"1 drop in each eye twice daily for 6 weeks",bottle_size:"10 mL",preservative_free:false,avg_brand_price:600,avg_generic_price:null,notes:"First FDA-approved treatment for Demodex blepharitis. 6-week course. Targets mites directly. Instillation site stinging is common.",price_size:"10 mL",route:"topical"},
             {id:"med_091",brand_name:"Lacrisert",generic_name:"Hydroxypropyl cellulose 5 mg insert",generic_available:false,drug_class:"Tear film stabilizer (ophthalmic insert)",condition:"dry_eye",typical_dosing:"1 insert in each inferior cul-de-sac once daily",bottle_size:"60 inserts per box",preservative_free:true,avg_brand_price:400,avg_generic_price:null,notes:"Preservative-free slow-release insert for moderate-to-severe dry eye. Placed in lower fornix. Dissolves over the day. Good for patients who cannot use drops frequently.",price_size:"60-count box",route:"insert"},
-            {id:"med_092",brand_name:"Verkazia",generic_name:"Cyclosporine 0.1% cationic emulsion",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in affected eye(s) four times daily",bottle_size:"0.3 mL single-use vials (120 count)",preservative_free:true,avg_brand_price:800,avg_generic_price:null,notes:"Cationic emulsion formulation of cyclosporine. FDA-approved for vernal keratoconjunctivitis (VKC) in children and adults. Enhanced ocular surface retention.",price_size:"120-count box",route:"topical"},
-            {id:"med_093",brand_name:"Tryptyr",generic_name:"Acoltremon 0.03%",generic_available:false,drug_class:"TRPM8 agonist",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily",bottle_size:"0.3 mL single-use vials (60 count)",preservative_free:true,avg_brand_price:500,avg_generic_price:null,notes:"Novel mechanism \u2014 activates TRPM8 cold receptor to stimulate natural tear production. Preservative-free single-use vials.",price_size:"60-count box",route:"topical"},
+            {id:"med_092",brand_name:"Verkazia",generic_name:"Cyclosporine 0.1% cationic emulsion",generic_available:false,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"allergy",typical_dosing:"1 drop in affected eye(s) four times daily",bottle_size:"0.3 mL single-use vials (120 count)",preservative_free:true,avg_brand_price:800,avg_generic_price:null,notes:"Cationic emulsion formulation of cyclosporine. FDA-approved for vernal keratoconjunctivitis (VKC) in children and adults. Enhanced ocular surface retention.",price_size:"120-count box",route:"topical"},
+            {id:"med_093",brand_name:"Tryptyr",generic_name:"Acoltremon 0.003%",generic_available:false,drug_class:"TRPM8 agonist",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily",bottle_size:"0.3 mL single-use vials (60 count)",preservative_free:true,avg_brand_price:500,avg_generic_price:null,notes:"Novel mechanism \u2014 activates TRPM8 cold receptor to stimulate natural tear production. Preservative-free single-use vials.",price_size:"60-count box",route:"topical"},
 
             // === Additional Glaucoma Medications ===
             {id:"med_094",brand_name:"Betoptic-S",generic_name:"Betaxolol 0.25% suspension",generic_available:true,drug_class:"Beta-1 selective blocker",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:180,avg_generic_price:25,notes:"Cardioselective beta-blocker \u2014 safer option for patients with mild asthma or COPD compared to non-selective beta-blockers. Less IOP lowering than timolol.",price_size:"5 mL",route:"topical"},
@@ -4130,28 +4129,28 @@
             {id:"med_097",brand_name:"Iopidine",generic_name:"Apraclonidine 0.5%",generic_available:true,drug_class:"Alpha-2 adrenergic agonist",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) three times daily; or 1 drop pre/post laser",bottle_size:"5 mL / 10 mL",preservative_free:false,avg_brand_price:150,avg_generic_price:30,notes:"Primarily used to prevent IOP spikes after laser procedures (SLT, YAG). High rate of tachyphylaxis and allergic reaction with chronic use. Not for long-term therapy.",price_size:"5 mL",route:"topical"},
             {id:"med_098",brand_name:"Iyuzeh",generic_name:"Latanoprost 0.005% (preservative-free)",generic_available:false,drug_class:"Prostaglandin analog (preservative-free)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily in the evening",bottle_size:"0.2 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:null,notes:"Preservative-free latanoprost in unit-dose vials. Good for patients with ocular surface disease or BAK sensitivity who need a PGA.",price_size:"30-count box",route:"topical"},
             {id:"med_099",brand_name:"Zioptan",generic_name:"Tafluprost 0.0015%",generic_available:false,drug_class:"Prostaglandin analog (preservative-free)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily in the evening",bottle_size:"0.3 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:null,notes:"First preservative-free prostaglandin analog. Unit-dose vials. Same class side effects as other PGAs (iris darkening, lash growth).",price_size:"30-count box",route:"topical"},
-            {id:"med_100",brand_name:"Xelpros",generic_name:"Latanoprost 0.005% (BAK-free)",generic_available:false,drug_class:"Prostaglandin analog (BAK-free)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily in the evening",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:250,avg_generic_price:null,notes:"BAK-free latanoprost in multi-dose bottle. Uses potassium sorbate instead of BAK. Not technically preservative-free but avoids BAK toxicity.",price_size:"2.5 mL",route:"topical"},
+            {id:"med_100",brand_name:"Xelpros (discontinued)",generic_name:"Latanoprost 0.005% (BAK-free)",generic_available:false,drug_class:"Prostaglandin analog (BAK-free)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily in the evening",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:250,avg_generic_price:null,notes:"Discontinued from US market. Was BAK-free latanoprost using potassium sorbate instead of BAK. Consider Iyuzeh (PF latanoprost) as alternative.",price_size:"2.5 mL",route:"topical"},
             {id:"med_101",brand_name:"Pilocarpine (glaucoma)",generic_name:"Pilocarpine HCl 1-4%",generic_available:true,drug_class:"Cholinergic agonist / Miotic",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) four times daily",bottle_size:"5 mL / 15 mL",preservative_free:false,avg_brand_price:40,avg_generic_price:10,notes:"Oldest glaucoma medication. Causes miosis and ciliary muscle contraction. Side effects include brow ache, dim vision, and induced myopia. Rarely used as primary therapy today.",price_size:"15 mL",route:"topical"},
             {id:"med_102",brand_name:"Diamox (oral)",generic_name:"Acetazolamide 250-500 mg tablet",generic_available:true,drug_class:"Carbonic anhydrase inhibitor (oral)",condition:"glaucoma",typical_dosing:"250-500 mg PO every 6-12 hours; or 500 mg ER twice daily",bottle_size:"100 tablets",preservative_free:false,avg_brand_price:100,avg_generic_price:15,notes:"Oral CAI for acute IOP spikes and as adjunct to topical therapy. Side effects: tingling, taste alteration, fatigue, metabolic acidosis, kidney stones. Check sulfa allergy.",price_size:"100 tablets",route:"oral"},
-            {id:"med_103",brand_name:"Neptazane (oral)",generic_name:"Methazolamide 25-50 mg tablet",generic_available:true,drug_class:"Carbonic anhydrase inhibitor (oral)",condition:"glaucoma",typical_dosing:"25-50 mg PO two to three times daily",bottle_size:"100 tablets",preservative_free:false,avg_brand_price:80,avg_generic_price:20,notes:"Oral CAI alternative to acetazolamide. Better tolerated by some patients. Lower incidence of kidney stones than acetazolamide. Sulfonamide derivative.",price_size:"100 tablets",route:"oral"},
+            {id:"med_103",brand_name:"Neptazane (oral, brand discontinued)",generic_name:"Methazolamide 25-50 mg tablet",generic_available:true,drug_class:"Carbonic anhydrase inhibitor (oral)",condition:"glaucoma",typical_dosing:"25-50 mg PO two to three times daily",bottle_size:"100 tablets",preservative_free:false,avg_brand_price:80,avg_generic_price:20,notes:"Brand discontinued; generic methazolamide available. Oral CAI alternative to acetazolamide. Better tolerated by some patients. Lower incidence of kidney stones than acetazolamide. Sulfonamide derivative.",price_size:"100 tablets",route:"oral"},
             {id:"med_104",brand_name:"Timoptic XE",generic_name:"Timolol maleate 0.25-0.5% gel-forming solution",generic_available:true,drug_class:"Non-selective beta-blocker (gel-forming)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:120,avg_generic_price:15,notes:"Gel-forming timolol \u2014 longer contact time allows once-daily dosing. Causes transient blurred vision after instillation. Available in preservative-free form.",price_size:"2.5 mL",route:"topical"},
-            {id:"med_105",brand_name:"Ocupress",generic_name:"Carteolol HCl 1%",generic_available:true,drug_class:"Non-selective beta-blocker (with ISA)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:100,avg_generic_price:20,notes:"Non-selective beta-blocker with intrinsic sympathomimetic activity (ISA). May cause less bradycardia than timolol. Rarely used first-line today.",price_size:"5 mL",route:"topical"},
+            {id:"med_105",brand_name:"Ocupress (brand discontinued)",generic_name:"Carteolol HCl 1%",generic_available:true,drug_class:"Non-selective beta-blocker (with ISA)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:100,avg_generic_price:20,notes:"Brand discontinued; generic carteolol available. Non-selective beta-blocker with intrinsic sympathomimetic activity (ISA). May cause less bradycardia than timolol. Rarely used first-line today.",price_size:"5 mL",route:"topical"},
 
             // === Additional Steroid Medications ===
             {id:"med_106",brand_name:"Maxidex",generic_name:"Dexamethasone 0.1% suspension",generic_available:true,drug_class:"Corticosteroid (high potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops four to six times daily; taper based on response",bottle_size:"5 mL / 15 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:20,notes:"Potent dexamethasone suspension. Good penetration for anterior uveitis. Shake well. High IOP risk \u2014 monitor closely. Very affordable generic.",price_size:"5 mL",route:"topical"},
-            {id:"med_107",brand_name:"Flarex",generic_name:"Fluorometholone acetate 0.1% suspension",generic_available:true,drug_class:"Corticosteroid (low-moderate potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops four times daily; taper based on response",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:180,avg_generic_price:25,notes:"Fluorometholone acetate \u2014 slightly more potent than FML (alcohol form) due to better corneal penetration. Good for surface and mild anterior segment inflammation.",price_size:"5 mL",route:"topical"},
+            {id:"med_107",brand_name:"Flarex",generic_name:"Fluorometholone acetate 0.1% suspension",generic_available:false,drug_class:"Corticosteroid (low-moderate potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops four times daily; taper based on response",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:180,avg_generic_price:null,notes:"Fluorometholone acetate \u2014 slightly more potent than FML (alcohol form) due to better corneal penetration. Good for surface and mild anterior segment inflammation. No generic available (note: generic FML is the alcohol form, not acetate).",price_size:"5 mL",route:"topical"},
             {id:"med_108",brand_name:"FML Forte",generic_name:"Fluorometholone 0.25% suspension",generic_available:true,drug_class:"Corticosteroid (moderate potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops every 4 hours; taper based on response",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:25,notes:"Higher concentration fluorometholone (0.25% vs 0.1%). More potent than FML but still lower IOP risk than prednisolone or dexamethasone. Shake well.",price_size:"5 mL",route:"topical"},
             {id:"med_109",brand_name:"Inveltys",generic_name:"Loteprednol etabonate 1% suspension",generic_available:false,drug_class:"Corticosteroid (high potency, retrometabolized)",condition:"inflammation_steroid",typical_dosing:"1-2 drops twice daily for 2 weeks post-operatively",bottle_size:"2.8 mL",preservative_free:false,avg_brand_price:350,avg_generic_price:null,notes:"Highest concentration loteprednol available. Twice-daily dosing for post-cataract surgery inflammation. Retrometabolized \u2014 may have lower IOP risk than equivalent-potency steroids.",price_size:"2.8 mL",route:"topical"},
             {id:"med_110",brand_name:"Lotemax (drops)",generic_name:"Loteprednol etabonate 0.5% suspension",generic_available:true,drug_class:"Corticosteroid (moderate potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops four times daily; taper based on response",bottle_size:"2.5 mL / 5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:40,notes:"Loteprednol 0.5% suspension formulation. Must shake well before use. Retrometabolized steroid with lower IOP risk. Also available as gel and SM formulations.",price_size:"5 mL",route:"topical"},
             {id:"med_111",brand_name:"Lotemax SM",generic_name:"Loteprednol etabonate 0.38% gel",generic_available:true,drug_class:"Corticosteroid (moderate potency, submicron)",condition:"inflammation_steroid",typical_dosing:"1 drop three times daily; taper based on response",bottle_size:"5 mL / 10 mL",preservative_free:false,avg_brand_price:350,avg_generic_price:45,notes:"Submicron particle formulation \u2014 no shaking needed, more uniform dosing. Three-times-daily dosing. Lower concentration but enhanced penetration due to smaller particle size.",price_size:"5 mL",route:"topical"},
             {id:"med_112",brand_name:"Dextenza",generic_name:"Dexamethasone 0.4 mg intracanalicular insert",generic_available:false,drug_class:"Corticosteroid (sustained-release insert)",condition:"inflammation_steroid",typical_dosing:"One insert placed in canaliculus post-operatively; lasts up to 30 days",bottle_size:"single insert",preservative_free:true,avg_brand_price:600,avg_generic_price:null,notes:"Inserted into punctum by physician. Provides sustained dexamethasone release for up to 30 days post-op. Eliminates need for steroid drop compliance. Resorbable.",price_size:"per insert",route:"insert"},
-            {id:"med_113",brand_name:"Prednisone (oral)",generic_name:"Prednisone 5-50 mg tablet",generic_available:true,drug_class:"Corticosteroid (oral systemic)",condition:"inflammation_steroid",typical_dosing:"10-20 mg PO twice daily for 5 days; taper as needed for longer courses",bottle_size:"21-30 tablets",preservative_free:false,avg_brand_price:20,avg_generic_price:5,notes:"Oral systemic steroid for severe anterior uveitis, optic neuritis, GCA workup, severe allergic reactions. Short courses preferred. Monitor blood sugar, mood, GI effects.",price_size:"21 tablets",route:"oral"},
+            {id:"med_113",brand_name:"Prednisone (oral)",generic_name:"Prednisone 5-50 mg tablet",generic_available:true,drug_class:"Corticosteroid (oral systemic)",condition:"inflammation_steroid",typical_dosing:"Uveitis: 40-60 mg PO daily with taper. GCA: 60-80 mg PO daily. Dose varies by indication",bottle_size:"21-30 tablets",preservative_free:false,avg_brand_price:20,avg_generic_price:5,notes:"Oral systemic steroid for severe anterior uveitis, optic neuritis, GCA workup, severe allergic reactions. Short courses preferred. Monitor blood sugar, mood, GI effects.",price_size:"21 tablets",route:"oral"},
 
             // === Additional NSAID Medications ===
             {id:"med_114",brand_name:"Nevanac",generic_name:"Nepafenac 0.1% suspension",generic_available:true,drug_class:"NSAID",condition:"inflammation_nsaid",typical_dosing:"1 drop three times daily starting 1 day before surgery through 14 days post-op",bottle_size:"3 mL / 5 mL",preservative_free:false,avg_brand_price:260,avg_generic_price:35,notes:"Original nepafenac formulation. Three-times-daily dosing (vs Ilevro once-daily at 0.3%). Prodrug converted to amfenac in the eye. Shake well.",price_size:"3 mL",route:"topical"},
             {id:"med_115",brand_name:"BromSite",generic_name:"Bromfenac 0.075% solution",generic_available:false,drug_class:"NSAID",condition:"inflammation_nsaid",typical_dosing:"1 drop in affected eye(s) twice daily starting 1 day before surgery through 14 days post-op",bottle_size:"1.6 mL / 5 mL",preservative_free:false,avg_brand_price:300,avg_generic_price:null,notes:"DuraSite polymer technology for extended ocular surface contact. Twice-daily dosing (vs Prolensa once-daily). Uses lower concentration with enhanced delivery.",price_size:"5 mL",route:"topical"},
             {id:"med_116",brand_name:"Voltaren Ophthalmic",generic_name:"Diclofenac sodium 0.1%",generic_available:true,drug_class:"NSAID",condition:"inflammation_nsaid",typical_dosing:"1 drop four times daily starting 24 hours after surgery for 2 weeks",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:120,avg_generic_price:15,notes:"Older ophthalmic NSAID. Also used for pain relief after corneal refractive surgery and for allergic conjunctivitis. Very affordable generic. Can slow corneal healing.",price_size:"2.5 mL",route:"topical"},
-            {id:"med_117",brand_name:"Acuvail",generic_name:"Ketorolac tromethamine 0.45% (preservative-free)",generic_available:true,drug_class:"NSAID (preservative-free)",condition:"inflammation_nsaid",typical_dosing:"1 drop twice daily to affected eye starting 1 day before surgery through 14 days post-op",bottle_size:"0.4 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:40,notes:"Preservative-free ketorolac in unit-dose vials. Slightly lower concentration than Acular (0.45% vs 0.5%) but PF. Good for patients with ocular surface disease needing an NSAID.",price_size:"30-count box",route:"topical"},
+            {id:"med_117",brand_name:"Acuvail",generic_name:"Ketorolac tromethamine 0.45% (preservative-free)",generic_available:false,drug_class:"NSAID (preservative-free)",condition:"inflammation_nsaid",typical_dosing:"1 drop twice daily to affected eye starting 1 day before surgery through 14 days post-op",bottle_size:"0.4 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:null,notes:"Preservative-free ketorolac in unit-dose vials. Slightly lower concentration than Acular (0.45% vs 0.5%) but PF. Good for patients with ocular surface disease needing an NSAID.",price_size:"30-count box",route:"topical"},
 
             // === Miscellaneous Medications ===
             {id:"med_118",brand_name:"Upneeq",generic_name:"Oxymetazoline HCl 0.1%",generic_available:false,drug_class:"Alpha-adrenergic agonist (topical)",condition:"cosmetic",typical_dosing:"1 drop in affected eye(s) once daily",bottle_size:"0.5 mL single-use vials (30 count)",preservative_free:true,avg_brand_price:250,avg_generic_price:null,notes:"FDA-approved for acquired ptosis. Stimulates Mueller\u2019s muscle to elevate upper eyelid 1-2 mm. Effects last 6-8 hours. Does not treat neurogenic or myogenic ptosis.",price_size:"30-count box",route:"topical"},
@@ -4552,6 +4551,16 @@
             if (Math.abs(sph) < 4) return sph;
             const d = vd / 1000;
             return Math.round((sph / (1 - d * sph)) * 4) / 4;
+        }
+
+        // Vertex both meridians then compute SE (correct order for high-cyl Rx)
+        function vertexSE(sph, cyl) {
+            const clSph = snapTo025(vertexConvert(sph));
+            let vCyl = cyl;
+            if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - clSph);
+            }
+            return snapTo025(clSph + vCyl / 2);
         }
 
         function calcYearlyCost(lens) {
@@ -5060,7 +5069,6 @@
                         <div class="input-row" style="gap:8px">
                             <button type="button" id="domRight" class="dom-toggle ${state.dominantEye === 'right' ? 'active-right' : ''}" style="flex:1">Right</button>
                             <button type="button" id="domLeft" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1">Left</button>
-                            <button type="button" id="domRandom" class="dom-toggle" style="flex:0.8;opacity:0.45;font-size:11px;border-style:dashed">Assign Randomly</button>
                         </div>
                     </div>
                 </div>
@@ -5137,8 +5145,6 @@
             const domRight = document.getElementById("domRight");
             if (domLeft) domLeft.addEventListener("click", () => { state.dominantEye = state.dominantEye === 'left' ? null : 'left'; rerender(); });
             if (domRight) domRight.addEventListener("click", () => { state.dominantEye = state.dominantEye === 'right' ? null : 'right'; rerender(); });
-            const domRandom = document.getElementById("domRandom");
-            if (domRandom) domRandom.addEventListener("click", () => { state.dominantEye = Math.random() < 0.5 ? 'left' : 'right'; rerender(); });
 
             const clearBtn = document.getElementById("clearRx");
             if (clearBtn) clearBtn.addEventListener("click", () => {
@@ -5388,6 +5394,8 @@
         // LENS SELECTION & ORDER PARAMETERS
         function selectLens(name) {
             state.selectedLens = name;
+            state.troubleshoot = null;
+            state.tsAdjustment = null;
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -5543,12 +5551,12 @@
             if (state.nonAdaptFrom) {
                 const odSph = parseFloat(state.od.sphere) || 0;
                 const odCyl = parseFloat(state.od.cylinder) || 0;
-                const odSE = snapTo025(vertexConvert(odSph) + odCyl / 2);
+                const odSE = vertexSE(odSph, odCyl);
                 odOk = odSE >= lens.sphMin && odSE <= lens.sphMax;
 
                 const osSph = parseFloat(state.os.sphere) || 0;
                 const osCyl = parseFloat(state.os.cylinder) || 0;
-                const osSE = snapTo025(vertexConvert(osSph) + osCyl / 2);
+                const osSE = vertexSE(osSph, osCyl);
                 osOk = osSE >= lens.sphMin && osSE <= lens.sphMax;
             }
 
@@ -5579,7 +5587,7 @@
                 let params = [];
                 let finalSph = clSph;
                 const notes = [];
-                if (vertexApplied) notes.push(`Vertexed`);
+                if (vertexApplied) notes.push(`Vertexed from ${sph > 0 ? "+" : ""}${sph.toFixed(2)}`);
                 if (foldCyl) notes.push(`SE: ${vCyl.toFixed(2)} cyl folded in`);
                 let sphNote = notes.length > 0 ? notes.join("; ") : null;
                 let sphHighlight = vertexApplied || foldCyl;
@@ -5591,9 +5599,9 @@
                         const seAdj = snapTo025(-cylDiff / 2);
                         finalSph = snapTo025(clSph + seAdj);
                         const parts = [];
-                        if (vertexApplied) parts.push(`Vertexed`);
-                        parts.push(`SE adjusted ${seAdj > 0 ? "+" : ""}${seAdj.toFixed(2)} for cyl reduction`);
-                        sphNote = parts.join("; ");
+                        if (vertexApplied) parts.push(`Vertexed from ${sph > 0 ? "+" : ""}${sph.toFixed(2)}`);
+                        if (Math.abs(seAdj) > 0.001) parts.push(`SE adjusted ${seAdj > 0 ? "+" : ""}${seAdj.toFixed(2)} for cyl reduction`);
+                        sphNote = parts.length > 0 ? parts.join("; ") : null;
                         sphHighlight = true;
                     }
                 }
@@ -5709,7 +5717,10 @@
                         const addParam = params.find(p => p.label === "Add");
                         if (addParam) {
                             const prevAdd = addParam.value;
-                            addParam.value = adj.addOverride;
+                            // Preserve center design (D/N) if previous value had one
+                            const designMatch = prevAdd.match(/ ([DN])$/);
+                            const newVal = (designMatch && !adj.addOverride.match(/ [DN]$/)) ? `${adj.addOverride} ${designMatch[1]}` : adj.addOverride;
+                            addParam.value = newVal;
                             addParam.note = `Adjusted from ${prevAdd}`;
                             addParam.highlight = true;
                         }
@@ -5884,10 +5895,12 @@
                     highlight: odDiam !== osDiam
                 });
             } else {
+                const bcOverride = state.tsAdjustment && state.tsAdjustment.bcOverride ? state.tsAdjustment.bcOverride : null;
                 sharedParams.push({
                     label: "Base Curve",
-                    value: bcs.length > 1 ? bcs[0] : lens.bc,
-                    note: bcs.length > 1 ? `Also available: ${bcs[1]}` : null
+                    value: bcOverride || (bcs.length > 1 ? bcs[0] : lens.bc),
+                    note: bcOverride ? `Adjusted from ${bcs[0]}` : (bcs.length > 1 ? `Also available: ${bcs[1]}` : null),
+                    highlight: !!bcOverride
                 });
                 sharedParams.push({
                     label: "Diameter",
@@ -5967,71 +5980,7 @@
 
                 ${eyeSectionsHtml}
 
-                ${(() => {
-                    if (!isAdjusted) return '';
-                    const nextSug = computeNextTsStep();
-                    window._tsHasNextStep = !!nextSug;
-                    if (!nextSug) return '';
-                    window._tsNextSuggestion = nextSug;
-                    const stepNum = (state.tsAdjustment.stepNumber || 1) + 1;
-                    if (nextSug.sphereAdjSelect) {
-                        const baseSph = nextSug.selectBaseSph;
-                        const eye = nextSug.selectEye;
-                        const isPlus = nextSug.selectOptions[0] > 0;
-                        const optHtml = nextSug.selectOptions.map(amt =>
-                            `<option value="${amt}">${amt > 0 ? '+' : ''}${amt.toFixed(2)}</option>`
-                        ).join('');
-                        return `<div style="margin-top:20px">
-                            <div class="order-section-title" style="color:#b45309;font-style:italic">Still Not Clear? Next Step</div>
-                            <div class="troubleshoot-suggestion fade-in">
-                                <div class="ts-step">${stepNum}</div>
-                                <div class="ts-body">
-                                    <div class="ts-title">Add ${isPlus ? 'plus' : 'minus'} to ${eye} sphere</div>
-                                    <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${nextSug.rationale}</div>
-                                    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);">Patient accepted:</span>
-                                        <select id="tsNextSelectAmt" onchange="updateTsNextSelectPreview()" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">
-                                            ${optHtml}
-                                        </select>
-                                    </div>
-                                    <div class="ts-changes" id="tsNextSelectChanges">
-                                        <div class="ts-change">
-                                            <span class="ts-change-eye">${eye}</span>
-                                            <span class="ts-change-param">Sphere:</span>
-                                            <span class="ts-change-from">${baseSph > 0 ? "+" : ""}${baseSph.toFixed(2)}</span>
-                                            <span class="ts-change-arrow">\u2192</span>
-                                            <span class="ts-change-to">${snapTo025(baseSph + nextSug.selectOptions[0]) > 0 ? "+" : ""}${snapTo025(baseSph + nextSug.selectOptions[0]).toFixed(2)}</span>
-                                        </div>
-                                    </div>
-                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyNextTsSelectStep()">View Adjusted Results \u2192</button>
-                                </div>
-                            </div>
-                        </div>`;
-                    }
-                    const changesHtml = nextSug.changes.map(c =>
-                        `<div class="ts-change">
-                            <span class="ts-change-eye">${c.eye}</span>
-                            <span class="ts-change-param">${c.param}:</span>
-                            <span class="ts-change-from">${c.from}</span>
-                            <span class="ts-change-arrow">\u2192</span>
-                            <span class="ts-change-to">${c.to}</span>
-                        </div>`
-                    ).join("");
-                    return `<div style="margin-top:20px">
-                        <div class="order-section-title" style="color:#b45309;font-style:italic">Still Not Clear? Next Step</div>
-                        <div class="troubleshoot-suggestion fade-in">
-                            <div class="ts-step">${stepNum}</div>
-                            <div class="ts-body">
-                                <div class="ts-title">${nextSug.title}</div>
-                                ${nextSug.rationale ? `<div class="ts-rationale">${nextSug.rationale}</div>` : ''}
-                                <div class="ts-changes">${changesHtml}</div>
-                                <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyNextTsStep()">View Adjusted Results \u2192</button>
-                            </div>
-                        </div>
-                    </div>`;
-                })()}
-
-                ${lens.type === 'sphere' ? '' : (isAdjusted && window._tsHasNextStep) ? '' : `<button class="troubleshoot-btn" onclick="openTroubleshoot()"><i class="ph-duotone ph-wrench"></i> ${isAdjusted ? 'Continue Troubleshooting' : 'Troubleshoot Vision'}</button>`}
+                ${lens.type === 'sphere' && !lens.bc.includes('/') ? '' : `<button class="troubleshoot-btn" onclick="openTroubleshoot()"><i class="ph-duotone ph-wrench"></i> ${isAdjusted ? 'Continue Troubleshooting' : 'Troubleshoot Vision'}</button>`}
 
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${sharedHtml}</div>
@@ -6046,6 +5995,13 @@
         // TROUBLESHOOT
         function openTroubleshoot() {
             state.troubleshoot = "select";
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function applyBcSwitch(newBc, complaint) {
+            state.tsAdjustment = { title: `Base curve changed to ${newBc}`, overrides: {}, bcOverride: newBc, complaint: complaint };
+            state.troubleshoot = null;
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -6237,7 +6193,8 @@
                         if (ci === -1 || ci >= addTypes.length - 1) continue;
                         const nAdd = addTypes[ci + 1];
                         const raT = step.offLabel ? `Change ${targetEye.label} from ${curAdd} to ${nAdd} Add` : `Increase ${targetEye.label} add power`;
-                        const raR = step.offLabel
+                        const raR = step.rationale ? step.rationale.replace('{from}', curAdd).replace('{to}', nAdd)
+                            : step.offLabel
                             ? `<u>Although not part of the manufacturer\u2019s fitting guide</u>, you can try changing ${curAdd} Add to ${nAdd} Add on the ${eyeLabel} eye.`
                             : `Increase ${eyeLabel} eye add from ${curAdd} to ${nAdd} for clearer near`;
                         return { title: raT, rationale: raR, adjustments: { [targetEye.label]: { addOverride: nAdd } }, changes: [{ eye: targetEye.label, param: "Add", from: curAdd, to: nAdd }], tsStepIdx: i, offLabel: !!step.offLabel };
@@ -6357,7 +6314,8 @@
 
         function backToTroubleshoot() {
             const complaint = state.tsAdjustment ? state.tsAdjustment.complaint : "select";
-            state.tsAdjustment = null;
+            const bcKeep = state.tsAdjustment ? state.tsAdjustment.bcOverride : null;
+            state.tsAdjustment = bcKeep ? { title: `Base curve changed to ${bcKeep}`, overrides: {}, bcOverride: bcKeep, complaint: null } : null;
             state.troubleshoot = complaint || "select";
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -6475,7 +6433,7 @@
                 const odSph = parseFloat(state.od.sphere) || 0;
                 const odCyl = parseFloat(state.od.cylinder) || 0;
                 const odAdd = parseFloat(state.od.add) || 0;
-                const odSE = snapTo025(vertexConvert(odSph) + odCyl / 2);
+                const odSE = vertexSE(odSph, odCyl);
                 if (odAdd > 0 && lens.type === "multifocal") {
                     odOk = odSE >= lens.sphMin && odSE <= lens.sphMax;
                 } else if (!odAdd && lens.type === "sphere") {
@@ -6485,7 +6443,7 @@
                 const osSph = parseFloat(state.os.sphere) || 0;
                 const osCyl = parseFloat(state.os.cylinder) || 0;
                 const osAdd = parseFloat(state.os.add) || 0;
-                const osSE = snapTo025(vertexConvert(osSph) + osCyl / 2);
+                const osSE = vertexSE(osSph, osCyl);
                 if (osAdd > 0 && lens.type === "multifocal") {
                     osOk = osSE >= lens.sphMin && osSE <= lens.sphMax;
                 } else if (!osAdd && lens.type === "sphere") {
@@ -6736,6 +6694,10 @@
             const alreadyFullCyl = state.fullCylFrom || (state.tsAdjustment && state.tsAdjustment.complaint === 'fullcyl');
             const showFullCyl = isToric && !alreadyFullCyl && (odFullCylInfo !== null || osFullCylInfo !== null);
 
+            // Check if lens has 2 base curves
+            const bcValues = lens.bc.split('/').map(s => s.trim());
+            const hasTwoBCs = bcValues.length === 2 && !isNaN(parseFloat(bcValues[0])) && !isNaN(parseFloat(bcValues[1]));
+
             // Complaint selection cards
             let complaintHtml = `
                 <div style="margin-bottom:20px">
@@ -6763,6 +6725,14 @@
                         ${showFullCyl ? `<div class="option-btn ${state.troubleshoot === 'fullcyl' ? 'active' : ''}" onclick="setTroubleshoot('fullcyl')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-vertical"></i></span><span class="title">Switch to Full Cylinder</span></div>
                             <div class="desc">Use Rx cylinder, revert SE adjustment</div>
+                        </div>` : ''}
+                        ${hasTwoBCs ? `<div class="option-btn ${state.troubleshoot === 'tooTight' ? 'active' : ''}" onclick="setTroubleshoot('tooTight')">
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-in"></i></span><span class="title">Lens Fits Too Tight</span></div>
+                            <div class="desc">Steep fit, limited movement</div>
+                        </div>
+                        <div class="option-btn ${state.troubleshoot === 'tooLoose' ? 'active' : ''}" onclick="setTroubleshoot('tooLoose')">
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-out"></i></span><span class="title">Lens Fits Too Loose</span></div>
+                            <div class="desc">Flat fit, excessive movement</div>
                         </div>` : ''}
                     </div>
                 </div>`;
@@ -6943,7 +6913,8 @@
 
                                 const newAdd = addTypes[currentIdx + 1];
                                 const raTitle = step.offLabel ? `Change ${targetEye.label} from ${currentAdd} to ${newAdd} Add` : `Increase ${targetEye.label} add power`;
-                                const raRationale = step.offLabel
+                                const raRationale = step.rationale ? step.rationale.replace('{from}', currentAdd).replace('{to}', newAdd)
+                                    : step.offLabel
                                     ? `<u>Although not part of the manufacturer\u2019s fitting guide</u>, you can try changing ${currentAdd} Add to ${newAdd} Add on the ${eyeLabel} eye.`
                                     : `Increase ${eyeLabel} eye add from ${currentAdd} to ${newAdd} for clearer near`;
                                 suggestions.push({
@@ -7218,7 +7189,7 @@
                     }).join("");
                 } else {
                     suggestionsHtml = `<div style="padding:20px;text-align:center;color:var(--ink-muted);font-size:13px">
-                        Per manufacturer fitting guide, there are no other recommendations for adjustments. Alter as you see fit.
+                        Per manufacturer fitting guide, there are no other recommendations for adjustments.<br>Alter as you see fit.
                     </div>`;
                 }
             }
@@ -7562,10 +7533,15 @@
                 eyeEntries.forEach(e => {
                     const sph = parseFloat(e.eye.sphere) || 0;
                     const cyl = parseFloat(e.eye.cylinder) || 0;
-                    const clSph = vertexConvert(sph);
-                    const seSph = snapTo025(clSph + cyl / 2);
+                    // Vertex both meridians, then derive SE
+                    const clSph = snapTo025(vertexConvert(sph));
+                    let vCyl = cyl;
+                    if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                        vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - clSph);
+                    }
+                    const seSph = snapTo025(clSph + vCyl / 2);
                     const sphStr = `${clSph > 0 ? "+" : ""}${clSph.toFixed(2)}`;
-                    const cylStr = `${cyl.toFixed(2)}`;
+                    const cylStr = `${vCyl.toFixed(2)}`;
                     const seStr = `${seSph > 0 ? "+" : ""}${seSph.toFixed(2)}`;
                     const seAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
                     seHtml += `<div style="margin-top:8px"><strong>${e.label}:</strong> <span style="font-family:var(--mono)">${sphStr} ${cylStr}${seAxis ? ` x ${seAxis}\u00B0` : ''}</span> \u2192 <span style="font-family:var(--mono);font-weight:700;color:var(--accent)">${seStr} (sphere)</span></div>`;
@@ -7631,6 +7607,80 @@
                         </div></div>
                         ${listHtml2}`;
                 }
+            }
+
+            // BASE CURVE — TOO TIGHT (STEEP)
+            if (state.troubleshoot === 'tooTight' && hasTwoBCs) {
+                const bcs = bcValues.map(Number).sort((a, b) => a - b); // [steeper, flatter]
+                const steeper = bcs[0];
+                const flatter = bcs[1];
+                const currentBC = state.tsAdjustment && state.tsAdjustment.bcOverride ? parseFloat(state.tsAdjustment.bcOverride) : parseFloat(bcValues[0]);
+                const alreadyFlat = currentBC === flatter;
+                suggestionsHtml = `<div class="troubleshoot-suggestion fade-in">
+                    <div class="ts-step">1</div>
+                    <div class="ts-body">
+                        <div class="ts-title">Signs of a Tight (Steep) Fit</div>
+                        <div class="ts-rationale" style="font-size:13px;line-height:1.7;">
+                            <ul style="margin:4px 0 0 0;padding-left:18px;">
+                                <li>Insufficient or no lens movement during a blink in primary gaze or upward gaze</li>
+                                <li>On push-up test, lens resists movement; if nudged upward, it may remain decentered or return slowly</li>
+                                <li>Vision blurry between blinks</li>
+                            </ul>
+                        </div>
+                        ${alreadyFlat
+                            ? `<div style="margin-top:14px;padding:12px 14px;background:rgba(220,38,38,0.05);border:1px solid rgba(220,38,38,0.2);border-radius:10px;">
+                                <div style="font-size:13px;color:#dc2626;">Already on the flattest available BC (${flatter}). No flatter option available for this lens.</div>
+                            </div>`
+                            : `<div class="ts-changes">
+                                <div class="ts-change">
+                                    <span class="ts-change-param">Base Curve:</span>
+                                    <span class="ts-change-from">${currentBC.toFixed(1)}</span>
+                                    <span class="ts-change-arrow">\u2192</span>
+                                    <span class="ts-change-to">${flatter.toFixed(1)} (flatter)</span>
+                                </div>
+                            </div>
+                            <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyBcSwitch('${flatter.toFixed(1)}','tooTight')">View Adjusted Results \u2192</button>`
+                        }
+                    </div>
+                </div>`;
+            }
+
+            // BASE CURVE — TOO LOOSE (FLAT)
+            if (state.troubleshoot === 'tooLoose' && hasTwoBCs) {
+                const bcs = bcValues.map(Number).sort((a, b) => a - b); // [steeper, flatter]
+                const steeper = bcs[0];
+                const flatter = bcs[1];
+                const currentBC = state.tsAdjustment && state.tsAdjustment.bcOverride ? parseFloat(state.tsAdjustment.bcOverride) : parseFloat(bcValues[0]);
+                const alreadySteep = currentBC === steeper;
+                suggestionsHtml = `<div class="troubleshoot-suggestion fade-in">
+                    <div class="ts-step">1</div>
+                    <div class="ts-body">
+                        <div class="ts-title">Signs of a Loose (Flat) Fit</div>
+                        <div class="ts-rationale" style="font-size:13px;line-height:1.7;">
+                            <ul style="margin:4px 0 0 0;padding-left:18px;">
+                                <li>Decentration of the lens on the eye</li>
+                                <li>Excessive lens movement during blink in primary or upward gaze</li>
+                                <li>Moves very easily on push-up test, well beyond the limbus; returns very quickly or settles lower than original position</li>
+                                <li>Reduced comfort</li>
+                                <li>Blurred vision immediately after the blink</li>
+                            </ul>
+                        </div>
+                        ${alreadySteep
+                            ? `<div style="margin-top:14px;padding:12px 14px;background:rgba(220,38,38,0.05);border:1px solid rgba(220,38,38,0.2);border-radius:10px;">
+                                <div style="font-size:13px;color:#dc2626;">Already on the steepest available BC (${steeper}). No steeper option available for this lens.</div>
+                            </div>`
+                            : `<div class="ts-changes">
+                                <div class="ts-change">
+                                    <span class="ts-change-param">Base Curve:</span>
+                                    <span class="ts-change-from">${currentBC.toFixed(1)}</span>
+                                    <span class="ts-change-arrow">\u2192</span>
+                                    <span class="ts-change-to">${steeper.toFixed(1)} (steeper)</span>
+                                </div>
+                            </div>
+                            <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyBcSwitch('${steeper.toFixed(1)}','tooLoose')">View Adjusted Results \u2192</button>`
+                        }
+                    </div>
+                </div>`;
             }
 
             return `<div class="order-detail">
@@ -8030,7 +8080,7 @@
               keywords:'prentice rule prism diopter decentration induced prismatic effect lens power' },
             { id:'hofstetter', icon:'ph-magnifying-glass-plus', title:'Hofstetter\u2019s Norms', desc:'Expected accommodative amplitudes by age',
               keywords:'hofstetter accommodation amplitude age expected minimum average maximum push-up' },
-            { id:'iol', icon:'ph-circle-dashed', title:'IOL Power Calculator', desc:'SRK/T estimated IOL power from biometry',
+            { id:'iol', icon:'ph-circle-dashed', title:'IOL Power Calculator', desc:'SRK I estimated IOL power from biometry',
               keywords:'iol intraocular lens power srkt srk/t axial length keratometry a-constant cataract surgery biometry' },
             { id:'keratoconus', icon:'ph-warning-diamond', title:'Keratoconus Screening', desc:'Flag suspicious topography & pachymetry values',
               keywords:'keratoconus ectasia topography pachymetry steep flat k keratometry i-s value screening cone cornea' },
@@ -8266,7 +8316,7 @@
                 return 4;
             }
             if (factor === 'cct') {
-                if (v >= 600) return 0;
+                if (v > 600) return 0;
                 if (v >= 576) return 1;
                 if (v >= 551) return 2;
                 if (v >= 526) return 3;
@@ -8493,10 +8543,10 @@
                             <tbody>
                                 <tr><td style="font-weight:600;">Age (yrs)</td><td>&lt;45</td><td>45\u2013&lt;55</td><td>55\u2013&lt;65</td><td>65\u2013&lt;75</td><td>\u226575</td></tr>
                                 <tr><td style="font-weight:600;">IOP (mmHg)</td><td>&lt;22</td><td>22\u2013&lt;24</td><td>24\u2013&lt;26</td><td>26\u2013&lt;28</td><td>\u226528</td></tr>
-                                <tr><td style="font-weight:600;">CCT (\u00B5m)</td><td>\u2265600</td><td>576\u2013600</td><td>551\u2013575</td><td>526\u2013550</td><td>\u2264525</td></tr>
+                                <tr><td style="font-weight:600;">CCT (\u00B5m)</td><td>&gt;600</td><td>576\u2013600</td><td>551\u2013575</td><td>526\u2013550</td><td>\u2264525</td></tr>
                                 <tr><td style="font-weight:600;">C/D Ratio</td><td>&lt;0.3</td><td>0.3\u2013&lt;0.4</td><td>0.4\u2013&lt;0.5</td><td>0.5\u2013&lt;0.6</td><td>\u22650.6</td></tr>
                                 <tr><td style="font-weight:600;">PSD (dB)</td><td>&lt;1.8</td><td>1.8\u2013&lt;2.0</td><td>2.0\u2013&lt;2.4</td><td>2.4\u2013&lt;2.8</td><td>\u22652.8</td></tr>
-                                <tr><td style="font-weight:600;color:var(--ink-muted);">Octopus LV</td><td>&lt;3.24</td><td>3.24\u2013&lt;4.0</td><td>4.0\u2013&lt;5.76</td><td>5.78\u2013&lt;7.84</td><td>\u22657.84</td></tr>
+                                <tr><td style="font-weight:600;color:var(--ink-muted);">Octopus LV</td><td>&lt;3.24</td><td>3.24\u2013&lt;4.0</td><td>4.0\u2013&lt;5.76</td><td>5.76\u2013&lt;7.84</td><td>\u22657.84</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -8613,16 +8663,13 @@
                 return;
             }
 
-            var mgPerKg = dose / wKg;
-            var maxSafe = wKg * 5.0;
+            // AAO 2025: use actual body weight, max 400 mg/day for severely obese
+            var effectiveMgKg = dose / wKg;
+            var effectiveMax = Math.min(wKg * 5.0, 400);
 
-            // IBW calculation if height+sex provided
+            // IBW calculation if height+sex provided (informational only)
             var hIn = plaqGetHeightIn();
             var ibw = (plaqState.sex && hIn) ? plaqIBW(plaqState.sex, hIn) : null;
-            var ibwMgKg = ibw ? dose / ibw : null;
-            var useWeight = (ibw && ibw < wKg) ? ibw : wKg;
-            var effectiveMgKg = dose / useWeight;
-            var effectiveMax = useWeight * 5.0;
 
             var safe = effectiveMgKg <= 5.0;
             var color = safe ? 'var(--success)' : 'var(--danger)';
@@ -8669,8 +8716,8 @@
                 html += '</div>';
             }
 
-            if (ibw && ibw < wKg) {
-                html += '<div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:8px;"><i class="ph-duotone ph-info" style="color:var(--accent);vertical-align:-1px;margin-right:3px;"></i>Using ideal body weight (' + ibw.toFixed(1) + ' kg) because it is lower than actual weight \u2014 HCQ distributes in lean tissue.</div>';
+            if (dose > 400) {
+                html += '<div style="font-size:11.5px;color:var(--danger);margin-bottom:8px;"><i class="ph-duotone ph-warning" style="vertical-align:-1px;margin-right:3px;"></i>AAO 2025: Maximum recommended dose is 400 mg/day regardless of weight.</div>';
             }
 
             // Risk factors
@@ -8696,7 +8743,7 @@
             if (dur && dur <= 5 && riskFlags.length === 0) {
                 screenRec = 'Baseline exam recommended. Annual screening may be deferred for first 5 years if no risk factors.';
             } else {
-                screenRec = 'Annual screening with SD-OCT, FAF, and VF 10-2 is recommended.';
+                screenRec = 'Annual screening with SD-OCT and wide-field FAF recommended. VF 10-2 as confirmatory.';
             }
             html += '<div style="font-size:12px;color:var(--ink-secondary);margin-top:6px;"><i class="ph-duotone ph-calendar-check" style="color:var(--accent);vertical-align:-1px;margin-right:3px;"></i><strong>Screening:</strong> ' + screenRec + '</div>';
 
@@ -8714,7 +8761,7 @@
                     <div class="tools-card-title"><i class="ph-duotone ph-pill"></i> Plaquenil Toxicity Risk Calculator</div>
                     <div class="tools-card-desc">
                         Check if a hydroxychloroquine dose is within the AAO-recommended \u22645.0 mg/kg/day limit
-                        and assess retinopathy risk factors. Uses lower of actual vs. ideal body weight.
+                        and assess retinopathy risk factors. Per AAO 2025: use actual body weight, max 400 mg/day.
                     </div>
 
                     <div class="iop-form-grid">
@@ -8739,7 +8786,7 @@
                         </div>
                     </div>
 
-                    <div style="margin:16px 0 6px;font-size:12px;font-weight:600;color:var(--ink-secondary);">Ideal Body Weight (optional, recommended)</div>
+                    <div style="margin:16px 0 6px;font-size:12px;font-weight:600;color:var(--ink-secondary);">Ideal Body Weight (optional, informational only)</div>
                     <div class="iop-form-grid">
                         <div class="iop-form-group">
                             <label>Sex</label>
@@ -8804,8 +8851,9 @@
                     <div class="ref-toggle-wrap">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
-                            <strong>Reference:</strong> AAO Recommendations on Screening for HCQ Retinopathy (2016, revised 2025).
-                            Marmor et al., <em>Ophthalmology</em> 2016. Ideal body weight via Devine formula.
+                            <strong>Reference:</strong> AAO Recommendations on Screening for HCQ Retinopathy (2025 Revision).
+                            Marmor et al., <em>Ophthalmology</em> 2016; AAO Board of Trustees, October 2025.
+                            Per AAO 2025: dose based on actual body weight, \u22645.0 mg/kg/day, max 400 mg/day.
                             This tool does not replace clinical judgment. Doses must be adjusted for renal insufficiency.
                         </div>
                     </div>
@@ -8875,11 +8923,11 @@
         // Treatment efficacy (% reduction in progression, from meta-analyses)
         const MYOP_TX = {
             'none':         { label:'No Treatment (SV)',         eff:0,    color:'#dc2626' },
-            'atro-low':     { label:'Atropine 0.01%',            eff:0.30, color:'#a78bfa' },
+            'atro-low':     { label:'Atropine 0.01%',            eff:0.15, color:'#a78bfa' },
             'atro-mod':     { label:'Atropine 0.05%',            eff:0.50, color:'#818cf8' },
             'ortho-k':      { label:'Orthokeratology',           eff:0.45, color:'#0d9488' },
             'misight':      { label:'MiSight / Soft Multifocal CL', eff:0.50, color:'#0284c7' },
-            'dims':         { label:'DIMS / Lenslet Spectacles', eff:0.40, color:'#d97706' },
+            'dims':         { label:'DIMS / Lenslet Spectacles', eff:0.52, color:'#d97706' },
             'combo':        { label:'Ortho-K + Low-Dose Atropine', eff:0.55, color:'#059669' }
         };
 
@@ -9301,11 +9349,11 @@
                         <table class="iop-ref-table">
                             <thead><tr><th>Treatment</th><th>Efficacy</th><th>Source</th></tr></thead>
                             <tbody>
-                                <tr onclick="navigateToMed('med_051')" style="cursor:pointer;" title="View in Medications"><td style="font-weight:600;color:var(--accent);">Atropine 0.01% <i class="ph-bold ph-arrow-square-out" style="font-size:10px;vertical-align:1px;opacity:0.6;"></i></td><td>~30%</td><td>ATOM2, LAMP</td></tr>
+                                <tr onclick="navigateToMed('med_051')" style="cursor:pointer;" title="View in Medications"><td style="font-weight:600;color:var(--accent);">Atropine 0.01% <i class="ph-bold ph-arrow-square-out" style="font-size:10px;vertical-align:1px;opacity:0.6;"></i></td><td>~15%</td><td>ATOM2, LAMP</td></tr>
                                 <tr onclick="navigateToMed('med_051')" style="cursor:pointer;" title="View in Medications"><td style="font-weight:600;color:var(--accent);">Atropine 0.05% <i class="ph-bold ph-arrow-square-out" style="font-size:10px;vertical-align:1px;opacity:0.6;"></i></td><td>~50%</td><td>LAMP study</td></tr>
                                 <tr><td style="font-weight:600;">Orthokeratology</td><td>~45%</td><td>Multiple RCTs</td></tr>
                                 <tr><td style="font-weight:600;">MiSight / Soft Multifocal CL</td><td>~50%</td><td>Chamberlain 2019</td></tr>
-                                <tr><td style="font-weight:600;">DIMS / Lenslet Spectacles</td><td>~40%</td><td>Lam 2020</td></tr>
+                                <tr><td style="font-weight:600;">DIMS / Lenslet Spectacles</td><td>~52%</td><td>Lam 2020</td></tr>
                                 <tr><td style="font-weight:600;">Ortho-K + Low-Dose Atropine</td><td>~55%</td><td>Kinoshita 2023</td></tr>
                             </tbody>
                         </table>
@@ -9548,8 +9596,8 @@
             ]},
             { field:'vergAmplitude', question:'Which vergence amplitude is reduced?', options:[
                 { value:'normal', label:'Normal' },
-                { value:'lowNFV', label:'Low NFV (low negative fusional vergence / BO)' },
-                { value:'lowPFV', label:'Low PFV (low positive fusional vergence / BI)' }
+                { value:'lowNFV', label:'Low NFV (low negative fusional vergence / BI)' },
+                { value:'lowPFV', label:'Low PFV (low positive fusional vergence / BO)' }
             ]},
             { field:'baf', question:'What is the Binocular Accommodative Facility?', options:[
                 { value:'normal', label:'Normal' },
@@ -9911,7 +9959,7 @@
                 deTable(['Test','<span class="de-normal">Normal</span>','<span class="de-mild">Mild</span>','<span class="de-moderate">Moderate</span>','<span class="de-severe">Severe</span>'], [
                     ['TBUT (fluorescein)','<span class="de-normal">&gt;10 sec</span>','<span class="de-mild">7\u201310</span>','<span class="de-moderate">3\u20136</span>','<span class="de-severe">&lt;3</span>'],
                     ['NIBUT (non-invasive)','<span class="de-normal">&gt;10 sec</span>','<span class="de-mild">5\u201310</span>','<span class="de-moderate">&lt;5</span>','<span class="de-severe">\u2014</span>'],
-                    ['Tear Osmolarity','<span class="de-normal">&lt;308 mOsm/L</span>','<span class="de-mild">308\u2013315</span>','<span class="de-moderate">316\u2013336</span>','<span class="de-severe">&gt;336</span>'],
+                    ['Tear Osmolarity','<span class="de-normal">&lt;308 mOsm/L</span>','<span class="de-mild">308\u2013316</span>','<span class="de-moderate">316\u2013328</span>','<span class="de-severe">&gt;328</span>'],
                     ['Lipid Layer (LipiView)','<span class="de-normal">\u226575 nm</span>','<span class="de-mild">60\u201375</span>','<span class="de-moderate">25\u201359</span>','<span class="de-severe">&lt;25</span>']
                 ])
                 + '<div class="de-note">Inter-eye osmolarity difference &gt;8 mOsm/L is also considered a positive marker for dry eye disease.</div>'
@@ -11576,45 +11624,44 @@
             var risks = [];
 
             // --- Anisometropia (difference between eyes) ---
-            // Hyperopia anisometropia: difference in hyperopic sphere >1.00D
+            // AAO PPP 2024: anisohyperopia >1.00-1.50D, anisomyopia >3.00-4.00D, anisoastigmatism >2.00D
             if (odS !== null && osS !== null) {
                 var sphDiff = Math.abs(odS - osS);
                 if (odS > 0 || osS > 0) {
-                    // At least one eye is hyperopic — check hyperopia threshold
                     if (sphDiff > 1.00) {
                         risks.push({ type: 'Anisometropia', category: 'Hyperopia', value: sphDiff.toFixed(2) + 'D difference', threshold: '>1.00D' });
                     }
                 }
                 if (odS < 0 || osS < 0) {
-                    // At least one eye is myopic — check myopia threshold
                     if (sphDiff > 3.00) {
                         risks.push({ type: 'Anisometropia', category: 'Myopia', value: sphDiff.toFixed(2) + 'D difference', threshold: '>3.00D' });
                     }
                 }
             }
-            // Astigmatism anisometropia
+            // Astigmatism anisometropia (AAO PPP: >2.00D)
             if (odCylAbs !== null && osCylAbs !== null) {
                 var cylDiff = Math.abs(odCylAbs - osCylAbs);
-                if (cylDiff > 1.50) {
-                    risks.push({ type: 'Anisometropia', category: 'Astigmatism', value: cylDiff.toFixed(2) + 'D difference', threshold: '>1.50D' });
+                if (cylDiff > 2.00) {
+                    risks.push({ type: 'Anisometropia', category: 'Astigmatism', value: cylDiff.toFixed(2) + 'D difference', threshold: '>2.00D' });
                 }
             }
 
             // --- Isoametropia (both eyes) ---
+            // AAO PPP 2024: hyperopia >4.00D, myopia >5.00D, astigmatism >2.00D
             if (odS !== null && osS !== null) {
-                // Hyperopia: both eyes >+5.00D
-                if (odS > 5.00 && osS > 5.00) {
-                    risks.push({ type: 'Isoametropia', category: 'Hyperopia', value: 'OD ' + (odS > 0 ? '+' : '') + odS.toFixed(2) + ' / OS ' + (osS > 0 ? '+' : '') + osS.toFixed(2), threshold: '>+5.00D both eyes' });
+                // Hyperopia: both eyes >+4.00D
+                if (odS > 4.00 && osS > 4.00) {
+                    risks.push({ type: 'Isoametropia', category: 'Hyperopia', value: 'OD ' + (odS > 0 ? '+' : '') + odS.toFixed(2) + ' / OS ' + (osS > 0 ? '+' : '') + osS.toFixed(2), threshold: '>+4.00D both eyes' });
                 }
-                // Myopia: both eyes more negative than -8.00D
-                if (odS < -8.00 && osS < -8.00) {
-                    risks.push({ type: 'Isoametropia', category: 'Myopia', value: 'OD ' + odS.toFixed(2) + ' / OS ' + osS.toFixed(2), threshold: '>-8.00D both eyes' });
+                // Myopia: both eyes more negative than -5.00D
+                if (odS < -5.00 && osS < -5.00) {
+                    risks.push({ type: 'Isoametropia', category: 'Myopia', value: 'OD ' + odS.toFixed(2) + ' / OS ' + osS.toFixed(2), threshold: '>-5.00D both eyes' });
                 }
             }
-            // Astigmatism isoametropia: both eyes >2.50D cyl
+            // Astigmatism isoametropia: both eyes >2.00D cyl
             if (odCylAbs !== null && osCylAbs !== null) {
-                if (odCylAbs > 2.50 && osCylAbs > 2.50) {
-                    risks.push({ type: 'Isoametropia', category: 'Astigmatism', value: 'OD ' + odCylAbs.toFixed(2) + 'D / OS ' + osCylAbs.toFixed(2) + 'D', threshold: '>2.50D both eyes' });
+                if (odCylAbs > 2.00 && osCylAbs > 2.00) {
+                    risks.push({ type: 'Isoametropia', category: 'Astigmatism', value: 'OD ' + odCylAbs.toFixed(2) + 'D / OS ' + osCylAbs.toFixed(2) + 'D', threshold: '>2.00D both eyes' });
                 }
             }
 
@@ -11696,13 +11743,13 @@
                                     <td style="font-weight:600;">Anisometropia<br><span style="font-weight:400;font-size:11px;color:var(--ink-muted);">(inter-eye difference)</span></td>
                                     <td class="adj-pos">&gt;1.00D</td>
                                     <td class="adj-pos">&gt;3.00D</td>
-                                    <td class="adj-pos">&gt;1.50D</td>
+                                    <td class="adj-pos">&gt;2.00D</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight:600;">Isoametropia<br><span style="font-weight:400;font-size:11px;color:var(--ink-muted);">(both eyes)</span></td>
+                                    <td class="adj-pos">&gt;4.00D</td>
                                     <td class="adj-pos">&gt;5.00D</td>
-                                    <td class="adj-pos">&gt;8.00D</td>
-                                    <td class="adj-pos">&gt;2.50D</td>
+                                    <td class="adj-pos">&gt;2.00D</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -11776,8 +11823,8 @@
                     <div class="ref-toggle-wrap">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
-                            <strong>Reference:</strong> Amblyogenic risk factor thresholds for refractive amblyopia. American Academy of Ophthalmology Preferred Practice Pattern, Pediatric Eye Evaluations.<br>
-                            Values represent clinically significant thresholds associated with increased risk of amblyopia development. This tool is intended to aid clinical screening and does not replace comprehensive examination.
+                            <strong>Reference:</strong> AAO Amblyopia Preferred Practice Pattern (2024 Update). Anisometropia: hyperopia &gt;1.00\u20131.50D, myopia &gt;3.00\u20134.00D, astigmatism &gt;2.00D. Isoametropia: hyperopia &gt;4.00\u20135.00D, myopia &gt;5.00\u20136.00D, astigmatism &gt;2.00\u20133.00D.<br>
+                            This tool is intended to aid clinical screening and does not replace comprehensive examination.
                         </div>
                     </div>
                 </div>
@@ -12023,7 +12070,7 @@
             var a = parseFloat(iolState.aConst);
             var tgt = parseFloat(iolState.targetRx) || 0;
             if (isNaN(al) || isNaN(k) || isNaN(a)) return null;
-            var power = a - 2.5 * al - 0.9 * k + (tgt * -1.25);
+            var power = a - 2.5 * al - 0.9 * k + (tgt * -1.5);
             return { power: power.toFixed(2) };
         }
 
@@ -12036,7 +12083,7 @@
                     '<div style="font-family:var(--mono);font-size:24px;font-weight:700;">' + r.power + ' D</div>' +
                     '<div style="font-size:12px;color:var(--ink-secondary);margin-top:8px;">P = A \u2212 2.5\u00D7AL \u2212 0.9\u00D7K + target correction</div>' +
                     '<div style="margin-top:10px;padding:8px 10px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.15);border-radius:6px;font-size:11px;color:#dc2626;">' +
-                    '<strong>Disclaimer:</strong> This is a simplified SRK/T estimate for educational purposes only. Always use validated biometry software (e.g., Barrett Universal II, Hill-RBF) for surgical planning.' +
+                    '<strong>Disclaimer:</strong> This is a simplified SRK I estimate for educational purposes only. Always use validated biometry software (e.g., Barrett Universal II, Hill-RBF) for surgical planning.' +
                     '</div>';
                 box.style.display = '';
             } else {
@@ -12054,7 +12101,7 @@
                 </div>
                 <div class="tools-card">
                     <div class="tools-card-title"><i class="ph-duotone ph-circle-dashed"></i> IOL Power Calculator</div>
-                    <div class="tools-card-desc">Simplified SRK/T formula estimate for intraocular lens power. For educational reference only.</div>
+                    <div class="tools-card-desc">SRK I regression formula estimate for intraocular lens power. For educational reference only.</div>
                     <div class="iop-form-grid" style="margin-bottom:0;">
                         <div class="iop-form-group">
                             <label>Axial Length (mm)</label>
@@ -12085,9 +12132,9 @@
                     <div class="ref-toggle-wrap" style="margin-top:14px;">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
-                            <strong>SRK/T Formula (simplified):</strong> P = A \u2212 2.5\u00D7AL \u2212 0.9\u00D7K.<br>
-                            Common A-constants: SA60AT = 118.7, SN60WF = 118.7, MA60AC = 118.4, Tecnis ZCB00 = 119.3.<br>
-                            This simplified version does not account for ELP, retinal thickness factor, or corneal curvature radius adjustments used in the full SRK/T derivation.
+                            <strong>SRK I Formula:</strong> P = A \u2212 2.5\u00D7AL \u2212 0.9\u00D7K. Target correction factor: 1.5\u00D7 per diopter.<br>
+                            Common A-constants: SA60AT = 118.4, SN60WF = 118.7, MA60AC = 118.4, Tecnis ZCB00 = 119.3.<br>
+                            SRK I is a first-generation regression formula. Modern formulas (SRK/T, Barrett, Hill-RBF) account for ELP and are more accurate.
                         </div>
                     </div>
                 </div>
@@ -12231,7 +12278,7 @@
                                 </tr>
                                 <tr style="border-bottom:1px solid var(--border);">
                                     <td style="padding:8px;font-weight:700;">3</td>
-                                    <td style="padding:8px;">1/4 \u2013 1/2 : 1</td>
+                                    <td style="padding:8px;">1/2 : 1</td>
                                     <td style="padding:8px;">Open (20\u201335\u00B0)</td>
                                     <td style="padding:8px;"><span style="color:#059669;font-weight:600;">Closure unlikely</span></td>
                                 </tr>
@@ -12310,13 +12357,13 @@
                                 </tr>
                                 <tr style="border-bottom:1px solid var(--border);">
                                     <td style="padding:8px;text-align:center;font-weight:700;">4</td>
-                                    <td style="padding:8px;">Amaurotic \u2014 no constriction to direct light</td>
-                                    <td style="padding:8px;color:var(--ink-secondary);">No direct response. Consensual response present from fellow eye.</td>
+                                    <td style="padding:8px;">Immediate dilation after prolonged illumination of fellow eye</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">After 6 seconds of light on the normal eye, swinging to the affected eye produces immediate dilation with no constriction.</td>
                                 </tr>
                                 <tr>
                                     <td style="padding:8px;text-align:center;font-weight:700;">5</td>
-                                    <td style="padding:8px;">Fixed, dilated pupil</td>
-                                    <td style="padding:8px;color:var(--ink-secondary);">No direct or consensual response. Complete afferent block.</td>
+                                    <td style="padding:8px;">Immediate dilation with no secondary constriction</td>
+                                    <td style="padding:8px;color:var(--ink-secondary);">After prolonged illumination of the normal eye, the affected pupil dilates immediately with no subsequent re-constriction. Near-total afferent loss.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -12361,9 +12408,9 @@
                                 <th style="text-align:left;padding:6px 8px;font-weight:600;">Vertical Diameter</th>
                             </tr></thead>
                             <tbody>
-                                <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;">Small</td><td style="padding:6px 8px;">< 1.5 mm\u00B2</td><td style="padding:6px 8px;">< 1.5 mm</td></tr>
-                                <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;">Average</td><td style="padding:6px 8px;">1.5 \u2013 2.5 mm\u00B2</td><td style="padding:6px 8px;">1.5 \u2013 2.0 mm</td></tr>
-                                <tr><td style="padding:6px 8px;">Large</td><td style="padding:6px 8px;">> 2.5 mm\u00B2</td><td style="padding:6px 8px;">> 2.0 mm</td></tr>
+                                <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;">Small</td><td style="padding:6px 8px;">< 1.6 mm\u00B2</td><td style="padding:6px 8px;">< 1.5 mm</td></tr>
+                                <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;">Average</td><td style="padding:6px 8px;">1.6 \u2013 2.6 mm\u00B2</td><td style="padding:6px 8px;">1.5 \u2013 2.0 mm</td></tr>
+                                <tr><td style="padding:6px 8px;">Large</td><td style="padding:6px 8px;">> 2.6 mm\u00B2</td><td style="padding:6px 8px;">> 2.0 mm</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -12696,7 +12743,7 @@
                         /* Step 4: Hydroxyamphetamine */
                         html += '<div class="bv-step active">';
                         html += '<div class="bv-step-header"><span class="bv-step-num">4</span> Phenylephrine 1%</div>';
-                        html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin:-4px 0 8px;padding-left:32px;">OR Hydroxyamphetamine 1% test (wait \u226548 hrs after cocaine)</div>';
+                        html += '<div style="color:var(--ink);opacity:0.85;font-size:12.5px;margin:-4px 0 8px;padding-left:32px;">OR Hydroxyamphetamine 1% test (wait \u226572 hrs after cocaine)</div>';
                         html += '<div class="bv-step-options">';
                         html += '<button class="bv-opt-btn' + (s.s4 === 'dilates' ? ' selected' : '') + '" onclick="anisoSelect(4,\'dilates\')">Positive: Affected Pupil Dilates</button>';
                         html += '<button class="bv-opt-btn' + (s.s4 === 'nodilate' ? ' selected' : '') + '" onclick="anisoSelect(4,\'nodilate\')">Negative: Neither Pupil Dilates</button>';
@@ -12739,7 +12786,7 @@
                 if (s.s2 === 'no') {
                     /* Step 3: Dilute pilocarpine */
                     html += '<div class="bv-step active">';
-                    html += '<div class="bv-step-header"><span class="bv-step-num">3</span> Pilocarpine 0.05\u20130.1% (diluted) to the larger pupil</div>';
+                    html += '<div class="bv-step-header"><span class="bv-step-num">3</span> Pilocarpine 0.125% (diluted) to the larger pupil</div>';
                     html += '<div class="bv-step-options">';
                     html += '<button class="bv-opt-btn' + (s.s3 === 'constricts' ? ' selected' : '') + '" onclick="anisoSelect(3,\'constricts\')">Positive: Larger Pupil Constricts</button>';
                     html += '<button class="bv-opt-btn' + (s.s3 === 'noconstrict' ? ' selected' : '') + '" onclick="anisoSelect(3,\'noconstrict\')">Negative: Larger Pupil Does Not Constrict</button>';
@@ -12901,7 +12948,7 @@
               reference:'Mikkilä HO et al. The expanding clinical spectrum of ocular Lyme borreliosis. Ophthalmology. 2000;107(3):581–587.' },
             { id:'toxoplasma', name:'Toxoplasma IgG / IgM', abbr:'Toxo IgG/IgM', category:'extended', summary:'Serologic testing for toxoplasmic retinochoroiditis',
               normalRange:'IgG: Negative; IgM: Negative',
-              abnormalMeaning:'Positive IgG indicates prior exposure (common—~30% of US adults). Positive IgM suggests recent or active infection. Most ocular toxoplasmosis is reactivation (IgG+, IgM−).',
+              abnormalMeaning:'Positive IgG indicates prior exposure (common—~11% of US adults per recent CDC data). Positive IgM suggests recent or active infection. Most ocular toxoplasmosis is reactivation (IgG+, IgM\u2212).',
               associatedConditions:['Toxoplasmic retinochoroiditis','Congenital toxoplasmosis','Posterior uveitis with focal necrotizing retinitis','Immunocompromised diffuse toxoplasmosis'],
               clinicalNotes:'Most common cause of infectious posterior uveitis worldwide. Classic "headlight in the fog" appearance. Negative IgG essentially excludes toxoplasmic retinochoroiditis. Diagnosis is primarily clinical; serology is supportive.',
               reference:'Holland GN. Ocular toxoplasmosis: a global reassessment. Am J Ophthalmol. 2003;136(6):973–988.' },
@@ -12910,7 +12957,7 @@
               abnormalMeaning:'Detected HSV-1, HSV-2, or VZV DNA confirms viral etiology. PCR of aqueous humor has high specificity (>95%).',
               associatedConditions:['Herpetic anterior uveitis (HSV, VZV)','Acute retinal necrosis (ARN)','Progressive outer retinal necrosis (PORN)','Herpetic keratouveitis','Post-herpetic uveitis'],
               clinicalNotes:'Aqueous tap for PCR is the gold standard for confirming viral uveitis. Consider in unilateral hypertensive anterior uveitis, sectoral iris atrophy, or ARN. ARN is an ocular emergency—early antiviral treatment is critical.',
-              reference:'Sugita S et al. Diagnosis of intraocular lymphoma by PCR and aqueous analysis. Ocul Immunol Inflamm. 2009;17(3):141–147.' },
+              reference:'Sugita S et al. Comprehensive PCR analysis for herpesviruses in aqueous humor. Graefes Arch Clin Exp Ophthalmol. 2008;246(12):1715–1722.' },
             { id:'cmv', name:'CMV PCR', abbr:'CMV PCR', category:'extended', summary:'PCR testing for cytomegalovirus-associated uveitis',
               normalRange:'Not detected',
               abnormalMeaning:'Detected CMV DNA in aqueous humor confirms CMV-associated anterior uveitis or retinitis.',
@@ -13043,7 +13090,7 @@
                 ['20/50', '1.00', '2.00'],
                 ['20/70', '1.50', '2.00'],
                 ['20/100', '2.00', '2.50'],
-                ['20/200', '2.50', '3.50']
+                ['20/200', '3.50', '5.00']
             ];
 
             var html = '<div style="margin-bottom:14px;">'
@@ -13167,7 +13214,7 @@
             { key:'hyperopia', label:'Hyperopia',
               text:'The affected eye shows a brighter reflex with a whitish or pale center.',
               significance:'Significant hyperopia produces a lighter, whiter reflex. Asymmetry suggests anisohyperopia.',
-              next:'Cycloplegic refraction. Prescribe if amblyogenic (\u22653.50 D bilateral or \u22651.50 D aniso).' },
+              next:'Cycloplegic refraction. Prescribe if amblyogenic (>4.00 D bilateral or >1.00 D aniso per AAO PPP 2024).' },
             { key:'anisometropia', label:'Anisometropia',
               text:'One eye is distinctly brighter while the other appears dimmer, indicating unequal refractive error.',
               significance:'Leading cause of amblyopia. Even 1\u20131.5 D can be significant in young children.',
@@ -13175,7 +13222,7 @@
             { key:'astigmatism', label:'Astigmatism',
               text:'The affected eye shows a crescent-shaped brightness rather than a uniform glow.',
               significance:'A crescent reflex indicates significant astigmatism. Orientation correlates with axis.',
-              next:'Cycloplegic retinoscopy for axis and magnitude. Prescribe if amblyogenic (\u22651.50 D).' },
+              next:'Cycloplegic retinoscopy for axis and magnitude. Prescribe if amblyogenic (>1.75 D for \u226548 months per AAPOS 2021).' },
             { key:'media', label:'Media Opacity',
               text:'A dark area within or obscuring the red reflex. May appear as a dark spot, shadow, or absent reflex.',
               significance:'Suggests cataract, corneal opacity, vitreous hemorrhage, or retinoblastoma (leukocoria). Most critical Bruckner finding.',
