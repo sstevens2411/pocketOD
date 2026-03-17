@@ -1638,6 +1638,11 @@
             color: var(--success);
             border: 1px solid var(--success-border);
         }
+        .badge-coming-soon {
+            background: rgba(217,119,6,0.08);
+            color: #d97706;
+            border: 1px solid rgba(217,119,6,0.25);
+        }
         .med-card .badge {
             cursor: pointer;
             transition: transform 0.15s, filter 0.15s;
@@ -4548,6 +4553,9 @@
             {id:"med_125",brand_name:"Tylenol #3",generic_name:"Codeine 30 mg / Acetaminophen 300 mg tablet",generic_available:true,drug_class:"Opioid analgesic (Schedule III)",condition:"oral_analgesic",typical_dosing:"1-2 tablets PO every 4-6 hours as needed",bottle_size:"12-24 tablets",preservative_free:false,avg_brand_price:30,avg_generic_price:8,notes:"Schedule III. Commonly prescribed post-trauma or corneal abrasion pain. Prescribing authority varies by state for ODs. Constipation, nausea, sedation are common.",price_size:"12 tablets",route:"oral"},
             {id:"med_126",brand_name:"Ultram / Tramadol",generic_name:"Tramadol HCl 50 mg tablet",generic_available:true,drug_class:"Opioid-like analgesic (Schedule IV)",condition:"oral_analgesic",typical_dosing:"50-100 mg PO every 4-6 hours as needed (max 400 mg/day)",bottle_size:"12-24 tablets",preservative_free:false,avg_brand_price:30,avg_generic_price:5,notes:"Schedule IV. Lower abuse potential than traditional opioids. Dual mechanism: weak opioid + serotonin/norepinephrine reuptake inhibition. Risk of seizures and serotonin syndrome.",price_size:"12 tablets",route:"oral"},
             {id:"med_127",brand_name:"Norco / Lortab",generic_name:"Hydrocodone 5-10 mg / Acetaminophen 325 mg tablet",generic_available:true,drug_class:"Opioid analgesic (Schedule II)",condition:"oral_analgesic",typical_dosing:"1-2 tablets PO every 4-6 hours as needed",bottle_size:"8-16 tablets",preservative_free:false,avg_brand_price:40,avg_generic_price:8,notes:"Schedule II (reclassified from III in 2014). Most ODs cannot prescribe Schedule II \u2014 check state scope of practice. For severe ocular/periorbital pain only.",price_size:"8 tablets",route:"oral"},
+
+            // === Coming Soon ===
+            {id:"med_130",brand_name:"Yuvezzi",generic_name:"Carbachol 2.75% / Brimonidine tartrate 0.1%",generic_available:false,drug_class:"Cholinergic agonist + Alpha-2 agonist (dual-action miotic)",condition:"presbyopia",typical_dosing:"1 drop in each eye once daily",bottle_size:"TBD",preservative_free:false,avg_brand_price:null,avg_generic_price:null,notes:"Dual-action presbyopia drop. Carbachol constricts the pupil for near focus; brimonidine prevents excessive dilation. Effects last up to 8 hours. Onset within 30 minutes. Remove contact lenses before use, wait 10 minutes to reinsert. Common side effects: headache (16%), irritation (14%), eye pain (7%), impaired vision (6%). No serious adverse events in 1-year safety study.",price_size:null,route:"topical",comingSoon:true},
         ];
 
         // Searchable indications/conditions for each medication
@@ -4691,6 +4699,7 @@
             med_121:"eyelash hypotrichosis, short eyelashes, thin eyelashes, eyelash growth",
             med_122:"presbyopia, near vision, reading difficulty",
             med_123:"presbyopia, near vision, reading difficulty",
+            med_130:"presbyopia, near vision, reading difficulty, carbachol, brimonidine, yuvezzi",
             med_124:"filamentary keratitis, mucus plaques, corneal filaments",
             med_128:"eyelid eczema, atopic dermatitis, eyelid dermatitis, periocular dermatitis, contact dermatitis, eyelid inflammation",
             // Oral Analgesics
@@ -4839,6 +4848,7 @@
             med_121:{pediatric:"Not approved in children <18 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to bimatoprost or any component. Apply to lash line only, not in the eye. May darken iris/periorbital skin permanently."},
             med_122:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in active anterior uveitis/iritis. Use caution with retinal detachment risk. May cause dim vision and headache."},
             med_123:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in active anterior uveitis/iritis. Use caution with retinal detachment risk."},
+            med_130:{pediatric:"Not indicated in pediatric patients; approved for presbyopia in adults",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"Contraindicated in iritis or hypersensitivity to carbachol or brimonidine. Use caution with retinal detachment risk. May cause dim vision and headache."},
             med_124:{pediatric:"Used off-label in pediatric patients",pregnancy:"Cat B (systemic) — use only if clearly needed",contraindication:"Contraindicated with known hypersensitivity to acetylcysteine. Strong sulfur odor. For topical ophthalmic use only (compounded)."},
             med_128:{pediatric:"Not recommended <2 years; approved ≥2 years (0.03%), ≥16 years (0.1%)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with known hypersensitivity to tacrolimus. Avoid direct contact with ocular surface. Do not use on infected skin; may increase infection risk."},
             // Oral Analgesics
@@ -6505,43 +6515,26 @@
         function updateAcuvueNearRefinePreview(index) {
             const s = window._tsSuggestions[index];
             if (!s || !s.acuvueNearRefine) return;
-            const sel = document.getElementById('tsNearRefineOR_' + index);
-            if (!sel) return;
-            const orVal = parseFloat(sel.value) || 0;
+            const domSel = document.getElementById('tsNearRefineOR_dom_' + index);
+            const ndomSel = document.getElementById('tsNearRefineOR_ndom_' + index);
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
             const changesEl = document.getElementById('tsNearRefineChanges_' + index);
             if (!changesEl) return;
             let html = '';
-            if (orVal !== 0) {
-                if (s.domEyeLabel && s.domBaseSph !== null) {
-                    const nv = snapTo025(s.domBaseSph + orVal);
-                    html += `<div class="ts-change">
-                        <span class="ts-change-eye">${s.domEyeLabel}</span>
-                        <span class="ts-change-param">Sphere:</span>
-                        <span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span>
-                        <span class="ts-change-arrow">\u2192</span>
-                        <span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span>
-                    </div>`;
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (s.domEyeLabel && s.domBaseSph !== null && domOR !== 0) {
+                    const nv = snapTo025(s.domBaseSph + domOR);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
-                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
-                    const nv = snapTo025(s.nonDomBaseSph + orVal);
-                    html += `<div class="ts-change">
-                        <span class="ts-change-eye">${s.nonDomEyeLabel}</span>
-                        <span class="ts-change-param">Sphere:</span>
-                        <span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span>
-                        <span class="ts-change-arrow">\u2192</span>
-                        <span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span>
-                    </div>`;
+                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null && ndomOR !== 0) {
+                    const nv = snapTo025(s.nonDomBaseSph + ndomOR);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
             } else {
                 if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
                     const nv = snapTo025(s.nonDomBaseSph + 0.25);
-                    html += `<div class="ts-change">
-                        <span class="ts-change-eye">${s.nonDomEyeLabel}</span>
-                        <span class="ts-change-param">Sphere:</span>
-                        <span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span>
-                        <span class="ts-change-arrow">\u2192</span>
-                        <span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span>
-                    </div>`;
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
             }
             changesEl.innerHTML = html;
@@ -6550,11 +6543,13 @@
         function applyAcuvueNearRefine(index) {
             const s = window._tsSuggestions[index];
             if (!s || !s.acuvueNearRefine) return;
-            const sel = document.getElementById('tsNearRefineOR_' + index);
-            const orVal = sel ? parseFloat(sel.value) || 0 : 0;
-            if (orVal !== 0) {
-                if (s.domEyeLabel) s.adjustments[s.domEyeLabel] = { sphDelta: orVal };
-                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: orVal };
+            const domSel = document.getElementById('tsNearRefineOR_dom_' + index);
+            const ndomSel = document.getElementById('tsNearRefineOR_ndom_' + index);
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (s.domEyeLabel && domOR !== 0) s.adjustments[s.domEyeLabel] = { sphDelta: domOR };
+                if (s.nonDomEyeLabel && ndomOR !== 0) s.adjustments[s.nonDomEyeLabel] = { sphDelta: ndomOR };
             } else {
                 if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: 0.25 };
             }
@@ -6948,19 +6943,20 @@
         function updateNextAcuvueNearRefinePreview() {
             const s = window._tsNextSuggestion;
             if (!s || !s.acuvueNearRefine) return;
-            const sel = document.getElementById('tsNextNearRefineOR');
-            if (!sel) return;
-            const orVal = parseFloat(sel.value) || 0;
+            const domSel = document.getElementById('tsNextNearRefineOR_dom');
+            const ndomSel = document.getElementById('tsNextNearRefineOR_ndom');
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
             const el = document.getElementById('tsNextNearRefineChanges');
             if (!el) return;
             let html = '';
-            if (orVal !== 0) {
-                if (s.domEyeLabel && s.domBaseSph !== null) {
-                    const nv = snapTo025(s.domBaseSph + orVal);
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (s.domEyeLabel && s.domBaseSph !== null && domOR !== 0) {
+                    const nv = snapTo025(s.domBaseSph + domOR);
                     html += `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
-                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
-                    const nv = snapTo025(s.nonDomBaseSph + orVal);
+                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null && ndomOR !== 0) {
+                    const nv = snapTo025(s.nonDomBaseSph + ndomOR);
                     html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
             } else {
@@ -6975,11 +6971,13 @@
         function applyNextAcuvueNearRefine() {
             const s = window._tsNextSuggestion;
             if (!s || !s.acuvueNearRefine) return;
-            const sel = document.getElementById('tsNextNearRefineOR');
-            const orVal = sel ? parseFloat(sel.value) || 0 : 0;
-            if (orVal !== 0) {
-                if (s.domEyeLabel) s.adjustments[s.domEyeLabel] = { sphDelta: orVal };
-                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: orVal };
+            const domSel = document.getElementById('tsNextNearRefineOR_dom');
+            const ndomSel = document.getElementById('tsNextNearRefineOR_ndom');
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (s.domEyeLabel && domOR !== 0) s.adjustments[s.domEyeLabel] = { sphDelta: domOR };
+                if (s.nonDomEyeLabel && ndomOR !== 0) s.adjustments[s.nonDomEyeLabel] = { sphDelta: ndomOR };
             } else {
                 if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: 0.25 };
             }
@@ -8037,7 +8035,7 @@
                             </div>`;
                         }
                         if (s.acuvueNearRefine) {
-                            const orOpts = [0, +0.25, +0.50, +0.75, +1.00, -0.25, -0.50, -0.75, -1.00].map(v =>
+                            const nrOrOpts = [0, +0.25, +0.50, +0.75, +1.00, -0.25, -0.50, -0.75, -1.00].map(v =>
                                 `<option value="${v}">${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
                             ).join('');
                             let nrInitChanges = '';
@@ -8051,16 +8049,29 @@
                                     <span class="ts-change-to">${defNew > 0 ? "+" : ""}${defNew.toFixed(2)}</span>
                                 </div>`;
                             }
+                            let nrDropdownsHtml = '';
+                            if (s.domEyeLabel) {
+                                nrDropdownsHtml += `<div style="display:flex;align-items:center;gap:8px;">
+                                    <span style="font-size:12px;font-weight:700;color:var(--ink);min-width:24px;">${s.domEyeLabel}:</span>
+                                    <select id="tsNearRefineOR_dom_${i}" onchange="updateAcuvueNearRefinePreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">${nrOrOpts}</select>
+                                </div>`;
+                            }
+                            if (s.nonDomEyeLabel) {
+                                nrDropdownsHtml += `<div style="display:flex;align-items:center;gap:8px;">
+                                    <span style="font-size:12px;font-weight:700;color:var(--ink);min-width:24px;">${s.nonDomEyeLabel}:</span>
+                                    <select id="tsNearRefineOR_ndom_${i}" onchange="updateAcuvueNearRefinePreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">${nrOrOpts}</select>
+                                </div>`;
+                            }
                             return `<div class="troubleshoot-suggestion fade-in">
                                 <div class="ts-step">${i + 1}</div>
                                 <div class="ts-body">
                                     <div class="ts-title">${s.title}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
-                                    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);">Over-refraction:</span>
-                                        <select id="tsNearRefineOR_${i}" onchange="updateAcuvueNearRefinePreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">
-                                            ${orOpts}
-                                        </select>
+                                    <div style="margin-top:10px;">
+                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);display:block;margin-bottom:6px;">Over-refraction:</span>
+                                        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                                            ${nrDropdownsHtml}
+                                        </div>
                                     </div>
                                     <div class="ts-changes" id="tsNearRefineChanges_${i}">
                                         ${nrInitChanges}
@@ -15004,8 +15015,10 @@
             }
             var dir = medsState.sortAsc ? 1 : -1;
             if (medsState.sortMode === 'price') {
-                // Sort by generic price (nulls always last)
+                // Sort by generic price (nulls always last, comingSoon always last)
                 results.sort((a, b) => {
+                    if (a.comingSoon && !b.comingSoon) return 1;
+                    if (!a.comingSoon && b.comingSoon) return -1;
                     const pa = a.avg_generic_price;
                     const pb = b.avg_generic_price;
                     if (pa == null && pb == null) return 0;
@@ -15014,8 +15027,10 @@
                     return (pa - pb) * dir;
                 });
             } else {
-                // Sort by generation (high→low default), then class order, then price
+                // Sort by generation (high→low default), then class order, then price; comingSoon always last
                 results.sort((a, b) => {
+                    if (a.comingSoon && !b.comingSoon) return 1;
+                    if (!a.comingSoon && b.comingSoon) return -1;
                     const ga = getMedGeneration(a.drug_class);
                     const gb = getMedGeneration(b.drug_class);
                     if (ga !== gb) return (gb - ga) * dir;
@@ -15048,6 +15063,7 @@
             html += `<div class="badges">`;
             const inCategory = medsState.selectedConditionGroup && MED_CONDITION_GROUPS.find(g => g.id === medsState.selectedConditionGroup && g.conditions.includes(med.condition));
             if (!inCategory) html += `<span class="badge badge-condition">${condInfo ? condInfo.label : med.condition}</span>`;
+            if (med.comingSoon) html += `<span class="badge badge-coming-soon">Coming Soon</span>`;
             if (med.preservative_free) html += `<span class="badge badge-pf">PF</span>`;
             if (med.generic_available) html += `<span class="badge badge-generic">Generic</span>`;
             html += `</div>`;
@@ -15066,7 +15082,7 @@
             if (!med.subtypes) {
                 const ps = med.price_size ? ` <span class="med-price-size">/${escMedHtml(med.price_size)}</span>` : '';
                 html += `<div class="med-price-side">`;
-                html += `<div class="med-price-col"><div class="med-price-label">Brand</div><div class="med-price-value">$${formatMedPrice(med.avg_brand_price)}${ps}</div></div>`;
+                html += `<div class="med-price-col"><div class="med-price-label">Brand</div><div class="med-price-value">${med.avg_brand_price !== null ? '$' + formatMedPrice(med.avg_brand_price) + ps : '<span style="color:var(--ink-muted);font-size:12px">N/A</span>'}</div></div>`;
                 if (med.avg_generic_price !== null) {
                     const savings = Math.round((1 - med.avg_generic_price / med.avg_brand_price) * 100);
                     html += `<div class="med-price-col"><div class="med-price-label">Generic</div><div class="med-price-value">$${formatMedPrice(med.avg_generic_price)}${ps}</div>`;
