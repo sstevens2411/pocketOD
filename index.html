@@ -489,16 +489,15 @@
 
         /* DOMINANCE TOGGLE */
         .dom-toggle {
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-radius: 8px;
-            border: 2px solid var(--border);
-            background: var(--surface-solid);
-
-            font-size: 12px;
+            border: 1px solid #d1d5db;
+            background: transparent;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--ink-muted);
+            color: var(--ink);
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -507,19 +506,16 @@
         .dom-toggle i[class*="ph-"] { font-size: 14px; vertical-align: -2px; }
 
         .dom-toggle:hover {
-            border-color: var(--border-hover);
+            border-color: #0d9488;
+            background: rgba(13,148,136,0.05);
+            transform: translateY(-1px);
         }
 
-        .dom-toggle.active-left {
-            border-color: #7c3aed;
-            background: rgba(124,58,237,0.08);
-            color: #7c3aed;
-        }
-
+        .dom-toggle.active-left,
         .dom-toggle.active-right {
-            border-color: #d97706;
-            background: rgba(217,119,6,0.08);
-            color: #d97706;
+            border-color: #0d9488;
+            background: #0d9488;
+            color: #fff;
         }
 
         /* VERTEX BOX */
@@ -1538,6 +1534,7 @@
         }
         .med-search-fav:hover { background: rgba(245,158,11,0.1); color: #f59e0b; }
         .med-search-fav.active { color: #f59e0b; background: rgba(245,158,11,0.1); }
+        .med-search-fav.has-favs { color: #f59e0b; }
 
         /* Phosphor icons global sizing & accent color */
         i[class*="ph-duotone"] {
@@ -2866,18 +2863,22 @@
             border-collapse: separate;
             border-spacing: 0;
             font-size: 13px;
-            table-layout: auto;
+            table-layout: fixed;
+            box-sizing: border-box;
+        }
+        .browse-table th,
+        .browse-table td {
+            box-sizing: border-box;
         }
         .browse-table th:first-child,
         .browse-table td:first-child {
-            width: 1%;
+            width: 32%;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .browse-table th {
-            position: sticky;
-            top: var(--header-h, 0px);
             background: var(--surface-solid);
-            z-index: 2;
             color: var(--ink-muted);
             font-size: 10px;
             font-weight: 700;
@@ -2961,7 +2962,7 @@
             padding: 40px 20px;
             font-size: 14px;
         }
-        .browse-main { overflow-x: hidden; }
+        .browse-main { overflow-x: clip; }
         @media (min-width: 601px) {
             .browse-main { max-width: 1100px; }
         }
@@ -3003,7 +3004,7 @@
             color: var(--accent);
         }
         .browse-scroll-wrap {
-            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
         }
         .rotate-hint {
             display: none;
@@ -3041,7 +3042,7 @@
             .browse-filters { gap: 4px; }
             .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; }
             .browse-table { font-size: 12px; min-width: 640px; }
-            .browse-table th { padding: 6px 6px; position: static; }
+            .browse-table th { padding: 6px 6px; }
             .browse-table td { padding: 5px 6px; }
             .browse-type, .browse-sched { font-size: 8px; padding: 1px 3px; }
             .browse-badges { display: none; }
@@ -3873,8 +3874,8 @@
     <main class="main">
         <div class="cl-subtabs" id="clSubtabs">
             <div class="cl-subtabs-left">
-                <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">Calculator</div>
-                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">Browse All</div>
+                <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">CL Calculator</div>
+                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">All Lenses</div>
             </div>
             <div class="cl-subtabs-right">
                 <div class="cl-subtab" id="clSubVertex" onclick="switchClSub('vertex')"><span class="cl-label-full">Vertex Chart</span><span class="cl-label-short">Vertex</span></div>
@@ -4244,7 +4245,32 @@
             { name:"Acuvue Oasys 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$109 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)" },
             { name:"Acuvue Oasys Max 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$120 (90pk)", wear:"DW", material:"Senofilcon A HVO (SiHy)" },
             { name:"Acuvue Oasys 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$133 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$163 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)" },
+            { name:"Acuvue Oasys Max 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$140 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
+            { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$163 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"Mid", nonDominant:"High" }
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"acuvueDistRefine", addConfigs:["Low/Low"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to the spherical version of the same lens, determined by spherical equivalent.", zeroAction:"dropToSphere", dropTo:"Acuvue Oasys Max 1-Day" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/Mid"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to LOW ADD.", zeroAction:"lowerDomAdd" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/High"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch non-dominant eye to MID and add +0.25 to the non-dominant eye sphere.", zeroAction:"lowerNonDomAdd", sphereCompensation:+0.25 }
+                    ],
+                    distanceBlocked: {
+                        "Mid/Low": "Distance refinement is not available for this add combination. MID/LOW is already the result of distance refinement.",
+                        "Low/High": "Distance refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    },
+                    near: [
+                        { action:"acuvueNearRefine", addConfigs:["Low/Low","Mid/Mid","Mid/High"] }
+                    ],
+                    nearBlocked: {
+                        "Mid/Low": "Near refinement is not available for this add combination. MID/LOW is only reached through distance refinement, meaning near vision was already adequate.",
+                        "Low/High": "Near refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    }
+                }
+            }},
             { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.00, cylSteps:[-1.00], addTypes:["Low","Mid","High"], qty:"30", price:"$80 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4253,22 +4279,79 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"lowerAdd", eye:"dominant", addConfigs:["Low/Low","Mid/Mid"] },
-                        { action:"lowerAdd", eye:"nonDominant", addConfigs:["Mid/High"], sphereCompensation:+0.25 }
+                        { action:"acuvueDistRefine", addConfigs:["Low/Low"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to the spherical version of the same lens, determined by spherical equivalent.", zeroAction:"dropToSphere", dropTo:"Acuvue Oasys Max 1-Day for Astigmatism" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/Mid"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to LOW ADD.", zeroAction:"lowerDomAdd" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/High"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch non-dominant eye to MID and add +0.25 to the non-dominant eye sphere.", zeroAction:"lowerNonDomAdd", sphereCompensation:+0.25 }
                     ],
+                    distanceBlocked: {
+                        "Mid/Low": "Distance refinement is not available for this add combination. MID/LOW is already the result of distance refinement.",
+                        "Low/High": "Distance refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    },
                     near: [
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.25 }
-                    ]
+                        { action:"acuvueNearRefine", addConfigs:["Low/Low","Mid/Mid","Mid/High"] }
+                    ],
+                    nearBlocked: {
+                        "Mid/Low": "Near refinement is not available for this add combination. MID/LOW is only reached through distance refinement, meaning near vision was already adequate.",
+                        "Low/High": "Near refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    }
                 }
             }},
             { name:"Acuvue Oasys (2-Week)", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:147, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12, 24", price:"$47 (6pk)", wear:"EW", material:"Senofilcon A (SiHy)", therapeutic:true },
             { name:"Acuvue Oasys for Astigmatism (2-Week)", brand:"J&J Acuvue", type:"toric", modality:"biweekly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$61", wear:"EW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"Acuvue Oasys Multifocal (2-Week)", brand:"J&J Acuvue", type:"multifocal", modality:"biweekly", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"6", price:"$61", wear:"EW", material:"Senofilcon A (SiHy)" },
+            { name:"Acuvue Oasys Multifocal (2-Week)", brand:"J&J Acuvue", type:"multifocal", modality:"biweekly", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"6", price:"$61", wear:"EW", material:"Senofilcon A (SiHy)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"Mid", nonDominant:"High" }
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"acuvueDistRefine", addConfigs:["Low/Low"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to the spherical version of the same lens, determined by spherical equivalent.", zeroAction:"dropToSphere", dropTo:"Acuvue Oasys (2-Week)" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/Mid"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to LOW ADD.", zeroAction:"lowerDomAdd" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/High"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch non-dominant eye to MID and add +0.25 to the non-dominant eye sphere.", zeroAction:"lowerNonDomAdd", sphereCompensation:+0.25 }
+                    ],
+                    distanceBlocked: {
+                        "Mid/Low": "Distance refinement is not available for this add combination. MID/LOW is already the result of distance refinement.",
+                        "Low/High": "Distance refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    },
+                    near: [
+                        { action:"acuvueNearRefine", addConfigs:["Low/Low","Mid/Mid","Mid/High"] }
+                    ],
+                    nearBlocked: {
+                        "Mid/Low": "Near refinement is not available for this add combination. MID/LOW is only reached through distance refinement, meaning near vision was already adequate.",
+                        "Low/High": "Near refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    }
+                }
+            }},
             { name:"Acuvue Oasys with Transitions", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:121, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 25", price:"$58 (6pk)", wear:"EW", material:"Senofilcon A (SiHy)", note:"Light-adaptive photochromic", discontinuing:"Discontinued June 2024" },
             { name:"Acuvue 2", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:33, bc:"8.3 / 8.7", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$30 (6pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", note:"Legacy hydrogel lens", discontinuing:"Discontinued April 2024" },
             { name:"1-Day Acuvue Moist", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:33, bc:"8.5 / 9.0", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$95 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)" },
             { name:"1-Day Acuvue Moist for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:33, bc:"8.5", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$120 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
-            { name:"1-Day Acuvue Moist Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:33, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$135 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)" },
+            { name:"1-Day Acuvue Moist Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:33, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$135 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
+                    { specAddMin:2.00, specAddMax:2.50, clAdd:"High", dominant:"Mid", nonDominant:"High" }
+                ],
+                troubleshootSteps: {
+                    distance: [
+                        { action:"acuvueDistRefine", addConfigs:["Low/Low"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to the spherical version of the same lens, determined by spherical equivalent.", zeroAction:"dropToSphere", dropTo:"1-Day Acuvue Moist" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/Mid"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch dominant eye to LOW ADD.", zeroAction:"lowerDomAdd" },
+                        { action:"acuvueDistRefine", addConfigs:["Mid/High"], text:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly. If no change is required based on over-refraction, switch non-dominant eye to MID and add +0.25 to the non-dominant eye sphere.", zeroAction:"lowerNonDomAdd", sphereCompensation:+0.25 }
+                    ],
+                    distanceBlocked: {
+                        "Mid/Low": "Distance refinement is not available for this add combination. MID/LOW is already the result of distance refinement.",
+                        "Low/High": "Distance refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    },
+                    near: [
+                        { action:"acuvueNearRefine", addConfigs:["Low/Low","Mid/Mid","Mid/High"] }
+                    ],
+                    nearBlocked: {
+                        "Mid/Low": "Near refinement is not available for this add combination. MID/LOW is only reached through distance refinement, meaning near vision was already adequate.",
+                        "Low/High": "Near refinement is not available for this add combination. The fitting guide does not produce a LOW/HIGH configuration."
+                    }
+                }
+            }},
             { name:"Acuvue Vita", brand:"J&J Acuvue", type:"sphere", modality:"monthly", dk:147, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$79", wear:"DW", material:"Senofilcon C (SiHy)" },
             { name:"Acuvue Vita for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"monthly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$55\u201380", wear:"DW", material:"Senofilcon C (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)" },
         ];
@@ -5489,21 +5572,29 @@
                 </div>`;
             }).join("");
 
+            const allSelected = state.brands.length === BRANDS.length;
+            const toggleLabel = allSelected ? 'Deselect All' : 'Select All';
+
             return `<div class="fade-in">
-                <h2 class="card-title">Manufacturers</h2>
-                <p class="card-desc">Select which brands to include in your results.</p>
-                <div class="option-grid">${items}</div>
+                <div style="display:flex;align-items:baseline;justify-content:space-between;">
+                    <h2 class="card-title" style="margin-bottom:0;">Manufacturers</h2>
+                    <button type="button" onclick="toggleAllBrands()" style="background:none;border:none;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:2px 4px;">${toggleLabel}</button>
+                </div>
+                <div class="option-grid" style="margin-top:12px;">${items}</div>
             </div>`;
         }
 
         function toggleBrand(brand) {
             if (state.brands.includes(brand)) {
-                if (state.brands.length > 1) {
-                    state.brands = state.brands.filter(b => b !== brand);
-                }
+                state.brands = state.brands.filter(b => b !== brand);
             } else {
                 state.brands.push(brand);
             }
+            render();
+        }
+
+        function toggleAllBrands() {
+            state.brands = state.brands.length === BRANDS.length ? [] : [...BRANDS];
             render();
         }
 
@@ -6230,13 +6321,11 @@
                 ${adjBanner}${nonAdaptBanner}${fullCylBanner}
 
                 ${(lens.type === 'multifocal' || lens.type === 'multifocal-toric') && !state.dominantEye ? `
-                <div style="margin:16px 0;padding:14px 16px;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.15);border-radius:10px;">
-                    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#b45309;margin-bottom:8px;">Select Dominant Eye</div>
-                    <div style="font-size:12px;color:var(--ink-secondary);margin-bottom:10px;">Required for optimized multifocal add power and design recommendations.</div>
-                    <div class="input-row" style="gap:8px;max-width:280px;">
+                <div style="margin:16px 0;">
+                    <div style="font-size:13px;font-weight:600;color:#0d9488;margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ph-fill ph-warning" style="color:#eab308;font-size:15px;"></i> Dominant Eye <span style="font-weight:400;color:var(--ink-muted);font-size:12px;">(Needed for troubleshooting)</span></div>
+                    <div class="input-row" style="gap:8px;">
                         <button type="button" id="domLeftResult" class="dom-toggle ${state.dominantEye === 'left' ? 'active-left' : ''}" style="flex:1" onclick="state.dominantEye='left';render();">Left (OS)</button>
                         <button type="button" id="domRightResult" class="dom-toggle ${state.dominantEye === 'right' ? 'active-right' : ''}" style="flex:1" onclick="state.dominantEye='right';render();">Right (OD)</button>
-                        <button type="button" class="dom-toggle" style="flex:0.8;opacity:0.45;font-size:11px;border-style:dashed" onclick="state.dominantEye=Math.random()<0.5?'left':'right';render();">Assign Randomly</button>
                     </div>
                 </div>` : ''}
 
@@ -6341,6 +6430,136 @@
             applyTsAdjustment(index);
         }
 
+        function updateAcuvueNearRefinePreview(index) {
+            const s = window._tsSuggestions[index];
+            if (!s || !s.acuvueNearRefine) return;
+            const sel = document.getElementById('tsNearRefineOR_' + index);
+            if (!sel) return;
+            const orVal = parseFloat(sel.value) || 0;
+            const changesEl = document.getElementById('tsNearRefineChanges_' + index);
+            if (!changesEl) return;
+            let html = '';
+            if (orVal !== 0) {
+                if (s.domEyeLabel && s.domBaseSph !== null) {
+                    const nv = snapTo025(s.domBaseSph + orVal);
+                    html += `<div class="ts-change">
+                        <span class="ts-change-eye">${s.domEyeLabel}</span>
+                        <span class="ts-change-param">Sphere:</span>
+                        <span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span>
+                        <span class="ts-change-arrow">\u2192</span>
+                        <span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span>
+                    </div>`;
+                }
+                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                    const nv = snapTo025(s.nonDomBaseSph + orVal);
+                    html += `<div class="ts-change">
+                        <span class="ts-change-eye">${s.nonDomEyeLabel}</span>
+                        <span class="ts-change-param">Sphere:</span>
+                        <span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span>
+                        <span class="ts-change-arrow">\u2192</span>
+                        <span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span>
+                    </div>`;
+                }
+            } else {
+                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                    const nv = snapTo025(s.nonDomBaseSph + 0.25);
+                    html += `<div class="ts-change">
+                        <span class="ts-change-eye">${s.nonDomEyeLabel}</span>
+                        <span class="ts-change-param">Sphere:</span>
+                        <span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span>
+                        <span class="ts-change-arrow">\u2192</span>
+                        <span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span>
+                    </div>`;
+                }
+            }
+            changesEl.innerHTML = html;
+        }
+
+        function applyAcuvueNearRefine(index) {
+            const s = window._tsSuggestions[index];
+            if (!s || !s.acuvueNearRefine) return;
+            const sel = document.getElementById('tsNearRefineOR_' + index);
+            const orVal = sel ? parseFloat(sel.value) || 0 : 0;
+            if (orVal !== 0) {
+                if (s.domEyeLabel) s.adjustments[s.domEyeLabel] = { sphDelta: orVal };
+                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: orVal };
+            } else {
+                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: 0.25 };
+            }
+            applyTsAdjustment(index);
+        }
+
+        function updateAcuvueDistRefinePreview(index) {
+            const s = window._tsSuggestions[index];
+            if (!s || !s.acuvueDistRefine) return;
+            const domSel = document.getElementById('tsDistRefineOR_dom_' + index);
+            const ndomSel = document.getElementById('tsDistRefineOR_ndom_' + index);
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
+            const changesEl = document.getElementById('tsDistRefineChanges_' + index);
+            if (!changesEl) return;
+            let html = '';
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (domOR !== 0 && s.domEyeLabel && s.domBaseSph !== null) {
+                    const nv = snapTo025(s.domBaseSph + domOR);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+                if (ndomOR !== 0 && s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                    const nv = snapTo025(s.nonDomBaseSph + ndomOR);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+            } else {
+                if (s.zeroAction === 'dropToSphere' && s.domEyeLabel && s.dropTo) {
+                    html = `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Lens:</span><span class="ts-change-from">${s.lensName}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${s.dropTo}</span></div>`;
+                } else if (s.zeroAction === 'lowerDomAdd' && s.domEyeLabel && s.domCurAdd) {
+                    const idx = s.addTypes.indexOf(s.domCurAdd);
+                    const newAdd = idx > 0 ? s.addTypes[idx - 1] : s.domCurAdd;
+                    html = `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Add:</span><span class="ts-change-from">${s.domCurAdd}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${newAdd}</span></div>`;
+                } else if (s.zeroAction === 'lowerNonDomAdd' && s.nonDomEyeLabel && s.nonDomCurAdd) {
+                    const idx = s.addTypes.indexOf(s.nonDomCurAdd);
+                    const newAdd = idx > 0 ? s.addTypes[idx - 1] : s.nonDomCurAdd;
+                    html = `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Add:</span><span class="ts-change-from">${s.nonDomCurAdd}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${newAdd}</span></div>`;
+                    if (s.sphereCompensation && s.nonDomBaseSph !== null) {
+                        const nv = snapTo025(s.nonDomBaseSph + s.sphereCompensation);
+                        html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                    }
+                }
+            }
+            changesEl.innerHTML = html;
+        }
+
+        function applyAcuvueDistRefine(index) {
+            const s = window._tsSuggestions[index];
+            if (!s || !s.acuvueDistRefine) return;
+            const domSel = document.getElementById('tsDistRefineOR_dom_' + index);
+            const ndomSel = document.getElementById('tsDistRefineOR_ndom_' + index);
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (domOR !== 0 && s.domEyeLabel) s.adjustments[s.domEyeLabel] = { sphDelta: domOR };
+                if (ndomOR !== 0 && s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: ndomOR };
+            } else {
+                if (s.zeroAction === 'dropToSphere') {
+                    if (s.domEyeLabel) s.adjustments[s.domEyeLabel] = { lensDropTo: s.dropTo };
+                    s.title = 'Switched dominant eye to non-MF SPH CL';
+                } else if (s.zeroAction === 'lowerDomAdd') {
+                    if (s.domEyeLabel && s.domCurAdd) {
+                        const idx = s.addTypes.indexOf(s.domCurAdd);
+                        if (idx > 0) s.adjustments[s.domEyeLabel] = { addOverride: s.addTypes[idx - 1] };
+                    }
+                } else if (s.zeroAction === 'lowerNonDomAdd') {
+                    if (s.nonDomEyeLabel && s.nonDomCurAdd) {
+                        const idx = s.addTypes.indexOf(s.nonDomCurAdd);
+                        const adj = {};
+                        if (idx > 0) adj.addOverride = s.addTypes[idx - 1];
+                        if (s.sphereCompensation) adj.sphDelta = s.sphereCompensation;
+                        s.adjustments[s.nonDomEyeLabel] = adj;
+                    }
+                }
+            }
+            applyTsAdjustment(index);
+        }
+
         function computeNextTsStep() {
             if (!state.tsAdjustment || state.tsAdjustment.tsStepIdx === null || state.tsAdjustment.tsStepIdx === undefined) return null;
             const lens = LENSES.find(l => l.name === state.selectedLens);
@@ -6349,6 +6568,7 @@
             const complaint = state.tsAdjustment.complaint;
             const isDistance = complaint === 'distance';
             const tsSteps = isDistance ? lens.fittingGuide.troubleshootSteps.distance : lens.fittingGuide.troubleshootSteps.near;
+            if (!tsSteps) return null;
             const prevIdx = state.tsAdjustment.tsStepIdx;
             const overrides = state.tsAdjustment.overrides;
 
@@ -6401,7 +6621,7 @@
                 const step = tsSteps[i];
                 if (step.addConfigs && (!addConfig || !step.addConfigs.includes(addConfig))) continue;
                 const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                if (step.action !== "addTableSwap" && !targetEye) continue;
+                if (step.action !== "addTableSwap" && step.action !== "acuvueNearRefine" && step.action !== "acuvueDistRefine" && !targetEye) continue;
                 const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
 
                 switch (step.action) {
@@ -6547,6 +6767,48 @@
                         const tl = step.to === "D" ? "D (Distance-center)" : "N (Near-center)";
                         return { title: `Switch ${targetEye.label} to ${step.to === "D" ? "Distance" : "Near"} design`, rationale: `Change ${eyeLabel} eye from ${fl} to ${tl}`, adjustments: { [targetEye.label]: { designOverride: step.to } }, changes: [{ eye: targetEye.label, param: "Design", from: fl, to: tl }], tsStepIdx: i };
                     }
+                    case "acuvueDistRefine": {
+                        const drDomSph = domEye ? getAdjSph(domEye.eye, domEye.label) : null;
+                        const drNonDomSph = nonDomEye ? getAdjSph(nonDomEye.eye, nonDomEye.label) : null;
+                        const drDomAdd = domEye ? getAdjAdd(domEye.eye, true, domEye.label) : null;
+                        const drNonDomAdd = nonDomEye ? getAdjAdd(nonDomEye.eye, false, nonDomEye.label) : null;
+                        const lens2 = LENSES.find(l => l.name === state.selectedLens);
+                        return {
+                            title: 'Distance Over-Refraction',
+                            rationale: step.text,
+                            acuvueDistRefine: true,
+                            zeroAction: step.zeroAction,
+                            dropTo: step.dropTo || null,
+                            sphereCompensation: step.sphereCompensation || 0,
+                            domEyeLabel: domEye ? domEye.label : null,
+                            nonDomEyeLabel: nonDomEye ? nonDomEye.label : null,
+                            domBaseSph: drDomSph,
+                            nonDomBaseSph: drNonDomSph,
+                            domCurAdd: drDomAdd,
+                            nonDomCurAdd: drNonDomAdd,
+                            lensName: lens2 ? lens2.name : '',
+                            addTypes: lens2 ? lens2.addTypes : [],
+                            adjustments: {},
+                            changes: [],
+                            tsStepIdx: i
+                        };
+                    }
+                    case "acuvueNearRefine": {
+                        const nrDomSph = domEye ? getAdjSph(domEye.eye, domEye.label) : null;
+                        const nrNonDomSph = nonDomEye ? getAdjSph(nonDomEye.eye, nonDomEye.label) : null;
+                        return {
+                            title: 'Near Over-Refraction',
+                            rationale: 'In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly, keeping ADD the same. If no change is required based on over-refraction, add +0.25 to the non-dominant eye.',
+                            acuvueNearRefine: true,
+                            domEyeLabel: domEye ? domEye.label : null,
+                            nonDomEyeLabel: nonDomEye ? nonDomEye.label : null,
+                            domBaseSph: nrDomSph,
+                            nonDomBaseSph: nrNonDomSph,
+                            adjustments: {},
+                            changes: [],
+                            tsStepIdx: i
+                        };
+                    }
                 }
             }
             return null;
@@ -6608,6 +6870,118 @@
             const amt = sel ? parseFloat(sel.value) : s.selectOptions[0];
             s.adjustments[s.selectEye] = { sphDelta: amt };
             if (s.selectBothEyes) s.adjustments[s.selectEye2] = { sphDelta: amt };
+            applyNextTsStep();
+        }
+
+        function updateNextAcuvueNearRefinePreview() {
+            const s = window._tsNextSuggestion;
+            if (!s || !s.acuvueNearRefine) return;
+            const sel = document.getElementById('tsNextNearRefineOR');
+            if (!sel) return;
+            const orVal = parseFloat(sel.value) || 0;
+            const el = document.getElementById('tsNextNearRefineChanges');
+            if (!el) return;
+            let html = '';
+            if (orVal !== 0) {
+                if (s.domEyeLabel && s.domBaseSph !== null) {
+                    const nv = snapTo025(s.domBaseSph + orVal);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                    const nv = snapTo025(s.nonDomBaseSph + orVal);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+            } else {
+                if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                    const nv = snapTo025(s.nonDomBaseSph + 0.25);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+            }
+            el.innerHTML = html;
+        }
+
+        function applyNextAcuvueNearRefine() {
+            const s = window._tsNextSuggestion;
+            if (!s || !s.acuvueNearRefine) return;
+            const sel = document.getElementById('tsNextNearRefineOR');
+            const orVal = sel ? parseFloat(sel.value) || 0 : 0;
+            if (orVal !== 0) {
+                if (s.domEyeLabel) s.adjustments[s.domEyeLabel] = { sphDelta: orVal };
+                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: orVal };
+            } else {
+                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: 0.25 };
+            }
+            applyNextTsStep();
+        }
+
+        function updateNextAcuvueDistRefinePreview() {
+            const s = window._tsNextSuggestion;
+            if (!s || !s.acuvueDistRefine) return;
+            const domSel = document.getElementById('tsNextDistRefineOR_dom');
+            const ndomSel = document.getElementById('tsNextDistRefineOR_ndom');
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
+            const el = document.getElementById('tsNextDistRefineChanges');
+            if (!el) return;
+            let html = '';
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (domOR !== 0 && s.domEyeLabel && s.domBaseSph !== null) {
+                    const nv = snapTo025(s.domBaseSph + domOR);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.domBaseSph > 0 ? "+" : ""}${s.domBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+                if (ndomOR !== 0 && s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                    const nv = snapTo025(s.nonDomBaseSph + ndomOR);
+                    html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                }
+            } else {
+                if (s.zeroAction === 'dropToSphere' && s.domEyeLabel && s.dropTo) {
+                    html = `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Lens:</span><span class="ts-change-from">${s.lensName}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${s.dropTo}</span></div>`;
+                } else if (s.zeroAction === 'lowerDomAdd' && s.domEyeLabel && s.domCurAdd) {
+                    const idx = s.addTypes.indexOf(s.domCurAdd);
+                    const newAdd = idx > 0 ? s.addTypes[idx - 1] : s.domCurAdd;
+                    html = `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Add:</span><span class="ts-change-from">${s.domCurAdd}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${newAdd}</span></div>`;
+                } else if (s.zeroAction === 'lowerNonDomAdd' && s.nonDomEyeLabel && s.nonDomCurAdd) {
+                    const idx = s.addTypes.indexOf(s.nonDomCurAdd);
+                    const newAdd = idx > 0 ? s.addTypes[idx - 1] : s.nonDomCurAdd;
+                    html = `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Add:</span><span class="ts-change-from">${s.nonDomCurAdd}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${newAdd}</span></div>`;
+                    if (s.sphereCompensation && s.nonDomBaseSph !== null) {
+                        const nv = snapTo025(s.nonDomBaseSph + s.sphereCompensation);
+                        html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
+                    }
+                }
+            }
+            el.innerHTML = html;
+        }
+
+        function applyNextAcuvueDistRefine() {
+            const s = window._tsNextSuggestion;
+            if (!s || !s.acuvueDistRefine) return;
+            const domSel = document.getElementById('tsNextDistRefineOR_dom');
+            const ndomSel = document.getElementById('tsNextDistRefineOR_ndom');
+            const domOR = domSel ? parseFloat(domSel.value) || 0 : 0;
+            const ndomOR = ndomSel ? parseFloat(ndomSel.value) || 0 : 0;
+            if (domOR !== 0 || ndomOR !== 0) {
+                if (domOR !== 0 && s.domEyeLabel) s.adjustments[s.domEyeLabel] = { sphDelta: domOR };
+                if (ndomOR !== 0 && s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: ndomOR };
+            } else {
+                if (s.zeroAction === 'dropToSphere') {
+                    if (s.domEyeLabel) s.adjustments[s.domEyeLabel] = { lensDropTo: s.dropTo };
+                    s.title = 'Switched dominant eye to non-MF SPH CL';
+                } else if (s.zeroAction === 'lowerDomAdd') {
+                    if (s.domEyeLabel && s.domCurAdd) {
+                        const idx = s.addTypes.indexOf(s.domCurAdd);
+                        if (idx > 0) s.adjustments[s.domEyeLabel] = { addOverride: s.addTypes[idx - 1] };
+                    }
+                } else if (s.zeroAction === 'lowerNonDomAdd') {
+                    if (s.nonDomEyeLabel && s.nonDomCurAdd) {
+                        const idx = s.addTypes.indexOf(s.nonDomCurAdd);
+                        const adj = {};
+                        if (idx > 0) adj.addOverride = s.addTypes[idx - 1];
+                        if (s.sphereCompensation) adj.sphDelta = s.sphereCompensation;
+                        s.adjustments[s.nonDomEyeLabel] = adj;
+                    }
+                }
+            }
             applyNextTsStep();
         }
 
@@ -7001,12 +7375,28 @@
             const bcValues = lens.bc.split('/').map(s => s.trim());
             const hasTwoBCs = bcValues.length === 2 && !isNaN(parseFloat(bcValues[0])) && !isNaN(parseFloat(bcValues[1]));
 
+            // Dominant eye gate for MF troubleshooting
+            const isMF = lens.type === 'multifocal' || lens.type === 'multifocal-toric';
+            const needsDomEye = isMF && !state.dominantEye;
+
             // Complaint selection cards
-            let complaintHtml = `
+            let complaintHtml = '';
+            if (needsDomEye) {
+                complaintHtml = `
+                <div style="margin-bottom:20px">
+                    <div class="order-section-title">Select Dominant Eye</div>
+                    <div style="font-size:13px;color:var(--ink-secondary);margin-bottom:12px;display:flex;align-items:center;gap:6px;"><i class="ph-fill ph-warning" style="color:#eab308;font-size:16px;"></i> Dominant eye must be selected before troubleshooting multifocal lenses.</div>
+                    <div class="input-row" style="gap:8px;max-width:320px;">
+                        <button type="button" class="dom-toggle" style="flex:1" onclick="state.dominantEye='left';render();">Left (OS)</button>
+                        <button type="button" class="dom-toggle" style="flex:1" onclick="state.dominantEye='right';render();">Right (OD)</button>
+                    </div>
+                </div>`;
+            } else {
+            complaintHtml = `
                 <div style="margin-bottom:20px">
                     <div class="order-section-title">Vision Complaint</div>
                     <div class="option-grid">
-                        ${lens.type === 'multifocal' || lens.type === 'multifocal-toric' ? `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
+                        ${isMF ? `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
                             <div class="desc">Difficulty seeing far away</div>
                         </div>
@@ -7040,6 +7430,7 @@
                         </div>` : ''}
                     </div>
                 </div>`;
+            } // end dominant eye gate else
 
             let suggestionsHtml = '';
 
@@ -7060,18 +7451,42 @@
                     const nonDomAdd = nonDomEye ? getCurrentAdd(nonDomEye.eye, false) : null;
                     const currentAddConfig = (domAdd && nonDomAdd) ? `${domAdd}/${nonDomAdd}` : null;
 
+                    // Check distanceBlocked messages
+                    if (isDistance && lens.fittingGuide.troubleshootSteps.distanceBlocked && currentAddConfig && lens.fittingGuide.troubleshootSteps.distanceBlocked[currentAddConfig]) {
+                        suggestions.push({
+                            tsStepIdx: null,
+                            title: 'Distance Refinement Not Available',
+                            rationale: lens.fittingGuide.troubleshootSteps.distanceBlocked[currentAddConfig],
+                            adjustments: {},
+                            changes: [],
+                            textOnly: true
+                        });
+                    }
+
+                    // Check nearBlocked messages
+                    if (!isDistance && lens.fittingGuide.troubleshootSteps.nearBlocked && currentAddConfig && lens.fittingGuide.troubleshootSteps.nearBlocked[currentAddConfig]) {
+                        suggestions.push({
+                            tsStepIdx: null,
+                            title: 'Near Refinement Not Available',
+                            rationale: lens.fittingGuide.troubleshootSteps.nearBlocked[currentAddConfig],
+                            adjustments: {},
+                            changes: [],
+                            textOnly: true
+                        });
+                    }
+
                     // Skip steps already applied in previous adjustments for same complaint
                     const prevTsIdx = (state.tsAdjustment && state.tsAdjustment.complaint === state.troubleshoot && state.tsAdjustment.tsStepIdx !== null && state.tsAdjustment.tsStepIdx !== undefined) ? state.tsAdjustment.tsStepIdx : -1;
 
                     let firstStepDone = false;
-                    tsSteps.forEach((step, stepIdx) => {
+                    if (tsSteps) tsSteps.forEach((step, stepIdx) => {
                         if (firstStepDone) return;
                         if (stepIdx <= prevTsIdx) return;
                         if (step.addConfigs && (!currentAddConfig || !step.addConfigs.includes(currentAddConfig))) return;
 
                         const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
                         const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                        if (step.action !== "addTableSwap" && step.action !== "textOnly" && !targetEye) return;
+                        if (step.action !== "addTableSwap" && step.action !== "textOnly" && step.action !== "acuvueNearRefine" && step.action !== "acuvueDistRefine" && !targetEye) return;
 
                         const prevLen = suggestions.length;
                         switch (step.action) {
@@ -7312,6 +7727,49 @@
                                 });
                                 break;
                             }
+                            case "acuvueDistRefine": {
+                                const drDomSph = domEye ? getCurrentSph(domEye.eye, domEye.label) : null;
+                                const drNonDomSph = nonDomEye ? getCurrentSph(nonDomEye.eye, nonDomEye.label) : null;
+                                const drDomAdd = domEye ? getCurrentAdd(domEye.eye, true) : null;
+                                const drNonDomAdd = nonDomEye ? getCurrentAdd(nonDomEye.eye, false) : null;
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: 'Distance Over-Refraction',
+                                    rationale: step.text,
+                                    acuvueDistRefine: true,
+                                    zeroAction: step.zeroAction,
+                                    dropTo: step.dropTo || null,
+                                    sphereCompensation: step.sphereCompensation || 0,
+                                    domEyeLabel: domEye ? domEye.label : null,
+                                    nonDomEyeLabel: nonDomEye ? nonDomEye.label : null,
+                                    domBaseSph: drDomSph,
+                                    nonDomBaseSph: drNonDomSph,
+                                    domCurAdd: drDomAdd,
+                                    nonDomCurAdd: drNonDomAdd,
+                                    lensName: lens.name,
+                                    addTypes: lens.addTypes,
+                                    adjustments: {},
+                                    changes: []
+                                });
+                                break;
+                            }
+                            case "acuvueNearRefine": {
+                                const nrDomSph = domEye ? getCurrentSph(domEye.eye, domEye.label) : null;
+                                const nrNonDomSph = nonDomEye ? getCurrentSph(nonDomEye.eye, nonDomEye.label) : null;
+                                suggestions.push({
+                                    tsStepIdx: stepIdx,
+                                    title: 'Near Over-Refraction',
+                                    rationale: 'In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly, keeping ADD the same. If no change is required based on over-refraction, add +0.25 to the non-dominant eye.',
+                                    acuvueNearRefine: true,
+                                    domEyeLabel: domEye ? domEye.label : null,
+                                    nonDomEyeLabel: nonDomEye ? nonDomEye.label : null,
+                                    domBaseSph: nrDomSph,
+                                    nonDomBaseSph: nrNonDomSph,
+                                    adjustments: {},
+                                    changes: []
+                                });
+                                break;
+                            }
                         }
                         if (suggestions.length > prevLen) firstStepDone = true;
                     });
@@ -7455,6 +7913,90 @@
                                 </div>
                             </div>`;
                         }
+                        if (s.acuvueDistRefine) {
+                            const drOrOpts = [0, -0.25, -0.50, -0.75, -1.00, +0.25, +0.50, +0.75, +1.00].map(v =>
+                                `<option value="${v}">${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
+                            ).join('');
+                            let drInitChanges = '';
+                            if (s.zeroAction === 'dropToSphere' && s.domEyeLabel && s.dropTo) {
+                                drInitChanges = `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Lens:</span><span class="ts-change-from">${s.lensName}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${s.dropTo}</span></div>`;
+                            } else if (s.zeroAction === 'lowerDomAdd' && s.domEyeLabel && s.domCurAdd) {
+                                const drIdx = s.addTypes.indexOf(s.domCurAdd);
+                                const drNewAdd = drIdx > 0 ? s.addTypes[drIdx - 1] : s.domCurAdd;
+                                drInitChanges = `<div class="ts-change"><span class="ts-change-eye">${s.domEyeLabel}</span><span class="ts-change-param">Add:</span><span class="ts-change-from">${s.domCurAdd}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${drNewAdd}</span></div>`;
+                            } else if (s.zeroAction === 'lowerNonDomAdd' && s.nonDomEyeLabel && s.nonDomCurAdd) {
+                                const drIdx2 = s.addTypes.indexOf(s.nonDomCurAdd);
+                                const drNewAdd2 = drIdx2 > 0 ? s.addTypes[drIdx2 - 1] : s.nonDomCurAdd;
+                                drInitChanges = `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Add:</span><span class="ts-change-from">${s.nonDomCurAdd}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${drNewAdd2}</span></div>`;
+                                if (s.sphereCompensation && s.nonDomBaseSph !== null) {
+                                    const drCompNew = snapTo025(s.nonDomBaseSph + s.sphereCompensation);
+                                    drInitChanges += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${drCompNew > 0 ? "+" : ""}${drCompNew.toFixed(2)}</span></div>`;
+                                }
+                            }
+                            let drDropdownsHtml = '';
+                            if (s.domEyeLabel) {
+                                drDropdownsHtml += `<div style="display:flex;align-items:center;gap:8px;">
+                                    <span style="font-size:12px;font-weight:700;color:var(--ink);min-width:24px;">${s.domEyeLabel}:</span>
+                                    <select id="tsDistRefineOR_dom_${i}" onchange="updateAcuvueDistRefinePreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">${drOrOpts}</select>
+                                </div>`;
+                            }
+                            if (s.nonDomEyeLabel) {
+                                drDropdownsHtml += `<div style="display:flex;align-items:center;gap:8px;">
+                                    <span style="font-size:12px;font-weight:700;color:var(--ink);min-width:24px;">${s.nonDomEyeLabel}:</span>
+                                    <select id="tsDistRefineOR_ndom_${i}" onchange="updateAcuvueDistRefinePreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">${drOrOpts}</select>
+                                </div>`;
+                            }
+                            return `<div class="troubleshoot-suggestion fade-in">
+                                <div class="ts-step">${i + 1}</div>
+                                <div class="ts-body">
+                                    <div class="ts-title">${s.title}</div>
+                                    <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
+                                    <div style="margin-top:10px;">
+                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);display:block;margin-bottom:6px;">Over-refraction:</span>
+                                        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                                            ${drDropdownsHtml}
+                                        </div>
+                                    </div>
+                                    <div class="ts-changes" id="tsDistRefineChanges_${i}">
+                                        ${drInitChanges}
+                                    </div>
+                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyAcuvueDistRefine(${i})">Apply \u2192</button>
+                                </div>
+                            </div>`;
+                        }
+                        if (s.acuvueNearRefine) {
+                            const orOpts = [0, +0.25, +0.50, +0.75, +1.00, -0.25, -0.50, -0.75, -1.00].map(v =>
+                                `<option value="${v}">${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
+                            ).join('');
+                            let nrInitChanges = '';
+                            if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
+                                const defNew = snapTo025(s.nonDomBaseSph + 0.25);
+                                nrInitChanges = `<div class="ts-change">
+                                    <span class="ts-change-eye">${s.nonDomEyeLabel}</span>
+                                    <span class="ts-change-param">Sphere:</span>
+                                    <span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span>
+                                    <span class="ts-change-arrow">\u2192</span>
+                                    <span class="ts-change-to">${defNew > 0 ? "+" : ""}${defNew.toFixed(2)}</span>
+                                </div>`;
+                            }
+                            return `<div class="troubleshoot-suggestion fade-in">
+                                <div class="ts-step">${i + 1}</div>
+                                <div class="ts-body">
+                                    <div class="ts-title">${s.title}</div>
+                                    <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
+                                    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);">Over-refraction:</span>
+                                        <select id="tsNearRefineOR_${i}" onchange="updateAcuvueNearRefinePreview(${i})" style="font-size:13px;font-family:var(--sans);padding:6px 10px;border:2px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);font-weight:600;cursor:pointer;">
+                                            ${orOpts}
+                                        </select>
+                                    </div>
+                                    <div class="ts-changes" id="tsNearRefineChanges_${i}">
+                                        ${nrInitChanges}
+                                    </div>
+                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyAcuvueNearRefine(${i})">Apply \u2192</button>
+                                </div>
+                            </div>`;
+                        }
                         if (s.sphereAdjSelect) {
                             const baseSph = s.selectBaseSph;
                             const eye = s.selectEye;
@@ -7520,8 +8062,8 @@
                         </div>`;
                     }).join("");
                 } else {
-                    suggestionsHtml = `<div style="padding:20px;text-align:center;color:var(--ink-muted);font-size:13px">
-                        Per manufacturer fitting guide, there are no other recommendations for adjustments.<br>Alter as you see fit.
+                    suggestionsHtml = `<div style="margin:16px 0;padding:20px 24px;text-align:center;background:rgba(100,116,139,0.06);border:1.5px dashed var(--border);border-radius:12px;">
+                        <div style="font-size:14px;font-weight:500;color:var(--ink-secondary);line-height:1.5;">Per manufacturer fitting guide, there are no other recommendations for adjustments.<br>Alter as you see fit.</div>
                     </div>`;
                 }
             }
@@ -8067,8 +8609,7 @@
 
             if (state.step < 3) {
                 if (state.step === 1) {
-                    state.brands = getBrandsWithResults();
-                    if (state.brands.length === 0) state.brands = [...BRANDS];
+                    state.brands = [...BRANDS];
                 }
                 state.step++;
                 render();
@@ -8288,20 +8829,22 @@
         }
 
         function toolsBack() {
-            resetToolStates();
             toolsActiveTool = null;
             toolsSearchQuery = '';
+            toolsCategoryFilter = [];
+            try { resetToolStates(); } catch(e) { console.warn('resetToolStates error:', e); }
             renderTools();
+            window.scrollTo(0, 0);
         }
 
         function resetToolStates() {
-            // IOP
-            iopState = { tonometer:'goldmann', od:{ iop:'', cct:'' }, os:{ iop:'', cct:'' } };
-            // Glaucoma
-            glaucState = { age:null, iop:null, cct:null, vcdr:null, vfType:'psd', vf:null };
-            // Plaquenil
-            plaqState = { weightVal:'', weightUnit:'lbs', heightFt:'', heightIn:'', sex:'', dailyDose:'', duration:'', renal:false, tamoxifen:false };
-            // Myopia
+            // IOP (const — mutate properties)
+            iopState.tonometer = 'goldmann'; iopState.od = { iop:'', cct:'' }; iopState.os = { iop:'', cct:'' };
+            // Glaucoma (const)
+            glaucState.age = null; glaucState.iop = null; glaucState.cct = null; glaucState.vcdr = null; glaucState.vfType = 'psd'; glaucState.vf = null;
+            // Plaquenil (const)
+            plaqState.weightVal = ''; plaqState.weightUnit = 'lbs'; plaqState.heightFt = ''; plaqState.heightIn = ''; plaqState.sex = ''; plaqState.dailyDose = ''; plaqState.duration = ''; plaqState.renal = false; plaqState.tamoxifen = false;
+            // Myopia (const)
             myopState.age = ''; myopState.rx = ''; myopState.sex = ''; myopState.ethnicity = 'caucasian'; myopState.treatment = 'none';
             _myopChartData = null;
             // BV Parks
@@ -8312,8 +8855,9 @@
             dryEyeExpanded = { tearQty:false, tearStab:false, staining:false, meibomian:false, inflammatory:false, symptoms:false, dews:false, lidBlink:false };
             // Gonio
             gonioExpanded = { anatomy:true, shaffer:true };
-            // Amblyopia
-            amblyopiaState = { odSph:null, odCyl:null, odSphSign:'+', odCylSign:'\u2212', osSph:null, osCyl:null, osSphSign:'+', osCylSign:'\u2212' };
+            // Amblyopia (const — mutate properties)
+            amblyopiaState.odSph = null; amblyopiaState.odCyl = null; amblyopiaState.odSphSign = '+'; amblyopiaState.odCylSign = '\u2212';
+            amblyopiaState.osSph = null; amblyopiaState.osCyl = null; amblyopiaState.osSphSign = '+'; amblyopiaState.osCylSign = '\u2212';
             // AMD
             amdState = { od_drusen:false, od_pigment:false, os_drusen:false, os_pigment:false, rpd:false };
             amdExpanded = { calculator:true, drusen:true, beckman:true, late:false, biomarkers:false };
@@ -9299,6 +9843,14 @@
                         <div style="font-weight:700;color:var(--ink);margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;"><i class="ph-duotone ph-eye" style="margin-right:4px;"></i>Primary Screening Tools</div>
                         <div><strong>SD-OCT</strong> and <strong>FAF</strong> are the primary, objective tools for detecting HCQ maculopathy.</div>
                         <div style="margin-top:4px;"><strong>VF 10-2</strong> should be used as a secondary, confirmatory test.</div>
+                    </div>
+                    <div class="ref-toggle-wrap">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
+                        <div class="ref-toggle-content">
+                            <strong>Reference:</strong> Marmor MF et al. Recommendations on Screening for Chloroquine and Hydroxychloroquine Retinopathy. <em>Ophthalmology</em> 2016;123(6):1386\u20131394.
+                            AAO Board of Trustees, Recommendations on Screening for HCQ Retinopathy (2025 Revision).
+                            Risk estimates based on cumulative dose data; actual risk may vary with individual factors including renal function and concurrent tamoxifen use.
+                        </div>
                     </div>
                 </div>
             `;
@@ -12011,7 +12563,8 @@
         function amblyopiaVal(raw, sign) {
             if (raw === null || raw === '' || raw === undefined) return null;
             var v = parseFloat(raw);
-            if (isNaN(v) || v === 0) return null;
+            if (isNaN(v)) return null;
+            if (v === 0) return 0;
             return (sign === '-' || sign === '\u2212') ? -Math.abs(v) : Math.abs(v);
         }
 
@@ -12021,11 +12574,15 @@
             var osS = amblyopiaVal(amblyopiaState.osSph, amblyopiaState.osSphSign);
             var osC = amblyopiaVal(amblyopiaState.osCyl, amblyopiaState.osCylSign);
 
+            // Treat untouched dropdowns (null) as 0.00 (plano) when the other eye has a value
+            if (odS !== null || osS !== null) { if (odS === null) odS = 0; if (osS === null) osS = 0; }
+            if (odC !== null || osC !== null) { if (odC === null) odC = 0; if (osC === null) osC = 0; }
+
             // Determine spherical equivalent type for each eye
             var odSE = odS !== null ? odS : null;
             var osSE = osS !== null ? osS : null;
-            var odCylAbs = odC !== null ? Math.abs(odC) : null;
-            var osCylAbs = osC !== null ? Math.abs(osC) : null;
+            var odCylAbs = odC !== null ? Math.abs(odC) : 0;
+            var osCylAbs = osC !== null ? Math.abs(osC) : 0;
 
             var risks = [];
 
@@ -14127,7 +14684,7 @@
             let html = `<div class="med-search-wrap">
                 <span class="med-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
                 <input type="text" class="med-search-input" id="medSearchInput" placeholder="Search by brand or generic name\u2026" value="${escMedHtml(medsState.searchQuery)}" autocomplete="off">
-                <button class="med-search-fav ${medsState.showFavoritesOnly?'active':''}" onclick="toggleMedFavoritesOnly()" title="Favorites${medsState.favorites.length ? ' ('+medsState.favorites.length+')' : ''}"><i class="ph-duotone ph-star"></i></button>
+                <button class="med-search-fav ${medsState.showFavoritesOnly?'active':''} ${!medsState.showFavoritesOnly && medsState.favorites.length?'has-favs':''}" onclick="toggleMedFavoritesOnly()" title="Favorites${medsState.favorites.length ? ' ('+medsState.favorites.length+')' : ''}"><i class="ph-duotone ph-star"></i></button>
                 <div class="med-autocomplete" id="medAutocomplete" style="display:none"></div>
             </div>`;
             if (medsState.showFavoritesOnly) {
@@ -14136,7 +14693,7 @@
                     html += `<div class="empty"><div class="empty-icon"><i class="ph-duotone ph-pill"></i></div><div class="empty-title">No favorites yet</div><div class="empty-desc">Star medications to add them here.</div></div>`;
                 } else {
                     html += `<div class="lens-list" style="margin-bottom:16px">`;
-                    favResults.forEach(med => { html += renderMedCard(med, false); });
+                    favResults.forEach(med => { html += renderMedCard(med, true); });
                     html += `</div>`;
                 }
                 return html;
@@ -15043,7 +15600,8 @@
 
             let html = `<div class="browse-search-wrap">
                 <span class="browse-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
-                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search lenses…" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
+                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search\u2026" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
+                <span style="position:absolute;left:36px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-muted);opacity:0.35;pointer-events:none;font-family:var(--sans);font-weight:400;${browseState.search ? 'display:none;' : ''}"><span style="opacity:0;">Search...</span> by name, manufacturer, private label</span>
             </div>`;
 
             const mf = browseState.modalityFilter;
@@ -15085,7 +15643,7 @@
                 let allLenses = [...LENSES];
                 if (tf) allLenses = allLenses.filter(l => l.type === tf);
                 if (mf) allLenses = allLenses.filter(l => l.modality === mf);
-                if (search) allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search))));
+                if (search) { var searchNorm = search.replace(/[-]/g,' '); allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(searchNorm) || pl.retailer.toLowerCase().includes(search)))); }
                 if (browseState.sortDk) allLenses.sort((a, b) => browseState.sortDk === "desc" ? b.dk - a.dk : a.dk - b.dk);
                 else if (browseState.sortBc) allLenses.sort((a, b) => browseState.sortBc === "desc" ? parseFloat(b.bc) - parseFloat(a.bc) : parseFloat(a.bc) - parseFloat(b.bc));
                 else if (browseState.sortDia) allLenses.sort((a, b) => browseState.sortDia === "desc" ? parseFloat(b.diam) - parseFloat(a.diam) : parseFloat(a.diam) - parseFloat(b.diam));
@@ -15117,7 +15675,7 @@
                 let lenses = LENSES.filter(l => l.brand === brand);
                 if (tf) lenses = lenses.filter(l => l.type === tf);
                 if (mf) lenses = lenses.filter(l => l.modality === mf);
-                if (search) lenses = lenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search))));
+                if (search) { var searchNorm = search.replace(/[-]/g,' '); lenses = lenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(searchNorm) || pl.retailer.toLowerCase().includes(search)))); }
                 if (lenses.length === 0) return;
                 lenses.sort((a, b) => a.name.localeCompare(b.name));
                 const color = brandColorMap[brand] || "var(--accent)";
