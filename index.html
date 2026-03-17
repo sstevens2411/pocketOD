@@ -2863,8 +2863,9 @@
             border-collapse: separate;
             border-spacing: 0;
             font-size: 13px;
-            table-layout: fixed;
+            table-layout: auto;
             box-sizing: border-box;
+            min-width: 900px;
         }
         .browse-table th,
         .browse-table td {
@@ -2872,7 +2873,7 @@
         }
         .browse-table th:first-child,
         .browse-table td:first-child {
-            width: 32%;
+            min-width: 220px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -2904,6 +2905,14 @@
             vertical-align: middle;
             color: var(--ink);
         }
+        .browse-table th:nth-child(5),
+        .browse-table td:nth-child(5) { min-width: 120px; } /* Sph Range */
+        .browse-table th:nth-child(6),
+        .browse-table td:nth-child(6) { min-width: 100px; } /* Cyl Range */
+        .browse-table th:nth-child(7),
+        .browse-table td:nth-child(7) { min-width: 140px; } /* Axes */
+        .browse-table th:nth-child(8),
+        .browse-table td:nth-child(8) { min-width: 80px; }  /* Cost/Yr */
         .browse-name {
             font-weight: 500;
         }
@@ -3004,7 +3013,7 @@
             color: var(--accent);
         }
         .browse-scroll-wrap {
-            overflow-x: hidden;
+            overflow-x: auto;
         }
         .rotate-hint {
             display: none;
@@ -3041,12 +3050,40 @@
             .browse-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .browse-filters { gap: 4px; }
             .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; }
-            .browse-table { font-size: 12px; min-width: 640px; }
+            .browse-table { font-size: 12px; min-width: 900px; }
             .browse-table th { padding: 6px 6px; }
             .browse-table td { padding: 5px 6px; }
             .browse-type, .browse-sched { font-size: 8px; padding: 1px 3px; }
             .browse-badges { display: none; }
         }
+
+        /* BROWSE → CALCULATE ORDER */
+        .browse-calc-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #0d9488; color: #fff; border: none; border-radius: 8px;
+            padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+        }
+        .browse-calc-btn:hover { background: #0f766e; }
+        .browse-filter-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            border: 1.5px solid #0d9488; color: #0d9488; border-radius: 20px;
+            padding: 4px 12px; font-size: 12px; font-weight: 600; margin-top: 8px;
+        }
+        .browse-filter-pill-x {
+            cursor: pointer; font-size: 14px; margin-left: 2px; line-height: 1;
+        }
+        .browse-filter-pill-x:hover { color: #0f766e; }
+        .browse-find-btn {
+            display: inline-block; border: 1.5px solid #0d9488; color: #0d9488;
+            background: transparent; border-radius: 8px; padding: 8px 16px;
+            font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px;
+        }
+        .browse-find-btn:hover { background: rgba(13,148,136,0.08); }
+        .browse-filter-empty {
+            background: rgba(13,148,136,0.06); border-color: rgba(13,148,136,0.2);
+        }
+        .browse-filter-empty .empty-icon { color: #0d9488; }
+        .browse-filter-empty .empty-title { color: var(--text); }
 
         /* TOOLS / IOP CALCULATOR */
         .tools-card {
@@ -4889,6 +4926,7 @@
             fullCylFrom: null,
             sortBy: "dk",
             sortDir: "desc",
+            browseLensFilter: null,
         };
 
         // HELPERS
@@ -5031,6 +5069,15 @@
         });
 
         function getCompatibleLenses() {
+            if (state.browseLensFilter) {
+                const target = LENSES.find(l => l.name === state.browseLensFilter);
+                if (!target) return [];
+                const odOk = isLensCompatibleWithEye(target, state.od);
+                const osOk = isLensCompatibleWithEye(target, state.os);
+                if (odOk || osOk) return [target];
+                return [];
+            }
+
             const results = [];
             const seen = new Set();
 
@@ -5197,6 +5244,21 @@
             });
 
             bar.innerHTML = html;
+
+            const oldPill = document.querySelector('.browse-filter-pill');
+            if (oldPill) oldPill.remove();
+
+            if (state.browseLensFilter) {
+                const pill = document.createElement('div');
+                pill.className = 'browse-filter-pill';
+                pill.innerHTML = `<i class="ph-duotone ph-funnel"></i> Filtered: ${state.browseLensFilter} <span class="browse-filter-pill-x" onclick="clearBrowseLensFilter()">✕</span>`;
+                bar.parentNode.insertBefore(pill, bar.nextSibling);
+            }
+        }
+
+        function clearBrowseLensFilter() {
+            state.browseLensFilter = null;
+            render();
         }
 
         function renderContent() {
@@ -5626,11 +5688,21 @@
 
             let listHtml;
             if (lenses.length === 0) {
-                listHtml = `<div class="empty">
-                    <div class="empty-icon"><i class="ph-duotone ph-magnifying-glass"></i></div>
-                    <div class="empty-title">No lenses match this prescription</div>
-                    <div class="empty-desc">Try expanding your brand selection or modality preference</div>
-                </div>`;
+                if (state.browseLensFilter) {
+                    listHtml = `<div class="empty browse-filter-empty">
+                        <div class="empty-icon"><i class="ph-duotone ph-warning-circle"></i></div>
+                        <div class="empty-title">This Rx is outside the available parameters for ${state.browseLensFilter}</div>
+                        <div class="empty-desc">
+                            <button class="browse-find-btn" onclick="clearBrowseLensFilter()">Show All Compatible Lenses</button>
+                        </div>
+                    </div>`;
+                } else {
+                    listHtml = `<div class="empty">
+                        <div class="empty-icon"><i class="ph-duotone ph-magnifying-glass"></i></div>
+                        <div class="empty-title">No lenses match this prescription</div>
+                        <div class="empty-desc">Try expanding your brand selection or modality preference</div>
+                    </div>`;
+                }
             } else {
                 listHtml = `<div class="lens-list">${lenses.map(renderLensCard).join("")}</div>`;
             }
@@ -8577,7 +8649,11 @@
                 state.orRotation = null;
                 state.nonAdaptFrom = null;
                 state.fullCylFrom = null;
-                state.step--;
+                if (state.browseLensFilter && state.step === 3) {
+                    state.step = 0;
+                } else {
+                    state.step--;
+                }
                 render();
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
@@ -8598,8 +8674,10 @@
                     tsAdjustment: null,
                     tsRotation: null,
                     nonAdaptFrom: null,
+                    fullCylFrom: null,
                     sortBy: "dk",
-                    sortDir: "desc"
+                    sortDir: "desc",
+                    browseLensFilter: null,
                 };
                 render();
                 return;
@@ -8611,7 +8689,11 @@
                 if (state.step === 1) {
                     state.brands = [...BRANDS];
                 }
-                state.step++;
+                if (state.browseLensFilter && state.step === 0) {
+                    state.step = 3;
+                } else {
+                    state.step++;
+                }
                 render();
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
@@ -8632,7 +8714,8 @@
                 tsRotation: null,
                 nonAdaptFrom: null,
                 sortBy: "dk",
-                sortDir: "desc"
+                sortDir: "desc",
+                browseLensFilter: null,
             };
             clSubTab = 'prescribe';
             document.getElementById('clSubPrescribe').classList.add('active');
@@ -15513,6 +15596,39 @@
             renderBrowse();
         }
 
+        function browseStartCalc(lensName) {
+            state = {
+                step: 0,
+                od: newEye(),
+                os: newEye(),
+                dominantEye: null,
+                modality: [],
+                brands: [...BRANDS],
+                selectedLens: null,
+                hasVisitedResults: false,
+                troubleshoot: null,
+                tsAdjustment: null,
+                tsRotation: null,
+                nonAdaptFrom: null,
+                fullCylFrom: null,
+                sortBy: "dk",
+                sortDir: "desc",
+                browseLensFilter: lensName,
+            };
+            clSubTab = 'prescribe';
+            document.getElementById('clSubPrescribe').classList.add('active');
+            document.getElementById('clSubBrowse').classList.remove('active');
+            document.getElementById('clSubVertex').classList.remove('active');
+            document.getElementById('clSubRadius').classList.remove('active');
+            document.getElementById('lensesContent').style.display = '';
+            document.getElementById('browsePage').style.display = 'none';
+            document.getElementById('vertexPage').style.display = 'none';
+            document.getElementById('radiusPage').style.display = 'none';
+            document.querySelector('main.main').style.paddingBottom = '';
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
         function renderBrowseLensDetail(lens) {
             const bc = brandClass(lens.brand);
             const brandColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[bc];
@@ -15561,6 +15677,7 @@
                 ${lens.infoBanner ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-info" style="margin-right:4px;"></i>${lens.infoBanner}</div>` : ''}
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${specsHtml}</div>
+                <button class="browse-calc-btn" style="margin-top:12px" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><i class="ph-duotone ph-calculator"></i> Calculate Order</button>
                 <div class="order-section-title">Lens Details</div>
                 <div class="order-lens-info">${infoHtml}</div>
                 ${notesHtml}
