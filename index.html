@@ -1749,7 +1749,8 @@
             text-align: left;
         }
         .med-price-size {
-            font-size: 11px;
+            display: block;
+            font-size: 10px;
             font-weight: 400;
             color: #475569;
         }
@@ -4522,6 +4523,7 @@
             {id:"med_103",brand_name:"Neptazane (oral, brand discontinued)",generic_name:"Methazolamide 25-50 mg tablet",generic_available:true,drug_class:"Carbonic anhydrase inhibitor (oral)",condition:"glaucoma",typical_dosing:"25-50 mg PO two to three times daily",bottle_size:"100 tablets",preservative_free:false,avg_brand_price:80,avg_generic_price:20,notes:"Brand discontinued; generic methazolamide available. Oral CAI alternative to acetazolamide. Better tolerated by some patients. Lower incidence of kidney stones than acetazolamide. Sulfonamide derivative.",price_size:"100 tablets",route:"oral"},
             {id:"med_104",brand_name:"Timoptic XE",generic_name:"Timolol maleate 0.25-0.5% gel-forming solution",generic_available:true,drug_class:"Non-selective beta-blocker (gel-forming)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily",bottle_size:"2.5 mL / 5 mL",preservative_free:false,avg_brand_price:120,avg_generic_price:15,notes:"Gel-forming timolol \u2014 longer contact time allows once-daily dosing. Causes transient blurred vision after instillation. Available in preservative-free form.",price_size:"2.5 mL",route:"topical"},
             {id:"med_105",brand_name:"Ocupress (brand discontinued)",generic_name:"Carteolol HCl 1%",generic_available:true,drug_class:"Non-selective beta-blocker (with ISA)",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) twice daily",bottle_size:"5 mL / 10 mL / 15 mL",preservative_free:false,avg_brand_price:100,avg_generic_price:20,notes:"Brand discontinued; generic carteolol available. Non-selective beta-blocker with intrinsic sympathomimetic activity (ISA). May cause less bradycardia than timolol. Rarely used first-line today.",price_size:"5 mL",route:"topical"},
+            {id:"med_131",brand_name:"Omlonti",generic_name:"Omidenepag isopropyl 0.002%",generic_available:false,drug_class:"Selective EP2 receptor agonist",condition:"glaucoma",typical_dosing:"1 drop in affected eye(s) once daily in the evening",bottle_size:"2.5 mL",preservative_free:false,avg_brand_price:250,avg_generic_price:null,notes:"First-in-class selective EP2 prostaglandin receptor agonist. Increases aqueous outflow via both trabecular and uveoscleral pathways. May cause iris pigmentation changes (likely permanent) and eyelash changes. Refrigerate unopened; store at room temp up to 31 days after opening. Remove contacts before use, wait 15 min to reinsert.",price_size:"2.5 mL",route:"topical"},
 
             // === Additional Steroid Medications ===
             {id:"med_106",brand_name:"Maxidex",generic_name:"Dexamethasone 0.1% suspension",generic_available:true,drug_class:"Corticosteroid (high potency)",condition:"inflammation_steroid",typical_dosing:"1-2 drops four to six times daily; taper based on response",bottle_size:"5 mL / 15 mL",preservative_free:false,avg_brand_price:200,avg_generic_price:20,notes:"Potent dexamethasone suspension. Good penetration for anterior uveitis. Shake well. High IOP risk \u2014 monitor closely. Very affordable generic.",price_size:"5 mL",route:"topical"},
@@ -4599,6 +4601,7 @@
             med_103:"glaucoma, acute glaucoma, IOP spike, intraocular pressure",
             med_104:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
             med_105:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure",
+            med_131:"glaucoma, ocular hypertension, open angle glaucoma, IOP, intraocular pressure, omlonti, omidenepag, EP2 agonist",
             // Allergy
             med_022:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
             med_023:"allergic conjunctivitis, eye allergy, itchy eyes, seasonal allergy, hay fever, red eyes",
@@ -4749,6 +4752,7 @@
             med_103:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated with sulfonamide hypersensitivity and severe renal/hepatic insufficiency. Monitor electrolytes."},
             med_104:{pediatric:"Use with caution — systemic absorption risk in children",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, 2nd/3rd-degree AV block, overt heart failure, and cardiogenic shock (non-selective beta-blocker)."},
             med_105:{pediatric:"Not established in pediatric patients",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Contraindicated in asthma, COPD, sinus bradycardia, 2nd/3rd-degree AV block, overt heart failure, and cardiogenic shock (non-selective beta-blocker)."},
+            med_131:{pediatric:"Not established in pediatric patients",pregnancy:"No adequate human studies; use only if clearly needed",contraindication:"May cause iris pigmentation changes (likely permanent). Use caution in patients with active intraocular inflammation, aphakia, pseudophakia with torn posterior lens capsule, or risk factors for macular edema."},
             // Allergy
             med_022:{pediatric:"Approved for ages ≥2 years",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to olopatadine or any component. No other absolute contraindications."},
             med_023:{pediatric:"Approved for ages ≥2 years (0.1%), ≥3 years (0.2%)",pregnancy:"Cat C — use only if benefit justifies risk",contraindication:"Hypersensitivity to olopatadine or any component. No other absolute contraindications."},
