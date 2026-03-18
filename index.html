@@ -936,20 +936,23 @@
             gap: 5px;
             margin-top: 10px;
             padding: 8px 16px;
-            border-radius: 8px;
-            border: 2px solid var(--accent);
-            background: var(--accent);
-            color: #fff;
+            border-radius: 50px;
+            border: 2px solid #1a2332;
+            background: transparent;
+            color: #1a2332;
             font-family: var(--sans);
             font-size: 12.5px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.4s ease;
         }
 
         .lens-select-btn:hover {
-            background: #0f766e;
-            box-shadow: var(--accent-glow);
+            background: #0d9488;
+            border-color: #0d9488;
+            color: #fff;
         }
 
         /* ORDER DETAIL VIEW */
@@ -1160,26 +1163,60 @@
             cursor: default;
         }
 
-        .nav-btn-next {
-            border: 2px solid var(--accent);
+        /* CTA BUTTON — shared arrow-swap style */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background: transparent;
-            color: var(--accent);
-            transition: all 0.3s ease;
+            border: 2px solid #1a2332;
+            color: #1a2332;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 50px;
+            font-family: var(--sans);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
         }
-
-        .nav-btn-next:hover {
-            background: var(--accent);
+        .cta-btn:hover {
+            background: #0d9488;
+            border-color: #0d9488;
             color: #fff;
-            box-shadow: var(--accent-glow);
+        }
+        .cta-btn .arrow-left {
+            opacity: 1;
+            width: auto;
+            overflow: hidden;
+            transition: opacity 0.4s ease, width 0.4s ease;
+        }
+        .cta-btn .arrow-right {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            transition: opacity 0.4s ease, width 0.4s ease;
+        }
+        .cta-btn:hover .arrow-left {
+            opacity: 0;
+            width: 0;
+        }
+        .cta-btn:hover .arrow-right {
+            opacity: 1;
+            width: auto;
         }
 
-        .nav-btn-next .btn-arrow {
-            display: inline-block;
-            transition: transform 0.3s ease;
+        .nav-btn-next {
+            border: 2px solid #1a2332;
+            background: transparent;
+            color: #1a2332;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
         }
-
-        .nav-btn-next:hover .btn-arrow {
-            transform: translateX(4px);
+        .nav-btn-next:hover {
+            background: #0d9488;
+            border-color: #0d9488;
+            color: #fff;
         }
 
         .nav-btn-next:disabled {
@@ -1193,6 +1230,14 @@
         .nav-btn-next:disabled:hover {
             background: transparent;
             color: var(--ink-muted);
+        }
+        .nav-btn-next:disabled:hover .arrow-left {
+            opacity: 1;
+            width: auto;
+        }
+        .nav-btn-next:disabled:hover .arrow-right {
+            opacity: 0;
+            width: 0;
         }
 
         /* FOOTER */
@@ -1832,9 +1877,9 @@
         .med-contra-icon {
             color: #dc2626;
             font-size: 18px;
-            vertical-align: -3px;
             margin-right: 6px;
-            display: inline-block;
+            display: inline-flex;
+            align-self: center;
             animation: contraShake 0.5s ease-in-out;
         }
         @keyframes contraShake {
@@ -2457,7 +2502,6 @@
                 min-height: 48px;
                 padding: 14px 16px;
                 font-size: 14px;
-                border-radius: 10px;
             }
 
             /* Badges — slightly bigger for readability */
@@ -2519,6 +2563,12 @@
             }
 
             /* --- Order detail --- */
+            .order-header-row {
+                flex-direction: column; align-items: stretch;
+            }
+            .order-header-row .browse-calc-btn {
+                width: 100%; justify-content: center; margin-top: 8px;
+            }
             .order-lens-name {
                 font-size: 18px;
             }
@@ -3063,22 +3113,32 @@
             .browse-badges { display: none; }
         }
 
-        /* BROWSE → CALCULATE ORDER */
+        /* BROWSE → FIT THIS LENS */
+        .order-header-row {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        }
+        .order-header-left { flex: 1; min-width: 0; }
         .browse-calc-btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: #0d9488; color: #fff; border: none; border-radius: 8px;
+            display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0;
+            background: transparent; color: #1a2332; border: 2px solid #1a2332; border-radius: 50px;
             padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            transition: all 0.4s ease;
         }
-        .browse-calc-btn:hover { background: #0f766e; }
+        .browse-calc-btn:hover { background: #0d9488; border-color: #0d9488; color: #fff; }
         .browse-filter-pill {
-            display: inline-flex; align-items: center; gap: 6px;
-            border: 1.5px solid #0d9488; color: #0d9488; border-radius: 20px;
-            padding: 4px 12px; font-size: 12px; font-weight: 600; margin-top: 8px;
+            display: inline-flex; align-items: center; gap: 5px;
+            background: rgba(13,148,136,0.08); color: #475569; border: none; border-radius: 6px;
+            padding: 4px 8px; font-size: 13px; font-weight: 400; margin-bottom: 6px;
         }
+        .browse-filter-pill i { color: #0d9488; font-size: 14px; }
         .browse-filter-pill-x {
-            cursor: pointer; font-size: 14px; margin-left: 2px; line-height: 1;
+            cursor: pointer; font-size: 11px; line-height: 1;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 18px; height: 18px; border-radius: 50%; color: #94a3b8;
+            transition: background 0.2s, color 0.2s;
         }
-        .browse-filter-pill-x:hover { color: #0f766e; }
+        .browse-filter-pill-x:hover { background: rgba(0,0,0,0.07); color: #475569; }
         .browse-find-btn {
             display: inline-block; border: 1.5px solid #0d9488; color: #0d9488;
             background: transparent; border-radius: 8px; padding: 8px 16px;
@@ -3931,11 +3991,11 @@
                 <div id="stepContent"></div>
                 <div class="nav-row" id="navRow">
                     <button class="nav-btn nav-btn-back" id="btnBack" onclick="goBack()">&larr; Back</button>
-                    <button class="nav-btn nav-btn-next" id="btnNext" onclick="goNext()">Next <span class="btn-arrow">&rarr;</span></button>
+                    <button class="nav-btn nav-btn-next cta-btn" id="btnNext" onclick="goNext()"><span class="arrow-left">&rarr;</span> Next <span class="arrow-right">&rarr;</span></button>
                 </div>
             </div>
             <footer class="footer">
-                Data sourced from manufacturer catalogs. Verify all parameters before prescribing.<span id="footerPricing"></span>
+                Data sourced from manufacturer catalogs. For reference only. Verify all parameters before prescribing.<span id="footerPricing"></span>
             </footer>
         </div>
     </main>
@@ -5265,7 +5325,7 @@
             if (state.browseLensFilter) {
                 const pill = document.createElement('div');
                 pill.className = 'browse-filter-pill';
-                pill.innerHTML = `<i class="ph-duotone ph-funnel"></i> Filtered: ${state.browseLensFilter} <span class="browse-filter-pill-x" onclick="clearBrowseLensFilter()">✕</span>`;
+                pill.innerHTML = `<i class="ph-duotone ph-funnel"></i> ${state.browseLensFilter} <span class="browse-filter-pill-x" onclick="clearBrowseLensFilter()">\u00d7</span>`;
                 bar.parentNode.insertBefore(pill, bar.nextSibling);
             }
         }
@@ -5313,10 +5373,10 @@
                 next.disabled = false;
             } else if (state.step === 2) {
                 const count = getCompatibleLenses().length;
-                next.innerHTML = `Show Results (${count}) <span class="btn-arrow">\u2192</span>`;
+                next.innerHTML = `<span class="arrow-left">\u2192</span> Show Results (${count}) <span class="arrow-right">\u2192</span>`;
                 next.disabled = false;
             } else {
-                next.innerHTML = 'Next <span class="btn-arrow">\u2192</span>';
+                next.innerHTML = '<span class="arrow-left">\u2192</span> Next <span class="arrow-right">\u2192</span>';
                 next.disabled = false;
             }
 
@@ -5815,7 +5875,7 @@
                     </div>
                 </div>
                 <div class="lens-specs">${specsHtml}</div>
-                <button class="lens-select-btn" onclick="selectLens('${lens.name.replace(/'/g, "\\'")}')" >Select</button>
+                <button class="lens-select-btn cta-btn" onclick="selectLens('${lens.name.replace(/'/g, "\\'")}')" ><span class="arrow-left">\u2192</span> Select <span class="arrow-right">\u2192</span></button>
             </div>`;
         }
 
@@ -8034,7 +8094,7 @@
                                     <div class="ts-changes" id="tsDistRefineChanges_${i}">
                                         ${drInitChanges}
                                     </div>
-                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyAcuvueDistRefine(${i})">Apply \u2192</button>
+                                    <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyAcuvueDistRefine(${i})"><span class="arrow-left">\u2192</span> Apply <span class="arrow-right">\u2192</span></button>
                                 </div>
                             </div>`;
                         }
@@ -8080,7 +8140,7 @@
                                     <div class="ts-changes" id="tsNearRefineChanges_${i}">
                                         ${nrInitChanges}
                                     </div>
-                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyAcuvueNearRefine(${i})">Apply \u2192</button>
+                                    <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyAcuvueNearRefine(${i})"><span class="arrow-left">\u2192</span> Apply <span class="arrow-right">\u2192</span></button>
                                 </div>
                             </div>`;
                         }
@@ -8124,7 +8184,7 @@
                                     <div class="ts-changes" id="tsSelectChanges_${i}">
                                         ${saInitChanges}
                                     </div>
-                                    <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsSelectAdjustment(${i})">View Adjusted Results \u2192</button>
+                                    <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsSelectAdjustment(${i})"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>
                                 </div>
                             </div>`;
                         }
@@ -8144,7 +8204,7 @@
                                 ${s.rationale ? `<div class="ts-rationale">${s.rationale}</div>` : ''}
                                 <div class="ts-changes">${changesHtml}</div>
                                 ${s.disclaimer ? `<div style="margin-top:8px;padding:8px 12px;background:rgba(13,148,136,0.06);border:1px solid rgba(13,148,136,0.15);border-radius:8px;font-size:12px;color:var(--accent);line-height:1.5;font-weight:500"><i class="ph-duotone ph-info" style="margin-right:4px;font-size:13px;vertical-align:-1px"></i>${s.disclaimer}</div>` : ''}
-                                <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsAdjustment(${i})">View Adjusted Results \u2192</button>
+                                <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsAdjustment(${i})"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>
                             </div>
                         </div>`;
                     }).join("");
@@ -8240,7 +8300,7 @@
                         }
                     });
                     window._tsRotationAdj = { title: `Axis rotation: ${parts.join(', ')}`, overrides };
-                    viewBtnHtml = `<button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyRotationAdjustment()">View Adjusted Results \u2192</button>`;
+                    viewBtnHtml = `<button class="lens-select-btn cta-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyRotationAdjustment()"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>`;
                 }
 
                 suggestionsHtml = rotationHtml + viewBtnHtml;
@@ -8476,7 +8536,7 @@
                             <i class="ph-duotone ph-arrows-counter-clockwise"></i>&nbsp; Back to Compatible Lenses
                         </button>`;
                     } else {
-                        ocViewBtnHtml = `<button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyOverCylAdjustment()">View Adjusted Results \u2192</button>`;
+                        ocViewBtnHtml = `<button class="lens-select-btn cta-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyOverCylAdjustment()"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>`;
                     }
                 }
 
@@ -8551,7 +8611,7 @@
                 if (allAvailable) {
                     // Case A: current lens supports the full cyl
                     suggestionsHtml = `${summaryHtml}
-                        <button class="lens-select-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyFullCylAdjustment()">View Full Cylinder Order \u2192</button>`;
+                        <button class="lens-select-btn cta-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyFullCylAdjustment()"><span class="arrow-left">\u2192</span> View Full Cylinder Order <span class="arrow-right">\u2192</span></button>`;
                 } else {
                     // Case B: need different lens - show filtered list
                     const fullCylLenses = getFullCylLenses();
@@ -8600,7 +8660,7 @@
                                     <span class="ts-change-to">${flatter.toFixed(1)} (flatter)</span>
                                 </div>
                             </div>
-                            <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyBcSwitch('${flatter.toFixed(1)}','tooTight')">View Adjusted Results \u2192</button>`
+                            <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyBcSwitch('${flatter.toFixed(1)}','tooTight')"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>`
                         }
                     </div>
                 </div>`;
@@ -8638,7 +8698,7 @@
                                     <span class="ts-change-to">${steeper.toFixed(1)} (steeper)</span>
                                 </div>
                             </div>
-                            <button class="lens-select-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyBcSwitch('${steeper.toFixed(1)}','tooLoose')">View Adjusted Results \u2192</button>`
+                            <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyBcSwitch('${steeper.toFixed(1)}','tooLoose')"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>`
                         }
                     </div>
                 </div>`;
@@ -8798,15 +8858,21 @@
             if (tab !== 'lenses') resetBrowseState();
 
             if (tab === 'lenses') {
+                if (clSubTab !== 'prescribe') {
+                    if (clSubTab === 'browse') resetBrowseState();
+                    clSubTab = 'prescribe';
+                }
+                document.getElementById('clSubPrescribe').classList.add('active');
+                document.getElementById('clSubBrowse').classList.remove('active');
+                document.getElementById('clSubVertex') && document.getElementById('clSubVertex').classList.remove('active');
+                document.getElementById('clSubRadius') && document.getElementById('clSubRadius').classList.remove('active');
                 document.querySelector('main.main').style.display = '';
-                document.querySelector('main.main').style.paddingBottom = clSubTab === 'prescribe' ? '' : '0';
-                document.getElementById('lensesContent').style.display = clSubTab === 'prescribe' ? '' : 'none';
-                document.getElementById('browsePage').style.display = clSubTab === 'browse' ? '' : 'none';
-                document.getElementById('vertexPage').style.display = clSubTab === 'vertex' ? '' : 'none';
-                document.getElementById('radiusPage').style.display = clSubTab === 'radius' ? '' : 'none';
-                if (clSubTab === 'browse') renderBrowse();
-                if (clSubTab === 'vertex') renderVertexChart();
-                if (clSubTab === 'radius') renderRadiusChart();
+                document.querySelector('main.main').style.paddingBottom = '';
+                document.getElementById('lensesContent').style.display = '';
+                document.getElementById('browsePage').style.display = 'none';
+                document.getElementById('vertexPage').style.display = 'none';
+                document.getElementById('radiusPage').style.display = 'none';
+                render();
             } else {
                 document.querySelector('main.main').style.display = 'none';
                 document.getElementById('browsePage').style.display = 'none';
@@ -15691,13 +15757,17 @@
 
             return `<div class="order-detail">
                 <button class="order-back-btn" onclick="closeBrowseLens()"><i class="ph-duotone ph-arrow-left"></i> Back to Browse</button>
-                <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
-                <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
+                <div class="order-header-row">
+                    <div class="order-header-left">
+                        <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
+                        <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
+                    </div>
+                    <button class="browse-calc-btn cta-btn" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><span class="arrow-left">\u2192</span> Fit This Lens <span class="arrow-right">\u2192</span></button>
+                </div>
                 ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
                 ${lens.infoBanner ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-info" style="margin-right:4px;"></i>${lens.infoBanner}</div>` : ''}
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${specsHtml}</div>
-                <button class="browse-calc-btn" style="margin-top:12px" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><i class="ph-duotone ph-calculator"></i> Calculate Order</button>
                 <div class="order-section-title">Lens Details</div>
                 <div class="order-lens-info">${infoHtml}</div>
                 ${notesHtml}
@@ -15862,11 +15932,9 @@
         window.addEventListener('resize', positionTabIndicator);
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:var(--bg);">
-        <div style="margin-bottom:4px;color:#475569;">Built by an Optometrist, For Optometrists.</div>
-        <div style="margin-bottom:4px;">For reference only. Verify all clinical decisions independently.</div>
         <div>&copy; 2026 Pocket OD &middot; <a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a></div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
-        <div style="margin-top:4px;">If you find an error, please let me know!</div>
+        <div style="margin-top:4px;">If you find an error, please let me know.</div>
     </footer>
     <div id="disclaimerModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;padding:24px;">
         <div style="background:#fff;border-radius:12px;padding:28px 28px 24px;max-width:520px;width:100%;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.15);">
