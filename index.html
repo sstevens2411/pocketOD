@@ -7464,8 +7464,13 @@
                 if (cyl !== 0 && Math.abs(cyl) === 0.50) {
                     clSph = snapTo025(clSph + cyl / 2);
                 } else if (lens.type === "toric" || lens.type === "multifocal-toric") {
-                    const clCyl = snapCyl(cyl, lens);
-                    const cylDiff = clCyl - cyl;
+                    let vCyl = cyl;
+                    if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                        const vM2 = vertexConvert(sph + cyl);
+                        vCyl = snapTo025(snapTo025(vM2) - clSph);
+                    }
+                    const clCyl = snapCyl(vCyl, lens);
+                    const cylDiff = clCyl - vCyl;
                     if (Math.abs(cylDiff) > 0.01) {
                         const seAdj = snapTo025(-cylDiff / 2);
                         clSph = snapTo025(clSph + seAdj);
@@ -7492,6 +7497,7 @@
                 if (eyeLabel && state.tsAdjustment && state.tsAdjustment.overrides && state.tsAdjustment.overrides[eyeLabel] && state.tsAdjustment.overrides[eyeLabel].sphDelta !== undefined) {
                     clSph = snapTo025(clSph + state.tsAdjustment.overrides[eyeLabel].sphDelta);
                 }
+                clSph = snapSph(clSph, lens);
                 return clSph;
             }
 
@@ -8369,10 +8375,17 @@
                     const or = state.overRefraction[e.label];
                     const rot = state.orRotation[e.label];
 
-                    // Current CL Rx
+                    // Current CL Rx — vertex-convert cyl to match buildEyeParams
+                    const sph = parseFloat(e.eye.sphere) || 0;
                     const cyl = parseFloat(e.eye.cylinder) || 0;
+                    let vCylOR = cyl;
+                    if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                        const clSphRaw = snapTo025(vertexConvert(sph));
+                        const vM2 = vertexConvert(sph + cyl);
+                        vCylOR = snapTo025(snapTo025(vM2) - clSphRaw);
+                    }
                     const clSph = getCurrentSph(e.eye, e.label);
-                    const clCyl = snapCyl(cyl, lens);
+                    const clCyl = snapCyl(vCylOR, lens);
                     const rxAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
                     let clAxis = snapAxis(rxAxis, lens);
 
@@ -8418,7 +8431,7 @@
                             if (Math.abs(cylDiff) > 0.01) {
                                 snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
                             }
-                            snappedSph = snapTo025(snappedSph);
+                            snappedSph = snapSph(snapTo025(snappedSph), lens);
                             snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
                             const snappedAxis = snapAxis(ideal.axis, lens);
                             const snappedStr = `${snappedSph > 0 ? "+" : ""}${snappedSph.toFixed(2)} ${snappedCyl.toFixed(2)} x ${snappedAxis}`;
@@ -8530,7 +8543,7 @@
                             if (Math.abs(cylDiff) > 0.01) {
                                 snappedSph = snapTo025(ideal.sph + (-cylDiff / 2));
                             }
-                            snappedSph = snapTo025(snappedSph);
+                            snappedSph = snapSph(snapTo025(snappedSph), lens);
                             snappedSph = Math.max(lens.sphMin, Math.min(lens.sphMax, snappedSph));
                             const snappedAxis = snapAxis(ideal.axis, lens);
 
