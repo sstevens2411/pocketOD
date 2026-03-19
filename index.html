@@ -18,7 +18,7 @@
             --ink: #1a2332;
             --ink-secondary: #475569;
             --ink-muted: #475569;
-            --border: rgba(0,0,0,0.08);
+            --border: rgba(0,0,0,0.15);
             --border-hover: rgba(0,0,0,0.12);
             --accent: #0d9488;
             --accent-light: rgba(13,148,136,0.10);
@@ -6260,6 +6260,8 @@
                             sphParam.value = `${adj.sphOverride > 0 ? "+" : ""}${adj.sphOverride.toFixed(2)}`;
                             sphParam.note = state.tsAdjustment.complaint === 'fullcyl'
                                 ? `Vertex-converted only (SE revert from ${oldVal})`
+                                : state.tsAdjustment.complaint === 'dropcyl'
+                                ? `SE adjusted for cyl reduction (from ${oldVal})`
                                 : `Cross-cyl adjusted from ${oldVal}`;
                             sphParam.highlight = true;
                         }
@@ -6271,6 +6273,8 @@
                             cylParam.value = adj.cylOverride.toFixed(2);
                             cylParam.note = state.tsAdjustment.complaint === 'fullcyl'
                                 ? `Full Rx cylinder (was reduced to ${oldVal})`
+                                : state.tsAdjustment.complaint === 'dropcyl'
+                                ? `Reduced one step (from ${oldVal})`
                                 : `Cross-cyl adjusted from ${oldVal}`;
                             cylParam.highlight = true;
                         }
@@ -6462,7 +6466,7 @@
             const hasLensDrop = isAdjusted && state.tsAdjustment.overrides && Object.values(state.tsAdjustment.overrides).some(o => o.lensDropTo);
             const adjBanner = isAdjusted ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Adjusted Order:</strong> ${state.tsAdjustment.title}</div>` : '';
             const nonAdaptBanner = isNonAdapt ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Non-Adapt Conversion:</strong> Cylinder folded into sphere via spherical equivalent</div>` : '';
-            const fullCylBanner = isFullCyl ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Full Cylinder:</strong> Using Rx cylinder with vertex-only sphere</div>` : '';
+            const fullCylBanner = '';
 
             return `<div class="order-detail">
                 ${isFullCyl
@@ -7356,6 +7360,66 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        function getDropCylInfo(eye, lens) {
+            const cyl = parseFloat(eye.cylinder) || 0;
+            if (cyl === 0) return null;
+            const sph = parseFloat(eye.sphere) || 0;
+            let clSph = snapTo025(vertexConvert(sph));
+            let vCyl = cyl;
+            if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - clSph);
+            }
+            const snapped = snapCyl(vCyl, lens);
+            // Only applies when cyl lands exactly on a step
+            if (Math.abs(Math.abs(snapped) - Math.abs(vCyl)) > 0.01) return null;
+            // Find one step lower
+            const steps = [];
+            if (lens.cylSteps) { lens.cylSteps.forEach(s => steps.push(Math.abs(s))); }
+            else { for (let s = Math.abs(lens.cylMin); s <= Math.abs(lens.cylMax) + 0.01; s += 0.50) steps.push(Math.round(s * 100) / 100); }
+            steps.sort((a, b) => a - b);
+            const curIdx = steps.findIndex(s => Math.abs(s - Math.abs(snapped)) < 0.01);
+            if (curIdx <= 0) return null;
+            const lowerCyl = -steps[curIdx - 1];
+            const cylDiff = lowerCyl - snapped; // negative minus more negative = positive (less minus)
+            const seAdj = snapTo025(-cylDiff / 2);
+            // Compute SE-adjusted sphere from vertex-converted sphere
+            let newSph = snapSph(snapTo025(clSph + seAdj), lens);
+            return {
+                oldCyl: snapped,
+                newCyl: lowerCyl,
+                oldSph: snapSph(clSph, lens),
+                newSph: newSph
+            };
+        }
+
+        function applyDropCylAdjustment() {
+            const lens = LENSES.find(l => l.name === state.selectedLens);
+            if (!lens) return;
+            const odOk = isLensCompatibleWithEye(lens, state.od);
+            const osOk = isLensCompatibleWithEye(lens, state.os);
+
+            const overrides = {};
+            [{ eye: state.od, label: "OD", ok: odOk },
+             { eye: state.os, label: "OS", ok: osOk }].forEach(({ eye, label, ok }) => {
+                if (!ok) return;
+                const info = getDropCylInfo(eye, lens);
+                if (!info) return;
+                overrides[label] = {
+                    sphOverride: info.newSph,
+                    cylOverride: info.newCyl
+                };
+            });
+
+            state.tsAdjustment = {
+                complaint: 'dropcyl',
+                title: 'Drop Down Cylinder — Reduced one step, sphere SE adjusted',
+                overrides: overrides
+            };
+            state.troubleshoot = null;
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
         function getFullCylLenses() {
             const results = [];
             LENSES.forEach(lens => {
@@ -7531,6 +7595,35 @@
             const alreadyFullCyl = state.fullCylFrom || (state.tsAdjustment && state.tsAdjustment.complaint === 'fullcyl');
             const showFullCyl = isToric && !alreadyFullCyl && (odFullCylInfo !== null || osFullCylInfo !== null);
 
+            // Check if drop-down cylinder option should show
+            const dropCylExcluded = ["Acuvue Oasys Max 1-Day for Astigmatism", "Acuvue Oasys Max 1-Day MF for Astigmatism"];
+            const alreadyDropCyl = state.tsAdjustment && state.tsAdjustment.complaint === 'dropcyl';
+            let showDropCyl = false;
+            if (isToric && !alreadyDropCyl && !dropCylExcluded.includes(lens.name)) {
+                const checkDropCyl = (eye, ok) => {
+                    if (!ok) return false;
+                    const cyl = parseFloat(eye.cylinder) || 0;
+                    if (cyl === 0) return false;
+                    const sph = parseFloat(eye.sphere) || 0;
+                    let vCyl = cyl;
+                    const clSph = snapTo025(vertexConvert(sph));
+                    if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                        vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - clSph);
+                    }
+                    const snapped = snapCyl(vCyl, lens);
+                    // Must be an exact match (no snap reduction happened)
+                    if (Math.abs(Math.abs(snapped) - Math.abs(vCyl)) > 0.01) return false;
+                    // Must have a lower step available
+                    const steps = [];
+                    if (lens.cylSteps) { lens.cylSteps.forEach(s => steps.push(Math.abs(s))); }
+                    else { for (let s = Math.abs(lens.cylMin); s <= Math.abs(lens.cylMax) + 0.01; s += 0.50) steps.push(Math.round(s * 100) / 100); }
+                    steps.sort((a, b) => a - b);
+                    const curIdx = steps.findIndex(s => Math.abs(s - Math.abs(snapped)) < 0.01);
+                    return curIdx > 0; // has a lower step
+                };
+                showDropCyl = checkDropCyl(state.od, odOk) || checkDropCyl(state.os, osOk);
+            }
+
             // Check if lens has 2 base curves
             const bcValues = lens.bc.split('/').map(s => s.trim());
             const hasTwoBCs = bcValues.length === 2 && !isNaN(parseFloat(bcValues[0])) && !isNaN(parseFloat(bcValues[1]));
@@ -7579,6 +7672,10 @@
                         ${showFullCyl ? `<div class="option-btn ${state.troubleshoot === 'fullcyl' ? 'active' : ''}" onclick="setTroubleshoot('fullcyl')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-vertical"></i></span><span class="title">Switch to Full Cylinder</span></div>
                             <div class="desc">Use Rx cylinder, revert SE adjustment</div>
+                        </div>` : ''}
+                        ${showDropCyl ? `<div class="option-btn ${state.troubleshoot === 'dropcyl' ? 'active' : ''}" onclick="setTroubleshoot('dropcyl')">
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrow-down"></i></span><span class="title">Drop Down Cylinder</span></div>
+                            <div class="desc">Reduce cyl one step, adjust sphere</div>
                         </div>` : ''}
                         ${hasTwoBCs ? `<div class="option-btn ${state.troubleshoot === 'tooTight' ? 'active' : ''}" onclick="setTroubleshoot('tooTight')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-in"></i></span><span class="title">Lens Fits Too Tight</span></div>
@@ -8654,13 +8751,41 @@
                     } else {
                         listHtml2 = `<div class="lens-list">${fullCylLenses.map(l => renderLensCard(l).replace(/selectLens\(/g, 'selectFullCylLens(')).join("")}</div>`;
                     }
+                    const noteMsg = fullCylLenses.length > 0
+                        ? `${lens.name} does not offer the full Rx cylinder. Select a compatible lens below.`
+                        : `${lens.name} does not offer the full Rx cylinder. No other toric lenses support this cylinder with your current brand/modality filters.`;
                     suggestionsHtml = `${summaryHtml}
-                        <div class="order-note-box" style="background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning)"><strong>Note:</strong> ${lens.name} does not offer the full Rx cylinder. Select a lens below that does.</div>
-                        <div class="results-header"><div>
+                        <div class="order-note-box" style="background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning)"><strong>Note:</strong> ${noteMsg}</div>
+                        ${fullCylLenses.length > 0 ? `<div class="results-header"><div>
                             <div class="results-count">${fullCylLenses.length} Compatible Toric Lens${fullCylLenses.length !== 1 ? 'es' : ''}</div>
                         </div></div>
-                        ${listHtml2}`;
+                        ${listHtml2}` : ''}`;
                 }
+            }
+
+            // DROP DOWN CYLINDER
+            if (state.troubleshoot === 'dropcyl') {
+                const eyeEntries = [];
+                if (odOk) eyeEntries.push({ eye: state.od, label: "OD" });
+                if (osOk) eyeEntries.push({ eye: state.os, label: "OS" });
+
+                let summaryHtml = '<div class="vertex-box fade-in" style="margin-bottom:20px"><div class="vertex-label">Drop Down Cylinder</div>';
+                eyeEntries.forEach(e => {
+                    const info = getDropCylInfo(e.eye, lens);
+                    if (!info) {
+                        summaryHtml += `<div style="margin-top:8px"><strong>${e.label}:</strong> No change needed</div>`;
+                        return;
+                    }
+                    const oldCylStr = info.oldCyl.toFixed(2);
+                    const newCylStr = info.newCyl.toFixed(2);
+                    const oldSphStr = `${info.oldSph > 0 ? "+" : ""}${info.oldSph.toFixed(2)}`;
+                    const newSphStr = `${info.newSph > 0 ? "+" : ""}${info.newSph.toFixed(2)}`;
+                    summaryHtml += `<div style="margin-top:8px"><strong>${e.label}:</strong> Cyl <span style="font-family:var(--mono)">${oldCylStr}</span> → <span style="font-family:var(--mono);font-weight:700;color:var(--accent)">${newCylStr}</span> · Sph <span style="font-family:var(--mono)">${oldSphStr}</span> → <span style="font-family:var(--mono);font-weight:700;color:var(--accent)">${newSphStr}</span></div>`;
+                });
+                summaryHtml += '</div>';
+
+                suggestionsHtml = `${summaryHtml}
+                    <button class="lens-select-btn cta-btn" style="margin-top:16px;width:100%;justify-content:center" onclick="applyDropCylAdjustment()"><span class="arrow-left">\u2192</span> View Adjusted Order <span class="arrow-right">\u2192</span></button>`;
             }
 
             // BASE CURVE — TOO TIGHT (STEEP)
@@ -12103,7 +12228,7 @@
             html += '<div id="vtxResetWrap" style="display:none;text-align:center;margin-bottom:16px"><button onclick="vtxReset()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:22px;line-height:1;transition:color 0.15s" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="this.style.color=\'var(--ink-muted)\'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button></div>';
             html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px;font-family:var(--mono,\'IBM Plex Mono\',monospace)">';
             html += '<thead><tr style="border-bottom:2px solid var(--border)">';
-            html += '<th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Spectacle Rx (+/&minus;)</th>';
+            html += '<th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap">Spec Rx (&plusmn;)</th>';
             html += '<th style="text-align:center;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Minus CL</th>';
             html += '<th style="text-align:center;padding:8px 12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em">Plus CL</th>';
             html += '</tr></thead><tbody>';
@@ -12382,7 +12507,7 @@
             },
             {
                 num: 'C', label: 'Bitemporal Hemianopia',
-                os: { type:'hemi-right' }, od: { type:'hemi-left' },
+                os: { type:'hemi-left' }, od: { type:'hemi-right' },
                 location: 'Optic chiasm (central crossing fibers)',
                 etiology: 'Pituitary adenoma (most common), craniopharyngioma, meningioma, aneurysm, demyelination',
                 notes: 'Loss of temporal fields bilaterally. Nasal retinal fibers cross at the chiasm; compression affects these decussating fibers. May start as superior bitemporal defects (from inferior chiasmal compression by a pituitary tumor pushing upward).'
