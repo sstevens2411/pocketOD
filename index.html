@@ -343,12 +343,12 @@
         /* Inactive sign toggles: muted */
 
         .sign-toggle button.active-neg {
-            background: rgba(220,38,38,0.08);
+            background: rgba(220,38,38,0.18);
             color: #dc2626;
         }
 
         .sign-toggle button.active-pos {
-            background: rgba(22,163,74,0.08);
+            background: rgba(22,163,74,0.18);
             color: #16a34a;
         }
 
@@ -910,7 +910,9 @@
             border-top: 1px solid var(--border);
         }
 
-        .spec-item {}
+        .spec-item {
+            min-width: 0;
+        }
 
         .spec-label {
 
@@ -922,11 +924,12 @@
         }
 
         .spec-value {
-
             font-size: 12.5px;
             font-weight: 500;
             color: var(--ink);
             margin-top: 2px;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         /* SELECT BUTTON */
@@ -1266,6 +1269,20 @@
             animation: slideUp 0.3s ease;
         }
 
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .order-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            .order-param {
+                min-width: 0;
+            }
+            .order-param-value {
+                font-size: 16px;
+            }
+        }
+
         /* RESPONSIVE */
         @media (max-width: 640px) {
             .main {
@@ -1314,6 +1331,8 @@
                 gap: 8px;
             }
             .lens-specs {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
                 gap: 8px;
             }
             .lens-card {
@@ -4192,10 +4211,22 @@
             // BAUSCH + LOMB
             { name:"Biotrue ONEday", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$79 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", privateLabels:[{name:"eureka!",retailer:"Walmart"}], sph50start:6 },
             { name:"Biotrue ONEday for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:42, bc:"8.4", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$97 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"eureka! for Astigmatism",retailer:"Walmart"}], sph50start:6 },
-            { name:"Biotrue ONEday for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"30, 90", price:"$107 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", sph50start:6 },
+            { name:"Biotrue ONEday for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"30, 90", price:"$107 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.75, specAddMax:2.50, clAdd:"High", dominant:"High", nonDominant:"High" },
+                ],
+                troubleshootSteps: { distance: [{ action:"blDistStep1", dropTo:"Biotrue ONEday" }, { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding -0.25 at a time to the dominant eye." }], near: [{ action:"blNearStep1" }, { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding +0.25 at a time to the non-dominant eye." }] }
+            }, sph50start:6 },
             { name:"INFUSE One-Day", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$113 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", sph50start:6 },
             { name:"INFUSE One-Day for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:104, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"90", price:"$145 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6 },
-            { name:"INFUSE Multifocal", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"10, 90", price:"$151 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", sph50start:6 },
+            { name:"INFUSE Multifocal", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"10, 90", price:"$151 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", fittingGuide: {
+                addTable: [
+                    { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
+                    { specAddMin:1.75, specAddMax:2.50, clAdd:"High", dominant:"High", nonDominant:"High" },
+                ],
+                troubleshootSteps: { distance: [{ action:"blDistStep1", dropTo:"INFUSE One-Day" }, { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding -0.25 at a time to the dominant eye." }], near: [{ action:"blNearStep1" }, { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding +0.25 at a time to the non-dominant eye." }] }
+            }, sph50start:6 },
             { name:"Ultra Monthly", brand:"Bausch + Lomb", type:"sphere", modality:"monthly", dk:163, bc:"8.5", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$66", wear:"EW", material:"Samfilcon A (SiHy)", privateLabels:[{name:"eureka! Monthly",retailer:"Walmart"}], sph50start:6 },
             { name:"Ultra for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$80", wear:"EW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:6 },
             { name:"Ultra for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"monthly", dk:163, bc:"8.5", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"6", price:"$98", wear:"EW", material:"Samfilcon A (SiHy)", fittingGuide: {
@@ -4206,17 +4237,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"lowerAdd", eye:"dominant", dropTo:"Ultra Monthly", addConfigs:["Low/Low"] },
-                        { action:"lowerAdd", eye:"dominant", addConfigs:["High/High"] },
-                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/Low","High/High"] },
-                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/High"] }
+                        { action:"blDistStep1", dropTo:"Ultra Monthly" },
+                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding -0.25 at a time to the dominant eye." }
                     ],
-                    near: [
-                        { action:"raiseAdd", eye:"nonDominant" },
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye (wearing High Add lens) using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
-                        { action:"raiseAdd", eye:"dominant", offLabel:true, addConfigs:["Low/Low","Low/High"] },
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"If vision is still unsatisfactory, make small changes by adding +0.25D at a time to non-dominant eye using handheld lenses, and continue evaluating vision binocularly in normal room illumination. Adjust contact lens power when vision is satisfactory.", addConfigs:["High/High"] }
-                    ]
+                    near: [{ action:"blNearStep1" }, { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding +0.25 at a time to the non-dominant eye." }]
                 }
             }, sph50start:6 },
             { name:"Ultra Multifocal for Astigmatism", brand:"Bausch + Lomb", type:"multifocal-toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:["Low","High"], qty:"6", price:"$150", wear:"EW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
@@ -4227,17 +4251,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"lowerAdd", eye:"dominant", dropTo:"Ultra for Astigmatism", addConfigs:["Low/Low"] },
-                        { action:"lowerAdd", eye:"dominant", addConfigs:["High/High"] },
-                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/Low","High/High"] },
-                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"Push minus in \u22120.25D steps to dominant eye using handheld lenses, evaluating distance vision binocularly in normal room illumination.", addConfigs:["Low/High"] }
+                        { action:"blDistStep1", dropTo:"Ultra for Astigmatism" },
+                        { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding -0.25 at a time to the dominant eye." }
                     ],
-                    near: [
-                        { action:"raiseAdd", eye:"nonDominant" },
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye (wearing High Add lens) using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
-                        { action:"raiseAdd", eye:"dominant", offLabel:true, addConfigs:["Low/Low","Low/High"] },
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"If vision is still unsatisfactory, make small changes by adding +0.25D at a time to non-dominant eye using handheld lenses, and continue evaluating vision binocularly in normal room illumination. Adjust contact lens power when vision is satisfactory.", addConfigs:["High/High"] }
-                    ]
+                    near: [{ action:"blNearStep1" }, { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding +0.25 at a time to the non-dominant eye." }]
                 }
             }, sph50start:6 },
             { name:"Ultra One-Day", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$70\u2013115 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", sph50start:6 },
@@ -4374,7 +4391,7 @@
                     }
                 }
             }, sph50start:6 },
-            { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.00, cylSteps:[-1.00], addTypes:["Low","Mid","High"], qty:"30", price:"$80 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+            { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.75, cylSteps:[-1.00, -1.75], cylTolerance:0, addTypes:["Low","Mid","High"], qty:"30", price:"$80 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
@@ -4996,6 +5013,7 @@
             hasVisitedResults: false,
             troubleshoot: null,
             tsAdjustment: null,
+
             nonAdaptFrom: null,
             fullCylFrom: null,
             sortBy: "dk",
@@ -5102,8 +5120,9 @@
                 const absCyl = Math.abs(cyl);
                 const absMin = Math.abs(lens.cylMin);
                 const absMax = Math.abs(lens.cylMax);
-                // Allow cyl up to 0.75 beyond max (snap down and compensate sphere)
-                if (absCyl < absMin || absCyl > absMax + 0.75) return false;
+                // Allow cyl up to tolerance beyond max (snap down and compensate sphere)
+                const cylTol = lens.cylTolerance !== undefined ? lens.cylTolerance : 0.75;
+                if (absCyl < absMin || absCyl > absMax + cylTol) return false;
             }
 
             return true;
@@ -5569,15 +5588,16 @@
         }
 
         function bindEyeInputs(prefix, eye, onAddChange) {
+            const otherEye = eye === state.od ? state.os : state.od;
             const sphNeg = document.getElementById(`${prefix}_sphNeg`);
             const sphPos = document.getElementById(`${prefix}_sphPos`);
-            if (sphNeg) sphNeg.addEventListener("click", () => { eye.sphSign = '\u2212'; rerender(); });
-            if (sphPos) sphPos.addEventListener("click", () => { eye.sphSign = '+'; rerender(); });
+            if (sphNeg) sphNeg.addEventListener("click", () => { eye.sphSign = '\u2212'; otherEye.sphSign = '\u2212'; rerender(); });
+            if (sphPos) sphPos.addEventListener("click", () => { eye.sphSign = '+'; otherEye.sphSign = '+'; rerender(); });
 
             const cylNeg = document.getElementById(`${prefix}_cylNeg`);
             const cylPos = document.getElementById(`${prefix}_cylPos`);
-            if (cylNeg) cylNeg.addEventListener("click", () => { eye.cylSign = '\u2212'; rerender(); });
-            if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; rerender(); });
+            if (cylNeg) cylNeg.addEventListener("click", () => { eye.cylSign = '\u2212'; otherEye.cylSign = '\u2212'; rerender(); });
+            if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; otherEye.cylSign = '+'; rerender(); });
 
             const sphEl = document.getElementById(`${prefix}_inSph`);
             if (sphEl) sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); });
@@ -6516,6 +6536,7 @@
         // TROUBLESHOOT
         function openTroubleshoot() {
             state.troubleshoot = "select";
+
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -6776,7 +6797,7 @@
                 const step = tsSteps[i];
                 if (step.addConfigs && (!addConfig || !step.addConfigs.includes(addConfig))) continue;
                 const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                if (step.action !== "addTableSwap" && step.action !== "acuvueNearRefine" && step.action !== "acuvueDistRefine" && !targetEye) continue;
+                if (step.action !== "addTableSwap" && step.action !== "acuvueNearRefine" && step.action !== "acuvueDistRefine" && step.action !== "blNearStep1" && step.action !== "blDistStep1" && !targetEye) continue;
                 const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
 
                 switch (step.action) {
@@ -6801,6 +6822,7 @@
                             selectEye: targetEye.label,
                             selectBaseSph: cur2
                         };
+
                         if (step.both) {
                             const otherEye2 = step.eye === "dominant" ? nonDomEye : domEye;
                             if (otherEye2) {
@@ -6963,6 +6985,53 @@
                             changes: [],
                             tsStepIdx: i
                         };
+                    }
+                    case "blNearStep1": {
+                        if (!nonDomEye) continue;
+                        const blIsLowLow = addConfig === "Low/Low";
+                        if (blIsLowLow) {
+                            return {
+                                title: 'Switch non-dominant eye to HIGH ADD',
+                                rationale: 'Switch non-dominant eye to HIGH ADD.',
+                                adjustments: { [nonDomEye.label]: { addOverride: "High" } },
+                                changes: [{ eye: nonDomEye.label, param: "Add", from: "Low", to: "High" }],
+                                tsStepIdx: i
+                            };
+                        } else {
+                            const blSph = getAdjSph(nonDomEye.eye, nonDomEye.label);
+                            const blNewSph = snapTo025(blSph + 0.25);
+                            return {
+                                title: 'Add +0.25 to the non-dominant eye',
+                                rationale: 'Add +0.25 to the non-dominant eye.',
+                                adjustments: { [nonDomEye.label]: { sphDelta: 0.25 } },
+                                changes: [{ eye: nonDomEye.label, param: "Sphere", from: `${blSph > 0 ? "+" : ""}${blSph.toFixed(2)}`, to: `${blNewSph > 0 ? "+" : ""}${blNewSph.toFixed(2)}` }],
+                                tsStepIdx: i
+                            };
+                        }
+                    }
+                    case "blDistStep1": {
+                        if (!domEye) continue;
+                        const blDistIsLowLow = addConfig === "Low/Low";
+                        const blDistIsHighHigh = addConfig === "High/High";
+                        if (blDistIsLowLow) {
+                            return {
+                                title: 'Switch dominant eye to the SPHERICAL version of the same lens, determined by spherical equivalent',
+                                rationale: 'Switch dominant eye to the SPHERICAL version of the same lens, determined by spherical equivalent.',
+                                adjustments: { [domEye.label]: { lensDropTo: step.dropTo } },
+                                changes: [{ eye: domEye.label, param: "Lens", from: lens.name, to: step.dropTo }],
+                                tsStepIdx: i
+                            };
+                        } else if (blDistIsHighHigh) {
+                            return {
+                                title: 'Switch dominant eye to LOW ADD',
+                                rationale: 'Switch dominant eye to LOW ADD.',
+                                adjustments: { [domEye.label]: { addOverride: "Low" } },
+                                changes: [{ eye: domEye.label, param: "Add", from: "High", to: "Low" }],
+                                tsStepIdx: i
+                            };
+                        } else {
+                            continue;
+                        }
                     }
                 }
             }
@@ -7148,12 +7217,14 @@
             const bcKeep = state.tsAdjustment ? state.tsAdjustment.bcOverride : null;
             state.tsAdjustment = bcKeep ? { title: `Base curve changed to ${bcKeep}`, overrides: {}, bcOverride: bcKeep, complaint: null } : null;
             state.troubleshoot = complaint || "select";
+
             render();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
         function setTroubleshoot(complaint) {
             state.troubleshoot = state.troubleshoot === complaint ? "select" : complaint;
+
             state.tsRotation = null;
             if (state.troubleshoot === 'overcyl') {
                 if (!state.overRefraction) {
@@ -7743,7 +7814,7 @@
 
                         const eyeLabel = step.eye === "dominant" ? "dominant" : "non-dominant";
                         const targetEye = step.eye === "dominant" ? domEye : nonDomEye;
-                        if (step.action !== "addTableSwap" && step.action !== "textOnly" && step.action !== "acuvueNearRefine" && step.action !== "acuvueDistRefine" && !targetEye) return;
+                        if (step.action !== "addTableSwap" && step.action !== "textOnly" && step.action !== "acuvueNearRefine" && step.action !== "acuvueDistRefine" && step.action !== "blNearStep1" && step.action !== "blDistStep1" && !targetEye) return;
 
                         const prevLen = suggestions.length;
                         switch (step.action) {
@@ -7829,6 +7900,7 @@
                                     selectEye: targetEye.label,
                                     selectBaseSph: currentSph
                                 };
+
                                 if (step.both) {
                                     const otherEye = step.eye === "dominant" ? nonDomEye : domEye;
                                     if (otherEye) {
@@ -8027,6 +8099,53 @@
                                 });
                                 break;
                             }
+                            case "blNearStep1": {
+                                if (!nonDomEye) break;
+                                const blIsLowLow = currentAddConfig === "Low/Low";
+                                if (blIsLowLow) {
+                                    suggestions.push({
+                                        tsStepIdx: stepIdx,
+                                        title: 'Switch non-dominant eye to HIGH ADD',
+                                        rationale: 'Switch non-dominant eye to HIGH ADD.',
+                                        adjustments: { [nonDomEye.label]: { addOverride: "High" } },
+                                        changes: [{ eye: nonDomEye.label, param: "Add", from: "Low", to: "High" }]
+                                    });
+                                } else {
+                                    const blSph = getCurrentSph(nonDomEye.eye, nonDomEye.label);
+                                    const blNewSph = snapTo025(blSph + 0.25);
+                                    suggestions.push({
+                                        tsStepIdx: stepIdx,
+                                        title: 'Add +0.25 to the non-dominant eye',
+                                        rationale: 'Add +0.25 to the non-dominant eye.',
+                                        adjustments: { [nonDomEye.label]: { sphDelta: 0.25 } },
+                                        changes: [{ eye: nonDomEye.label, param: "Sphere", from: `${blSph > 0 ? "+" : ""}${blSph.toFixed(2)}`, to: `${blNewSph > 0 ? "+" : ""}${blNewSph.toFixed(2)}` }]
+                                    });
+                                }
+                                break;
+                            }
+                            case "blDistStep1": {
+                                if (!domEye) break;
+                                const blDistIsLowLow = currentAddConfig === "Low/Low";
+                                const blDistIsHighHigh = currentAddConfig === "High/High";
+                                if (blDistIsLowLow) {
+                                    suggestions.push({
+                                        tsStepIdx: stepIdx,
+                                        title: 'Switch dominant eye to the SPHERICAL version of the same lens, determined by spherical equivalent',
+                                        rationale: 'Switch dominant eye to the SPHERICAL version of the same lens, determined by spherical equivalent.',
+                                        adjustments: { [domEye.label]: { lensDropTo: step.dropTo } },
+                                        changes: [{ eye: domEye.label, param: "Lens", from: lens.name, to: step.dropTo }]
+                                    });
+                                } else if (blDistIsHighHigh) {
+                                    suggestions.push({
+                                        tsStepIdx: stepIdx,
+                                        title: 'Switch dominant eye to LOW ADD',
+                                        rationale: 'Switch dominant eye to LOW ADD.',
+                                        adjustments: { [domEye.label]: { addOverride: "Low" } },
+                                        changes: [{ eye: domEye.label, param: "Add", from: "High", to: "Low" }]
+                                    });
+                                }
+                                break;
+                            }
                         }
                         if (suggestions.length > prevLen) firstStepDone = true;
                     });
@@ -8160,6 +8279,7 @@
                 window._tsSuggestions = _tsSuggestions;
                 if (suggestions.length > 0) {
                     suggestionsHtml = `<div class="order-section-title">${isDistance ? 'Distance' : 'Near'} Vision Adjustments</div>`;
+                    const tsStepOffset = (state.tsAdjustment && state.tsAdjustment.complaint === state.troubleshoot && state.tsAdjustment.stepNumber) ? state.tsAdjustment.stepNumber : 0;
                     suggestionsHtml += suggestions.map((s, i) => {
                         if (s.textOnly) {
                             return `<div class="troubleshoot-suggestion fade-in">
@@ -8204,7 +8324,7 @@
                                 </div>`;
                             }
                             return `<div class="troubleshoot-suggestion fade-in">
-                                <div class="ts-step">${i + 1}</div>
+                                <div class="ts-step">${tsStepOffset + i + 1}</div>
                                 <div class="ts-body">
                                     <div class="ts-title">${s.title}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
@@ -8250,7 +8370,7 @@
                                 </div>`;
                             }
                             return `<div class="troubleshoot-suggestion fade-in">
-                                <div class="ts-step">${i + 1}</div>
+                                <div class="ts-step">${tsStepOffset + i + 1}</div>
                                 <div class="ts-body">
                                     <div class="ts-title">${s.title}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
@@ -8294,7 +8414,7 @@
                                         </div>`;
                             }
                             return `<div class="troubleshoot-suggestion fade-in">
-                                <div class="ts-step">${i + 1}</div>
+                                <div class="ts-step">${tsStepOffset + i + 1}</div>
                                 <div class="ts-body">
                                     <div class="ts-title">${saTitle}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
@@ -8321,7 +8441,7 @@
                             </div>`
                         ).join("");
                         return `<div class="troubleshoot-suggestion fade-in">
-                            <div class="ts-step">${i + 1}</div>
+                            <div class="ts-step">${tsStepOffset + i + 1}</div>
                             <div class="ts-body">
                                 <div class="ts-title">${s.title}</div>
                                 ${s.rationale ? `<div class="ts-rationale">${s.rationale}</div>` : ''}
@@ -8376,6 +8496,11 @@
                         </div>`;
                     }
 
+                    const axisStepMatch = lens.axes ? lens.axes.match(/(\d+)\u00B0 (?:steps|full)/i) : null;
+                    const axisStep = axisStepMatch ? parseInt(axisStepMatch[1]) : 10;
+                    const degOptions = axisStep === 5 ? [5, 10, 15, 20, 25, 30] : [10, 20, 30];
+                    const degBtns = degOptions.map(d => '<button type="button" class="dom-toggle ' + (rot.deg === d ? 'active-left' : '') + '" style="flex:1;min-width:40px" onclick="setRotationDeg(\'' + e.label + '\',' + d + ')">' + d + '\u00B0</button>').join('');
+
                     rotationHtml += `
                         <div class="eye-section">
                             <div class="eye-header">${e.name}</div>
@@ -8393,10 +8518,8 @@
                                 </div>
                                 <div class="form-group" style="grid-column:1/-1">
                                     <label>Degrees Rotated</label>
-                                    <div class="input-row" style="gap:6px">
-                                        <button type="button" class="dom-toggle ${rot.deg === 10 ? 'active-left' : ''}" style="flex:1" onclick="setRotationDeg('${e.label}',10)">10\u00B0</button>
-                                        <button type="button" class="dom-toggle ${rot.deg === 20 ? 'active-left' : ''}" style="flex:1" onclick="setRotationDeg('${e.label}',20)">20\u00B0</button>
-                                        <button type="button" class="dom-toggle ${rot.deg === 30 ? 'active-left' : ''}" style="flex:1" onclick="setRotationDeg('${e.label}',30)">30\u00B0</button>
+                                    <div class="input-row" style="gap:6px;flex-wrap:wrap">
+                                        ${degBtns}
                                     </div>
                                 </div>
                             </div>
