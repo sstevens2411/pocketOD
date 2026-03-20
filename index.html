@@ -5742,19 +5742,20 @@
         // STEP 3: Brands
         function renderBrandsStep() {
             const items = BRANDS.map(brand => {
-                const isActive = state.brands.includes(brand);
                 const bc = brandClass(brand);
+                const saved = state.brands;
+                state.brands = [brand];
+                const count = getCompatibleLenses().length;
+                state.brands = saved;
+                if (count === 0 && state.brands.includes(brand)) {
+                    state.brands = state.brands.filter(b => b !== brand);
+                }
+                const isActive = state.brands.includes(brand);
 
                 return `<div class="option-btn brand-btn brand-${bc} ${isActive ? "active" : ""}" onclick="toggleBrand('${brand}')">
                     <div class="check">${isActive ? "\u2713" : ""}</div>
                     <div class="title">${brand}</div>
-                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${(() => {
-                        const saved = state.brands;
-                        state.brands = [brand];
-                        const count = getCompatibleLenses().length;
-                        state.brands = saved;
-                        return count;
-                    })()} compatible</div>
+                    <div class="desc" style="margin-top:4px;font-size:11px;color:var(--ink-muted)">${count} compatible</div>
                 </div>`;
             }).join("");
 
