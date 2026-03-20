@@ -1440,6 +1440,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            margin-top: 10px;
         }
 
         .ts-change {
@@ -6517,7 +6518,7 @@
             const isNonAdapt = state.nonAdaptFrom !== null;
             const isFullCyl = state.fullCylFrom !== null;
             const hasLensDrop = isAdjusted && state.tsAdjustment.overrides && Object.values(state.tsAdjustment.overrides).some(o => o.lensDropTo);
-            const adjBanner = isAdjusted ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Adjusted Order:</strong> ${state.tsAdjustment.title}</div>` : '';
+            const adjBanner = '';
             const nonAdaptBanner = isNonAdapt ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Non-Adapt Conversion:</strong> Cylinder folded into sphere via spherical equivalent</div>` : '';
             const fullCylBanner = '';
 
@@ -7753,14 +7754,20 @@
                 <div style="margin-bottom:20px">
                     <div class="order-section-title">Vision Complaint</div>
                     <div class="option-grid">
-                        ${isMF ? `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
+                        ${isMF ? `${state.tsAdjustment && state.tsAdjustment.complaint === 'near' ? `<div class="option-btn" style="opacity:0.45;pointer-events:none;cursor:default">
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
+                            <div class="desc">By selecting near refinement, distance has already been determined to be adequate.</div>
+                        </div>` : `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
                             <div class="desc">Difficulty seeing far away</div>
-                        </div>
-                        <div class="option-btn ${state.troubleshoot === 'near' ? 'active' : ''}" onclick="setTroubleshoot('near')">
+                        </div>`}
+                        ${state.tsAdjustment && state.tsAdjustment.complaint === 'distance' ? `<div class="option-btn" style="opacity:0.45;pointer-events:none;cursor:default">
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Blurry at Near</span></div>
+                            <div class="desc">By selecting distance refinement, near has already been determined to be adequate.</div>
+                        </div>` : `<div class="option-btn ${state.troubleshoot === 'near' ? 'active' : ''}" onclick="setTroubleshoot('near')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Blurry at Near</span></div>
                             <div class="desc">Difficulty reading or close work</div>
-                        </div>` : ''}
+                        </div>`}` : ''}
                         ${isToric ? `<div class="option-btn ${state.troubleshoot === 'rotation' ? 'active' : ''}" onclick="setTroubleshoot('rotation')">
                             <div class="title-row"><span class="icon"><i class="ph-duotone ph-arrows-clockwise"></i></span><span class="title">Lens Rotation</span></div>
                             <div class="desc">Toric lens rotating on eye</div>
