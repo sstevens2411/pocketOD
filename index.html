@@ -4087,15 +4087,14 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
                         ]}
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
-                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                        { action:"acuvueNearRefine", addConfigs:["Lo/Lo","Med/Med","Hi/Hi"], nonDomDefault: 0.50 },
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
@@ -4115,15 +4114,14 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
                         ]}
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
-                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                        { action:"acuvueNearRefine", addConfigs:["Lo/Lo","Med/Med","Hi/Hi"], nonDomDefault: 0.50 },
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
@@ -4145,15 +4143,14 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
                         ]}
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
-                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                        { action:"acuvueNearRefine", addConfigs:["Lo/Lo","Med/Med","Hi/Hi"], nonDomDefault: 0.50 },
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
@@ -4169,15 +4166,14 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
                         ]}
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
-                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                        { action:"acuvueNearRefine", addConfigs:["Lo/Lo","Med/Med","Hi/Hi"], nonDomDefault: 0.50 },
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
@@ -4195,15 +4191,14 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"addTableSwap", label:"Adjust add power for enhanced distance vision", table: [
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Lo", nonDominant:"Med" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
                         ]}
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"dominant", both:true, options:[0.25, 0.50, 0.75, 1.00], title:"Over-refraction OU", rationale:"Select the over-refraction power accepted by the patient. Applied to both eyes (OU)." },
-                        { action:"sphereAdj", eye:"nonDominant", amount:+0.50 },
-                        { action:"addTableSwap", label:"Adjust add power for enhanced near vision", table: [
+                        { action:"acuvueNearRefine", addConfigs:["Lo/Lo","Med/Med","Hi/Hi"], nonDomDefault: 0.50 },
+                        { action:"addTableSwap", label:"Change non-dominant eye to MED Add", table: [
                             { specAddMin:0.75, specAddMax:1.25, dominant:"Med", nonDominant:"Med" },
                             { specAddMin:1.50, specAddMax:2.00, dominant:"Med", nonDominant:"Hi" },
                             { specAddMin:2.25, specAddMax:2.50, dominant:"Hi", nonDominant:"Med" }
@@ -4272,8 +4267,8 @@
             { name:"Biofinity Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:116, bc:"8.7", diam:"14.5", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$199", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Biofinity Toric", sph50start:6 },
             { name:"Proclear Toric", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-8, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$107 (6pk)", wear:"DW", material:"Omafilcon B", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Proclear Toric XR", sph50start:6 },
             { name:"Proclear Toric XR", brand:"CooperVision", type:"toric", modality:"monthly", dk:14, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$185 (6pk)", wear:"DW", material:"Omafilcon B", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Proclear Toric", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026.", sph50start:6 },
-            { name:"Proclear Multifocal XR", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:17, bc:"8.4 / 8.7", diam:"14.4", sphMin:-20, sphMax:20, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$179 (6pk)", wear:"DW", material:"Omafilcon B (Hydrogel)", note:"D lens (center-distance) for dominant eye, N lens (center-near) for non-dominant. Extended range: sph to \u00B120.00, adds to +4.00. PC Technology for hydration.", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026.", sph50start:6 },
-            { name:"Proclear Multifocal Toric", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:39, bc:"8.8 / 8.4", diam:"14.4", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$197 (6pk)", wear:"DW", material:"Omafilcon B (Hydrogel)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Combines toric correction with D/N multifocal design. PC Technology for hydration.", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026.", sph50start:6 },
+            { name:"Proclear Multifocal XR", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:17, bc:"8.4 / 8.7", diam:"14.4", sphMin:-20, sphMax:20, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$179 (6pk)", wear:"DW", material:"Omafilcon B (Hydrogel)", note:"D lens (center-distance) for dominant eye, N lens (center-near) for non-dominant. Extended range: sph to \u00B120.00, adds to +4.00. PC Technology for hydration.", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026.", fittingGuide: { troubleshootSteps: { distance: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" } ], near: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" }, { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true } ] } }, sph50start:6 },
+            { name:"Proclear Multifocal Toric", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:39, bc:"8.8 / 8.4", diam:"14.4", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$197 (6pk)", wear:"DW", material:"Omafilcon B (Hydrogel)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Combines toric correction with D/N multifocal design. PC Technology for hydration.", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026.", fittingGuide: { troubleshootSteps: { distance: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" } ], near: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" }, { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true } ] } }, sph50start:6 },
             { name:"Biofinity Multifocal", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:142, bc:"8.6", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"3, 6", price:"$113 (6pk)", wear:"EW", material:"Comfilcon A (SiHy)", privateLabels:[{name:"Aquaclear Multifocal",retailer:"Vision Source"},{name:"Voyant Monthly Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathables XW Multifocal",retailer:"America's Best"},{name:"LensCrafters Monthly Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Multifocal",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW Multifocal",retailer:"Eyeglass World"},], fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"+1.00", dominant:"D", nonDominant:"D" },
@@ -4283,10 +4278,11 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"textOnly", title:"To Improve Distance", textMinus:"Perform hand-held trial lens over-refraction. Push minus in \u22120.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye).", textPlus:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the eye that results in greatest improvement in distance vision (most likely dominant eye)." }
+                        { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" }
                     ],
                     near: [
-                        { action:"textOnly", title:"To Improve Near", text:"Perform hand-held trial lens over-refraction. Push plus in +0.25 steps into the sphere of the eye that results in greatest improvement in near vision (most likely non-dominant eye). Manufacturer recommends against changing the ADD power." }
+                        { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" },
+                        { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true }
                     ]
                 }
             }, sph50start:6 },
@@ -4300,11 +4296,11 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationaleBySign:{ plus:"Add +0.25 to dominant eye using handheld trial lenses, evaluating vision binocularly in normal room illumination.", minus:"Add \u22120.25 to dominant eye using handheld trial lenses, evaluating vision binocularly in normal room illumination." } }
+                        { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" }
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Adding +0.25D at a time to non-dominant eye using handheld lenses, continue evaluating vision binocularly in normal room illumination." },
-                        { action:"raiseAdd", eye:"nonDominant", rationale:"To improve near vision, add +0.50D to the ADD power of the non-dominant eye (from {from} to {to})." }
+                        { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" },
+                        { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true }
                     ]
                 }
             }, sph50start:6 },
@@ -4318,10 +4314,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], optionsMinus:[-0.25, -0.50, -0.75, -1.00, -1.25, -1.50], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
+                        { action:"sphereAdjSelect", eye:"dominant", options:[0.75, 0.50, 0.25, -0.25, -0.50, -0.75], title:"Over-Refraction", rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the dominant eye that results in greatest improvement in distance vision. Do not change ADD power." }
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.75, 0.50, 0.25, -0.25, -0.50, -0.75], title:"Over-Refraction", rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the non-dominant eye that results in greatest improvement in near vision. Do not change ADD power." }
                     ]
                 }
             }, sph50start:6 },
@@ -4336,10 +4332,10 @@
                 ],
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], optionsMinus:[-0.25, -0.50, -0.75, -1.00, -1.25, -1.50], rationaleBySign:{ plus:"Add +0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power.", minus:"Add -0.25 to dominant eye using trial lenses in normal room illumination with both eyes open. Per manufacturer, do not change ADD power." } }
+                        { action:"sphereAdjSelect", eye:"dominant", options:[0.75, 0.50, 0.25, -0.25, -0.50, -0.75], title:"Over-Refraction", rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the dominant eye that results in greatest improvement in distance vision. Do not change ADD power." }
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"Add +0.25 to non-dominant eye using trial lenses in normal room illumination with both eyes open. Use phone or reading material, not near VA card for checking near vision. Per manufacturer, do not change ADD power." }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.75, 0.50, 0.25, -0.25, -0.50, -0.75], title:"Over-Refraction", rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the non-dominant eye that results in greatest improvement in near vision. Do not change ADD power." }
                     ]
                 }
             }, sph50start:6 },
@@ -4355,10 +4351,10 @@
                 },
                 troubleshootSteps: {
                     distance: [
-                        { action:"sphereAdjSelectBySign", eye:"dominant", optionsPlus:[0.25, 0.50, 0.75, 1.00], optionsMinus:[-0.25, -0.50, -0.75, -1.00], rationale:"Perform trial lens over-refraction in 0.25D steps to dominant eye under binocular conditions." }
+                        { action:"sphereAdjSelect", eye:"dominant", options:[0.75, 0.50, 0.25, -0.25, -0.50, -0.75], title:"Over-Refraction", rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the dominant eye that results in greatest improvement in distance vision. Do not change ADD power." }
                     ],
                     near: [
-                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00], rationale:"Perform trial lens over-refraction in +0.25D steps to non-dominant eye under binocular conditions." }
+                        { action:"sphereAdjSelect", eye:"nonDominant", options:[0.75, 0.50, 0.25, -0.25, -0.50, -0.75], title:"Over-Refraction", rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the non-dominant eye that results in greatest improvement in near vision. Do not change ADD power." }
                     ]
                 }
             }, sph50start:6 },
@@ -6676,7 +6672,8 @@
                 }
             } else {
                 if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
-                    const nv = snapTo025(s.nonDomBaseSph + 0.25);
+                    const defDelta = s.nonDomDefault || 0.25;
+                    const nv = snapTo025(s.nonDomBaseSph + defDelta);
                     html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
             }
@@ -6694,7 +6691,7 @@
                 if (s.domEyeLabel && domOR !== 0) s.adjustments[s.domEyeLabel] = { sphDelta: domOR };
                 if (s.nonDomEyeLabel && ndomOR !== 0) s.adjustments[s.nonDomEyeLabel] = { sphDelta: ndomOR };
             } else {
-                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: 0.25 };
+                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: s.nonDomDefault || 0.25 };
             }
             applyTsAdjustment(index);
         }
@@ -6908,9 +6905,15 @@
                             const atRow = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
                             if (atRow) { curAdd = atRow.clAdd; ci = addTypes.indexOf(curAdd); }
                         }
-                        if (ci === -1 || ci >= addTypes.length - 1) continue;
+                        if (ci === -1) continue;
+                        if (ci >= addTypes.length - 1) {
+                            if (step.showMaxMessage) {
+                                return { title: step.title || 'Max ADD Reached', rationale: `${targetEye.label}: Maximum ADD power (${curAdd}) already reached.`, adjustments: {}, changes: [], tsStepIdx: i, readOnly: true };
+                            }
+                            continue;
+                        }
                         const nAdd = addTypes[ci + 1];
-                        const raT = step.offLabel ? `Change ${targetEye.label} from ${curAdd} to ${nAdd} Add` : `Increase ${targetEye.label} add power`;
+                        const raT = step.title || (step.offLabel ? `Change ${targetEye.label} from ${curAdd} to ${nAdd} Add` : `Increase ${targetEye.label} add power`);
                         const raR = step.rationale ? step.rationale.replace('{from}', curAdd).replace('{to}', nAdd)
                             : step.offLabel
                             ? `<u>Although not part of the manufacturer\u2019s fitting guide</u>, you can try changing ${curAdd} Add to ${nAdd} Add on the ${eyeLabel} eye.`
@@ -6985,7 +6988,7 @@
                         const drNonDomAdd = nonDomEye ? getAdjAdd(nonDomEye.eye, false, nonDomEye.label) : null;
                         const lens2 = LENSES.find(l => l.name === state.selectedLens);
                         return {
-                            title: 'Distance Over-Refraction',
+                            title: 'Over-Refraction',
                             rationale: step.text,
                             acuvueDistRefine: true,
                             zeroAction: step.zeroAction,
@@ -7007,10 +7010,13 @@
                     case "acuvueNearRefine": {
                         const nrDomSph = domEye ? getAdjSph(domEye.eye, domEye.label) : null;
                         const nrNonDomSph = nonDomEye ? getAdjSph(nonDomEye.eye, nonDomEye.label) : null;
+                        const nrNonDomDef = step.nonDomDefault || 0.25;
+                        const nrRationale = step.rationale || `In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly, keeping ADD the same. If no change is required based on over-refraction, add +${nrNonDomDef.toFixed(2)} to the non-dominant eye.`;
                         return {
-                            title: 'Near Over-Refraction',
-                            rationale: 'In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly, keeping ADD the same. If no change is required based on over-refraction, add +0.25 to the non-dominant eye.',
+                            title: 'Over-Refraction',
+                            rationale: nrRationale,
                             acuvueNearRefine: true,
+                            nonDomDefault: nrNonDomDef,
                             domEyeLabel: domEye ? domEye.label : null,
                             nonDomEyeLabel: nonDomEye ? nonDomEye.label : null,
                             domBaseSph: nrDomSph,
@@ -7152,7 +7158,8 @@
                 }
             } else {
                 if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
-                    const nv = snapTo025(s.nonDomBaseSph + 0.25);
+                    const defDelta2 = s.nonDomDefault || 0.25;
+                    const nv = snapTo025(s.nonDomBaseSph + defDelta2);
                     html += `<div class="ts-change"><span class="ts-change-eye">${s.nonDomEyeLabel}</span><span class="ts-change-param">Sphere:</span><span class="ts-change-from">${s.nonDomBaseSph > 0 ? "+" : ""}${s.nonDomBaseSph.toFixed(2)}</span><span class="ts-change-arrow">\u2192</span><span class="ts-change-to">${nv > 0 ? "+" : ""}${nv.toFixed(2)}</span></div>`;
                 }
             }
@@ -7170,7 +7177,7 @@
                 if (s.domEyeLabel && domOR !== 0) s.adjustments[s.domEyeLabel] = { sphDelta: domOR };
                 if (s.nonDomEyeLabel && ndomOR !== 0) s.adjustments[s.nonDomEyeLabel] = { sphDelta: ndomOR };
             } else {
-                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: 0.25 };
+                if (s.nonDomEyeLabel) s.adjustments[s.nonDomEyeLabel] = { sphDelta: s.nonDomDefault || 0.25 };
             }
             applyNextTsStep();
         }
@@ -7752,20 +7759,20 @@
             } else {
             complaintHtml = `
                 <div style="margin-bottom:20px">
-                    <div class="order-section-title">Vision Complaint</div>
+                    <div class="order-section-title">Troubleshooting Options:</div>
                     <div class="option-grid">
                         ${isMF ? `${state.tsAdjustment && state.tsAdjustment.complaint === 'near' ? `<div class="option-btn" style="opacity:0.45;pointer-events:none;cursor:default">
-                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-crosshair"></i></span><span class="title">Refine Distance</span></div>
                             <div class="desc">By selecting near refinement, distance has already been determined to be adequate.</div>
                         </div>` : `<div class="option-btn ${state.troubleshoot === 'distance' ? 'active' : ''}" onclick="setTroubleshoot('distance')">
-                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-eye"></i></span><span class="title">Blurry at Distance</span></div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-crosshair"></i></span><span class="title">Refine Distance</span></div>
                             <div class="desc">Difficulty seeing far away</div>
                         </div>`}
                         ${state.tsAdjustment && state.tsAdjustment.complaint === 'distance' ? `<div class="option-btn" style="opacity:0.45;pointer-events:none;cursor:default">
-                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Blurry at Near</span></div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Refine Near</span></div>
                             <div class="desc">By selecting distance refinement, near has already been determined to be adequate.</div>
                         </div>` : `<div class="option-btn ${state.troubleshoot === 'near' ? 'active' : ''}" onclick="setTroubleshoot('near')">
-                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Blurry at Near</span></div>
+                            <div class="title-row"><span class="icon"><i class="ph-duotone ph-book-open"></i></span><span class="title">Refine Near</span></div>
                             <div class="desc">Difficulty reading or close work</div>
                         </div>`}` : ''}
                         ${isToric ? `<div class="option-btn ${state.troubleshoot === 'rotation' ? 'active' : ''}" onclick="setTroubleshoot('rotation')">
@@ -8010,10 +8017,16 @@
                                     const atRow = lens.fittingGuide.addTable.find(r => addP >= r.specAddMin && addP <= r.specAddMax);
                                     if (atRow) { currentAdd = atRow.clAdd; currentIdx = addTypes.indexOf(currentAdd); }
                                 }
-                                if (currentIdx === -1 || currentIdx >= addTypes.length - 1) break;
+                                if (currentIdx === -1) break;
+                                if (currentIdx >= addTypes.length - 1) {
+                                    if (step.showMaxMessage) {
+                                        suggestions.push({ tsStepIdx: stepIdx, title: step.title || 'Max ADD Reached', rationale: `${targetEye.label}: Maximum ADD power (${currentAdd}) already reached.`, adjustments: {}, changes: [], readOnly: true });
+                                    }
+                                    break;
+                                }
 
                                 const newAdd = addTypes[currentIdx + 1];
-                                const raTitle = step.offLabel ? `Change ${targetEye.label} from ${currentAdd} to ${newAdd} Add` : `Increase ${targetEye.label} add power`;
+                                const raTitle = step.title || (step.offLabel ? `Change ${targetEye.label} from ${currentAdd} to ${newAdd} Add` : `Increase ${targetEye.label} add power`);
                                 const raRationale = step.rationale ? step.rationale.replace('{from}', currentAdd).replace('{to}', newAdd)
                                     : step.offLabel
                                     ? `<u>Although not part of the manufacturer\u2019s fitting guide</u>, you can try changing ${currentAdd} Add to ${newAdd} Add on the ${eyeLabel} eye.`
@@ -8103,7 +8116,7 @@
                                 const drNonDomAdd = nonDomEye ? getCurrentAdd(nonDomEye.eye, false) : null;
                                 suggestions.push({
                                     tsStepIdx: stepIdx,
-                                    title: 'Distance Over-Refraction',
+                                    title: 'Over-Refraction',
                                     rationale: step.text,
                                     acuvueDistRefine: true,
                                     zeroAction: step.zeroAction,
@@ -8125,11 +8138,14 @@
                             case "acuvueNearRefine": {
                                 const nrDomSph = domEye ? getCurrentSph(domEye.eye, domEye.label) : null;
                                 const nrNonDomSph = nonDomEye ? getCurrentSph(nonDomEye.eye, nonDomEye.label) : null;
+                                const nrNonDomDef2 = step.nonDomDefault || 0.25;
+                                const nrRationale2 = step.rationale || `In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly, keeping ADD the same. If no change is required based on over-refraction, add +${nrNonDomDef2.toFixed(2)} to the non-dominant eye.`;
                                 suggestions.push({
                                     tsStepIdx: stepIdx,
-                                    title: 'Near Over-Refraction',
-                                    rationale: 'In normal room illumination, perform binocular distance over-refraction using handheld lenses. Adjust trials accordingly, keeping ADD the same. If no change is required based on over-refraction, add +0.25 to the non-dominant eye.',
+                                    title: 'Over-Refraction',
+                                    rationale: nrRationale2,
                                     acuvueNearRefine: true,
+                                    nonDomDefault: nrNonDomDef2,
                                     domEyeLabel: domEye ? domEye.label : null,
                                     nonDomEyeLabel: nonDomEye ? nonDomEye.label : null,
                                     domBaseSph: nrDomSph,
@@ -8331,8 +8347,8 @@
                             </div>`;
                         }
                         if (s.acuvueDistRefine) {
-                            const drOrOpts = [0, -0.25, -0.50, -0.75, -1.00, +0.25, +0.50, +0.75, +1.00].map(v =>
-                                `<option value="${v}">${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
+                            const drOrOpts = [+0.75, +0.50, +0.25, 0, -0.25, -0.50, -0.75].map(v =>
+                                `<option value="${v}"${v === 0 ? ' selected' : ''}>${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
                             ).join('');
                             let drInitChanges = '';
                             if (s.zeroAction === 'dropToSphere' && s.domEyeLabel && s.dropTo) {
@@ -8369,7 +8385,7 @@
                                     <div class="ts-title">${s.title}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
                                     <div style="margin-top:10px;">
-                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);display:block;margin-bottom:6px;">Over-refraction:</span>
+                                        <span style="font-size:12px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">Over-refraction:</span>
                                         <div style="display:flex;gap:12px;flex-wrap:wrap;">
                                             ${drDropdownsHtml}
                                         </div>
@@ -8382,12 +8398,12 @@
                             </div>`;
                         }
                         if (s.acuvueNearRefine) {
-                            const nrOrOpts = [0, +0.25, +0.50, +0.75, +1.00, -0.25, -0.50, -0.75, -1.00].map(v =>
-                                `<option value="${v}">${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
+                            const nrOrOpts = [+0.75, +0.50, +0.25, 0, -0.25, -0.50, -0.75].map(v =>
+                                `<option value="${v}"${v === 0 ? ' selected' : ''}>${v === 0 ? 'None (0.00)' : (v > 0 ? '+' : '') + v.toFixed(2)}</option>`
                             ).join('');
                             let nrInitChanges = '';
                             if (s.nonDomEyeLabel && s.nonDomBaseSph !== null) {
-                                const defNew = snapTo025(s.nonDomBaseSph + 0.25);
+                                const defNew = snapTo025(s.nonDomBaseSph + (s.nonDomDefault || 0.25));
                                 nrInitChanges = `<div class="ts-change">
                                     <span class="ts-change-eye">${s.nonDomEyeLabel}</span>
                                     <span class="ts-change-param">Sphere:</span>
@@ -8415,7 +8431,7 @@
                                     <div class="ts-title">${s.title}</div>
                                     <div class="ts-rationale" style="font-size:13px;line-height:1.6;">${s.rationale}</div>
                                     <div style="margin-top:10px;">
-                                        <span style="font-size:12px;font-weight:600;color:var(--ink-secondary);display:block;margin-bottom:6px;">Over-refraction:</span>
+                                        <span style="font-size:12px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">Over-refraction:</span>
                                         <div style="display:flex;gap:12px;flex-wrap:wrap;">
                                             ${nrDropdownsHtml}
                                         </div>
@@ -8468,6 +8484,15 @@
                                         ${saInitChanges}
                                     </div>
                                     <button class="lens-select-btn cta-btn" style="margin-top:10px;font-size:12px;padding:7px 14px" onclick="applyTsSelectAdjustment(${i})"><span class="arrow-left">\u2192</span> View Adjusted Results <span class="arrow-right">\u2192</span></button>
+                                </div>
+                            </div>`;
+                        }
+                        if (s.readOnly) {
+                            return `<div class="troubleshoot-suggestion fade-in">
+                                <div class="ts-step">${tsStepOffset + i + 1}</div>
+                                <div class="ts-body">
+                                    <div class="ts-title">${s.title}</div>
+                                    ${s.rationale ? `<div class="ts-rationale">${s.rationale}</div>` : ''}
                                 </div>
                             </div>`;
                         }
@@ -9025,12 +9050,29 @@
                 </div>`;
             }
 
+            const clinicalTipsHtml = isMF ? `
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+                    <div class="ref-toggle-wrap" style="margin-top:0;">
+                        <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> Clinical Tips</button>
+                        <div class="ref-toggle-content">
+                            <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;">
+                                <li>Prescribe maximum plus power for distance vision; do not over minus. Utilize R/G Binocular Balance.</li>
+                                <li>Choose the lowest add power when possible; do not overprescribe the add power</li>
+                                <li>Check patient\u2019s vision binocularly with room lights on</li>
+                                <li>Assess near vision with their handheld device or other reading material</li>
+                                <li>Assess distance vision in surrounding environment under normal lighting conditions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>` : '';
+
             return `<div class="order-detail">
                 <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> ${(state.nonAdaptFrom || state.fullCylFrom) ? 'Back to Order' : 'Back to Results'}</button>
                 <div class="order-lens-name">${lens.name}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${complaintHtml}
                 ${suggestionsHtml}
+                ${clinicalTipsHtml}
             </div>`;
         }
 
