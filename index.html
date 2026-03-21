@@ -5050,15 +5050,17 @@
             { id:"dry_eye", label:"Dry Eye", icon:'<i class="ph-duotone ph-drop"></i>', conditions:["dry_eye"] },
             { id:"glaucoma", label:"Glaucoma", icon:'<i class="ph-duotone ph-eye"></i>', conditions:["glaucoma"] },
             { id:"allergy", label:"Allergy", icon:'<i class="ph-duotone ph-flower-tulip"></i>', conditions:["allergy","allergy_steroid"] },
-            { id:"infection", label:"Infection", icon:'<i class="ph-duotone ph-virus"></i>', conditions:["bacterial_infection","viral_infection","fungal_infection"] },
-            { id:"inflammation", label:"Steroids & NSAIDs", icon:'<i class="ph-duotone ph-flame"></i>', conditions:["inflammation_steroid","inflammation_nsaid","allergy_steroid"] },
-            { id:"combination", label:"Antibiotic + Steroid Combo", icon:'<i class="ph-duotone ph-pill"></i>', conditions:["combination"] },
+            { id:"antibiotics", label:"Antibiotics", icon:'<i class="ph-duotone ph-shield-plus"></i>', conditions:["bacterial_infection","fungal_infection"] },
+            { id:"antivirals", label:"Antivirals", icon:'<i class="ph-duotone ph-virus"></i>', conditions:["viral_infection"] },
+            { id:"steroids", label:"Steroids", icon:'<i class="ph-duotone ph-flame"></i>', conditions:["inflammation_steroid","allergy_steroid"] },
+            { id:"nsaids", label:"NSAIDs", icon:'<i class="ph-duotone ph-thermometer"></i>', conditions:["inflammation_nsaid"] },
+            { id:"combination", label:"Antibiotic + Steroid Combo", icon:'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" style="vertical-align:-0.125em"><path d="M174.63,81.37a80,80,0,1,0-93.26,93.26,80,80,0,1,0,93.26-93.26ZM100.69,136,120,155.31A63.48,63.48,0,0,1,96,160,63.48,63.48,0,0,1,100.69,136Zm33.75,11.13-25.57-25.57a64.65,64.65,0,0,1,12.69-12.69l25.57,25.57A64.65,64.65,0,0,1,134.44,147.13ZM155.31,120,136,100.69A63.48,63.48,0,0,1,160,96,63.48,63.48,0,0,1,155.31,120ZM32,96a64,64,0,0,1,126-16A80.08,80.08,0,0,0,80.05,158,64.11,64.11,0,0,1,32,96ZM160,224A64.11,64.11,0,0,1,98,176,80.08,80.08,0,0,0,176,98,64,64,0,0,1,160,224Z"></path></svg>', conditions:["combination"] },
             { id:"mydriatic_cycloplegic", label:"Mydriatics & Cycloplegics", icon:'<i class="ph-duotone ph-sun"></i>', conditions:["mydriatic_cycloplegic"] },
             { id:"demodex", label:"Demodex", icon:'<i class="ph-duotone ph-bug-beetle"></i>', conditions:["demodex"] },
             { id:"macular_degeneration", label:"Macular Degeneration", icon:'<i class="ph-duotone ph-syringe"></i>', conditions:["macular_degeneration"] },
             { id:"presbyopia", label:"Presbyopia", icon:'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" style="vertical-align:-0.125em"><path d="M200,40a8,8,0,0,0,0,16,16,16,0,0,1,16,16v58.08A44,44,0,0,0,145.68,152H110.32A44,44,0,0,0,40,130.08V72A16,16,0,0,1,56,56a8,8,0,0,0,0-16A32,32,0,0,0,24,72v92a44,44,0,0,0,87.81,4h32.38A44,44,0,0,0,232,164V72A32,32,0,0,0,200,40ZM68,192a28,28,0,1,1,28-28A28,28,0,0,1,68,192Zm120,0a28,28,0,1,1,28-28A28,28,0,0,1,188,192Z"></path></svg>', conditions:["presbyopia"] },
-            { id:"cosmetic", label:"Cosmetic", icon:'<i class="ph-duotone ph-sparkle"></i>', conditions:["cosmetic"] },
-            { id:"miscellaneous", label:"Miscellaneous", icon:'<i class="ph-duotone ph-package"></i>', conditions:["miscellaneous","oral_analgesic"] },
+            { id:"cosmetic", label:"Cosmetic", icon:'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" style="vertical-align:-0.125em"><path d="M228,175a8,8,0,0,1-10.92-3l-19-33.2A123.23,123.23,0,0,1,162,155.46l5.87,35.22a8,8,0,0,1-6.58,9.21A8.4,8.4,0,0,1,160,200a8,8,0,0,1-7.88-6.69l-5.77-34.58a133.06,133.06,0,0,1-36.68,0l-5.77,34.58A8,8,0,0,1,96,200a8.4,8.4,0,0,1-1.32-.11,8,8,0,0,1-6.58-9.21L94,155.46a123.23,123.23,0,0,1-36.06-16.69L39,172A8,8,0,1,1,25.06,164l20-35a153.47,153.47,0,0,1-19.3-20A8,8,0,1,1,38.22,99c16.6,20.54,45.64,45,89.78,45s73.18-24.49,89.78-45A8,8,0,1,1,230.22,109a153.47,153.47,0,0,1-19.3,20l20,35A8,8,0,0,1,228,175Z"></path></svg>', conditions:["cosmetic"] },
+            { id:"miscellaneous", label:"Miscellaneous", icon:'<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" style="vertical-align:-0.125em"><path d="M176,32c-20.61,0-38.28,18.16-48,45.85C118.28,50.16,100.61,32,80,32c-31.4,0-56,42.17-56,96s24.6,96,56,96c20.61,0,38.28-18.16,48-45.85,9.72,27.69,27.39,45.85,48,45.85,31.4,0,56-42.17,56-96S207.4,32,176,32ZM106.92,186.39C99.43,200.12,89.62,208,80,208s-19.43-7.88-26.92-21.61a104.81,104.81,0,0,1-10.24-29.23,32,32,0,1,0,0-58.32A104.81,104.81,0,0,1,53.08,69.61C60.57,55.88,70.38,48,80,48s19.43,7.88,26.92,21.61C115.35,85.07,120,105.81,120,128S115.35,170.93,106.92,186.39ZM40,128a16,16,0,1,1,16,16A16,16,0,0,1,40,128Zm162.92,58.39C195.43,200.12,185.62,208,176,208s-19.43-7.88-26.92-21.61a104.81,104.81,0,0,1-10.24-29.23,32,32,0,1,0,0-58.32,104.81,104.81,0,0,1,10.24-29.23C156.57,55.88,166.38,48,176,48s19.43,7.88,26.92,21.61C211.35,85.07,216,105.81,216,128S211.35,170.93,202.92,186.39ZM136,128a16,16,0,1,1,16,16A16,16,0,0,1,136,128Z"></path></svg>', conditions:["miscellaneous","oral_analgesic"] },
         ];
 
         let medsState = {
@@ -15308,8 +15310,9 @@
                 }
             }
             const medCatColors = {
-                dry_eye:'#0284c7', glaucoma:'#0f766e', allergy:'#7c3aed', infection:'#dc2626',
-                inflammation:'#ea580c', combination:'#1e3a8a', mydriatic_cycloplegic:'#16a34a',
+                dry_eye:'#0284c7', glaucoma:'#0f766e', allergy:'#7c3aed',
+                antibiotics:'#dc2626', antivirals:'#9333ea', steroids:'#ea580c', nsaids:'#d97706',
+                combination:'#1e3a8a', mydriatic_cycloplegic:'#16a34a',
                 demodex:'#78716c', macular_degeneration:'#b45309', presbyopia:'#6366f1',
                 cosmetic:'#db2777', miscellaneous:'#475569'
             };
@@ -15548,6 +15551,8 @@
                     return (pa - pb) * dir;
                 });
             }
+            // Stable re-sort: topical before oral, preserving existing order within each group
+            results = results.filter(m => (m.route || 'topical') !== 'oral').concat(results.filter(m => (m.route || 'topical') === 'oral'));
             return results;
         }
 
