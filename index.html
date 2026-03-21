@@ -206,7 +206,7 @@
         .steps-bar {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             margin-bottom: 10px;
             background: transparent;
             border: none;
@@ -221,6 +221,7 @@
         .step-item {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             flex: 1;
             cursor: pointer;
@@ -281,7 +282,28 @@
 
             font-size: 21px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 16px;
+        }
+
+        .reset-btn {
+            background: none;
+            border: none;
+            color: var(--ink-muted);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 18px;
+            line-height: 1;
+            transition: color 0.15s;
+        }
+        .reset-btn:hover {
+            color: var(--accent);
+            animation: shake 0.4s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
+            75% { transform: rotate(-10deg); }
         }
 
         .card-desc {
@@ -405,6 +427,7 @@
         .form-group input::placeholder {
             color: var(--ink-muted);
             font-weight: 400;
+            opacity: 0.5;
         }
 
         .form-group select option.placeholder-opt {
@@ -435,7 +458,19 @@
             margin-bottom: 16px;
             padding-bottom: 6px;
             border-bottom: 2px solid var(--accent);
-            display: inline-block;
+            display: block;
+        }
+        .eye-header .eye-abbr {
+            font-family: var(--mono);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-right: 6px;
+        }
+        .eye-header .eye-desc {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--ink-muted);
         }
 
         .copy-od-btn {
@@ -1312,11 +1347,15 @@
                 padding: 12px;
             }
             .step-label {
-                display: none;
+                font-size: 10px;
             }
             .steps-bar {
                 padding: 8px;
                 margin-bottom: 10px;
+                justify-content: center;
+            }
+            .step-item {
+                justify-content: center;
             }
             .step-line {
                 width: 12px;
@@ -1595,6 +1634,27 @@
         .med-search-fav:hover { background: rgba(245,158,11,0.1); color: #f59e0b; }
         .med-search-fav.active { color: #f59e0b; background: rgba(245,158,11,0.1); }
         .med-search-fav.has-favs { color: #f59e0b; }
+        .med-search-fav::after {
+            content: 'Favorites';
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ink);
+            color: #fff;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s;
+        }
+        .med-search-fav:hover::after {
+            opacity: 1;
+        }
 
         /* Phosphor icons global sizing & accent color */
         i[class*="ph-duotone"] {
@@ -2432,6 +2492,9 @@
             .browse-search-wrap {
                 margin-bottom: 8px;
             }
+            .browse-search-hint {
+                display: none !important;
+            }
             .browse-search-icon {
                 font-size: 14px;
                 left: 10px;
@@ -2580,6 +2643,9 @@
             /* --- Order detail --- */
             .order-header-row {
                 flex-direction: column; align-items: stretch;
+            }
+            .order-header-row .order-header-left {
+                text-align: center;
             }
             .order-header-row .browse-calc-btn {
                 width: 100%; justify-content: center; margin-top: 8px;
@@ -2921,7 +2987,7 @@
             background: #ffffff;
             box-shadow: none;
         }
-        .browse-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
+        .browse-search-input::placeholder { color: var(--ink-muted); font-weight: 400; opacity: 0.6; }
         .browse-search-icon {
             position: absolute;
             left: 11px;
@@ -3119,8 +3185,8 @@
         }
         @media (max-width: 600px) {
             .browse-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .browse-filters { gap: 4px; }
-            .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; }
+            .browse-filters { gap: 4px; width: 100%; }
+            .browse-filter-btn { font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0; flex: 1; text-align: center; }
             .browse-table { font-size: 12px; min-width: 900px; }
             .browse-table th { padding: 6px 6px; }
             .browse-table td { padding: 5px 6px; }
@@ -3135,8 +3201,8 @@
         .order-header-left { flex: 1; min-width: 0; }
         .browse-calc-btn {
             display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0;
-            background: transparent; color: #1a2332; border: 2px solid #1a2332; border-radius: 50px;
-            padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+            background: var(--accent); color: #fff; border: 2px solid var(--accent); border-radius: 50px;
+            padding: 8px 14px; font-size: 13px; font-weight: 700; cursor: pointer;
             text-transform: uppercase; letter-spacing: 1.5px;
             transition: all 0.4s ease;
         }
@@ -4985,7 +5051,7 @@
             { id:"allergy", label:"Allergy", icon:'<i class="ph-duotone ph-flower-tulip"></i>', conditions:["allergy","allergy_steroid"] },
             { id:"infection", label:"Infection", icon:'<i class="ph-duotone ph-virus"></i>', conditions:["bacterial_infection","viral_infection","fungal_infection"] },
             { id:"inflammation", label:"Steroids & NSAIDs", icon:'<i class="ph-duotone ph-flame"></i>', conditions:["inflammation_steroid","inflammation_nsaid","allergy_steroid"] },
-            { id:"combination", label:"Combo Antibiotic & Steroid", icon:'<i class="ph-duotone ph-pill"></i>', conditions:["combination"] },
+            { id:"combination", label:"Antibiotic + Steroid Combo", icon:'<i class="ph-duotone ph-pill"></i>', conditions:["combination"] },
             { id:"mydriatic_cycloplegic", label:"Mydriatics & Cycloplegics", icon:'<i class="ph-duotone ph-sun"></i>', conditions:["mydriatic_cycloplegic"] },
             { id:"demodex", label:"Demodex", icon:'<i class="ph-duotone ph-bug-beetle"></i>', conditions:["demodex"] },
             { id:"macular_degeneration", label:"Macular Degeneration", icon:'<i class="ph-duotone ph-syringe"></i>', conditions:["macular_degeneration"] },
@@ -5470,11 +5536,12 @@
             const cyl = parseFloat(eye.cylinder) || 0;
             const hasCyl = eye.cylinder && cyl !== 0;
 
+            const [abbr, desc] = label.split(' — ');
             return `<div class="eye-section">
-                <div class="eye-header">${label}</div>
+                <div class="eye-header"><span class="eye-abbr">${abbr}</span><span class="eye-desc">${desc}</span></div>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Sphere (SPH)</label>
+                        <label>SPH</label>
                         <div class="input-row">
                             <div class="sign-toggle">
                                 <button type="button" id="${prefix}_sphNeg" class="${eye.sphSign === '+' ? '' : 'active-neg'}">\u2212</button>
@@ -5485,7 +5552,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Cylinder (CYL)</label>
+                        <label>CYL</label>
                         <div class="input-row">
                             <div class="sign-toggle">
                                 <button type="button" id="${prefix}_cylNeg" class="${eye.cylSign === '+' ? '' : 'active-neg'}">\u2212</button>
@@ -5502,12 +5569,12 @@
                                 <button type="button" id="${prefix}_axis90" class="${eye.axis === '90' ? 'active-90' : ''}" ${!hasCyl ? "disabled" : ""}>90</button>
                                 <button type="button" id="${prefix}_axis180" class="${eye.axis === '180' ? 'active-180' : ''}" ${!hasCyl ? "disabled" : ""}>180</button>
                             </div>
-                            <input type="text" inputmode="numeric" id="${prefix}_inAxis" value="${eye.axis}" placeholder="180" ${!hasCyl ? "disabled" : ""}>
+                            <input type="text" inputmode="numeric" id="${prefix}_inAxis" value="${eye.axis}" placeholder="180" ${!hasCyl ? "disabled style=\"opacity:1\"" : ""}>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Add Power <span style="font-weight:400;opacity:0.6;">(for MF CLs only)</span></label>
+                        <label>ADD &nbsp;<span style="font-weight:400;opacity:0.6;">(for MF only)</span></label>
                         <select id="${prefix}_inAdd"><option value="0.00" ${(!eye.addAbs || eye.addAbs === "0.00") ? "selected" : ""}>0.00</option>${buildPowerOptions(3, eye.addAbs || "0.00", 1)}</select>
                     </div>
                 </div>
@@ -5575,9 +5642,9 @@
             }
 
             return `<div class="fade-in">
-                <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
                     <h2 class="card-title" style="margin:0">Enter Prescription</h2>
-                    <button onclick="resetAll()" title="Reset" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;font-size:18px;line-height:1;transition:color 0.15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-muted)'"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
+                    <button onclick="resetAll()" title="Reset" class="reset-btn"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
                 </div>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
@@ -5680,6 +5747,10 @@
 
         // STEP 2: Modality
         function renderModalityStep() {
+            const availableModalities = MODALITIES.filter(m => countByModality(m.id) > 0);
+            if (availableModalities.length === 1 && !state.modality.includes(availableModalities[0].id)) {
+                state.modality = [availableModalities[0].id];
+            }
             const items = MODALITIES.map(m => {
                 const count = countByModality(m.id);
                 const isActive = state.modality.includes(m.id);
@@ -5732,12 +5803,14 @@
 
         // STEP 3: Brands
         function renderBrandsStep() {
+            const compatibleBrands = [];
             const items = BRANDS.map(brand => {
                 const bc = brandClass(brand);
                 const saved = state.brands;
                 state.brands = [brand];
                 const count = getCompatibleLenses().length;
                 state.brands = saved;
+                if (count > 0) compatibleBrands.push(brand);
                 if (count === 0 && state.brands.includes(brand)) {
                     state.brands = state.brands.filter(b => b !== brand);
                 }
@@ -5750,7 +5823,7 @@
                 </div>`;
             }).join("");
 
-            const allSelected = state.brands.length === BRANDS.length;
+            const allSelected = compatibleBrands.length > 0 && compatibleBrands.every(b => state.brands.includes(b));
             const toggleLabel = allSelected ? 'Deselect All' : 'Select All';
 
             return `<div class="fade-in">
@@ -5772,7 +5845,15 @@
         }
 
         function toggleAllBrands() {
-            state.brands = state.brands.length === BRANDS.length ? [] : [...BRANDS];
+            const compatibleBrands = BRANDS.filter(brand => {
+                const saved = state.brands;
+                state.brands = [brand];
+                const count = getCompatibleLenses().length;
+                state.brands = saved;
+                return count > 0;
+            });
+            const allSelected = compatibleBrands.length > 0 && compatibleBrands.every(b => state.brands.includes(b));
+            state.brands = allSelected ? [] : [...compatibleBrands];
             render();
         }
 
@@ -9332,9 +9413,8 @@
                 var r = IOP_CCT_TABLE[i];
                 var cls = r.adj > 0 ? 'adj-pos' : r.adj < 0 ? 'adj-neg' : 'adj-zero';
                 var sign = r.adj > 0 ? '+' : '';
-                var interp = r.adj > 0 ? 'True IOP likely higher' : r.adj < 0 ? 'True IOP likely lower' : 'No adjustment';
                 var hl = r.cct === 545 ? ' class="highlight"' : '';
-                rows += '<tr' + hl + '><td>' + r.cct + '</td><td class="' + cls + '">' + sign + r.adj + ' mmHg</td><td style="color:var(--ink-muted)">' + interp + '</td></tr>';
+                rows += '<tr' + hl + '><td>' + r.cct + '</td><td class="' + cls + '">' + sign + r.adj + ' mmHg</td></tr>';
             }
             return rows;
         }
@@ -9640,7 +9720,7 @@
 
             // Category filter buttons
             var catColors = { glaucoma:'#0d9488', pediatrics:'#7c3aed', bv:'#2563eb', neuro:'#c2410c', oculardz:'#b45309' };
-            var catBtns = '<div style="display:flex;flex-wrap:' + (window.innerWidth <= 640 ? 'nowrap' : 'wrap') + ';gap:6px;margin-bottom:12px;' + (window.innerWidth > 640 ? 'justify-content:center;' : '') + '">';
+            var catBtns = '<div style="display:flex;flex-wrap:' + (window.innerWidth <= 640 ? 'nowrap' : 'wrap') + ';gap:6px;margin-bottom:12px;justify-content:center;">';
             var allActive = activeCats.length === 0;
             var _catDesk = window.innerWidth > 640;
             var _catPad = _catDesk ? '6px 14px' : '3px 8px';
@@ -9752,7 +9832,7 @@
                     <div class="tools-card-desc">Goldmann applanation tonometry adjustment table. Thinner corneas underestimate true IOP; thicker corneas overestimate.</div>
                     <div class="iop-table-wrap">
                         <table class="iop-ref-table">
-                            <thead><tr><th>CCT (\u00B5m)</th><th>IOP Adjustment</th><th>Interpretation</th></tr></thead>
+                            <thead><tr><th>CCT (\u00B5m)</th><th>IOP Adjustment</th></tr></thead>
                             <tbody>
                             ${tableRows}
                             </tbody>
@@ -16165,8 +16245,8 @@
 
             let html = `<div class="browse-search-wrap">
                 <span class="browse-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
-                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search\u2026" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
-                <span style="position:absolute;left:36px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-muted);opacity:0.35;pointer-events:none;font-family:var(--sans);font-weight:400;${browseState.search ? 'display:none;' : ''}"><span style="opacity:0;">Search...</span> by name, manufacturer, private label</span>
+                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search by name, manufacturer, or private label" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
+                <span class="browse-search-hint" style="position:absolute;left:36px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-muted);opacity:0.35;pointer-events:none;font-family:var(--sans);font-weight:400;display:none;"></span>
             </div>`;
 
             const mf = browseState.modalityFilter;
@@ -16290,7 +16370,7 @@
         window.addEventListener('resize', positionTabIndicator);
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:var(--bg);">
-        <div>&copy; 2026 Pocket OD &middot; <a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a></div>
+        <div>&copy; 2026 Pocket OD &middot; <a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a></div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
         <div style="margin-top:4px;">If you find an error, please let me know.</div>
     </footer>
