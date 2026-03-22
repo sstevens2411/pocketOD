@@ -5194,6 +5194,12 @@
             const needed = getNeededTypeForEye(eye);
             const hasCyl = cyl !== 0 && Math.abs(cyl) > 0.50;
 
+            // Vertex convert cylinder (both meridians) when sphere is high
+            let vCyl = cyl;
+            if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - snapTo025(clSph));
+            }
+
             // SE adjustment: fold -0.50 cyl into sphere
             if (Math.abs(cyl) === 0.50) {
                 clSph = snapTo025(clSph + cyl / 2);
@@ -5207,7 +5213,7 @@
             if (clSph < lens.sphMin || clSph > lens.sphMax) return false;
 
             if (hasCyl && (lens.type === "toric" || lens.type === "multifocal-toric")) {
-                const absCyl = Math.abs(cyl);
+                const absCyl = Math.abs(vCyl);
                 const absMin = Math.abs(lens.cylMin);
                 const absMax = Math.abs(lens.cylMax);
                 // Allow cyl up to tolerance beyond max (snap down and compensate sphere)
@@ -6091,10 +6097,17 @@
         function getFullCylInfo(eye, lens) {
             const cyl = parseFloat(eye.cylinder) || 0;
             if (cyl === 0) return null;
-            const absCyl = Math.abs(cyl);
+            const sph = parseFloat(eye.sphere) || 0;
+            // Vertex convert cylinder when sphere is high
+            let vCyl = cyl;
+            if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                const clSphRaw = snapTo025(vertexConvert(sph));
+                vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - clSphRaw);
+            }
+            const absCyl = Math.abs(vCyl);
 
             // Check if snapping actually reduced the cylinder
-            const snappedCyl = snapCyl(cyl, lens);
+            const snappedCyl = snapCyl(vCyl, lens);
             if (Math.abs(Math.abs(snappedCyl) - absCyl) < 0.01) return null; // no snap occurred
 
             // Check if Rx cyl is a valid CL step
@@ -6127,11 +6140,10 @@
             const lensHasStep = steps.some(s => Math.abs(s - absCyl) < 0.01);
 
             // fullCylSph: vertex-converted sphere with NO SE adjustment
-            const sph = parseFloat(eye.sphere) || 0;
             const fullCylSph = snapSph(snapTo025(vertexConvert(sph)), lens);
 
             return {
-                rxCyl: cyl,
+                rxCyl: vCyl,
                 snappedCyl: snappedCyl,
                 fullCylSph: fullCylSph,
                 lensHasStep: lensHasStep
@@ -6867,14 +6879,19 @@
                 const sph = parseFloat(eye.sphere) || 0;
                 const cyl = parseFloat(eye.cylinder) || 0;
                 let clSph = snapTo025(vertexConvert(sph));
+                // Vertex convert cylinder when sphere is high
+                let vCyl = cyl;
+                if (cyl !== 0 && (Math.abs(sph) >= 4 || Math.abs(sph + cyl) >= 4)) {
+                    vCyl = snapTo025(snapTo025(vertexConvert(sph + cyl)) - clSph);
+                }
                 if (cyl !== 0 && Math.abs(cyl) === 0.50) {
                     clSph = snapTo025(clSph + cyl / 2);
                 } else if (lens.type === "toric" || lens.type === "multifocal-toric") {
-                    const clCyl = snapCyl(cyl, lens);
-                    const cylDiff = clCyl - cyl;
+                    const clCyl = snapCyl(vCyl, lens);
+                    const cylDiff = clCyl - vCyl;
                     if (Math.abs(cylDiff) > 0.01) clSph = snapTo025(clSph + snapTo025(-cylDiff / 2));
                 } else if (lens.type === "sphere" || lens.type === "multifocal") {
-                    clSph = snapTo025(clSph + cyl / 2);
+                    clSph = snapTo025(clSph + vCyl / 2);
                 }
                 return clSph;
             }
@@ -8878,9 +8895,15 @@
                     ocEyeEntries.forEach(e => {
                         const or = state.overRefraction[e.label];
                         const rot = state.orRotation[e.label];
+                        const sphRaw = parseFloat(e.eye.sphere) || 0;
                         const cyl = parseFloat(e.eye.cylinder) || 0;
+                        let vCylAdj = cyl;
+                        if (cyl !== 0 && (Math.abs(sphRaw) >= 4 || Math.abs(sphRaw + cyl) >= 4)) {
+                            const clSphRaw = snapTo025(vertexConvert(sphRaw));
+                            vCylAdj = snapTo025(snapTo025(vertexConvert(sphRaw + cyl)) - clSphRaw);
+                        }
                         const clSph = getCurrentSph(e.eye, e.label);
-                        const clCyl = snapCyl(cyl, lens);
+                        const clCyl = snapCyl(vCylAdj, lens);
                         const rxAxis = e.eye.cylSign === '+' ? e.eye.transposedAxis : e.eye.axis;
                         let clAxis = snapAxis(rxAxis, lens);
 
@@ -9163,11 +9186,15 @@
                 state.orRotation = null;
                 state.nonAdaptFrom = null;
                 state.fullCylFrom = null;
+                let target;
                 if (state.browseLensFilter && state.step === 3) {
-                    state.step = 0;
+                    target = 0;
                 } else {
-                    state.step--;
+                    target = state.step - 1;
                 }
+                // Reset brands when going back to schedule or Rx so counts are unfiltered
+                if (target <= 1) state.brands = [...BRANDS];
+                state.step = target;
                 render();
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
@@ -9245,6 +9272,8 @@
                 state.troubleshoot = null;
                 state.tsAdjustment = null;
                 state.tsRotation = null;
+                // Reset brands when going back to schedule or Rx so counts are unfiltered
+                if (i <= 1) state.brands = [...BRANDS];
                 state.step = i;
                 render();
                 window.scrollTo({ top: 0, behavior: "smooth" });
