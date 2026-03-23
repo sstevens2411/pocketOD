@@ -4706,6 +4706,7 @@
             // === Additional Miscellaneous Medications ===
             {id:"med_137",brand_name:"Betadine 5% Ophthalmic",generic_name:"Povidone-iodine 5% solution",generic_available:true,drug_class:"Antiseptic / Microbicide",condition:"miscellaneous",typical_dosing:"Pre-procedural: irrigate conjunctival sac, wait 2 minutes, then rinse. Off-label viral conj: 1-2 drops, rinse after 1 minute",bottle_size:"30 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:15,notes:"Broad-spectrum antiseptic \u2014 bactericidal, virucidal, fungicidal. Standard pre-injection and pre-surgical prep. Used off-label as in-office treatment for adenoviral conjunctivitis (Betadine flush). Iodine allergy is a contraindication. May cause transient stinging and mild corneal staining.",price_size:"30 mL",route:"topical"},
             {id:"med_138",brand_name:"Proparacaine",generic_name:"Proparacaine HCl 0.5%",generic_available:true,drug_class:"Topical anesthetic",condition:"miscellaneous",typical_dosing:"1-2 drops for topical anesthesia; onset 20 seconds, duration 15-20 minutes",bottle_size:"15 mL",preservative_free:false,avg_brand_price:25,avg_generic_price:8,notes:"In-office topical anesthetic for tonometry, gonioscopy, foreign body removal, and minor procedures. Not for chronic use or prescribing to patients \u2014 causes corneal toxicity and inhibits epithelial healing. Refrigerate for longer shelf life. Discard if solution turns dark.",price_size:"15 mL",route:"topical"},
+            {id:"med_139",brand_name:"Akten",generic_name:"Lidocaine HCl 3.5% ophthalmic gel",generic_available:false,drug_class:"Topical anesthetic",condition:"miscellaneous",typical_dosing:"2 drops to ocular surface; may reapply to maintain effect. Onset 20 sec\u20131 min, duration 5\u201330 min",bottle_size:"Single-use dropperette",preservative_free:true,avg_brand_price:50,avg_generic_price:null,notes:"Preservative-free gel anesthetic for ocular surface procedures (cataract surgery, intravitreal injections, LASIK, refractive surgery). Gel formulation provides longer contact time vs drops. Not for patient self-administration. Prolonged use of topical anesthetics may cause permanent corneal opacification, ulceration, and visual loss. Common side effects: conjunctival hyperemia, corneal epithelial changes, headache, burning on instillation.",price_size:"Single-use",route:"topical"},
 
             // === Coming Soon ===
             {id:"med_130",brand_name:"Yuvezzi",generic_name:"Carbachol 2.75% / Brimonidine tartrate 0.1%",generic_available:false,drug_class:"Cholinergic agonist + Alpha-2 agonist (dual-action miotic)",condition:"presbyopia",typical_dosing:"1 drop in each eye once daily",bottle_size:"TBD",preservative_free:false,avg_brand_price:null,avg_generic_price:null,notes:"Dual-action presbyopia drop. Carbachol constricts the pupil for near focus; brimonidine prevents excessive dilation. Effects last up to 8 hours. Onset within 30 minutes. Remove contact lenses before use, wait 10 minutes to reinsert. Common side effects: headache (16%), irritation (14%), eye pain (7%), impaired vision (6%). No serious adverse events in 1-year safety study.",price_size:null,route:"topical",comingSoon:true},
@@ -4861,6 +4862,7 @@
             med_136:"blepharitis, lid inflammation, periocular inflammation, eyelid eczema, post-surgical",
             med_137:"pre-surgical antiseptic, pre-injection, adenoviral conjunctivitis, viral conjunctivitis, betadine flush, povidone-iodine",
             med_138:"tonometry, gonioscopy, foreign body removal, topical anesthesia, in-office anesthetic, minor procedures",
+            med_139:"lidocaine, akten, gel anesthetic, ocular surface anesthesia, intravitreal injection, cataract surgery, LASIK, refractive surgery, procedural anesthesia",
             med_124:"filamentary keratitis, mucus plaques, corneal filaments",
             med_128:"eyelid eczema, atopic dermatitis, eyelid dermatitis, periocular dermatitis, contact dermatitis, eyelid inflammation",
             // Oral Analgesics
@@ -5916,7 +5918,7 @@
             return `<div class="fade-in">
                 <div class="results-header">
                     <div>
-                        <div class="results-count">${lenses.length} Compatible Lens${lenses.length !== 1 ? "es" : ""}</div>
+                        <div class="results-count"><span onclick="goBack()" style="cursor:pointer;margin-right:8px;opacity:0.45;font-size:18px;vertical-align:middle;transition:opacity 0.15s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.45'">&larr;</span>${lenses.length} Compatible Lens${lenses.length !== 1 ? "es" : ""}</div>
                     </div>
                     <div class="sort-group">${sortBtns}</div>
                 </div>
@@ -6231,26 +6233,34 @@
                 }
 
                 let params = [];
+                const summary = [];
                 let finalSph = clSph;
                 const sphVertexed = Math.abs(sph) >= 4;
-                const notes = [];
-                if (sphVertexed) notes.push(`Vertexed from ${sph > 0 ? "+" : ""}${sph.toFixed(2)}`);
-                if (foldCyl) notes.push(`SE: ${vCyl.toFixed(2)} cyl folded in`);
-                let sphNote = notes.length > 0 ? notes.join("; ") : null;
                 let sphHighlight = sphVertexed || foldCyl;
+                let _seAdj = null;
 
                 if (l.type === "toric" || l.type === "multifocal-toric") {
                     const clCyl = snapCyl(vCyl, l);
                     const cylDiff = clCyl - vCyl;
                     if (Math.abs(cylDiff) > 0.01) {
-                        const seAdj = snapTo025(-cylDiff / 2);
-                        finalSph = snapTo025(clSph + seAdj);
-                        const parts = [];
-                        if (sphVertexed) parts.push(`Vertexed from ${sph > 0 ? "+" : ""}${sph.toFixed(2)}`);
-                        if (Math.abs(seAdj) > 0.001) parts.push(`SE adjusted ${seAdj > 0 ? "+" : ""}${seAdj.toFixed(2)} for cyl reduction`);
-                        sphNote = parts.length > 0 ? parts.join("; ") : null;
+                        _seAdj = snapTo025(-cylDiff / 2);
+                        finalSph = snapTo025(clSph + _seAdj);
                         sphHighlight = true;
                     }
+                }
+
+                // Build condensed SPH summary
+                const hasSeAdj = _seAdj !== null && Math.abs(_seAdj) > 0.01;
+                if (sphVertexed && hasSeAdj) {
+                    summary.push(`SPH: Vertexed & SE adjusted ${_seAdj > 0 ? "+" : ""}${_seAdj.toFixed(2)}`);
+                } else if (sphVertexed && foldCyl) {
+                    summary.push(`SPH: Vertexed & cyl folded into sph`);
+                } else if (sphVertexed) {
+                    summary.push(`SPH: Vertexed`);
+                } else if (hasSeAdj) {
+                    summary.push(`SPH: SE adjusted ${_seAdj > 0 ? "+" : ""}${_seAdj.toFixed(2)}`);
+                } else if (foldCyl) {
+                    summary.push(`SPH: Cyl folded into sph`);
                 }
 
                 // Proclear-style sphBoost: automatic sphere adjustment based on dominance & ADD
@@ -6265,12 +6275,12 @@
                         const row = sphBoost.nonDominant.find(r => addP >= r.addMin && addP <= r.addMax);
                         if (row) {
                             boost = row.boost;
-                            boostNote = boost !== 0 ? `+${boost.toFixed(2)} non-dominant boost (ADD +${addP.toFixed(2)})` : '';
+                            boostNote = boost !== 0 ? `+${boost.toFixed(2)} non-dominant boost` : '';
                         }
                     }
                     if (boost !== 0) {
                         finalSph = snapTo025(finalSph + boost);
-                        sphNote = sphNote ? `${sphNote}; ${boostNote}` : boostNote;
+                        if (boostNote) summary.push(`SPH: ${boostNote}`);
                         sphHighlight = true;
                     }
                 }
@@ -6278,7 +6288,7 @@
                 // Snap to 0.50D steps for high powers
                 const snapped50 = snapSph(finalSph, l);
                 if (snapped50 !== finalSph) {
-                    sphNote = sphNote ? sphNote + '; Rounded to 0.50D step' : 'Rounded to 0.50D step';
+                    summary.push('SPH: Rounded to 0.50D step');
                     sphHighlight = true;
                     finalSph = snapped50;
                 }
@@ -6286,30 +6296,38 @@
                 params.push({
                     label: "Sphere (SPH)",
                     value: `${finalSph > 0 ? "+" : ""}${finalSph.toFixed(2)}`,
-                    note: sphNote,
+                    note: null,
                     highlight: sphHighlight
                 });
 
                 if (l.type === "toric" || l.type === "multifocal-toric") {
                     const clCyl = snapCyl(vCyl, l);
                     const cylChanged = Math.abs(clCyl - cyl) > 0.01;
-                    const cylNote = [];
-                    if (vertexApplied && Math.abs(vCyl - cyl) > 0.01) cylNote.push(`Vertexed from ${cyl.toFixed(2)}`);
-                    if (Math.abs(clCyl - vCyl) > 0.01) cylNote.push(`Snapped from ${vCyl.toFixed(2)}`);
+
+                    if (Math.abs(clCyl - vCyl) > 0.01) {
+                        summary.push(`CYL: Snapped from ${vCyl.toFixed(2)} to ${clCyl.toFixed(2)}`);
+                    } else if (vertexApplied && Math.abs(vCyl - cyl) > 0.01) {
+                        summary.push(`CYL: Vertexed from ${cyl.toFixed(2)}`);
+                    }
+
                     params.push({
                         label: "Cylinder (CYL)",
                         value: clCyl.toFixed(2),
-                        note: cylNote.length > 0 ? cylNote.join('; ') : null,
+                        note: null,
                         highlight: cylChanged
                     });
 
                     const rxAxis = eye.cylSign === '+' ? eye.transposedAxis : eye.axis;
                     const clAxis = snapAxis(rxAxis, l);
                     const axisChanged = clAxis !== (parseInt(rxAxis) || 180);
+                    if (axisChanged) {
+                        summary.push(`Axis: Snapped from ${rxAxis}\u00B0 to ${clAxis}\u00B0`);
+                    }
+
                     params.push({
                         label: "Axis",
                         value: `${clAxis}\u00B0`,
-                        note: axisChanged ? `Snapped from ${rxAxis}\u00B0` : null,
+                        note: null,
                         highlight: axisChanged
                     });
                 }
@@ -6364,8 +6382,8 @@
                             const oldVal = parseFloat(sphParam.value);
                             const newVal025 = snapTo025(oldVal + adj.sphDelta);
                             const newVal = snapSph(newVal025, l);
-                            sphParam.note = `Adjusted ${adj.sphDelta > 0 ? "+" : ""}${adj.sphDelta.toFixed(2)} from ${sphParam.value}`;
-                            if (newVal !== newVal025) sphParam.note += '; Rounded to 0.50D step';
+                            summary.push(`SPH: Adjusted ${adj.sphDelta > 0 ? "+" : ""}${adj.sphDelta.toFixed(2)} from ${sphParam.value}`);
+                            if (newVal !== newVal025) summary.push('SPH: Rounded to 0.50D step');
                             sphParam.value = `${newVal > 0 ? "+" : ""}${newVal.toFixed(2)}`;
                             sphParam.highlight = true;
                         }
@@ -6396,11 +6414,11 @@
                         if (sphParam) {
                             const oldVal = sphParam.value;
                             sphParam.value = `${adj.sphOverride > 0 ? "+" : ""}${adj.sphOverride.toFixed(2)}`;
-                            sphParam.note = state.tsAdjustment.complaint === 'fullcyl'
-                                ? `Vertex-converted only (SE revert from ${oldVal})`
+                            summary.push(state.tsAdjustment.complaint === 'fullcyl'
+                                ? `SPH: Vertex-converted only (SE revert from ${oldVal})`
                                 : state.tsAdjustment.complaint === 'dropcyl'
-                                ? `SE adjusted for cyl reduction (from ${oldVal})`
-                                : `Cross-cyl adjusted from ${oldVal}`;
+                                ? `SPH: SE adjusted for cyl change (from ${oldVal})`
+                                : `SPH: Cross-cyl adjusted from ${oldVal}`);
                             sphParam.highlight = true;
                         }
                     }
@@ -6409,27 +6427,27 @@
                         if (cylParam) {
                             const oldVal = cylParam.value;
                             cylParam.value = adj.cylOverride.toFixed(2);
-                            cylParam.note = state.tsAdjustment.complaint === 'fullcyl'
-                                ? `Full Rx cylinder (was reduced to ${oldVal})`
+                            summary.push(state.tsAdjustment.complaint === 'fullcyl'
+                                ? `CYL: Full Rx cyl (was ${oldVal})`
                                 : state.tsAdjustment.complaint === 'dropcyl'
-                                ? `Reduced one step (from ${oldVal})`
-                                : `Cross-cyl adjusted from ${oldVal}`;
+                                ? `CYL: Reduced one step (from ${oldVal})`
+                                : `CYL: Cross-cyl adjusted from ${oldVal}`);
                             cylParam.highlight = true;
                         }
                     }
                     if (adj.axisOverride !== undefined) {
                         const axisParam = params.find(p => p.label === "Axis");
                         if (axisParam) {
-                            axisParam.note = adj.sphOverride !== undefined
-                                ? `Cross-cyl adjusted from ${axisParam.value}`
-                                : `Rotation compensated from ${axisParam.value}`;
+                            summary.push(adj.sphOverride !== undefined
+                                ? `Axis: Cross-cyl adjusted from ${axisParam.value}`
+                                : `Axis: Rotation compensated from ${axisParam.value}`);
                             axisParam.value = `${adj.axisOverride}\u00B0`;
                             axisParam.highlight = true;
                         }
                     }
                 }
 
-                return { params, vertexApplied };
+                return { params, vertexApplied, summary };
             }
 
             // Determine dominant status per eye: OD = right, OS = left
@@ -6472,18 +6490,19 @@
 
             if (odOk) {
                 const odDropLens = (state.tsAdjustment && state.tsAdjustment.overrides["OD"] && state.tsAdjustment.overrides["OD"].lensDropTo) ? LENSES.find(l => l.name === state.tsAdjustment.overrides["OD"].lensDropTo) : null;
-                const { params, vertexApplied } = buildEyeParams(state.od, odDominant, "OD", odDropLens || undefined);
+                const { params, vertexApplied, summary } = buildEyeParams(state.od, odDominant, "OD", odDropLens || undefined);
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                     <div class="order-param-label">${p.label}</div>
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 const odLensName = odDropLens ? odDropLens.name : lens.name;
                 const odTitle = (isMixedPair || odDropLens)
                     ? `OD (Right Eye) \u2014 <span style="color:${brandColor};font-weight:600">${odLensName}</span>`
                     : `OD (Right Eye) \u2014 Order Parameters`;
                 eyeSectionsHtml += `<div class="order-section-title">${odTitle}</div>
-                    <div class="order-grid">${html}</div>`;
+                    <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
             }
 
@@ -6491,31 +6510,33 @@
                 companionLensUsed = odCompLens;
                 const compBc = brandClass(odCompLens.brand);
                 const compColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[compBc];
-                const { params, vertexApplied } = buildEyeParams(state.od, odDominant, "OD", odCompLens);
+                const { params, vertexApplied, summary } = buildEyeParams(state.od, odDominant, "OD", odCompLens);
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                     <div class="order-param-label">${p.label}</div>
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 eyeSectionsHtml += `<div class="order-section-title">OD (Right Eye) \u2014 <span style="color:${compColor};font-weight:600">${odCompLens.name}</span></div>
-                    <div class="order-grid">${html}</div>`;
+                    <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
             }
 
             if (osOk) {
                 const osDropLens = (state.tsAdjustment && state.tsAdjustment.overrides["OS"] && state.tsAdjustment.overrides["OS"].lensDropTo) ? LENSES.find(l => l.name === state.tsAdjustment.overrides["OS"].lensDropTo) : null;
-                const { params, vertexApplied } = buildEyeParams(state.os, osDominant, "OS", osDropLens || undefined);
+                const { params, vertexApplied, summary } = buildEyeParams(state.os, osDominant, "OS", osDropLens || undefined);
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                     <div class="order-param-label">${p.label}</div>
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 const osLensName = osDropLens ? osDropLens.name : lens.name;
                 const osTitle = (isMixedPair || osDropLens)
                     ? `OS (Left Eye) \u2014 <span style="color:${brandColor};font-weight:600">${osLensName}</span>`
                     : `OS (Left Eye) \u2014 Order Parameters`;
                 eyeSectionsHtml += `<div class="order-section-title">${osTitle}</div>
-                    <div class="order-grid">${html}</div>`;
+                    <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
             }
 
@@ -6523,14 +6544,15 @@
                 companionLensUsed = osCompLens;
                 const compBc = brandClass(osCompLens.brand);
                 const compColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[compBc];
-                const { params, vertexApplied } = buildEyeParams(state.os, osDominant, "OS", osCompLens);
+                const { params, vertexApplied, summary } = buildEyeParams(state.os, osDominant, "OS", osCompLens);
                 const html = params.map(p => `<div class="order-param ${p.highlight ? 'highlight' : ''}">
                     <div class="order-param-label">${p.label}</div>
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 eyeSectionsHtml += `<div class="order-section-title">OS (Left Eye) \u2014 <span style="color:${compColor};font-weight:600">${osCompLens.name}</span></div>
-                    <div class="order-grid">${html}</div>`;
+                    <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
             }
 
