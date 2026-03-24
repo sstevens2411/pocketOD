@@ -12324,20 +12324,20 @@
         function getDrGrade() {
             var s = drState;
             // PDR takes priority
-            if (s.nv || s.vit_hem) return { grade: 'PDR', desc: 'Proliferative Diabetic Retinopathy', color: '#ef4444' };
+            if (s.nv || s.vit_hem) return { grade: 'PDR', desc: 'Proliferative Diabetic Retinopathy', color: '#ef4444', followUp: 'Retinal referral within 48 hrs to 1 week depending on severity' };
             // Severe NPDR — 4-2-1 rule
             var severeCount = 0;
             if (s.hemorrhages && s.hem_quads >= 4) severeCount++;
             if (s.venous_beading && s.vb_quads >= 2) severeCount++;
             if (s.irma) severeCount++;
-            if (severeCount >= 1) return { grade: 'Severe NPDR', desc: 'Severe Non-Proliferative DR (4-2-1 rule met)', color: '#dc2626' };
+            if (severeCount >= 1) return { grade: 'Severe NPDR', desc: 'Severe Non-Proliferative DR (4-2-1 rule met)', color: '#dc2626', followUp: '2\u20134 months + consider retina referral' };
             // Moderate NPDR
             if (s.ma && (s.hemorrhages || s.hard_exudates || s.cws || s.venous_beading))
-                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#c2410c' };
+                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#c2410c', followUp: '6 months' };
             if ((s.hemorrhages || s.hard_exudates || s.cws || s.venous_beading))
-                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#c2410c' };
+                return { grade: 'Moderate NPDR', desc: 'Non-Proliferative DR with additional findings', color: '#c2410c', followUp: '6 months' };
             // Mild NPDR
-            if (s.ma) return { grade: 'Mild NPDR', desc: 'Microaneurysms only', color: '#a16207' };
+            if (s.ma) return { grade: 'Mild NPDR', desc: 'Microaneurysms only', color: '#a16207', followUp: '12 months' };
             return null;
         }
 
@@ -12350,7 +12350,8 @@
                 return;
             }
             el.innerHTML = '<div style="font-size:18px;font-weight:700;color:' + result.color + ';margin-bottom:4px;">' + result.grade + '</div>'
-                + '<div style="font-size:13px;color:var(--ink);">' + result.desc + '</div>';
+                + '<div style="font-size:13px;color:var(--ink);">' + result.desc + '</div>'
+                + '<div style="font-size:12px;color:var(--ink-muted);margin-top:6px;"><strong>Recommended follow-up:</strong> ' + result.followUp + '</div>';
         }
 
         function drReset() {
