@@ -9520,7 +9520,7 @@
             // Plaquenil (const)
             plaqState.weightVal = ''; plaqState.weightUnit = 'lbs'; plaqState.heightFt = ''; plaqState.heightIn = ''; plaqState.sex = ''; plaqState.dailyDose = ''; plaqState.duration = ''; plaqState.renal = false; plaqState.tamoxifen = false;
             // Myopia (const)
-            myopState.age = ''; myopState.rx = ''; myopState.sex = ''; myopState.ethnicity = 'caucasian'; myopState.treatment = 'none';
+            myopState.age = ''; myopState.rx = ''; myopState.sex = ''; myopState.ethnicity = ''; myopState.treatment = 'none';
             _myopChartData = null;
             // BV Parks
             bvParks = { step1:null, step2:null, step3:null };
@@ -10537,7 +10537,7 @@
             age: '',
             rx: '',
             sex: '',
-            ethnicity: 'caucasian',
+            ethnicity: '',
             treatment: 'none'
         };
 
@@ -10629,7 +10629,7 @@
             myopState.age = '';
             myopState.rx = '';
             myopState.sex = '';
-            myopState.ethnicity = 'caucasian';
+            myopState.ethnicity = '';
             myopState.treatment = 'none';
             renderMyopiaTool(document.getElementById('toolsContent'));
         }
@@ -10647,8 +10647,8 @@
             var eth = myopState.ethnicity;
             var tx = myopState.treatment;
 
-            if (!age || isNaN(rx) || !sex || age < 6 || age > 17) {
-                el.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter age (6\u201317), current Rx, and sex to see projection.</div>';
+            if (!age || isNaN(rx) || !sex || !eth || age < 6 || age > 17) {
+                el.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter age (6\u201317), current Rx, sex, and ethnicity to see projection.</div>';
                 _myopChartData = null;
                 return;
             }
@@ -10941,6 +10941,7 @@
                         <div class="iop-form-group">
                             <label>Ethnicity</label>
                             <select id="myopEth" onchange="onMyopInput('ethnicity',this.value)">
+                                <option value="" disabled ${myopState.ethnicity===''?'selected':''}>Select...</option>
                                 <option value="east-asian" ${myopState.ethnicity==='east-asian'?'selected':''}>East / SE Asian</option>
                                 <option value="south-asian" ${myopState.ethnicity==='south-asian'?'selected':''}>South Asian</option>
                                 <option value="caucasian" ${myopState.ethnicity==='caucasian'?'selected':''}>Caucasian / White</option>
@@ -16464,10 +16465,19 @@
         window.addEventListener('resize', positionTabIndicator);
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:var(--bg);">
-        <div>&copy; 2026 Pocket OD &middot; <a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a></div>
+        <div>&copy; 2026 Pocket OD</div>
+        <div style="margin-top:4px;"><a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a> &middot; <a href="javascript:void(0)" onclick="document.getElementById('homescreenModal').style.display='flex'" style="color:#555;text-decoration:underline;">Add to iPhone Home Screen</a></div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
         <div style="margin-top:4px;">If you find an error, please let me know.</div>
     </footer>
+    <div id="homescreenModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;padding:24px;">
+        <div style="background:#fff;border-radius:12px;padding:28px 28px 24px;max-width:520px;width:100%;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+            <button onclick="document.getElementById('homescreenModal').style.display='none'" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;line-height:1;padding:4px;">&times;</button>
+            <div style="font-size:16px;font-weight:700;color:#1a2332;margin-bottom:14px;">Add to iPhone Home Screen</div>
+            <p style="font-size:13px;line-height:1.7;color:#475569;margin:0 0 18px;">To add a website to your iPhone home screen, open the site in Safari, tap the Share button (square with an upward arrow), and select Add to Home Screen from the menu. You can then name the shortcut, and it will appear as an app-like icon on your home screen.</p>
+            <div style="text-align:center;"><a href="https://www.youtube.com/shorts/VL3mwF_Ymwk" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:10px 20px;background:var(--accent,#0d9488);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">Watch Instructional Video</a></div>
+        </div>
+    </div>
     <div id="disclaimerModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;padding:24px;">
         <div style="background:#fff;border-radius:12px;padding:28px 28px 24px;max-width:520px;width:100%;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.15);">
             <button onclick="document.getElementById('disclaimerModal').style.display='none'" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;line-height:1;padding:4px;">&times;</button>
