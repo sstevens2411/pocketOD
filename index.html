@@ -3059,6 +3059,14 @@
         .browse-table td:nth-child(6) { min-width: 100px; } /* Cyl Range */
         .browse-table th:nth-child(7),
         .browse-table td:nth-child(7) { min-width: 140px; } /* Axes */
+        @media (max-width: 767px) {
+            .browse-no-cyl th:nth-child(6),
+            .browse-no-cyl td:nth-child(6),
+            .browse-no-cyl th:nth-child(7),
+            .browse-no-cyl td:nth-child(7) { display: none; }
+            .browse-no-cyl th:nth-child(1),
+            .browse-no-cyl td:nth-child(1) { width: 140px; max-width: 140px; }
+        }
         .browse-table th:nth-child(8),
         .browse-table td:nth-child(8) { min-width: 80px; }  /* Cost/Yr */
         .browse-name {
@@ -3651,6 +3659,7 @@
             padding: 9px 12px;
             border-bottom: 1px solid var(--rule);
             vertical-align: top;
+            white-space: nowrap;
         }
         .bv-norms-table tr:last-child td { border-bottom: none; }
         .bv-norms-table .bv-cat-row td {
@@ -16370,7 +16379,8 @@
             const clearSort = "browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;browseState.sortSph=null;browseState.sortCyl=null;browseState.sortCost=null;renderBrowse()";
 
             html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view, or scroll right.</div>`;
-            html += `<div class="browse-scroll-wrap"><table class="browse-table"><thead><tr>
+            const hideCyl = (tf === 'sphere' || tf === 'multifocal');
+            html += `<div class="browse-scroll-wrap"><table class="browse-table${hideCyl ? ' browse-no-cyl' : ''}"><thead><tr>
                 <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk/t${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
 
