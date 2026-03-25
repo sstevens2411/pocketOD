@@ -9675,6 +9675,9 @@
               svgIcon:'<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256" style="color:var(--accent);"><path d="M240,120H215.63A88.13,88.13,0,0,0,136,40.37V16a8,8,0,0,0-16,0V40.37A88.13,88.13,0,0,0,40.37,120H16a8,8,0,0,0,0,16H40.37A88.13,88.13,0,0,0,120,215.63V240a8,8,0,0,0,16,0V215.63A88.13,88.13,0,0,0,215.63,136H240a8,8,0,0,0,0-16ZM128,200a72,72,0,1,1,72-72A72.08,72.08,0,0,1,128,200Zm0-112a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Z"></path></svg>' },
             { id:'glaucoma', icon:'ph-chart-line-up', title:'Glaucoma Risk', desc:'OHTS 5-year POAG risk estimator (points system)',
               keywords:'glaucoma ohts poag risk ocular hypertension cup disc ratio visual field psd iop intraocular pressure cct corneal thickness' },
+            { id:'hvf', icon:'ph-chart-scatter', title:'Visual Field Hub',
+              desc:'Systematic Humphrey visual field interpretation guide',
+              keywords:'humphrey visual field hvf perimetry reliability fixation loss false positive false negative md psd vfi ght glaucoma hemifield test pattern deviation total deviation arcuate scotoma artifact' },
             { id:'plaquenil', icon:'ph-pill', title:'Plaquenil Toxicity', desc:'HCQ toxicity risk calculator (AAO guidelines)',
               keywords:'plaquenil hydroxychloroquine hcq toxicity retinopathy dosing aao screening tamoxifen renal' },
             { id:'myopia', icon:'ph-trend-down', title:'Myopia Progression', desc:'Pediatric progression projection &amp; treatment comparison',
@@ -9729,9 +9732,6 @@
               keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' },
             { id:'bruckner', icon:'ph-flashlight', title:'Bruckner Screening', desc:'Red reflex comparison & interpretation guide',
               keywords:'bruckner red reflex screening myopia hyperopia anisometropia astigmatism media opacity strabismus leukocoria pediatric retinoscopy' },
-            { id:'hvf', icon:'ph-chart-scatter', title:'HVF Interpreter',
-              desc:'Systematic Humphrey visual field interpretation guide',
-              keywords:'humphrey visual field hvf perimetry reliability fixation loss false positive false negative md psd vfi ght glaucoma hemifield test pattern deviation total deviation arcuate scotoma artifact' },
             { id:'slaboff', icon:'ph-arrows-vertical', title:'Slab-Off Calculator',
               desc:'Vertical imbalance & slab-off prism for anisometropia',
               keywords:'slab off slab-off vertical imbalance prism anisometropia bifocal progressive prentice differential prismatic effect bicentric grind reading near' }
@@ -15076,6 +15076,84 @@
                 + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="hvfExpandAll()">Expand All</button><button onclick="hvfCollapseAll()">Collapse All</button></div>'
                 + '</div>';
 
+            // HVF Reference Printout
+            html += '<div style="margin-bottom:24px">'
+                + '<style>'
+                + '.hvf-wrap { background:#fff;border:1px solid #ccc;padding:10px;font-size:10px;color:#111;line-height:1.5;font-family:\'IBM Plex Mono\',monospace; }'
+                + '.hvf-title { font-size:13px;font-weight:bold;margin-bottom:2px;color:#000; }'
+                + '.hvf-subtitle { font-size:10px;color:#222;font-weight:bold;margin-bottom:4px; }'
+                + '.hvf-label { color:#444; }'
+                + '.hvf-section-title { font-size:9px;font-weight:bold;text-transform:uppercase;letter-spacing:0.05em;color:#222;margin:6px 0 3px;border-bottom:1.5px solid #aaa; }'
+                + '.hvf-abnormal { color:#c00;font-weight:bold; }'
+                + '.hvf-ght { border:1px solid #999;padding:3px 6px;font-size:9px;margin-top:4px;display:inline-block; }'
+                + '.hvf-tip { position:relative;cursor:default;border-bottom:1px dotted #999; }'
+                + '.hvf-tip .hvf-tiptext { visibility:hidden;opacity:0;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--surface-solid,#fff);color:var(--ink,#1a2332);font-family:var(--sans,system-ui);font-size:11px;font-weight:400;line-height:1.5;white-space:normal;width:220px;padding:8px 10px;border-radius:var(--radius,8px);border:1.5px solid var(--accent,#0d9488);box-shadow:var(--shadow-md,0 2px 8px rgba(0,0,0,0.12));z-index:100;pointer-events:none;transition:opacity 0.15s; }'
+                + '.hvf-tip:hover .hvf-tiptext,.hvf-tip:focus .hvf-tiptext,.hvf-tip.hvf-tip-active .hvf-tiptext { visibility:visible;opacity:1; }'
+                + '.hvf-tip .hvf-tiptext::after { content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--accent,#0d9488); }'
+                + '.hvf-stitle { cursor:default; }'
+                + '.hvf-stitle .hvf-tiptext { left:0;transform:none;text-transform:none;letter-spacing:normal; }'
+                + '.hvf-stitle .hvf-tiptext::after { left:16px;transform:none; }'
+                + '</style>'
+                + '<div style="font-size:13px;font-weight:600;color:var(--ink,#1a2332);margin-bottom:6px;"><span style="color:var(--accent,#0d9488);margin-right:4px;"><i class="ph-duotone ph-cursor-click"></i></span>Visual Field Breakdown <span style="font-weight:400;color:var(--ink-muted,#64748b);font-size:12px;">\u2014 Hover over section to learn more</span></div>'
+                + '<div class="hvf-wrap">'
+                + '<div style="border-bottom:1.5px solid #777;margin-bottom:6px;padding-bottom:5px">'
+                + '<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+                + '<div>'
+                + '<div class="hvf-title">Single Field Analysis</div>'
+                + '<div class="hvf-subtitle">Central 24-2 Threshold Test</div>'
+                + '<div style="font-size:9px;color:#333">Eye: Left &nbsp;&nbsp; Fovea: OFF</div>'
+                + '</div>'
+                + '<div style="text-align:right;font-size:9px;color:#222;font-weight:500">'
+                + '<div>Date: 03-25-2026 &nbsp; Time: 09:14</div>'
+                + '<div>Age: 67 &nbsp;&nbsp; DOB: 01/14/1959</div>'
+                + '</div>'
+                + '</div>'
+                + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:5px;font-size:9px;color:#111">'
+                + '<div><span class="hvf-label">Fixation Monitor: </span>Gaze/Blind Spot</div>'
+                + '<div><span class="hvf-label">Stimulus: </span>III, White</div>'
+                + '<div><span class="hvf-label">Pupil Diameter: </span>4.2 mm</div>'
+                + '<div><span class="hvf-label">Fixation Target: </span>Central</div>'
+                + '<div><span class="hvf-label">Background: </span>31.5 ASB</div>'
+                + '<div><span class="hvf-label">Visual Acuity: </span>20/25</div>'
+                + '<div><span class="hvf-tip"><span class="hvf-label">Fixation Losses: </span>1/20<span class="hvf-tiptext"><strong>Fixation Losses</strong> \u2014 Measures how often the patient looked away from the fixation target.<br><strong style="color:#16a34a">Reliable:</strong> &lt;20%<br><strong style="color:#d97706">Suspect:</strong> 20\u201333%<br><strong style="color:#dc2626">Unreliable:</strong> &gt;33%</span></span></div>'
+                + '<div><span class="hvf-label">Strategy: </span>SITA-Standard</div>'
+                + '<div><span class="hvf-label">RX: </span>\u20131.75 DS DC X</div>'
+                + '<div><span class="hvf-tip"><span class="hvf-label">False POS Errors: </span>2%<span class="hvf-tiptext"><strong>False Positive Errors</strong> \u2014 Patient pressed the button without a stimulus being presented.<br><strong style="color:#16a34a">Reliable:</strong> &lt;15%<br><strong style="color:#d97706">Suspect:</strong> 15\u201333%<br><strong style="color:#dc2626">Unreliable:</strong> &gt;33%</span></span></div>'
+                + '<div><span class="hvf-tip"><span class="hvf-label">False NEG Errors: </span>8%<span class="hvf-tiptext"><strong>False Negative Errors</strong> \u2014 Patient failed to respond to a stimulus brighter than one previously seen.<br><strong style="color:#16a34a">Reliable:</strong> &lt;33%<br><strong style="color:#dc2626">Unreliable:</strong> &gt;33%<br>High FN may reflect true advanced disease rather than inattention.</span></span></div>'
+                + '<div><span class="hvf-label">Test Duration: </span>06:42</div>'
+                + '</div>'
+                + '</div>'
+                + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">'
+                + '<div><div class="hvf-section-title hvf-stitle hvf-tip">Threshold Values (dB)<span class="hvf-tiptext"><strong>Threshold Values</strong> \u2014 Raw retinal sensitivity at each test point in decibels. Higher = more sensitive. Values &lt;10 dB indicate severe focal loss.</span></div><canvas id="hvfThresh" width="170" height="160"></canvas></div>'
+                + '<div><div class="hvf-section-title hvf-stitle hvf-tip">Grayscale<span class="hvf-tiptext"><strong>Grayscale</strong> \u2014 Visual representation of threshold values. Darker areas = lower sensitivity. Useful for quick pattern recognition but can be misleading\u2014always check deviation maps.</span></div><canvas id="hvfGray" width="170" height="160"></canvas></div>'
+                + '<div>'
+                + '<div class="hvf-section-title">VF Indices</div>'
+                + '<div style="font-size:9px;color:#111">'
+                + '<div style="margin-bottom:4px"><span class="hvf-tip" style="border-bottom:none"><div class="hvf-ght hvf-abnormal">GHT: Outside normal limits</div><span class="hvf-tiptext"><strong>Glaucoma Hemifield Test</strong> \u2014 Compares corresponding zones in the superior and inferior hemifields.<br><strong style="color:#16a34a">Within Normal Limits</strong> \u2014 No significant asymmetry<br><strong style="color:#d97706">Borderline</strong> \u2014 Marginal asymmetry, not statistically significant<br><strong style="color:#dc2626">Outside Normal Limits</strong> \u2014 Significant hemifield asymmetry (hallmark of glaucoma)<br><strong style="color:#dc2626">General Reduction of Sensitivity</strong> \u2014 Diffuse loss across entire field<br><strong style="color:#d97706">Abnormally High Sensitivity</strong> \u2014 Trigger-happy patient (check FP rate)</span></span></div>'
+                + '<div style="margin-bottom:3px"><span class="hvf-tip"><span class="hvf-label">VFI: </span>61%<span class="hvf-tiptext"><strong>Visual Field Index</strong> \u2014 Percentage of overall visual field remaining. Weighted toward central points. Used to track progression over time.<br><strong style="color:#16a34a">100%</strong> \u2014 Full field<br><strong style="color:#d97706">50\u201399%</strong> \u2014 Mild to moderate loss<br><strong style="color:#dc2626">&lt;50%</strong> \u2014 Severe loss<br><strong style="color:#dc2626">0%</strong> \u2014 Perimetrically blind</span></span></div>'
+                + '<div style="margin-bottom:3px"><span class="hvf-tip"><span class="hvf-label">MD: </span><span class="hvf-abnormal">\u20139.82 dB P &lt; 0.5%</span><span class="hvf-tiptext"><strong>Mean Deviation</strong> \u2014 Average departure from age-matched norms across all points.<br><strong style="color:#16a34a">Normal:</strong> 0 to \u22122 dB<br><strong style="color:#d97706">Early defect:</strong> \u22122 to \u22126 dB<br><strong style="color:#ea580c">Moderate defect:</strong> \u22126 to \u221212 dB<br><strong style="color:#dc2626">Severe defect:</strong> worse than \u221212 dB</span></span></div>'
+                + '<div style="margin-bottom:3px"><span class="hvf-tip"><span class="hvf-label">PSD: </span><span class="hvf-abnormal">10.44 dB P &lt; 0.5%</span><span class="hvf-tiptext"><strong>Pattern Standard Deviation</strong> \u2014 Measures localized (focal) loss after removing generalized depression.<br><strong style="color:#16a34a">Normal:</strong> &lt;2.5 dB<br><strong style="color:#dc2626">Elevated:</strong> &gt;2.5 dB \u2014 suggests focal defects (glaucoma) rather than diffuse causes (cataract)</span></span></div>'
+                + '</div>'
+                + '<div class="hvf-section-title" style="margin-top:8px">Legend</div>'
+                + '<canvas id="hvfLegend" width="170" height="50"></canvas>'
+                + '</div>'
+                + '</div>'
+                + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">'
+                + '<div><div class="hvf-section-title hvf-stitle hvf-tip">Total Deviation (dB)<span class="hvf-tiptext"><strong>Total Deviation</strong> \u2014 Difference between measured sensitivity and age-matched normal values at each point. Negative values = worse than expected. Reflects both focal and diffuse loss.</span></div><canvas id="hvfTD" width="170" height="160"></canvas></div>'
+                + '<div><div class="hvf-section-title hvf-stitle hvf-tip">Pattern Deviation (dB)<span class="hvf-tiptext"><strong>Pattern Deviation</strong> \u2014 Total Deviation adjusted for generalized depression (e.g. cataract). Isolates focal defects. More specific for detecting glaucomatous loss in the presence of media opacity.</span></div><canvas id="hvfPD" width="170" height="160"></canvas></div>'
+                + '<div><div class="hvf-section-title hvf-stitle hvf-tip">Total Deviation Probability<span class="hvf-tiptext"><strong>Total Deviation Probability</strong> \u2014 Statistical significance of each Total Deviation value compared to age-matched norms. Darker symbols = more statistically significant loss (p &lt; 5%, 2%, 1%, 0.5%).</span></div><canvas id="hvfTDprob" width="170" height="160"></canvas></div>'
+                + '<div><div class="hvf-section-title hvf-stitle hvf-tip">Pattern Deviation Probability<span class="hvf-tiptext"><strong>Pattern Deviation Probability</strong> \u2014 Probability map for Pattern Deviation values. More specific for glaucoma because it removes generalized depression. Clustered significant points suggest true focal defects.</span></div><canvas id="hvfPDprob" width="170" height="160"></canvas></div>'
+                + '</div>'
+                + '<div style="margin-top:10px">'
+                + '<div class="hvf-section-title hvf-stitle hvf-tip">Gaze Tracking Record<span class="hvf-tiptext"><strong>Gaze Tracking Record</strong> \u2014 Real-time record of eye position during the test. Upward deflections = eye movements away from fixation. Frequent large deflections indicate poor fixation and less reliable results.</span></div>'
+                + '<canvas id="hvfGaze" width="640" height="24" style="width:100%;border:1px solid #ccc"></canvas>'
+                + '</div>'
+                + '<div style="font-size:7px;color:#777;margin-top:8px;border-top:1px solid #ccc;padding-top:4px">'
+                + 'Pocket OD \u00b7 Visual Field Reference \u00b7 Data shown is fictional and for educational purposes only.'
+                + '</div>'
+                + '</div>'
+                + '</div>';
+
             // 1. Reliability Indices
             var reliabilityContent = deTable(
                 ['Index', 'Reliable', 'Suspect', 'Unreliable'],
@@ -15181,6 +15259,43 @@
                 + '</div></div></div>';
 
             el.innerHTML = html;
+
+            // Draw HVF canvases
+            (function(){
+              var layout=[{cols:4,xOffset:2},{cols:6,xOffset:1},{cols:8,xOffset:0},{cols:8,xOffset:0},{cols:8,xOffset:0},{cols:8,xOffset:0},{cols:6,xOffset:1},{cols:4,xOffset:2}];
+              function isBS(r,c){return(r===4&&c===1)||(r===4&&c===2);}
+              var thresh=[[6,4,8,27],[0,4,6,8,24,29],[0,2,4,10,27,30,29,28],[4,6,10,22,28,30,28,27],[23,0,0,29,28,27,26,25],[21,25,27,28,27,26,25,23],[19,23,26,28,25,21],[17,21,25,23]];
+              var normz=[[26,27,28,26],[26,27,29,29,27,26],[25,27,28,29,29,28,27,25],[25,28,29,30,30,29,28,25],[25,28,29,30,30,29,28,25],[25,27,28,29,29,28,27,25],[24,26,28,28,26,24],[22,24,26,24]];
+              var td=thresh.map(function(row,r){return row.map(function(v,c){return isBS(r,c)?-999:v-normz[r][c];});});
+              var vTD=td.reduce(function(a,r){return a.concat(r);},[]).filter(function(v){return v>-900;});vTD.sort(function(a,b){return a-b;});
+              var med=vTD[Math.floor(vTD.length*0.85)];
+              var pd=td.map(function(row){return row.map(function(v){return v<=-999?-999:v-med;});});
+              function grayC(db,bs){if(bs)return'#000';if(db<=0)return'#000';if(db<5)return'#0a0a0a';if(db<10)return'#1a1a1a';if(db<15)return'#333';if(db<20)return'#555';if(db<22)return'#777';if(db<25)return'#999';if(db<28)return'#bbb';if(db<30)return'#ddd';return'#efefef';}
+              function sym(dev,ctx,x,y,cW,cH,fb){if(fb){var s=Math.min(cW,cH)*0.55;ctx.fillStyle='#000';ctx.fillRect(x+(cW-s)/2,y+(cH-s)/2,s,s);return;}if(dev>-900&&dev>=-3)return;if(dev<=-999)return;var f=dev<-10?'#000':dev<-7?'#444':dev<-5?'#888':'#bbb';var s=Math.min(cW,cH)*0.55;ctx.fillStyle=f;ctx.fillRect(x+(cW-s)/2,y+(cH-s)/2,s,s);}
+              function xhair(ctx,W,H){ctx.strokeStyle='#222';ctx.lineWidth=1.5;ctx.setLineDash([3,2]);ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();ctx.setLineDash([]);}
+              function drawGrid(id,data,fn){var cv=document.getElementById(id);if(!cv)return;var ctx=cv.getContext('2d'),W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);var cH=H/layout.length,cW=W/8;layout.forEach(function(row,r){var xO=row.xOffset*cW;for(var c=0;c<row.cols;c++){fn(ctx,data,r,c,xO+c*cW,r*cH,cW,cH,isBS(r,c));}});xhair(ctx,W,H);}
+              drawGrid('hvfThresh',thresh,function(ctx,data,r,c,x,y,cW,cH,bs){ctx.fillStyle='#fff';ctx.fillRect(x,y,cW,cH);if(bs){ctx.fillStyle='#ddd';ctx.fillRect(x+1,y+1,cW-2,cH-2);ctx.fillStyle='#777';ctx.font=Math.min(cW,cH)*0.4+'px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('BS',x+cW/2,y+cH/2);return;}var val=data[r][c];ctx.fillStyle=val<10?'#c00':val<18?'#e60':'#111';ctx.font='bold '+Math.min(cW,cH)*0.48+'px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(val===0?'<1':val,x+cW/2,y+cH/2);});
+              drawGrid('hvfGray',thresh,function(ctx,data,r,c,x,y,cW,cH,bs){ctx.fillStyle=grayC(data[r][c],bs);ctx.fillRect(x+0.5,y+0.5,cW-1,cH-1);});
+              drawGrid('hvfTD',td,function(ctx,data,r,c,x,y,cW,cH,bs){ctx.fillStyle='#fff';ctx.fillRect(x,y,cW,cH);if(bs)return;var val=data[r][c];ctx.fillStyle=val<-8?'#c00':val<-3?'#e60':'#111';ctx.font=Math.min(cW,cH)*0.45+'px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText((val>=0?'+':'')+val,x+cW/2,y+cH/2);});
+              drawGrid('hvfPD',pd,function(ctx,data,r,c,x,y,cW,cH,bs){ctx.fillStyle='#fff';ctx.fillRect(x,y,cW,cH);if(bs)return;var val=Math.round(data[r][c]);ctx.fillStyle=val<-8?'#c00':val<-3?'#e60':'#111';ctx.font=Math.min(cW,cH)*0.45+'px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText((val>=0?'+':'')+val,x+cW/2,y+cH/2);});
+              drawGrid('hvfTDprob',td,function(ctx,data,r,c,x,y,cW,cH,bs){ctx.fillStyle='#fff';ctx.fillRect(x,y,cW,cH);sym(data[r][c],ctx,x,y,cW,cH,bs);});
+              drawGrid('hvfPDprob',pd,function(ctx,data,r,c,x,y,cW,cH,bs){ctx.fillStyle='#fff';ctx.fillRect(x,y,cW,cH);sym(Math.round(data[r][c]),ctx,x,y,cW,cH,bs);});
+              var lc=document.getElementById('hvfLegend');if(lc){var lx=lc.getContext('2d');[{fill:'#bbb',label:'p < 5%'},{fill:'#888',label:'p < 2%'},{fill:'#444',label:'p < 1%'},{fill:'#000',label:'p < 0.5%'}].forEach(function(s,i){var x=2,y=4+i*11;lx.fillStyle=s.fill;lx.fillRect(x,y,8,8);lx.fillStyle='#111';lx.font='8px monospace';lx.textBaseline='middle';lx.fillText(s.label,x+12,y+4);});}
+              var gc=document.getElementById('hvfGaze');if(gc){var gx=gc.getContext('2d'),GW=gc.width,GH=gc.height;gx.fillStyle='#fff';gx.fillRect(0,0,GW,GH);var mid=GH/2;gx.strokeStyle='#111';gx.lineWidth=0.7;gx.beginPath();gx.moveTo(0,mid);gx.lineTo(GW,mid);gx.stroke();var seed=42;function sr(){seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/0xffffffff;}for(var i=0;i<38;i++){var sx=20+sr()*(GW-40),h=2+sr()*7;gx.beginPath();gx.moveTo(sx,mid);gx.lineTo(sx,mid-h);gx.stroke();}}
+            })();
+
+            // Mobile tap support for tooltips
+            el.querySelectorAll('.hvf-tip').forEach(function(tip) {
+                tip.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var wasActive = tip.classList.contains('hvf-tip-active');
+                    el.querySelectorAll('.hvf-tip-active').forEach(function(t) { t.classList.remove('hvf-tip-active'); });
+                    if (!wasActive) tip.classList.add('hvf-tip-active');
+                });
+            });
+            document.addEventListener('click', function() {
+                el.querySelectorAll('.hvf-tip-active').forEach(function(t) { t.classList.remove('hvf-tip-active'); });
+            });
         }
 
         // ===== SLAB-OFF CALCULATOR TOOL =====
