@@ -1,6 +1,16 @@
+<!-- © 2026 Pocket OD. All rights reserved. Unauthorized copying, modification, or distribution of this code is strictly prohibited. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YNC6RWJ80V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YNC6RWJ80V');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
@@ -5665,7 +5675,7 @@
                 </div>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
-                <button type="button" class="copy-od-btn" id="copyOdToOs">&#x2193; Copy OD to OS</button>
+                <button type="button" class="copy-od-btn" onclick="copyOdToOs()">&#x2193; Copy OD to OS</button>
                 ${buildEyeForm("os", state.os, "OS — Left Eye")}
 
                 <div class="form-grid" style="margin-top:14px">
@@ -5739,12 +5749,6 @@
                 if (!state.od.addAbs || state.od.addAbs === "0.00") {
                     state.od.addAbs = val;
                 }
-            });
-
-            const copyBtn = document.getElementById("copyOdToOs");
-            if (copyBtn) copyBtn.addEventListener("click", () => {
-                Object.assign(state.os, JSON.parse(JSON.stringify(state.od)));
-                rerender();
             });
 
             const domLeft = document.getElementById("domLeft");
@@ -6509,7 +6513,7 @@
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:-18px;margin-bottom:16px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 const odLensName = odDropLens ? odDropLens.name : lens.name;
                 const odTitle = (isMixedPair || odDropLens)
                     ? `OD (Right Eye) \u2014 <span style="color:${brandColor};font-weight:600">${odLensName}</span>`
@@ -6529,7 +6533,7 @@
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:-18px;margin-bottom:16px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 eyeSectionsHtml += `<div class="order-section-title">OD (Right Eye) \u2014 <span style="color:${compColor};font-weight:600">${odCompLens.name}</span></div>
                     <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
@@ -6543,7 +6547,7 @@
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:-18px;margin-bottom:16px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 const osLensName = osDropLens ? osDropLens.name : lens.name;
                 const osTitle = (isMixedPair || osDropLens)
                     ? `OS (Left Eye) \u2014 <span style="color:${brandColor};font-weight:600">${osLensName}</span>`
@@ -6563,7 +6567,7 @@
                     <div class="order-param-value">${p.value}</div>
                     ${p.note ? `<div class="order-param-note">${p.note}</div>` : ""}
                 </div>`).join("");
-                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:6px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
+                const summaryHtml = summary.length > 0 ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:-18px;margin-bottom:16px;line-height:1.5">${summary.join(' \u2013 ')}</div>` : '';
                 eyeSectionsHtml += `<div class="order-section-title">OS (Left Eye) \u2014 <span style="color:${compColor};font-weight:600">${osCompLens.name}</span></div>
                     <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
@@ -9275,6 +9279,11 @@
             }
         }
 
+        function copyOdToOs() {
+            Object.assign(state.os, JSON.parse(JSON.stringify(state.od)));
+            rerender();
+        }
+
         function resetAll() {
             state = {
                 step: 0,
@@ -11413,6 +11422,13 @@
                 html += '</div>';
             }
 
+            html += '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + 'Scheiman M, Wick B. <em>Clinical Management of Binocular Vision.</em> 5th ed. Wolters Kluwer; 2020.<br>'
+                + 'Morgan MW. The clinical aspects of accommodation and convergence. <em>Am J Optom Arch Am Acad Optom.</em> 1944;21(8):301\u2013313.'
+                + '</div></div>';
+
             el.innerHTML = html;
         }
 
@@ -11486,7 +11502,13 @@
                 + '<div class="tools-card-title"><i class="ph-duotone ph-path"></i> Park\u2019s 3-Step Test</div>'
                 + '<div class="tools-card-desc">Identify the paretic cyclovertical muscle in 3 steps. Used for isolated vertical deviations (cranial nerve palsies).</div>'
                 + '<div id="bvParksContent"></div>'
-                + '</div>';
+                + '</div>'
+                + '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + 'Parks MM. Isolated cyclovertical muscle palsy. <em>AMA Arch Ophthalmol.</em> 1958;60(6):1027\u20131035.<br>'
+                + 'von Noorden GK, Campos EC. <em>Binocular Vision and Ocular Motility.</em> 6th ed. Mosby; 2002.'
+                + '</div></div>';
             bvParks = { step1: null, step2: null, step3: null };
             renderBvParks();
         }
@@ -12479,13 +12501,6 @@
             html += buildDrSection('dme', 'ph-drop-half', 'Diabetic Macular Edema', 'DME classification (independent of DR grade)', dmeContent);
 
             // Clinical Pearl
-            html += '<div class="tools-card">'
-                + '<div class="de-note" style="font-size:13px;line-height:1.7;">'
-                + '<strong style="color:var(--accent);"><i class="ph-duotone ph-lightbulb" style="margin-right:4px;"></i>Clinical Pearl:</strong> '
-                + 'Grade DR severity using the 4-2-1 rule for severe NPDR. Always assess for DME independently \u2014 it can occur at any DR stage and is the most common cause of vision loss in diabetic eye disease. '
-                + 'Refer severe NPDR and PDR promptly for retinal evaluation.'
-                + '</div></div>';
-
             // Citation
             html += '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
                 + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
@@ -13212,6 +13227,14 @@
             }
 
             html += '</div>'; // tools-card
+
+            html += '<div class="ref-toggle-wrap" style="margin:0 0 12px 0;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + 'Walsh TJ. <em>Visual Fields: Examination and Interpretation.</em> 3rd ed. Oxford University Press; 2010.<br>'
+                + 'Liu GT, Volpe NJ, Galetta SL. <em>Neuro-Ophthalmology: Diagnosis and Management.</em> 3rd ed. Elsevier; 2019.'
+                + '</div></div>';
+
             el.innerHTML = html;
 
             // Initialize debug drag handlers after DOM update
