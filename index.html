@@ -4211,7 +4211,9 @@
             { name:"Precision7", brand:"Alcon", type:"sphere", modality:"weekly", dk:149, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"12, 27", price:"$129 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)", sph50start:6 },
             { name:"Precision7 for Astigmatism", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"12, 27", price:"$145 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6 },
             { name:"Total30", brand:"Alcon", type:"sphere", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$89 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)", sph50start:6 },
-            { name:"Total30 for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$113", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6 },
+            { name:"Total30 for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$113", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, axisRestrictions: [
+              { cyls: [-2.75], axes: [10,20,30,70,80,90,100,110,150,160,170,180] }
+            ] },
             { name:"Total30 Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$131", wear:"DW", material:"Lehfilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
@@ -4287,7 +4289,11 @@
 
             // BAUSCH + LOMB
             { name:"Biotrue ONEday", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$88 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", privateLabels:[{name:"eureka!",retailer:"Walmart"}], sph50start:6 },
-            { name:"Biotrue ONEday for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:42, bc:"8.4", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$102 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"eureka! for Astigmatism",retailer:"Walmart"}], sph50start:6 },
+            { name:"Biotrue ONEday for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:42, bc:"8.4", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$102 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"eureka! for Astigmatism",retailer:"Walmart"}], sph50start:6, axisRestrictions: [
+              { cyls: [-2.25], sphRange: [-6, 4], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25], sphRange: [-9, -6.25], axes: [10,20,90,160,170,180] },
+              { cyls: [-2.75], axes: [10,20,90,160,170,180] }
+            ] },
             { name:"Biotrue ONEday for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"30, 90", price:"$122 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4296,7 +4302,11 @@
                 troubleshootSteps: { distance: [{ action:"blDistStep1", dropTo:"Biotrue ONEday" }, { action:"sphereAdjSelect", eye:"dominant", options:[-0.25, -0.50, -0.75, -1.00], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding -0.25 at a time to the dominant eye." }], near: [{ action:"blNearStep1" }, { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding +0.25 at a time to the non-dominant eye." }] }
             }, sph50start:6, hasPlano:true },
             { name:"INFUSE One-Day", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$121 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", sph50start:6 },
-            { name:"INFUSE One-Day for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:104, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"90", price:"$169 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6 },
+            { name:"INFUSE One-Day for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:104, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"90", price:"$169 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, axisRestrictions: [
+              { cyls: [-2.25, -2.75], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25, -2.75], sphRange: [-9, -6.25], axes: [] },
+              { cyls: [-2.25, -2.75], sphRange: [0.25, 6], axes: [] }
+            ] },
             { name:"INFUSE Multifocal", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"10, 90", price:"$174 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4442,8 +4452,14 @@
             // J&J ACUVUE
             { name:"Acuvue Oasys 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$127 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", sph50start:6 },
             { name:"Acuvue Oasys Max 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$160 (90pk)", wear:"DW", material:"Senofilcon A HVO (SiHy)", sph50start:6 },
-            { name:"Acuvue Oasys 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$162 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
-            { name:"Acuvue Oasys Max 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$170 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
+            { name:"Acuvue Oasys 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$162 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, axisRestrictions: [
+              { cyls: [-2.25], axes: [10,20,70,80,90,100,110,160,170,180] }
+            ] },
+            { name:"Acuvue Oasys Max 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$170 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, axisRestrictions: [
+              { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
+              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] }
+            ] },
             { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$186 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4524,7 +4540,11 @@
             { name:"Acuvue Oasys with Transitions", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:121, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 25", price:"$66 (6pk)", wear:"EW", material:"Senofilcon A (SiHy)", note:"Light-adaptive photochromic", discontinuing:"Discontinued June 2024", sph50start:6 },
             { name:"Acuvue 2", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:33, bc:"8.3 / 8.7", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$67 (6pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", note:"Legacy hydrogel lens", discontinuing:"Discontinued April 2024", sph50start:6 },
             { name:"1-Day Acuvue Moist", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:33, bc:"8.5 / 9.0", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$119 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", sph50start:6 },
-            { name:"1-Day Acuvue Moist for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:33, bc:"8.5", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$140 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
+            { name:"1-Day Acuvue Moist for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:33, bc:"8.5", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$140 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, axisRestrictions: [
+              { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
+              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] }
+            ] },
             { name:"1-Day Acuvue Moist Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:33, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$159 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4551,7 +4571,9 @@
                 }
             }, sph50start:6 },
             { name:"Acuvue Vita", brand:"J&J Acuvue", type:"sphere", modality:"monthly", dk:147, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$94", wear:"DW", material:"Senofilcon C (SiHy)", sph50start:6 },
-            { name:"Acuvue Vita for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"monthly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$93", wear:"DW", material:"Senofilcon C (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
+            { name:"Acuvue Vita for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"monthly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$93", wear:"DW", material:"Senofilcon C (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, axisRestrictions: [
+              { cyls: [-2.25, -2.75], axes: [10,20,70,80,90,100,110,160,170,180] }
+            ] },
         ];
 
         // MEDICATIONS DATABASE
@@ -5246,6 +5268,12 @@
                 // Allow cyl up to tolerance beyond max (snap down and compensate sphere)
                 const cylTol = lens.cylTolerance !== undefined ? lens.cylTolerance : 0.75;
                 if (absCyl < absMin || absCyl > absMax + cylTol) return false;
+            }
+
+            if (lens.axisRestrictions) {
+                const snappedCyl = snapCyl(vCyl, lens);
+                const available = getAvailableAxes(lens, snappedCyl, clSph);
+                if (available !== null && available.length === 0) return false;
             }
 
             return true;
@@ -6171,16 +6199,48 @@
             };
         }
 
-        function snapAxis(patientAxis, lens) {
+        function axisDist(a, b) {
+            const d = Math.abs(a - b) % 180;
+            return Math.min(d, 180 - d);
+        }
+
+        function getAvailableAxes(lens, clCyl, clSph) {
+            if (!lens.axisRestrictions) return null;
+            const absCyl = Math.abs(clCyl);
+            for (const rule of lens.axisRestrictions) {
+                if (!rule.cyls.includes(-absCyl)) continue;
+                if (rule.sphRange) {
+                    if (clSph < rule.sphRange[0] || clSph > rule.sphRange[1]) continue;
+                }
+                return rule.axes;
+            }
+            return null;
+        }
+
+        function snapAxis(patientAxis, lens, clCyl, clSph) {
             if (!lens.axes) return parseInt(patientAxis) || 180;
 
-            const stepMatch = lens.axes.match(/(\d+)\u00B0\s*steps/i);
+            const stepMatch = lens.axes.match(/(\d+)\u00B0\s*(?:steps|full)/i);
             const step = stepMatch ? parseInt(stepMatch[1]) : 10;
             const ax = parseInt(patientAxis) || 180;
 
-            const snapped = Math.round(ax / step) * step;
-            if (snapped === 0) return 180;
-            if (snapped > 180) return 180;
+            let snapped = Math.round(ax / step) * step;
+            if (snapped === 0) snapped = 180;
+            if (snapped > 180) snapped = 180;
+
+            if (clCyl !== undefined && clSph !== undefined) {
+                const available = getAvailableAxes(lens, clCyl, clSph);
+                if (available && available.length > 0) {
+                    if (!available.includes(snapped)) {
+                        let best = available[0], bestDist = axisDist(snapped, available[0]);
+                        for (let i = 1; i < available.length; i++) {
+                            const d = axisDist(snapped, available[i]);
+                            if (d < bestDist) { bestDist = d; best = available[i]; }
+                        }
+                        snapped = best;
+                    }
+                }
+            }
             return snapped;
         }
 
@@ -6344,10 +6404,14 @@
                     });
 
                     const rxAxis = eye.cylSign === '+' ? eye.transposedAxis : eye.axis;
-                    const clAxis = snapAxis(rxAxis, l);
+                    const clAxis = snapAxis(rxAxis, l, clCyl, finalSph);
                     const axisChanged = clAxis !== (parseInt(rxAxis) || 180);
                     if (axisChanged) {
                         summary.push(`Axis: Snapped from ${rxAxis}\u00B0 to ${clAxis}\u00B0`);
+                    }
+                    const available = getAvailableAxes(l, clCyl, finalSph);
+                    if (available && available.length > 0 && available.length < 18) {
+                        summary.push(`Axis: Limited to ${available.length} positions at CYL ${clCyl.toFixed(2)}`);
                     }
 
                     params.push({
@@ -16400,6 +16464,17 @@
                 ...(lens.therapeutic ? [{ label: "FDA Approved", value: `<span style="color:#db2777;font-weight:600">Therapeutic Use</span>` }] : []),
             ];
 
+            let axisRestrictHtml = "";
+            if (lens.axisRestrictions) {
+                const rows = lens.axisRestrictions.map(r => {
+                    const cylStr = r.cyls.map(c => c.toFixed(2)).join(", ");
+                    const sphStr = r.sphRange ? ` <span style="opacity:0.7">(SPH ${r.sphRange[0] > 0 ? "+" : ""}${r.sphRange[0].toFixed(2)} to ${r.sphRange[1] > 0 ? "+" : ""}${r.sphRange[1].toFixed(2)})</span>` : "";
+                    const axStr = r.axes.length === 0 ? '<span style="color:#dc2626;font-weight:600">Not available</span>' : r.axes.map(a => a + "\u00B0").join(", ");
+                    return `<tr><td style="padding:4px 8px;white-space:nowrap;font-weight:600;font-family:var(--mono);font-size:11.5px">${cylStr}${sphStr}</td><td style="padding:4px 8px;font-family:var(--mono);font-size:11.5px">${axStr}</td></tr>`;
+                });
+                axisRestrictHtml = `<div class="order-section-title">Axis Restrictions</div><div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:12px"><table style="width:100%;border-collapse:collapse"><thead><tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:4px 8px;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-muted)">CYL</th><th style="text-align:left;padding:4px 8px;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-muted)">Available Axes</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+            }
+
             let notes = [];
             if (lens.note) notes.push(lens.note);
             if (bcs.length > 1) notes.push(`This lens comes in ${bcs.length} base curves.`);
@@ -16426,6 +16501,7 @@
                 ${lens.infoBanner ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-info" style="margin-right:4px;"></i>${lens.infoBanner}</div>` : ''}
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${specsHtml}</div>
+                ${axisRestrictHtml}
                 <div class="order-section-title">Lens Details</div>
                 <div class="order-lens-info">${infoHtml}</div>
                 ${notesHtml}
