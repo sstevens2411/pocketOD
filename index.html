@@ -4576,6 +4576,21 @@
             ] },
         ];
 
+        const WATER_CONTENT = {
+            "Lotrafilcon B (SiHy)": 33, "Lotrafilcon A (SiHy)": 24,
+            "Delefilcon A (SiHy)": 33, "Verofilcon A (SiHy)": 51,
+            "Serafilcon A (SiHy)": 55, "Lehfilcon A (SiHy)": 55,
+            "Nelfilcon A (Hydrogel)": 69, "Nesofilcon A (HyperGel)": 78,
+            "Kalifilcon A (SiHy)": 55, "Samfilcon A (SiHy)": 46,
+            "Balafilcon A (SiHy)": 36, "Comfilcon A (SiHy)": 48,
+            "Omafilcon B": 62, "Omafilcon B (Hydrogel)": 62,
+            "Omafilcon A": 60, "Omafilcon A (Hydrogel)": 60,
+            "Stenfilcon A (SiHy)": 54, "Fanfilcon A (SiHy)": 55,
+            "Somofilcon A (SiHy)": 56, "Senofilcon A (SiHy)": 38,
+            "Senofilcon A HVO (SiHy)": 38, "Etafilcon A (Hydrogel)": 58,
+            "Senofilcon C (SiHy)": 41
+        };
+
         // MEDICATIONS DATABASE
         const MEDS = [
             {id:"med_001",brand_name:"Restasis",generic_name:"Cyclosporine 0.05%",generic_available:true,drug_class:"Calcineurin inhibitor / Immunomodulator",condition:"dry_eye",typical_dosing:"1 drop in each eye twice daily (every 12 hours)",bottle_size:"0.4 mL single-use vials (30 or 60 count)",preservative_free:true,avg_brand_price:600,avg_generic_price:150,notes:"Takes 3-6 months for full effect. Sting/burn on instillation is common. Shake well before use.",price_size:"30-count box",route:"topical"},
@@ -6731,7 +6746,8 @@
             const infoItems = [
                 { label: "Modality", value: lens.modality },
                 { label: "Dk/t", value: lens.dk },
-                { label: "Material", value: lens.material || "—" },
+                { label: "Water", value: WATER_CONTENT[lens.material] ? WATER_CONTENT[lens.material] + "%" : "\u2014" },
+                { label: "Material", value: lens.material || "\u2014" },
                 { label: "Wear", value: lens.wear },
                 { label: "Pack Sizes", value: lens.qty },
                 { label: "Price/Pack", value: `<span style="color:#059669">~${lens.price}</span>` },
@@ -16495,6 +16511,7 @@
             const infoItems = [
                 { label: "Modality", value: lens.modality },
                 { label: "Dk/t", value: lens.dk },
+                { label: "Water", value: WATER_CONTENT[lens.material] ? WATER_CONTENT[lens.material] + "%" : "\u2014" },
                 { label: "Material", value: lens.material || "\u2014" },
                 { label: "Wear", value: lens.wear },
                 { label: "Pack Sizes", value: lens.qty },
