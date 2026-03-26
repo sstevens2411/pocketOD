@@ -6079,6 +6079,16 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        let _lastRxText = '';
+
+        function copyRxToClipboard(btn) {
+            navigator.clipboard.writeText(_lastRxText).then(() => {
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="ph-duotone ph-check"></i> Copied!';
+                setTimeout(() => { btn.innerHTML = orig; }, 1500);
+            });
+        }
+
         function deselectLens() {
             state.selectedLens = null;
             state.troubleshoot = null;
@@ -6546,6 +6556,7 @@
 
             let eyeSectionsHtml = '';
             const notes = [];
+            const rxLines = [];
 
             // Track companion lens used (if any) for specs section
             let companionLensUsed = null;
@@ -6578,6 +6589,17 @@
                 }
             }
 
+            function buildRxLine(eyeLabel, lensUsed, params, bc, diam) {
+                const sph = (params.find(p => p.label === "Sphere (SPH)") || {}).value || "";
+                const cyl = (params.find(p => p.label === "Cylinder (CYL)") || {}).value;
+                const axis = (params.find(p => p.label === "Axis") || {}).value;
+                const add = (params.find(p => p.label === "Add") || {}).value;
+                let power = sph;
+                if (cyl) power += ` / ${cyl} x ${(axis || "").replace(/\u00B0/g, "")}`;
+                if (add) power += ` Add ${add}`;
+                return `${eyeLabel}: ${lensUsed.name}: ${bc} / ${diam} / ${power}`;
+            }
+
             if (odOk) {
                 const odDropLens = (state.tsAdjustment && state.tsAdjustment.overrides["OD"] && state.tsAdjustment.overrides["OD"].lensDropTo) ? LENSES.find(l => l.name === state.tsAdjustment.overrides["OD"].lensDropTo) : null;
                 const { params, vertexApplied, summary } = buildEyeParams(state.od, odDominant, "OD", odDropLens || undefined);
@@ -6594,6 +6616,9 @@
                 eyeSectionsHtml += `<div class="order-section-title">${odTitle}</div>
                     <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
+                const odL = odDropLens || lens;
+                const odBc = odL.bc.split("/")[0].trim();
+                rxLines.push(buildRxLine("OD", odL, params, odBc, odL.diam));
             }
 
             if (odCompLens) {
@@ -6610,6 +6635,8 @@
                 eyeSectionsHtml += `<div class="order-section-title">OD (Right Eye) \u2014 <span style="color:${compColor};font-weight:600">${odCompLens.name}</span></div>
                     <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied) notes.push("Vertex conversion applied at 12mm vertex distance.");
+                const odBc = odCompLens.bc.split("/")[0].trim();
+                rxLines.push(buildRxLine("OD", odCompLens, params, odBc, odCompLens.diam));
             }
 
             if (osOk) {
@@ -6628,6 +6655,9 @@
                 eyeSectionsHtml += `<div class="order-section-title">${osTitle}</div>
                     <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
+                const osL = osDropLens || lens;
+                const osBc = osL.bc.split("/")[0].trim();
+                rxLines.push(buildRxLine("OS", osL, params, osBc, osL.diam));
             }
 
             if (osCompLens) {
@@ -6644,6 +6674,8 @@
                 eyeSectionsHtml += `<div class="order-section-title">OS (Left Eye) \u2014 <span style="color:${compColor};font-weight:600">${osCompLens.name}</span></div>
                     <div class="order-grid">${html}</div>${summaryHtml}`;
                 if (vertexApplied && !notes.includes("Vertex conversion applied at 12mm vertex distance.")) notes.push("Vertex conversion applied at 12mm vertex distance.");
+                const osBc = osCompLens.bc.split("/")[0].trim();
+                rxLines.push(buildRxLine("OS", osCompLens, params, osBc, osCompLens.diam));
             }
 
             // Shared lens specs
@@ -6718,6 +6750,8 @@
             const nonAdaptBanner = isNonAdapt ? `<div class="order-note-box" style="background:var(--success-bg);border-color:var(--success-border);color:var(--success)"><strong>Non-Adapt Conversion:</strong> Cylinder folded into sphere via spherical equivalent</div>` : '';
             const fullCylBanner = '';
 
+            _lastRxText = rxLines.join('\n');
+
             return `<div class="order-detail">
                 ${isFullCyl
                     ? `<button class="order-back-btn" onclick="backToFullCyl()"><i class="ph-duotone ph-arrow-left"></i> Back to Troubleshooting</button>`
@@ -6751,7 +6785,10 @@
 
                 ${eyeSectionsHtml}
 
-                ${lens.type === 'sphere' && !lens.bc.includes('/') ? '' : `<button class="troubleshoot-btn" onclick="openTroubleshoot()"><i class="ph-duotone ph-wrench"></i> ${isAdjusted ? 'Continue Troubleshooting' : 'Troubleshoot Vision'}</button>`}
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px;margin-bottom:4px">
+                ${lens.type === 'sphere' && !lens.bc.includes('/') ? '<div></div>' : `<button class="troubleshoot-btn" style="margin:0" onclick="openTroubleshoot()"><i class="ph-duotone ph-wrench"></i> ${isAdjusted ? 'Continue Troubleshooting' : 'Troubleshoot Vision'}</button>`}
+                ${rxLines.length ? `<button class="troubleshoot-btn" style="margin:0;color:#7c3aed;border-color:#7c3aed" onclick="copyRxToClipboard(this)"><i class="ph-duotone ph-clipboard-text"></i> Copy Rx</button>` : ''}
+                </div>
 
                 <div class="order-section-title">Lens Specifications</div>
                 <div class="order-grid">${sharedHtml}</div>
