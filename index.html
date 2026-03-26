@@ -6084,8 +6084,10 @@
         function copyRxToClipboard(btn) {
             navigator.clipboard.writeText(_lastRxText).then(() => {
                 const orig = btn.innerHTML;
+                const origStyle = btn.getAttribute('style');
                 btn.innerHTML = '<i class="ph-duotone ph-check"></i> Copied!';
-                setTimeout(() => { btn.innerHTML = orig; }, 1500);
+                btn.setAttribute('style', origStyle.replace(/color:#7c3aed/, 'color:#fff;background:#7c3aed'));
+                setTimeout(() => { btn.innerHTML = orig; btn.setAttribute('style', origStyle); }, 1500);
             });
         }
 
@@ -6595,7 +6597,7 @@
                 const axis = (params.find(p => p.label === "Axis") || {}).value;
                 const add = (params.find(p => p.label === "Add") || {}).value;
                 let power = sph;
-                if (cyl) power += ` / ${cyl} x ${(axis || "").replace(/\u00B0/g, "")}`;
+                if (cyl) power += ` ${cyl} x ${(axis || "").replace(/\u00B0/g, "")}`;
                 if (add) power += ` Add ${add}`;
                 return `${eyeLabel}: ${lensUsed.name}: ${bc} / ${diam} / ${power}`;
             }
