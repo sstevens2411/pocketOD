@@ -4460,7 +4460,7 @@
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
               { cyls: [-2.25], sphRange: [0.25, 4], axes: [] }
             ] },
-            { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$186 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", fittingGuide: {
+            { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$186 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", cylAbsorb:0.75, fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
@@ -5266,10 +5266,14 @@
                 clSph = snapTo025(clSph + cyl / 2);
             }
 
-            if (needed === "sphere" && lens.type !== "sphere") return false;
-            if (needed === "toric" && lens.type !== "toric") return false;
-            if (needed === "multifocal" && lens.type !== "multifocal") return false;
-            if (needed === "multifocal-toric" && lens.type !== "multifocal-toric") return false;
+            let typeOk = (needed === lens.type);
+            if (!typeOk && lens.cylAbsorb && needed === "multifocal-toric" && lens.type === "multifocal") {
+                if (Math.abs(vCyl) <= lens.cylAbsorb) {
+                    typeOk = true;
+                    clSph = snapTo025(clSph + vCyl / 2);
+                }
+            }
+            if (!typeOk) return false;
 
             if (clSph < lens.sphMin || clSph > lens.sphMax) return false;
 
@@ -5282,7 +5286,8 @@
                 const absMax = Math.abs(lens.cylMax);
                 // Allow cyl up to tolerance beyond max (snap down and compensate sphere)
                 const cylTol = lens.cylTolerance !== undefined ? lens.cylTolerance : 0.75;
-                if (absCyl < absMin || absCyl > absMax + cylTol) return false;
+                const rawAbsCyl = Math.abs(cyl);
+                if ((absCyl < absMin && rawAbsCyl < absMin) || absCyl > absMax + cylTol) return false;
             }
 
             if (lens.axisRestrictions) {
@@ -9498,10 +9503,25 @@
             if (tab !== 'lenses') resetBrowseState();
 
             if (tab === 'lenses') {
-                if (clSubTab !== 'prescribe') {
-                    if (clSubTab === 'browse') resetBrowseState();
-                    clSubTab = 'prescribe';
-                }
+                state = {
+                    step: 0,
+                    od: newEye(),
+                    os: newEye(),
+                    dominantEye: null,
+                    modality: [],
+                    brands: [...BRANDS],
+                    selectedLens: null,
+                    hasVisitedResults: false,
+                    troubleshoot: null,
+                    tsAdjustment: null,
+                    tsRotation: null,
+                    nonAdaptFrom: null,
+                    sortBy: "dk",
+                    sortDir: "desc",
+                    browseLensFilter: null,
+                };
+                if (clSubTab === 'browse') resetBrowseState();
+                clSubTab = 'prescribe';
                 document.getElementById('clSubPrescribe').classList.add('active');
                 document.getElementById('clSubBrowse').classList.remove('active');
                 document.getElementById('clSubVertex') && document.getElementById('clSubVertex').classList.remove('active');
@@ -13018,7 +13038,7 @@
             {
                 num: 'F', label: 'Contralateral Inferior Quadrantanopia',
                 os: { type:'quad-lower-left' }, od: { type:'quad-lower-left' },
-                location: 'Parietal lobe (superior optic radiations)',
+                location: 'Parietal lobe (dorsal optic radiations)',
                 etiology: 'MCA stroke, parietal lobe tumor, trauma',
                 notes: '\u201CPie on the floor\u201D \u2014 contralateral inferior quadrant loss. Superior optic radiations traverse the parietal lobe carrying superior retinal fibers (inferior visual field).'
             },
@@ -15198,7 +15218,7 @@
             // HVF Reference Printout
             html += '<div style="margin-bottom:24px">'
                 + '<style>'
-                + '.hvf-wrap { background:#fff;border:1px solid #ccc;padding:10px;font-size:10px;color:#111;line-height:1.5;font-family:\'IBM Plex Mono\',monospace; }'
+                + '.hvf-wrap { background:#fff;border:1px solid #ccc;padding:10px;font-size:10px;color:#111;line-height:1.5;font-family:\'IBM Plex Mono\',monospace;overflow-x:hidden; }'
                 + '.hvf-title { font-size:13px;font-weight:bold;margin-bottom:2px;color:#000; }'
                 + '.hvf-subtitle { font-size:10px;color:#222;font-weight:bold;margin-bottom:4px; }'
                 + '.hvf-label { color:#444; }'
@@ -15208,12 +15228,21 @@
                 + '.hvf-tip { position:relative;cursor:default;border-bottom:1px dotted #999; }'
                 + '.hvf-tip .hvf-tiptext { visibility:hidden;opacity:0;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--surface-solid,#fff);color:var(--ink,#1a2332);font-family:var(--sans,system-ui);font-size:11px;font-weight:400;line-height:1.5;white-space:normal;width:220px;padding:8px 10px;border-radius:var(--radius,8px);border:1.5px solid var(--accent,#0d9488);box-shadow:var(--shadow-md,0 2px 8px rgba(0,0,0,0.12));z-index:100;pointer-events:none;transition:opacity 0.15s; }'
                 + '.hvf-tip:hover .hvf-tiptext,.hvf-tip:focus .hvf-tiptext,.hvf-tip.hvf-tip-active .hvf-tiptext { visibility:visible;opacity:1; }'
+                + '.hvf-stitle:not(.hvf-tip-active) > .hvf-tiptext { visibility:hidden!important;opacity:0!important; }'
                 + '.hvf-tip .hvf-tiptext::after { content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--accent,#0d9488); }'
                 + '.hvf-stitle { cursor:default; }'
                 + '.hvf-stitle .hvf-tiptext { left:0;transform:none;text-transform:none;letter-spacing:normal; }'
                 + '.hvf-stitle .hvf-tiptext::after { left:16px;transform:none; }'
+                + '.hvf-wrap canvas { max-width:100%;height:auto; }'
+                + '@media(max-width:600px){'
+                + '.hvf-wrap .hvf-grid3{grid-template-columns:1fr 1fr!important;}'
+                + '.hvf-wrap .hvf-grid2{grid-template-columns:1fr 1fr!important;}'
+                + '.hvf-wrap .hvf-meta{grid-template-columns:1fr 1fr!important;}'
+                + '.hvf-hover-hint{display:none!important;}'
+                + '.hvf-tap-hint{display:inline!important;}'
+                + '}'
                 + '</style>'
-                + '<div style="font-size:13px;font-weight:600;color:var(--ink,#1a2332);margin-bottom:6px;"><span style="color:var(--accent,#0d9488);margin-right:4px;"><i class="ph-duotone ph-cursor-click"></i></span>Visual Field Breakdown <span style="font-weight:400;color:var(--ink-muted,#64748b);font-size:12px;">\u2014 Hover over section to learn more</span></div>'
+                + '<div style="font-size:13px;font-weight:600;color:var(--ink,#1a2332);margin-bottom:6px;"><span style="color:var(--accent,#0d9488);margin-right:4px;"><i class="ph-duotone ph-cursor-click"></i></span>Visual Field Breakdown <span class="hvf-hover-hint" style="font-weight:400;color:var(--ink-muted,#64748b);font-size:12px;">\u2014 Hover over section to learn more</span><span class="hvf-tap-hint" style="font-weight:400;color:var(--ink-muted,#64748b);font-size:12px;display:none;">\u2014 Click on section to learn more</span></div>'
                 + '<div class="hvf-wrap">'
                 + '<div style="border-bottom:1.5px solid #777;margin-bottom:6px;padding-bottom:5px">'
                 + '<div style="display:flex;justify-content:space-between;align-items:flex-start">'
@@ -15227,7 +15256,7 @@
                 + '<div>Age: 67 &nbsp;&nbsp; DOB: 01/14/1959</div>'
                 + '</div>'
                 + '</div>'
-                + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:5px;font-size:9px;color:#111">'
+                + '<div class="hvf-meta" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:5px;font-size:9px;color:#111">'
                 + '<div><span class="hvf-label">Fixation Monitor: </span>Gaze/Blind Spot</div>'
                 + '<div><span class="hvf-label">Stimulus: </span>III, White</div>'
                 + '<div><span class="hvf-label">Pupil Diameter: </span>4.2 mm</div>'
@@ -15242,7 +15271,7 @@
                 + '<div><span class="hvf-label">Test Duration: </span>06:42</div>'
                 + '</div>'
                 + '</div>'
-                + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">'
+                + '<div class="hvf-grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">'
                 + '<div class="hvf-tip hvf-stitle" style="border-bottom:none"><div class="hvf-section-title">Threshold Values (dB)</div><canvas id="hvfThresh" width="170" height="160"></canvas><span class="hvf-tiptext"><strong>Threshold Values</strong> \u2014 Raw retinal sensitivity at each test point in decibels. Higher = more sensitive. Values &lt;10 dB indicate severe focal loss.</span></div>'
                 + '<div class="hvf-tip hvf-stitle" style="border-bottom:none"><div class="hvf-section-title">Grayscale</div><canvas id="hvfGray" width="170" height="160"></canvas><span class="hvf-tiptext"><strong>Grayscale</strong> \u2014 Visual representation of threshold values. Darker areas = lower sensitivity. Useful for quick pattern recognition but can be misleading\u2014always check deviation maps.</span></div>'
                 + '<div>'
@@ -15257,7 +15286,7 @@
                 + '<canvas id="hvfLegend" width="170" height="50"></canvas>'
                 + '</div>'
                 + '</div>'
-                + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">'
+                + '<div class="hvf-grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">'
                 + '<div class="hvf-tip hvf-stitle" style="border-bottom:none"><div class="hvf-section-title">Total Deviation (dB)</div><canvas id="hvfTD" width="170" height="160"></canvas><span class="hvf-tiptext"><strong>Total Deviation</strong> \u2014 Difference between measured sensitivity and age-matched normal values at each point. Negative values = worse than expected. Reflects both focal and diffuse loss.</span></div>'
                 + '<div class="hvf-tip hvf-stitle" style="border-bottom:none"><div class="hvf-section-title">Pattern Deviation (dB)</div><canvas id="hvfPD" width="170" height="160"></canvas><span class="hvf-tiptext"><strong>Pattern Deviation</strong> \u2014 Total Deviation adjusted for generalized depression (e.g. cataract). Isolates focal defects. More specific for detecting glaucomatous loss in the presence of media opacity.</span></div>'
                 + '<div class="hvf-tip hvf-stitle" style="border-bottom:none"><div class="hvf-section-title">Total Deviation Probability</div><canvas id="hvfTDprob" width="170" height="160"></canvas><span class="hvf-tiptext"><strong>Total Deviation Probability</strong> \u2014 Statistical significance of each Total Deviation value compared to age-matched norms. Darker symbols = more statistically significant loss (p &lt; 5%, 2%, 1%, 0.5%).</span></div>'
