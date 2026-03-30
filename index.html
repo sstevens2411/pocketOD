@@ -4485,7 +4485,7 @@
                     }
                 }
             }, sph50start:6 },
-            { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.75, cylSteps:[-1.00, -1.75], cylTolerance:0, addTypes:["Low","Mid","High"], qty:"30", price:"$75 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+            { name:"Acuvue Oasys Max 1-Day MF for Astigmatism", brand:"J&J Acuvue", type:"multifocal-toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-1.00, cylMax:-1.00, cylTolerance:0.75, addTypes:["Low","Mid","High"], qty:"30", price:"$75 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.50, specAddMax:1.75, clAdd:"Mid", dominant:"Mid", nonDominant:"Mid" },
@@ -6022,7 +6022,7 @@
                 const osLens = lens.companionForOS ? compLens : lens;
                 const renderRow = (eye, l) => {
                     const s = buildSpecsForLens(l);
-                    return `<div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;padding:6px 0;${eye === 'OD' ? 'border-bottom:1px solid var(--rule);' : ''}">
+                    return `<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:6px 0;${eye === 'OD' ? 'border-bottom:1px solid var(--rule);' : ''}">
                         <div class="spec-item" style="min-width:28px;flex:0 0 auto;"><div class="spec-label">${eye}</div></div>
                         ${s.map(sp => `<div class="spec-item"><div class="spec-label">${sp.label}</div><div class="spec-value">${sp.value}</div></div>`).join("")}
                     </div>`;
