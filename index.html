@@ -4050,6 +4050,12 @@
             .bv-opt-btn { min-width: 100px; font-size: 13px; padding: 10px 12px; }
         }
 
+        .mobile-only { display: none; }
+        @media (max-width: 600px) {
+            .mobile-only { display: inline; }
+            .desktop-only { display: none; }
+        }
+
     </style>
 </head>
 <body>
@@ -4079,7 +4085,7 @@
         <div class="cl-subtabs" id="clSubtabs">
             <div class="cl-subtabs-left">
                 <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">CL Calculator</div>
-                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')">All Lenses</div>
+                <div class="cl-subtab" id="clSubBrowse" onclick="switchClSub('browse')"><span class="desktop-only">All Contact Lenses</span><span class="mobile-only">All Lenses</span></div>
             </div>
             <div class="cl-subtabs-right">
                 <div class="cl-subtab" id="clSubVertex" onclick="switchClSub('vertex')"><span class="cl-label-full">Vertex Chart</span><span class="cl-label-short">Vertex</span></div>
