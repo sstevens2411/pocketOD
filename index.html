@@ -5769,13 +5769,13 @@
             const otherEye = eye === state.od ? state.os : state.od;
             const sphNeg = document.getElementById(`${prefix}_sphNeg`);
             const sphPos = document.getElementById(`${prefix}_sphPos`);
-            if (sphNeg) sphNeg.addEventListener("click", () => { eye.sphSign = '\u2212'; otherEye.sphSign = '\u2212'; rerender(); });
-            if (sphPos) sphPos.addEventListener("click", () => { eye.sphSign = '+'; otherEye.sphSign = '+'; rerender(); });
+            if (sphNeg) sphNeg.addEventListener("click", () => { eye.sphSign = '\u2212'; if (!otherEye.sphAbs) otherEye.sphSign = '\u2212'; rerender(); });
+            if (sphPos) sphPos.addEventListener("click", () => { eye.sphSign = '+'; if (!otherEye.sphAbs) otherEye.sphSign = '+'; rerender(); });
 
             const cylNeg = document.getElementById(`${prefix}_cylNeg`);
             const cylPos = document.getElementById(`${prefix}_cylPos`);
-            if (cylNeg) cylNeg.addEventListener("click", () => { eye.cylSign = '\u2212'; otherEye.cylSign = '\u2212'; rerender(); });
-            if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; otherEye.cylSign = '+'; rerender(); });
+            if (cylNeg) cylNeg.addEventListener("click", () => { eye.cylSign = '\u2212'; if (!otherEye.cylAbs) otherEye.cylSign = '\u2212'; rerender(); });
+            if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; if (!otherEye.cylAbs) otherEye.cylSign = '+'; rerender(); });
 
             const sphEl = document.getElementById(`${prefix}_inSph`);
             if (sphEl) sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); });
