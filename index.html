@@ -5281,6 +5281,10 @@
             }
             if (!typeOk) return false;
 
+            // Clamp extreme sphere values (±20 to ±22) so ±20 max lenses still match
+            if (clSph < -20 && clSph >= -22) clSph = -20;
+            if (clSph > 20 && clSph <= 22) clSph = 20;
+
             if (clSph < lens.sphMin || clSph > lens.sphMax) return false;
 
             // Exclude lenses that don't offer plano sphere
@@ -5637,7 +5641,7 @@
                                 <button type="button" id="${prefix}_sphNeg" class="${eye.sphSign === '+' ? '' : 'active-neg'}">\u2212</button>
                                 <button type="button" id="${prefix}_sphPos" class="${eye.sphSign === '+' ? 'active-pos' : ''}">+</button>
                             </div>
-                            <select id="${prefix}_inSph">${buildPowerOptions(20, eye.sphAbs || "0.00")}</select>
+                            <select id="${prefix}_inSph">${buildPowerOptions(30, eye.sphAbs || "0.00")}</select>
                         </div>
                     </div>
 
@@ -5648,7 +5652,7 @@
                                 <button type="button" id="${prefix}_cylNeg" class="${eye.cylSign === '+' ? '' : 'active-neg'}">\u2212</button>
                                 <button type="button" id="${prefix}_cylPos" class="${eye.cylSign === '+' ? 'active-pos' : ''}">+</button>
                             </div>
-                            <select id="${prefix}_inCyl">${buildPowerOptions(6, eye.cylAbs || "0.00")}</select>
+                            <select id="${prefix}_inCyl">${buildPowerOptions(8, eye.cylAbs || "0.00")}</select>
                         </div>
                     </div>
 
@@ -5967,8 +5971,21 @@
                 return `<button class="sort-btn ${isActive ? "active" : ""}" onclick="setSort('${s}')">${labels[s]}${arrow}</button>`;
             }).join("");
 
+            // Check if either eye's vertex-converted sphere exceeds ±22
+            const odSphRaw = parseFloat(state.od.sphere) || 0;
+            const osSphRaw = parseFloat(state.os.sphere) || 0;
+            const odVSph = snapTo025(vertexConvert(odSphRaw));
+            const osVSph = snapTo025(vertexConvert(osSphRaw));
+            const beyondLimit = Math.abs(odVSph) > 22 || Math.abs(osVSph) > 22;
+
             let listHtml;
-            if (lenses.length === 0) {
+            if (lenses.length === 0 && beyondLimit) {
+                listHtml = `<div class="empty">
+                    <div class="empty-icon"><i class="ph-duotone ph-warning-circle"></i></div>
+                    <div class="empty-title">No compatible contact lenses for this power</div>
+                    <div class="empty-desc">Consider fitting a \u00b120.00D lens and fine-tuning with spectacle over-refraction.</div>
+                </div>`;
+            } else if (lenses.length === 0) {
                 if (state.browseLensFilter) {
                     listHtml = `<div class="empty browse-filter-empty">
                         <div class="empty-icon"><i class="ph-duotone ph-warning-circle"></i></div>
@@ -6417,10 +6434,24 @@
                     sphHighlight = true;
                 }
 
+                // Clamp extreme sphere values (±20 to ±22) to ±20
+                let sphClampNote = null;
+                if (finalSph < -20 && finalSph >= -22) {
+                    sphClampNote = `Clamped from ${finalSph.toFixed(2)} to −20.00`;
+                    summary.push(`SPH: Clamped from ${finalSph.toFixed(2)} to −20.00`);
+                    finalSph = -20;
+                    sphHighlight = true;
+                } else if (finalSph > 20 && finalSph <= 22) {
+                    sphClampNote = `Clamped from +${finalSph.toFixed(2)} to +20.00`;
+                    summary.push(`SPH: Clamped from +${finalSph.toFixed(2)} to +20.00`);
+                    finalSph = 20;
+                    sphHighlight = true;
+                }
+
                 params.push({
                     label: "Sphere (SPH)",
                     value: `${finalSph > 0 ? "+" : ""}${finalSph.toFixed(2)}`,
-                    note: null,
+                    note: sphClampNote,
                     highlight: sphHighlight
                 });
 
@@ -12725,7 +12756,18 @@
                 [16.00,13.50,19.75],[16.25,13.62,20.25],[16.50,13.75,20.50],[16.75,14.00,21.00],
                 [17.00,14.12,21.50],[17.25,14.25,21.75],[17.50,14.50,22.25],[17.75,14.62,22.50],
                 [18.00,14.75,23.00],[18.25,15.00,23.50],[18.50,15.12,23.75],[18.75,15.25,24.25],
-                [19.00,15.50,24.75],[20.00,16.00,26.00]
+                [19.00,15.50,24.75],[19.25,15.75,25.00],[19.50,15.75,25.50],[19.75,16.00,26.00],
+                [20.00,16.00,26.00],[20.25,16.25,26.75],[20.50,16.50,27.25],[20.75,16.50,27.75],
+                [21.00,16.75,28.00],[21.25,17.00,28.50],[21.50,17.00,29.00],[21.75,17.25,29.50],
+                [22.00,17.50,30.00],[22.25,17.50,30.25],[22.50,17.75,30.75],[22.75,17.75,31.25],
+                [23.00,18.00,31.75],[23.25,18.25,32.25],[23.50,18.25,32.75],[23.75,18.50,33.25],
+                [24.00,18.75,33.75],[24.25,18.75,34.25],[24.50,19.00,34.75],[24.75,19.00,35.25],
+                [25.00,19.25,35.75],[25.25,19.50,36.25],[25.50,19.50,36.75],[25.75,19.75,37.25],
+                [26.00,19.75,37.75],[26.25,20.00,38.25],[26.50,20.00,38.75],[26.75,20.25,39.50],
+                [27.00,20.50,40.00],[27.25,20.50,40.50],[27.50,20.75,41.00],[27.75,20.75,41.50],
+                [28.00,21.00,42.25],[28.25,21.00,42.75],[28.50,21.25,43.25],[28.75,21.50,44.00],
+                [29.00,21.50,44.50],[29.25,21.75,45.00],[29.50,21.75,45.75],[29.75,22.00,46.25],
+                [30.00,22.00,47.00]
             ];
             var html = '<div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:24px;max-width:560px;margin:0 auto">';
             html += '<h2 style="font-size:18px;font-weight:700;color:var(--ink);margin:0 0 4px">Vertex Conversion Chart</h2>';
@@ -12734,7 +12776,7 @@
             html += '<div class="sign-toggle"><button type="button" id="vtxSignNeg" class="active-neg" onclick="vtxSetSign(true)">&minus;</button><button type="button" id="vtxSignPos" onclick="vtxSetSign(false)">+</button></div>';
             html += '<select id="vtxPowerSelect" onchange="vtxCalc()" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--mono,\'IBM Plex Mono\',monospace);background:#fff;color:var(--ink);appearance:auto">';
             html += '<option value="">Select power...</option>';
-            for (var p = 4.00; p <= 20.00; p = Math.round((p + 0.25) * 100) / 100) {
+            for (var p = 4.00; p <= 30.00; p = Math.round((p + 0.25) * 100) / 100) {
                 html += '<option value="' + p.toFixed(2) + '">' + p.toFixed(2) + '</option>';
             }
             html += '</select>';
