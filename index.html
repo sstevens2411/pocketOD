@@ -4161,7 +4161,7 @@
         const LENSES = [
             // ALCON
             { name:"Air Optix plus HydraGlyde", brand:"Alcon", type:"sphere", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$105", wear:"EW", material:"Lotrafilcon B (SiHy)", therapeutic:true, sph50start:8 },
-            { name:"Air Optix plus HydraGlyde for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:108, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$125", wear:"EW", material:"Lotrafilcon B (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:8 },
+            { name:"Air Optix plus HydraGlyde for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:108, bc:"8.7", diam:"14.5", sphMin:-10, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$125", wear:"EW", material:"Lotrafilcon B (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:8 },
             { name:"Air Optix plus HydraGlyde Multifocal", brand:"Alcon", type:"multifocal", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"6", price:"$155", wear:"EW", material:"Lotrafilcon B (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
@@ -4188,7 +4188,14 @@
             { name:"Air Optix Night & Day Aqua", brand:"Alcon", type:"sphere", modality:"monthly", dk:175, bc:"8.4 / 8.6", diam:"13.8", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"6", price:"$149", wear:"EW 30-night", material:"Lotrafilcon A (SiHy)", therapeutic:true, sph50start:8 },
             { name:"Air Optix Colors", brand:"Alcon", type:"sphere", modality:"monthly", dk:138, bc:"8.6", diam:"14.2", sphMin:-8, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"2, 6", price:"$159", wear:"DW", material:"Lotrafilcon B (SiHy)", note:"Color cosmetic lens", sph50start:8 },
             { name:"Dailies Total 1", brand:"Alcon", type:"sphere", modality:"daily", dk:156, bc:"8.5", diam:"14.1", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$150 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)", sph50start:6 },
-            { name:"Dailies Total 1 for Astigmatism", brand:"Alcon", type:"toric", modality:"daily", dk:127, bc:"8.6", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$180 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
+            { name:"Dailies Total 1 for Astigmatism", brand:"Alcon", type:"toric", modality:"daily", dk:127, bc:"8.6", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$180 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, axisRestrictions: [
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[-6,0], axes:[10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180] },
+                { cyls:[-2.25], sphRange:[-6,0], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[-8,-6.25], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.25], sphRange:[-8,-6.25], axes:[10,20,160,170,180] },
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[0.25,4], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.25], sphRange:[0.25,4], axes:[10,20,160,170,180] }
+            ] },
             { name:"Dailies Total 1 Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:156, bc:"8.5", diam:"14.1", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$190 (90pk)", wear:"DW", material:"Delefilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
@@ -4213,9 +4220,16 @@
                 }
             }, sph50start:6 },
             { name:"Precision1", brand:"Alcon", type:"sphere", modality:"daily", dk:100, bc:"8.3", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$127 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", sph50start:6 },
-            { name:"Precision1 for Astigmatism", brand:"Alcon", type:"toric", modality:"daily", dk:90, bc:"8.5", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$145 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
+            { name:"Precision1 for Astigmatism", brand:"Alcon", type:"toric", modality:"daily", dk:90, bc:"8.5", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$145 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, axisRestrictions: [
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[-6,0], axes:[10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180] },
+                { cyls:[-2.25], sphRange:[-6,0], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[-8,-6.25], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.25], sphRange:[-8,-6.25], axes:[10,20,160,170,180] },
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[0.25,4], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.25], sphRange:[0.25,4], axes:[10,20,160,170,180] }
+            ] },
             { name:"Precision7", brand:"Alcon", type:"sphere", modality:"weekly", dk:149, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"12, 27", price:"$129 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)", sph50start:6 },
-            { name:"Precision7 for Astigmatism", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"12, 27", price:"$145 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6 },
+            { name:"Precision7 for Astigmatism", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"12, 27", price:"$145 (27pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:6 },
             { name:"Total30", brand:"Alcon", type:"sphere", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$89 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)", sph50start:6 },
             { name:"Total30 for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$113", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, axisRestrictions: [
               { cyls: [-2.75], axes: [10,20,30,70,80,90,100,110,150,160,170,180] }
@@ -4267,7 +4281,9 @@
                 }
             }, sph50start:6 },
             { name:"DAILIES AquaComfort Plus", brand:"Alcon", type:"sphere", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-15, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$117 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", discontinuing:"Trial lenses discontinued. Patients can still order lenses.", sph50start:6 },
-            { name:"DAILIES AquaComfort Plus Toric", brand:"Alcon", type:"toric", modality:"daily", dk:26, bc:"8.8", diam:"14.4", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:[], qty:"30, 90", price:"$149 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", discontinuing:"Trial lenses discontinued. Patients can still order lenses.", sph50start:6 },
+            { name:"DAILIES AquaComfort Plus Toric", brand:"Alcon", type:"toric", modality:"daily", dk:26, bc:"8.8", diam:"14.4", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-1.75, addTypes:[], qty:"30, 90", price:"$149 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", discontinuing:"Trial lenses discontinued. Patients can still order lenses.", sph50start:6, axisRestrictions: [
+                { cyls:[-0.75,-1.25,-1.75], axes:[10,20,70,80,90,100,110,160,170,180] }
+            ] },
             { name:"DAILIES AquaComfort Plus Multifocal", brand:"Alcon", type:"multifocal", modality:"daily", dk:26, bc:"8.7", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Lo","Med","Hi"], qty:"30, 90", price:"$157 (90pk)", wear:"DW", material:"Nelfilcon A (Hydrogel)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, dominant:"Lo", nonDominant:"Lo" },
@@ -4336,7 +4352,9 @@
                     near: [{ action:"blNearStep1" }, { action:"sphereAdjSelect", eye:"nonDominant", options:[0.25, 0.50, 0.75, 1.00, 1.25, 1.50], rationale:"In normal room illumination, perform binocular distance over-refraction using handheld lenses adding +0.25 at a time to the non-dominant eye." }]
                 }
             }, sph50start:6, hasPlano:true },
-            { name:"Ultra Multifocal for Astigmatism", brand:"Bausch + Lomb", type:"multifocal-toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:["Low","High"], qty:"6", price:"$140", wear:"EW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", fittingGuide: {
+            { name:"Ultra Multifocal for Astigmatism", brand:"Bausch + Lomb", type:"multifocal-toric", modality:"monthly", dk:114, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:["Low","High"], qty:"6", price:"$140", wear:"EW", material:"Samfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", axisRestrictions: [
+                { cyls:[-2.25,-2.75], axes:[10,20,70,80,90,100,110,160,170,180] }
+            ], fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.75, specAddMax:1.75, clAdd:"High", dominant:"Low", nonDominant:"High" },
@@ -4416,7 +4434,14 @@
             }, sph50start:6 },
             { name:"MyDay Energys", brand:"CooperVision", type:"sphere", modality:"daily", dk:100, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"90", price:"$120 (90pk)", wear:"DW", material:"Stenfilcon A (SiHy)", note:"Digital Zone Optics for screen use", privateLabels:[{name:"Reveal Premium",retailer:"Vision Source"},{name:"Ethos Aquell Evolve 1 Day",retailer:"Visionworks"},{name:"up & up 1 Day Performance+",retailer:"Target"}], sph50start:6 },
             { name:"Clariti 1 Day", brand:"CooperVision", type:"sphere", modality:"daily", dk:86, bc:"8.6", diam:"14.1", sphMin:-10, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", privateLabels:[{name:"Fresh Day",retailer:"Vision Source"},{name:"Voyant 1 Day",retailer:"Vision Source"},{name:"Ethos 1 Day",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day",retailer:"America's Best"},{name:"Ray-Ban 1-Day",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear 1-Day",retailer:"Eyeglass World"}], sph50start:6 },
-            { name:"Clariti 1 Day Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:57, bc:"8.6", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"Fresh Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Toric",retailer:"Vision Source"},{name:"Ethos 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Toric",retailer:"America's Best"},{name:"Ray-Ban 1-Day for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day for Astigmatism",retailer:"Pearle Vision"},{name:"up & up 1 Day for Astigmatism",retailer:"Target"}], sph50start:6, hasPlano:true },
+            { name:"Clariti 1 Day Toric", brand:"CooperVision", type:"toric", modality:"daily", dk:57, bc:"8.6", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$109 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"Fresh Day Toric",retailer:"Vision Source"},{name:"Voyant 1 Day Toric",retailer:"Vision Source"},{name:"Ethos 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Ethos AquaTech 1 Day for Astigmatism",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Toric",retailer:"America's Best"},{name:"Ray-Ban 1-Day for Astigmatism",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day for Astigmatism",retailer:"Pearle Vision"},{name:"up & up 1 Day for Astigmatism",retailer:"Target"}], sph50start:6, hasPlano:true, axisRestrictions: [
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[-6,0], axes:[10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180] },
+                { cyls:[-2.25], sphRange:[-6,0], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[-9,-6.25], axes:[10,20,60,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.25], sphRange:[-9,-6.25], axes:[10,20,90,160,170,180] },
+                { cyls:[-0.75,-1.25,-1.75], sphRange:[0.25,4], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.25], sphRange:[0.25,4], axes:[] }
+            ] },
             { name:"Clariti 1 Day Multifocal 3 ADD", brand:"CooperVision", type:"multifocal", modality:"daily", dk:86, bc:"8.6", diam:"14.1", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:["Low","Med","High"], qty:"90", price:"$121 (90pk)", wear:"DW", material:"Somofilcon A (SiHy)", infoBanner:"Replacing Clariti 1 Day 2 ADD which will be fully discontinued on 10/31/26.", privateLabels:[{name:"Fresh Day Multifocal",retailer:"Vision Source"},{name:"Fresh Day Multifocal 3 Add",retailer:"Vision Source"},{name:"Voyant 1 Day Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech 1 Day Multifocal",retailer:"Visionworks"},{name:"Ethos 1 Day Multifocal 3 Add",retailer:"Visionworks"},{name:"Sofmed Breathables 1-Day Multifocal",retailer:"America's Best"},{name:"Sofmed Breathables 1-Day Multifocal 3 Add",retailer:"America's Best"},{name:"Ray-Ban 1-Day Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision 1 Day Multifocal",retailer:"Pearle Vision"}], fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
@@ -4517,7 +4542,7 @@
                 }
             }, sph50start:6, hasPlano:true },
             { name:"Acuvue Oasys (2-Week)", brand:"J&J Acuvue", type:"sphere", modality:"biweekly", dk:147, bc:"8.4 / 8.8", diam:"14.0", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12, 24", price:"$55 (6pk)", wear:"EW", material:"Senofilcon A (SiHy)", therapeutic:true, sph50start:6 },
-            { name:"Acuvue Oasys for Astigmatism (2-Week)", brand:"J&J Acuvue", type:"toric", modality:"biweekly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$75", wear:"EW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true },
+            { name:"Acuvue Oasys for Astigmatism (2-Week)", brand:"J&J Acuvue", type:"toric", modality:"biweekly", dk:129, bc:"8.6", diam:"14.5", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$75", wear:"EW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:6, hasPlano:true },
             { name:"Acuvue Oasys Multifocal (2-Week)", brand:"J&J Acuvue", type:"multifocal", modality:"biweekly", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"6", price:"$72", wear:"EW", material:"Senofilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
