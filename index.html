@@ -13,8 +13,8 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pocket OD — Prescription to Contact Lens in Seconds</title>
-    <meta name="description" content="Contact lens fitting tool for optometrists. Enter an Rx, find compatible lenses, calculate order parameters, troubleshoot fits. Plus medication database and clinical tools.">
+    <title>Pocket OD — Contact Lens Calculator for Optometrists | Toric & Multifocal Fitting Tool</title>
+    <meta name="description" content="Free contact lens calculator for optometrists. Enter a spectacle Rx and instantly get order parameters with automatic vertex conversion. Includes toric contact lens fitting calculator, troubleshooting workflows, and 127 ophthalmic medications.">
     <meta name="keywords" content="contact lens fitting, optometry tool, contact lens calculator, vertex conversion, toric lens fitting, multifocal contact lens, ophthalmic medications, binocular vision calculator, BV disorder calculator, IOP correction, glaucoma risk calculator, myopia progression, Parks 3 step test, dry eye reference, gonioscopy, amblyopia screening, AMD staging, diabetic retinopathy grading, optometry clinical tools">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -4056,6 +4056,45 @@
             .desktop-only { display: none; }
         }
 
+        /* Paste Rx button & bubble — desktop only */
+        .paste-rx-wrap { position: relative; display: inline-block; }
+        .paste-rx-btn {
+            background: none; border: none; color: var(--ink-muted); cursor: pointer;
+            padding: 4px; font-size: 18px; line-height: 1; transition: color 0.15s;
+        }
+        .paste-rx-btn:hover { color: var(--accent); }
+        @media (max-width: 767px) { .paste-rx-wrap { display: none; } }
+
+        .paste-rx-bubble {
+            display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 100;
+            background: var(--surface-solid); border: 1px solid var(--border); border-radius: var(--radius);
+            box-shadow: var(--shadow-md); padding: 14px 16px; width: 370px;
+        }
+        .paste-rx-bubble.open { display: block; }
+        .paste-rx-bubble .prx-hint {
+            font-size: 12px; color: var(--ink-secondary); margin: 0 0 8px; line-height: 1.4;
+        }
+        .paste-rx-bubble .prx-row { display: flex; gap: 6px; }
+        .paste-rx-bubble .prx-input {
+            flex: 1; font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 13px;
+            padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--surface-solid); color: var(--ink); outline: none;
+        }
+        .paste-rx-bubble .prx-input:focus { border-color: var(--accent); }
+        .paste-rx-bubble .prx-parse {
+            padding: 7px 14px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius);
+            background: var(--accent); color: #fff; cursor: pointer; white-space: nowrap;
+        }
+        .paste-rx-bubble .prx-parse:hover { opacity: 0.9; }
+        .paste-rx-bubble .prx-close {
+            position: absolute; top: 6px; right: 8px; background: none; border: none;
+            color: var(--ink-muted); cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 4px;
+        }
+        .paste-rx-bubble .prx-close:hover { color: var(--ink); }
+        .paste-rx-bubble .prx-msg {
+            font-size: 12px; font-weight: 600; margin: 8px 0 0; transition: opacity 0.4s;
+        }
+
     </style>
 </head>
 <body>
@@ -5762,7 +5801,21 @@
             return `<div class="fade-in">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
                     <h2 class="card-title" style="margin:0">Enter Prescription</h2>
-                    <button onclick="resetAll()" title="Reset" class="reset-btn"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
+                    <div style="display:flex;align-items:center;gap:6px">
+                        <div class="paste-rx-wrap">
+                            <button type="button" class="paste-rx-btn" title="Paste Rx" onclick="togglePasteRx()"><i class="ph-duotone ph-clipboard-text"></i></button>
+                            <div class="paste-rx-bubble" id="pasteRxBubble">
+                                <button type="button" class="prx-close" onclick="closePasteRx()">&times;</button>
+                                <p class="prx-hint">Paste full Rx below. Use / to separate OD and OS.</p>
+                                <div class="prx-row">
+                                    <input type="text" class="prx-input" id="pasteRxInput" placeholder="-3.50 -1.25 x 180 / -4.00 -0.75 x 165">
+                                    <button type="button" class="prx-parse" onclick="parsePastedRx()">Parse</button>
+                                </div>
+                                <div class="prx-msg" id="pasteRxMsg"></div>
+                            </div>
+                        </div>
+                        <button onclick="resetAll()" title="Reset" class="reset-btn"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
+                    </div>
                 </div>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
@@ -5792,6 +5845,76 @@
             bindRxInputs();
             if (focusId) document.getElementById(focusId)?.focus();
         }
+
+        /* ── Paste Rx bubble ── */
+        function togglePasteRx() {
+            const b = document.getElementById('pasteRxBubble');
+            b.classList.toggle('open');
+            if (b.classList.contains('open')) {
+                const inp = document.getElementById('pasteRxInput');
+                inp.value = ''; inp.focus();
+                document.getElementById('pasteRxMsg').textContent = '';
+            }
+        }
+        function closePasteRx() {
+            document.getElementById('pasteRxBubble').classList.remove('open');
+        }
+
+        function parseOneEye(str) {
+            str = str.trim();
+            if (!str) return null;
+            // "plano" / "pl" → sph 0
+            if (/^(plano|pl)$/i.test(str)) return { sph: 0, cyl: null, axis: null };
+            // match e.g. -3.50 -1.25 x 180  or  +2.00  or  -4.00 -0.75 x 165
+            const m = str.match(/^([+\u2212-]?\d+(?:\.\d+)?)\s*(?:([+\u2212-]?\d+(?:\.\d+)?)\s*[x×]\s*(\d+))?$/i);
+            if (!m) return null;
+            const sph = parseFloat(m[1].replace('\u2212', '-'));
+            if (isNaN(sph)) return null;
+            let cyl = null, axis = null;
+            if (m[2] != null) {
+                cyl = parseFloat(m[2].replace('\u2212', '-'));
+                axis = m[3];
+                if (isNaN(cyl) || axis == null) return null;
+            }
+            return { sph, cyl, axis };
+        }
+
+        function applyParsedEye(eye, parsed) {
+            if (parsed.sph > 0) { eye.sphSign = '+'; eye.sphAbs = parsed.sph.toFixed(2); }
+            else if (parsed.sph === 0) { eye.sphSign = '\u2212'; eye.sphAbs = ''; }
+            else { eye.sphSign = '\u2212'; eye.sphAbs = Math.abs(parsed.sph).toFixed(2); }
+            if (parsed.cyl != null) {
+                if (parsed.cyl >= 0) { eye.cylSign = '+'; eye.cylAbs = parsed.cyl === 0 ? '' : parsed.cyl.toFixed(2); }
+                else { eye.cylSign = '\u2212'; eye.cylAbs = Math.abs(parsed.cyl).toFixed(2); }
+            } else { eye.cylAbs = ''; }
+            eye.axis = parsed.axis || '';
+        }
+
+        function parsePastedRx() {
+            const raw = (document.getElementById('pasteRxInput').value || '').trim();
+            const msgEl = document.getElementById('pasteRxMsg');
+            // split by /
+            const parts = raw.split('/');
+            const odStr = parts[0];
+            const osStr = parts.length > 1 ? parts[1] : null;
+            const odP = parseOneEye(odStr);
+            if (!odP) { msgEl.textContent = 'Could not parse'; msgEl.style.color = '#ef4444'; return; }
+            applyParsedEye(state.od, odP);
+            if (osStr) {
+                const osP = parseOneEye(osStr);
+                if (!osP) { msgEl.textContent = 'Could not parse'; msgEl.style.color = '#ef4444'; return; }
+                applyParsedEye(state.os, osP);
+            }
+            rerender();
+            msgEl.textContent = '\u2713 Parsed'; msgEl.style.color = 'var(--accent)'; msgEl.style.opacity = '1';
+            setTimeout(() => { msgEl.style.opacity = '0'; }, 2000);
+            setTimeout(() => { closePasteRx(); }, 2200);
+        }
+
+        // allow Enter key inside paste input
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.id === 'pasteRxInput') { e.preventDefault(); parsePastedRx(); }
+        });
 
         function bindEyeInputs(prefix, eye, onAddChange) {
             const otherEye = eye === state.od ? state.os : state.od;
@@ -16844,5 +16967,8 @@
             <p style="font-size:13px;line-height:1.7;color:#475569;margin:0;">Pocket OD is provided for educational and clinical reference purposes only. It is not a substitute for professional training or independent clinical judgment. Pocket OD does not engage in the practice of prescribing. All lens parameters, medication information, and clinical data should be verified independently before use. Each patient situation is unique &mdash; all treatment decisions should be individualized accordingly. Pocket OD cannot warrant the accuracy or completeness of information provided.</p>
         </div>
     </div>
+<div style="position:absolute;left:-9999px;overflow:hidden;height:1px;width:1px;" aria-hidden="true">
+    <p>Pocket OD is a free contact lens calculator for optometrists designed to streamline everyday clinical workflows. The built-in toric contact lens fitting calculator matches cylinder and axis values to available lens parameters, while the multifocal contact lens fitting guides walk through manufacturer-specific add power selection. Enter any spectacle Rx to contact lens conversion and the tool applies automatic vertex conversion calculator adjustments for powers exceeding plus or minus four diopters. Pocket OD also includes a comprehensive ophthalmic medication reference covering over 127 branded and generic drops organized by drug class. Whether you need clinical tools for optometrists such as IOP correction, diabetic retinopathy grading, or myopia progression risk analysis, Pocket OD puts evidence-based resources in your pocket.</p>
+</div>
 </body>
 </html>
