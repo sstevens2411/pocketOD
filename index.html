@@ -1052,6 +1052,31 @@
             margin-bottom: 20px;
         }
 
+        .fitting-guide-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            background: transparent;
+            border: 2px solid var(--accent);
+            border-radius: 50px;
+            padding: 8px 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s;
+            margin-top: 0;
+        }
+        .fitting-guide-pill:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .fitting-guide-pill i { font-size: 12px; }
+
         .order-section-title {
 
             font-size: 13px;
@@ -16772,6 +16797,27 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        const mfFittingGuideUrls = {
+            "Air Optix plus HydraGlyde Multifocal": "https://www.optometry.org.au/wp-content/uploads/States/WA/ECOWA/Alcon-MF-Fitting-Guide.pdf",
+            "DAILIES AquaComfort Plus Multifocal": "https://www.optometry.org.au/wp-content/uploads/States/WA/ECOWA/Alcon-MF-Fitting-Guide.pdf",
+            "Dailies Total 1 Multifocal": "https://www.optometry.org.au/wp-content/uploads/States/WA/ECOWA/Alcon-MF-Fitting-Guide.pdf",
+            "Total30 Multifocal": "https://www.myalcon.com/professional/contact-lenses/monthly/total30-multifocal/",
+            "Ultra for Presbyopia": "https://pi.bausch.com/globalassets/pdf/Downloads/ECP/vision-care/ultra-fp-fitting-guide.pdf",
+            "Ultra Multifocal for Astigmatism": "https://fitbetter.bausch.com/fitting-guides/102",
+            "INFUSE Multifocal": "https://fitbetter.bausch.com/fitting-guides/94",
+            "Biotrue ONEday for Presbyopia": "https://fitbetter.bausch.com/fitting-guides/94",
+            "Biofinity Multifocal": "https://coopervision.com/sites/coopervision.com/files/media-document/biofinity-mf-fitting-guide.pdf",
+            "Biofinity Toric Multifocal": "https://coopervision.com/sites/coopervision.com/files/media-document/biofinity-toric-mf-fitting-guide.pdf",
+            "Clariti 1 Day Multifocal 3 ADD": "https://coopervision.co.uk/sites/coopervision.co.uk/files/multifocal-fitting-guide-all-coopervision-brands-230308.pdf",
+            "MyDay Multifocal": "https://coopervision.co.uk/sites/coopervision.co.uk/files/multifocal-fitting-guide-all-coopervision-brands-230308.pdf",
+            "Proclear 1 Day Multifocal": "https://coopervision.co.uk/sites/coopervision.co.uk/files/multifocal-fitting-guide-all-coopervision-brands-230308.pdf",
+            "Proclear Multifocal XR": "https://coopervision.co.uk/sites/coopervision.co.uk/files/multifocal-fitting-guide-all-coopervision-brands-230308.pdf",
+            "Acuvue Oasys Multifocal (2-Week)": "https://www.optometry.org.au/wp-content/uploads/States/WA/ECOWA/JJ-MF-Fitting-Guide-for-Oasys-pt2.pdf",
+            "1-Day Acuvue Moist Multifocal": "https://www.optometry.org.au/wp-content/uploads/States/WA/ECOWA/JJ-MF-Fitting-Guide-for-Oasys-pt2.pdf",
+            "Acuvue Oasys Max 1-Day Multifocal": "https://assets.contentstack.io/v3/assets/bltc6e7ece114c6734f/blte2e1477264380f69/aomax1d_package_insert_fitting_guide.pdf",
+            "Acuvue Oasys Max 1-Day Multifocal Toric": "https://assets.contentstack.io/v3/assets/bltc6e7ece114c6734f/blte2e1477264380f69/aomax1d_package_insert_fitting_guide.pdf"
+        };
+
         function renderBrowseLensDetail(lens) {
             const bc = brandClass(lens.brand);
             const brandColor = { alcon:"var(--alcon)", bl:"var(--bl)", cv:"var(--cv)", jj:"var(--jj)" }[bc];
@@ -16835,7 +16881,10 @@
                         <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                     </div>
-                    <button class="browse-calc-btn cta-btn" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><span class="arrow-left">\u2192</span> Fit This Lens <span class="arrow-right">\u2192</span></button>
+                    <div style="display:flex;flex-direction:column;gap:8px;align-items:stretch;">
+                        <button class="browse-calc-btn cta-btn" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><span class="arrow-left">\u2192</span> Fit This Lens <span class="arrow-right">\u2192</span></button>
+                        ${mfFittingGuideUrls[lens.name] ? `<a href="${mfFittingGuideUrls[lens.name]}" target="_blank" rel="noopener" class="fitting-guide-pill" style="justify-content:center;"><i class="ph-duotone ph-arrow-square-out"></i> Fitting Guide</a>` : ''}
+                    </div>
                 </div>
                 ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
                 ${lens.infoBanner ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-info" style="margin-right:4px;"></i>${lens.infoBanner}</div>` : ''}
