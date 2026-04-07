@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#fff;">
+<canvas id="c" width="480" height="480"></canvas>
+<script>
+var canvas = document.getElementById('c');
+var ctx = canvas.getContext('2d');
+var svg = `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 120 120" fill="none">
+  <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#0d9488" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#0d9488" stroke-width="5" fill="rgba(13,148,136,0.1)" stroke-linejoin="round"/>
+  <circle cx="60" cy="55" r="9" fill="#0d9488"/>
+  <circle cx="63.5" cy="52.5" r="2.8" fill="#1a2332"/>
+</svg>`;
+var img = new Image();
+img.onload = function() {
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, 480, 480);
+  ctx.drawImage(img, 0, 0, 480, 480);
+  var link = document.createElement('a');
+  link.download = 'logo.jpeg';
+  link.href = canvas.toDataURL('image/jpeg', 0.95);
+  link.click();
+};
+img.src = 'data:image/svg+xml;base64,' + btoa(svg);
+</script>
+</body>
+</html>

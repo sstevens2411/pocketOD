@@ -1090,6 +1090,12 @@
             color: #fff;
         }
         .fitting-guide-pill i { font-size: 12px; }
+        @media(max-width:767px){
+            .order-header-row { flex-wrap:wrap; }
+            .order-btns-col { flex-direction:row !important; width:100%; }
+            .order-btns-col .browse-calc-btn,
+            .order-btns-col .fitting-guide-pill { flex:1; text-align:center; justify-content:center; }
+        }
 
         .order-section-title {
 
@@ -13757,7 +13763,7 @@
         const amblyopiaState = {
             odSph: null, odCyl: null, odSphSign: '+', odCylSign: '\u2212',
             osSph: null, osCyl: null, osSphSign: '+', osCylSign: '\u2212',
-            ageGroup: '>48'
+            ageGroup: '>=48'
         };
 
         function amblyopiaVal(raw, sign) {
@@ -13768,11 +13774,10 @@
             return (sign === '-' || sign === '\u2212') ? -Math.abs(v) : Math.abs(v);
         }
 
-        // Age-specific thresholds: { hyperopia, myopia, astigmatism, aniso }
+        // 2021 AAPOS age-specific thresholds: { hyperopia, myopia, astigmatism, aniso }
         const amblyopiaThresholds = {
-            '12-30': { hyperopia: 4.50, myopia: -3.50, astigmatism: 2.00, aniso: 2.50 },
-            '31-48': { hyperopia: 4.00, myopia: -3.00, astigmatism: 2.00, aniso: 2.00 },
-            '>48':   { hyperopia: 3.50, myopia: -1.50, astigmatism: 1.50, aniso: 1.50 }
+            '<48':  { hyperopia: 4.00, myopia: -3.00, astigmatism: 3.00, aniso: 1.25 },
+            '>=48': { hyperopia: 4.00, myopia: -2.00, astigmatism: 1.75, aniso: 1.25 }
         };
 
         function amblyopiaCalc() {
@@ -13874,7 +13879,7 @@
             amblyopiaState.osSph = null; amblyopiaState.osCyl = null;
             amblyopiaState.odSphSign = '+'; amblyopiaState.odCylSign = '\u2212';
             amblyopiaState.osSphSign = '+'; amblyopiaState.osCylSign = '\u2212';
-            amblyopiaState.ageGroup = '>48';
+            amblyopiaState.ageGroup = '>=48';
             renderAmblyopiaTool(document.getElementById('toolsContent'));
         }
 
@@ -13892,32 +13897,25 @@
                 </div>
 
                 <div class="tools-card">
-                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Key Risk Thresholds by Age</div>
+                    <div class="tools-card-title"><i class="ph-duotone ph-table"></i> Key Risk Thresholds by Age <span style="font-weight:400;font-size:12px;color:var(--ink-secondary);">(2021 AAPOS)</span></div>
                     <p style="font-size:12px;color:var(--ink-secondary);margin:0 0 10px;line-height:1.5;">Risk increases when refractive errors exceed specific levels, which change as the eye develops.</p>
                     <div class="iop-table-wrap">
                         <table class="iop-ref-table">
                             <thead><tr><th>Age</th><th>Hyperopia</th><th>Myopia</th><th>Astigmatism</th><th>Anisometropia</th></tr></thead>
                             <tbody>
                                 <tr>
-                                    <td style="font-weight:600;">12\u201330 mo</td>
-                                    <td class="adj-pos">&gt; +4.50D</td>
-                                    <td class="adj-pos">&gt; \u22123.50D</td>
-                                    <td class="adj-pos">&gt; 2.00D</td>
-                                    <td class="adj-pos">&gt; 2.50D</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight:600;">31\u201348 mo</td>
+                                    <td style="font-weight:600;">&lt; 48 mo</td>
                                     <td class="adj-pos">&gt; +4.00D</td>
                                     <td class="adj-pos">&gt; \u22123.00D</td>
-                                    <td class="adj-pos">&gt; 2.00D</td>
-                                    <td class="adj-pos">&gt; 2.00D</td>
+                                    <td class="adj-pos">&gt; 3.00D</td>
+                                    <td class="adj-pos">&gt; 1.25D</td>
                                 </tr>
                                 <tr>
-                                    <td style="font-weight:600;">&gt; 48 mo</td>
-                                    <td class="adj-pos">&gt; +3.50D</td>
-                                    <td class="adj-pos">&gt; \u22121.50D</td>
-                                    <td class="adj-pos">&gt; 1.50D</td>
-                                    <td class="adj-pos">&gt; 1.50D</td>
+                                    <td style="font-weight:600;">\u2265 48 mo</td>
+                                    <td class="adj-pos">&gt; +4.00D</td>
+                                    <td class="adj-pos">&gt; \u22122.00D</td>
+                                    <td class="adj-pos">&gt; 1.75D</td>
+                                    <td class="adj-pos">&gt; 1.25D</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -13926,8 +13924,8 @@
                     <div class="ref-toggle-wrap">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
-                            <strong>Reference:</strong> AAPOS/AAO Uniform Guidelines for Vision Screening in Infants, Children, and Young Adults. Donahue SP et al., <em>J AAPOS</em>, 2023. NIH National Eye Institute.<br>
-                            Early diagnosis before age 6\u20137 is crucial for the best treatment outcomes (PubMed Central).
+                            <strong>Reference:</strong> AAPOS Uniform Guidelines for Instrument-Based Pediatric Vision Screen Validation, 2021. Donahue SP et al., <em>J AAPOS</em>, 2022;26(1):e52. NIH National Eye Institute.<br>
+                            Early diagnosis before age 6\u20137 is crucial for the best treatment outcomes.
                         </div>
                     </div>
                 </div>
@@ -13970,9 +13968,8 @@
                     <div class="form-group" style="margin-top:4px;">
                         <label>Patient Age</label>
                         <div class="input-row" style="gap:8px">
-                            <button type="button" class="dom-toggle ${amblyopiaState.ageGroup === '12-30' ? 'active-right' : ''}" style="flex:1;font-size:12px;" onclick="onAmblyopiaAge('12-30');renderAmblyopiaTool(document.getElementById('toolsContent'));">12\u201330 mo</button>
-                            <button type="button" class="dom-toggle ${amblyopiaState.ageGroup === '31-48' ? 'active-right' : ''}" style="flex:1;font-size:12px;" onclick="onAmblyopiaAge('31-48');renderAmblyopiaTool(document.getElementById('toolsContent'));">31\u201348 mo</button>
-                            <button type="button" class="dom-toggle ${amblyopiaState.ageGroup === '>48' ? 'active-right' : ''}" style="flex:1;font-size:12px;" onclick="onAmblyopiaAge('>48');renderAmblyopiaTool(document.getElementById('toolsContent'));">&gt;48 mo</button>
+                            <button type="button" class="dom-toggle ${amblyopiaState.ageGroup === '<48' ? 'active-right' : ''}" style="flex:1;font-size:13px;" onclick="onAmblyopiaAge('<48');renderAmblyopiaTool(document.getElementById('toolsContent'));">&lt; 48 mo</button>
+                            <button type="button" class="dom-toggle ${amblyopiaState.ageGroup === '>=48' ? 'active-right' : ''}" style="flex:1;font-size:13px;" onclick="onAmblyopiaAge('>=48');renderAmblyopiaTool(document.getElementById('toolsContent'));">\u2265 48 mo</button>
                         </div>
                     </div>
 
@@ -14037,7 +14034,7 @@
                     <div class="ref-toggle-wrap">
                         <button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle('ref-open')"><i class="ph ph-caret-right"></i> References</button>
                         <div class="ref-toggle-content">
-                            <strong>References:</strong> Age-based thresholds from AAPOS/AAO uniform guidelines for vision screening (NIH). Preschool anisometropia/isoametropia thresholds from AAO Amblyopia Preferred Practice Pattern (2024 Update).<br>
+                            <strong>References:</strong> Age-based screening thresholds from AAPOS Uniform Guidelines for Instrument-Based Pediatric Vision Screen Validation, 2021 (Donahue et al., <em>J AAPOS</em>, 2022). Anisometropia/isoametropia thresholds from AAO Amblyopia Preferred Practice Pattern (2024 Update).<br>
                             This tool is intended to aid clinical screening and does not replace comprehensive examination.
                         </div>
                     </div>
@@ -17017,7 +17014,7 @@
                         <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                     </div>
-                    <div style="display:flex;flex-direction:column;gap:8px;align-items:stretch;">
+                    <div class="order-btns-col" style="display:flex;flex-direction:column;gap:8px;align-items:stretch;">
                         <button class="browse-calc-btn cta-btn" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><span class="arrow-left">\u2192</span> Fit This Lens <span class="arrow-right">\u2192</span></button>
                         ${mfFittingGuideUrls[lens.name] ? `<a href="${mfFittingGuideUrls[lens.name]}" target="_blank" rel="noopener" class="fitting-guide-pill" style="justify-content:center;"><i class="ph-duotone ph-arrow-square-out"></i> Fitting Guide</a>` : ''}
                     </div>
