@@ -16,6 +16,20 @@
     <title>Pocket OD — Contact Lens Calculator for Optometrists | Toric & Multifocal Fitting Tool</title>
     <meta name="description" content="Free contact lens calculator for optometrists. Enter a spectacle Rx and instantly get order parameters with automatic vertex conversion. Includes toric contact lens fitting calculator, troubleshooting workflows, and 127 ophthalmic medications.">
     <meta name="keywords" content="contact lens fitting, optometry tool, contact lens calculator, vertex conversion, toric lens fitting, multifocal contact lens, ophthalmic medications, binocular vision calculator, BV disorder calculator, IOP correction, glaucoma risk calculator, myopia progression, Parks 3 step test, dry eye reference, gonioscopy, amblyopia screening, AMD staging, diabetic retinopathy grading, optometry clinical tools">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pocket OD">
+    <meta name="theme-color" content="#1a2332">
+    <link rel="canonical" href="https://pocketod.com">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pocketod.com">
+    <meta property="og:title" content="Pocket OD — Contact Lens Calculator for Optometrists">
+    <meta property="og:description" content="Free contact lens calculator for optometrists. Vertex conversion, toric and multifocal fitting workflows, 127 ophthalmic medications, and 30+ clinical tools. No login required.">
+    <meta property="og:image" content="https://pocketod.com/apple-touch-icon.png">
+    <meta property="og:site_name" content="Pocket OD">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pocket OD — Contact Lens Calculator for Optometrists">
+    <meta name="twitter:description" content="Free contact lens calculator for optometrists. Vertex conversion, toric and multifocal fitting workflows, 127 ophthalmic medications, and 30+ clinical tools.">
+    <meta name="twitter:image" content="https://pocketod.com/apple-touch-icon.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -4121,6 +4135,42 @@
         }
 
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Pocket OD",
+      "url": "https://pocketod.com",
+      "description": "Free contact lens calculator for optometrists. Includes vertex conversion, toric and multifocal fitting workflows, ophthalmic medication database, and 30+ clinical tools.",
+      "applicationCategory": "MedicalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Shane Stevens",
+        "jobTitle": "Optometrist"
+      },
+      "featureList": [
+        "Contact lens calculator with vertex conversion",
+        "Toric contact lens fitting calculator",
+        "Multifocal contact lens fitting workflows",
+        "Ophthalmic medication database",
+        "Glaucoma risk calculator",
+        "Myopia progression calculator",
+        "Binocular vision disorder calculator",
+        "IOP correction calculator",
+        "Visual field interpreter"
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Optometrists"
+      }
+    }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -4196,28 +4246,111 @@
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
         var _skipPush = false;
-        history.replaceState({view:'lenses'}, '');
-        window.addEventListener('popstate', function(e) {
-            var s = e.state;
-            if (!s) return;
+        var _defaultTitle = document.title;
+
+        // Hash ↔ internal state mappings
+        var _clSubToHash = {
+            prescribe: 'contactlenscalculator',
+            browse:    'contactlensdatabase',
+            vertex:    'contactlensvertexconversion',
+            radius:    'contactlensradiusconversion'
+        };
+        var _hashToClSub = {};
+        for (var k in _clSubToHash) _hashToClSub[_clSubToHash[k]] = k;
+
+        var _toolToHash = {
+            iop:'iopcorrectioncalculator', glaucoma:'glaucomariskcalculator', hvf:'visualfieldhub',
+            plaquenil:'plaqueniltoxicitycalculator', myopia:'myopiaprogressioncalculator',
+            bv:'binocularvisionorms', bvdx:'binocularvisiondisordercalculator',
+            parks:'parks3steptest', dryeye:'dryeyereferencenorms', gonio:'gonioscopyrading',
+            amblyopia:'amblyopiariskscreener', amd:'amdstagingcalculator',
+            dr:'diabeticretinopathygrading', vfindex:'neurovisualfieldindex',
+            colorvision:'colorvisionreference', va:'visualacuityconverter',
+            prentice:'prenticesrulecalculator', hofstetter:'hofstettornormscalculator',
+            iol:'iolpowercalculator', keratoconus:'keratoconusscreening',
+            vanherick:'vanherickgrading', rapd:'rapdgradingscale',
+            opticnerve:'opticnerveassessment', pupilcn:'pupilcranialnerveassessment',
+            clparam:'clparametercalculator', anisocoria:'anisocoreadecisiontree',
+            uveitislab:'uveitislabguide', eggers:'eggerschart',
+            bruckner:'brucknerscreeningexamples', slaboff:'slaboffcalculator'
+        };
+        var _hashToTool = {};
+        for (var k in _toolToHash) _hashToTool[_toolToHash[k]] = k;
+
+        // Title mappings for non-tool pages
+        var _clSubTitles = {
+            prescribe: 'Contact Lens Calculator for Optometrists | Pocket OD',
+            browse:    'Contact Lens Database | Pocket OD',
+            vertex:    'Contact Lens Vertex Conversion | Pocket OD',
+            radius:    'Contact Lens Radius Conversion | Pocket OD'
+        };
+
+        function buildHash() {
+            if (document.getElementById('subnavTools') && document.getElementById('subnavTools').classList.contains('active')) {
+                if (typeof toolsActiveTool !== 'undefined' && toolsActiveTool && _toolToHash[toolsActiveTool])
+                    return '#' + _toolToHash[toolsActiveTool];
+                return '#clinicaltools';
+            }
+            if (document.getElementById('subnavMeds') && document.getElementById('subnavMeds').classList.contains('active')) {
+                return '#medications';
+            }
+            var sub = (typeof clSubTab !== 'undefined') ? clSubTab : 'prescribe';
+            return '#' + (_clSubToHash[sub] || 'contactlenses');
+        }
+
+        function syncHash() {
+            var h = buildHash();
+            if (window.location.hash !== h) {
+                if (!_skipPush) history.pushState(null, '', h);
+                else history.replaceState(null, '', h);
+            }
+            syncTitle();
+        }
+
+        function syncTitle() {
+            // Tool open
+            if (document.getElementById('subnavTools') && document.getElementById('subnavTools').classList.contains('active') && typeof toolsActiveTool !== 'undefined' && toolsActiveTool && typeof TOOLS_REGISTRY !== 'undefined') {
+                var t = TOOLS_REGISTRY.find(function(x) { return x.id === toolsActiveTool; });
+                if (t) { document.title = t.title + ' | Pocket OD'; return; }
+            }
+            // Meds tab
+            if (document.getElementById('subnavMeds') && document.getElementById('subnavMeds').classList.contains('active')) {
+                document.title = 'Ophthalmic Medication Reference | Pocket OD'; return;
+            }
+            // CL subtab
+            if (document.getElementById('subnavLenses') && document.getElementById('subnavLenses').classList.contains('active')) {
+                var sub = (typeof clSubTab !== 'undefined') ? clSubTab : 'prescribe';
+                if (_clSubTitles[sub]) { document.title = _clSubTitles[sub]; return; }
+            }
+            document.title = _defaultTitle;
+        }
+
+        function routeFromHash() {
+            var h = (window.location.hash || '').toLowerCase();
+            if (!h || h === '#') return;
+            var key = h.substring(1); // strip #
             _skipPush = true;
-            if (s.view === 'medCategory') {
-                medsState.selectedConditionGroup = s.groupId;
-                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
-                medsState.categorySearch = "";
-                medsState.paStep = 1;
+            if (key === 'contactlenses' || key === 'contactlenscalculator') {
+                switchTab('lenses');
+            } else if (_hashToClSub[key]) {
+                switchTab('lenses');
+                if (typeof switchClSub === 'function') switchClSub(_hashToClSub[key]);
+            } else if (key === 'medications') {
                 switchTab('meds');
+            } else if (key === 'clinicaltools') {
+                switchTab('tools');
+            } else if (_hashToTool[key]) {
+                switchTab('tools');
+                if (typeof openTool === 'function') openTool(_hashToTool[key]);
             }
-            else if (s.view === 'lenses') { switchTab('lenses'); }
-            else if (s.view === 'meds') {
-                medsState.paStep = 0;
-                medsState.selectedConditionGroup = null;
-                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
-                medsState.categorySearch = "";
-                medsState.expandedCards = {};
-                switchTab('meds');
-            }
-            else if (s.view === 'tools') { switchTab('tools'); }
+            _skipPush = false;
+            syncHash();
+        }
+
+        history.replaceState(null, '', window.location.hash || '#contactlenscalculator');
+        window.addEventListener('popstate', function(e) {
+            _skipPush = true;
+            routeFromHash();
             _skipPush = false;
         });
 
@@ -9683,7 +9816,6 @@
         }
 
         function switchTab(tab) {
-            if (!_skipPush) history.pushState({view:tab}, '');
             window.scrollTo(0, 0);
             document.getElementById('subnavLenses').classList.toggle('active', tab === 'lenses');
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
@@ -9755,6 +9887,7 @@
             if (tab === 'meds') renderMeds();
             document.getElementById('toolsPage').style.display = tab === 'tools' ? '' : 'none';
             if (tab === 'tools') renderTools();
+            syncHash();
         }
 
         function navigateToMed(medId) {
@@ -9861,6 +9994,7 @@
             var tp = document.getElementById('toolsPage');
             if (tp) tp.scrollTop = 0;
             window.scrollTo(0, 0);
+            syncHash();
         }
 
         function toolsBack() {
@@ -9870,6 +10004,7 @@
             try { resetToolStates(); } catch(e) { console.warn('resetToolStates error:', e); }
             renderTools();
             window.scrollTo(0, 0);
+            syncHash();
         }
 
         function resetToolStates() {
@@ -12913,6 +13048,7 @@
             if (sub === 'browse') renderBrowse();
             if (sub === 'vertex') renderVertexChart();
             if (sub === 'radius') renderRadiusChart();
+            syncHash();
         }
 
         function renderVertexChart() {
@@ -17050,6 +17186,7 @@
         (function() {
             var ind = document.getElementById('subnavIndicator');
             if (ind) ind.style.transition = 'none';
+            routeFromHash();
             positionTabIndicator();
             if (ind) requestAnimationFrame(function() { ind.style.transition = ''; });
         })();
