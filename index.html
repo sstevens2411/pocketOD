@@ -24,7 +24,7 @@
     <meta property="og:url" content="https://pocketod.com">
     <meta property="og:title" content="Pocket OD — Contact Lens Calculator for Optometrists">
     <meta property="og:description" content="Free contact lens calculator for optometrists. Vertex conversion, toric and multifocal fitting workflows, 127 ophthalmic medications, and 30+ clinical tools. No login required.">
-    <meta property="og:image" content="https://pocketod.com/apple-touch-icon.png">
+    <meta property="og:image" content="https://pocketod.com/og-logo.png">
     <meta property="og:site_name" content="Pocket OD">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Pocket OD — Contact Lens Calculator for Optometrists">
@@ -16569,7 +16569,13 @@
 
         function goMedBack() {
             if (medsState.paStep > 0) {
-                history.back();
+                medsState.paStep = 0;
+                medsState.selectedConditionGroup = null;
+                medsState.expandedCards = {};
+                medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
+                medsState.categorySearch = "";
+                renderMeds();
+                window.scrollTo(0, 0);
             }
         }
 
@@ -16578,7 +16584,6 @@
             medsState.filters = { genericOnly:false, preservativeFree:false, drugClass:[], subCondition:[], route:[] };
             medsState.categorySearch = "";
             medsState.paStep = 1;
-            history.pushState({view:'medCategory', groupId:groupId}, '');
             renderMeds();
             window.scrollTo(0, 0);
         }
