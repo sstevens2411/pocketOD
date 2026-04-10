@@ -4278,7 +4278,8 @@
             opticnerve:'opticnerveassessment', pupilcn:'pupilcranialnerveassessment',
             clparam:'clparametercalculator', anisocoria:'anisocoreadecisiontree',
             uveitislab:'uveitislabguide', eggers:'eggerschart',
-            bruckner:'brucknerscreeningexamples', slaboff:'slaboffcalculator'
+            bruckner:'brucknerscreeningexamples', slaboff:'slaboffcalculator',
+            herpes:'herpesantiviraldosing'
         };
         var _hashToTool = {};
         for (var k in _toolToHash) _hashToTool[_toolToHash[k]] = k;
@@ -10077,6 +10078,10 @@
             hvfGhtSelection = null;
             // Slab-Off
             slabOffState = { odPower:'', osPower:'', readingDrop:'10' };
+            // Herpes Antiviral
+            herpesMode = 'hsv';
+            herpesExpanded = { epithelial:true, stromal:false, necrotizing:false, endotheliitis:false, prophylaxis:false, acute:true, immunocomp:false, adjunctive:false, renal:false };
+            herpesToolFromMeds = false;
         }
 
         function renderTools() {
@@ -10143,6 +10148,8 @@
                 renderHvfTool(el);
             } else if (toolsActiveTool === 'slaboff') {
                 renderSlabOffTool(el);
+            } else if (toolsActiveTool === 'herpes') {
+                renderHerpesTool(el);
             }
         }
 
@@ -10154,7 +10161,7 @@
             { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx','bruckner'] },
             { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter','slaboff'] },
             { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks','hvf'] },
-            { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve','hvf'] }
+            { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve','hvf','herpes'] }
         ];
 
         function toggleToolsCategory(catId) {
@@ -10192,6 +10199,11 @@
               keywords:'binocular vision disorder bv convergence insufficiency excess divergence accommodative esophoria exophoria diagnosis calculator profile' },
             { id:'parks', icon:'ph-path', title:'Park\u2019s 3-Step Test', desc:'Identify paretic cyclovertical muscle',
               keywords:'parks 3 step three step cranial nerve palsy strabismus hypertropia oblique rectus cn iv trochlear cyclovertical muscle' },
+            { id:'herpes', icon:'ph-dna', title:'Herpes Antiviral Dosing',
+              desc:'HSV keratitis & HZO ophthalmic antiviral guide',
+              keywords:'herpes simplex zoster hsv hzv hzo antiviral acyclovir valacyclovir famciclovir ganciclovir zirgan viroptic dendritic keratitis shingles prophylaxis heds stromal epithelial endotheliitis' },
+            { id:'eggers', icon:'ph-table', title:"Egger's Chart", desc:'Visual acuity to dioptric blur & astigmatism conversion',
+              keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' },
             { id:'dryeye', icon:'ph-drop-half', title:'Dry Eye Reference', desc:'Testing norms, grading scales & DEWS II classification',
               keywords:'dry eye schirmer tbut phenol red osmolarity meibomian osdi speed deq mmp inflammadry staining oxford nei dews mgd tear meniscus lid wiper blink' },
             { id:'gonio', icon:'gonio-svg', title:'Gonioscopy', desc:'Shaffer angle grading reference',
@@ -10232,8 +10244,6 @@
               keywords:'anisocoria pupil unequal horner adie tonic pharmacologic mydriasis cn3 pilocarpine cocaine apraclonidine hydroxyamphetamine decision tree' },
             { id:'uveitislab', icon:'ph-flask', title:'Uveitis Lab Guide', desc:'Searchable lab reference for uveitis work-up',
               keywords:'uveitis lab workup hla-b27 ana antinuclear rf rheumatoid factor ace angiotensin lysozyme rpr vdrl fta-abs syphilis cbc esr crp quantiferon ppd tuberculosis chest xray anca lyme toxoplasma hsv vzv cmv hla-a29 toxocara sarcoidosis ankylosing spondylitis lupus granulomatosis birdshot' },
-            { id:'eggers', icon:'ph-table', title:"Egger's Chart", desc:'Visual acuity to dioptric blur & astigmatism conversion',
-              keywords:'eggers chart visual acuity blur dioptric spherical equivalent astigmatism with the rule conversion refraction expected va snellen' },
             { id:'bruckner', icon:'ph-flashlight', title:'Bruckner Screening', desc:'Red reflex comparison & interpretation guide',
               keywords:'bruckner red reflex screening myopia hyperopia anisometropia astigmatism media opacity strabismus leukocoria pediatric retinoscopy' },
             { id:'slaboff', icon:'ph-arrows-vertical', title:'Slab-Off Calculator',
@@ -10285,7 +10295,7 @@
                 dr:'#b45309', amd:'#b45309', uveitislab:'#b45309', keratoconus:'#b45309',
                 plaquenil:'#7c3aed', dryeye:'#0284c7',
                 va:'#475569', iol:'#475569', clparam:'#0d9488', eggers:'#475569', bruckner:'#16a34a',
-                hvf:'#64748b', slaboff:'#2563eb'
+                hvf:'#64748b', slaboff:'#2563eb', herpes:'#b45309'
             };
             var cards = '';
             for (var i = 0; i < filtered.length; i++) {
@@ -16002,6 +16012,193 @@
             slabOffUpdateResult();
         }
 
+        // ===== HERPES ANTIVIRAL DOSING TOOL =====
+
+        var herpesMode = 'hsv';
+        var herpesExpanded = { epithelial:true, stromal:false, necrotizing:false, endotheliitis:false, prophylaxis:false, acute:true, immunocomp:false, adjunctive:false, renal:false };
+        var herpesToolFromMeds = false;
+
+        function toggleHerpesMode(mode) {
+            herpesMode = mode;
+            var el = document.getElementById('toolsContent');
+            if (el) renderHerpesTool(el);
+        }
+        function toggleHerpesSection(key) {
+            herpesExpanded[key] = !herpesExpanded[key];
+            var el = document.getElementById('toolsContent');
+            if (el) renderHerpesTool(el);
+        }
+        function herpesExpandAll() {
+            var sections = herpesMode === 'hsv' ? ['epithelial','stromal','necrotizing','endotheliitis','prophylaxis','renal'] : ['acute','immunocomp','adjunctive','renal'];
+            for (var i = 0; i < sections.length; i++) herpesExpanded[sections[i]] = true;
+            var el = document.getElementById('toolsContent');
+            if (el) renderHerpesTool(el);
+        }
+        function herpesCollapseAll() {
+            var sections = herpesMode === 'hsv' ? ['epithelial','stromal','necrotizing','endotheliitis','prophylaxis','renal'] : ['acute','immunocomp','adjunctive','renal'];
+            for (var i = 0; i < sections.length; i++) herpesExpanded[sections[i]] = false;
+            var el = document.getElementById('toolsContent');
+            if (el) renderHerpesTool(el);
+        }
+
+        function buildHerpesSection(id, icon, title, summary, content) {
+            var exp = herpesExpanded[id];
+            return '<div class="tools-card" style="padding:0;">'
+                + '<div class="de-section-header" onclick="toggleHerpesSection(\'' + id + '\')" style="padding:16px 20px;">'
+                + '<i class="de-chevron ph-duotone ph-caret-right' + (exp ? ' expanded' : '') + '"></i>'
+                + '<i class="de-section-icon ph-duotone ' + icon + '"></i>'
+                + '<div style="flex:1;"><div class="de-section-title">' + title + '</div>'
+                + '<div class="de-section-summary">' + summary + '</div></div>'
+                + '</div>'
+                + (exp ? '<div class="de-section-body" style="padding:0 20px 16px 20px;border-top:1px solid var(--rule);">' + content + '</div>' : '')
+                + '</div>';
+        }
+
+        function herpesMedLink(medId, label) {
+            return '<span onclick="navigateToMed(\'' + medId + '\')" style="cursor:pointer;color:var(--accent);font-weight:600;">'
+                + label + ' <i class="ph-bold ph-arrow-square-out" style="font-size:10px;vertical-align:1px;opacity:0.6;"></i></span>';
+        }
+
+        function herpesDoseTable(headers, rows) {
+            var h = '<tr>';
+            for (var i = 0; i < headers.length; i++) h += '<th>' + headers[i] + '</th>';
+            h += '</tr>';
+            var r = '';
+            for (var j = 0; j < rows.length; j++) {
+                r += '<tr>';
+                for (var k = 0; k < rows[j].length; k++) r += '<td>' + rows[j][k] + '</td>';
+                r += '</tr>';
+            }
+            return '<div style="overflow-x:auto;"><table class="bv-norms-table"><thead>' + h + '</thead><tbody>' + r + '</tbody></table></div>';
+        }
+
+        function renderHerpesTool(el) {
+            var backLabel = herpesToolFromMeds ? 'Antivirals' : 'All Tools';
+            var backAction = herpesToolFromMeds ? 'herpesToolFromMeds=false;toolsBack();switchTab(\'meds\');selectMedCondition(\'antivirals\');' : 'toolsBack()';
+            var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">'
+                + '<button onclick="' + backAction + '" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> ' + backLabel
+                + '</button>'
+                + '<div class="de-expand-btns" style="margin-top:0;"><button onclick="herpesExpandAll()">Expand All</button><button onclick="herpesCollapseAll()">Collapse All</button></div>'
+                + '</div>';
+
+            // Mode toggle — HSV Keratitis vs HZO
+            html += '<div style="display:flex;gap:8px;margin-bottom:18px;">'
+                + '<button class="bv-opt-btn' + (herpesMode === 'hsv' ? ' selected' : '') + '" onclick="toggleHerpesMode(\'hsv\')">HSV Keratitis</button>'
+                + '<button class="bv-opt-btn' + (herpesMode === 'hzo' ? ' selected' : '') + '" onclick="toggleHerpesMode(\'hzo\')">Herpes Zoster Ophthalmicus</button>'
+                + '</div>';
+
+            if (herpesMode === 'hsv') {
+                // --- HSV Keratitis Sections ---
+
+                // 1. Epithelial Keratitis
+                html += buildHerpesSection('epithelial', 'ph-eye', 'Epithelial Keratitis (Dendritic / Geographic)', 'First-line topical & oral antivirals',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        [herpesMedLink('med_033','Zirgan (ganciclovir 0.15% gel)'),'1 drop','5\u00d7/day until healed, then 3\u00d7/day','7 days after re-epithelialization'],
+                        [herpesMedLink('med_034','Viroptic (trifluridine 1%)'),'1 drop','9\u00d7/day (q2h while awake)','Max 21 days'],
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'500 mg','3\u00d7/day','7\u201310 days'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'400 mg','5\u00d7/day','7\u201310 days']
+                    ])
+                    + '<div class="de-note">Topical antivirals are first-line for epithelial disease. Oral antivirals are an effective alternative, especially when topical agents are unavailable or poorly tolerated. Avoid topical corticosteroids in active epithelial disease.</div>'
+                );
+
+                // 2. Stromal Keratitis (Immune / Non-necrotizing)
+                html += buildHerpesSection('stromal', 'ph-stack', 'Stromal Keratitis (Immune / Non-necrotizing)', 'Topical steroid + antiviral cover',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'500 mg','2\u20133\u00d7/day','Weeks\u2013months (steroid taper duration)'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'400 mg','3\u20135\u00d7/day','Weeks\u2013months (steroid taper duration)']
+                    ])
+                    + '<div class="de-note">Topical corticosteroid (e.g., prednisolone acetate 1%) is the primary treatment for immune stromal keratitis; oral antiviral provides prophylactic cover to prevent epithelial reactivation during steroid use. Taper steroid slowly over weeks to months based on clinical response.</div>'
+                );
+
+                // 3. Necrotizing Stromal Keratitis
+                html += buildHerpesSection('necrotizing', 'ph-warning-octagon', 'Necrotizing Stromal Keratitis', 'Aggressive oral antiviral therapy',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'1 g (1000 mg)','3\u00d7/day','Several weeks; taper with clinical improvement'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'800 mg','5\u00d7/day','Several weeks; taper with clinical improvement']
+                    ])
+                    + '<div class="de-note">Necrotizing stromal keratitis involves active viral replication within the stroma. Requires higher-dose oral antivirals. Topical corticosteroids may be used cautiously and only with concurrent antiviral therapy. Consider referral to cornea specialist.</div>'
+                );
+
+                // 4. Endotheliitis
+                html += buildHerpesSection('endotheliitis', 'ph-hexagon', 'Endotheliitis', 'Oral antiviral + topical steroid',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'500 mg\u20131 g (1000 mg)','2\u20133\u00d7/day','Weeks\u2013months'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'400\u2013800 mg','3\u20135\u00d7/day','Weeks\u2013months']
+                    ])
+                    + '<div class="de-note">Presents with corneal edema, KPs, and mild anterior chamber reaction without significant stromal infiltration. Treat with topical corticosteroids and oral antiviral cover. Monitor IOP as elevated pressure is common with herpetic endotheliitis.</div>'
+                );
+
+                // 5. Prophylaxis / Suppressive (HEDS)
+                html += buildHerpesSection('prophylaxis', 'ph-shield-check', 'Prophylaxis / Suppressive Therapy (HEDS)', 'Long-term suppression to prevent recurrence',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'500 mg','1\u00d7/day','12 months (HEDS); may extend longer'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'400 mg','2\u00d7/day','12 months (HEDS); may extend longer']
+                    ])
+                    + '<div class="de-note">The HEDS Acyclovir Prevention Trial showed oral acyclovir 400 mg BID reduced recurrence of any type of ocular HSV by ~45% over 12 months. Valacyclovir 500 mg daily is the commonly used modern equivalent. Consider for patients with \u22652 episodes/year or sight-threatening disease history. Periodically reassess need for continued suppression.</div>'
+                );
+
+            } else {
+                // --- HZO Sections ---
+
+                // 1. Acute Treatment
+                html += buildHerpesSection('acute', 'ph-lightning', 'Acute Treatment (Within 72 h of Rash Onset)', 'Standard oral antiviral dosing',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'1 g (1000 mg)','3\u00d7/day','7 days'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'800 mg','5\u00d7/day','7\u201310 days'],
+                        [herpesMedLink('med_083','Famvir (famciclovir)'),'500 mg','3\u00d7/day','7 days']
+                    ])
+                    + '<div class="de-note">Initiate within 72 hours of rash onset for maximal efficacy. Treatment reduces duration and severity of acute disease, risk of ocular complications, and may reduce risk of postherpetic neuralgia. Valacyclovir or famciclovir are preferred over acyclovir due to improved bioavailability and simpler dosing.</div>'
+                );
+
+                // 2. Immunocompromised Patients
+                html += buildHerpesSection('immunocomp', 'ph-shield-warning', 'Immunocompromised Patients', 'IV acyclovir or higher oral dosing',
+                    herpesDoseTable(['Drug','Dose','Frequency','Duration'], [
+                        ['Acyclovir IV','5\u201310 mg/kg','q8h IV','7\u201314 days (until lesions crusted)'],
+                        [herpesMedLink('med_035','Valtrex (valacyclovir)'),'1 g (1000 mg)','3\u00d7/day','7\u201314 days'],
+                        [herpesMedLink('med_082','Zovirax (acyclovir oral)'),'800 mg','5\u00d7/day','7\u201314 days']
+                    ])
+                    + '<div class="de-note">IV acyclovir is preferred for severely immunocompromised patients (e.g., transplant recipients, advanced HIV, active chemotherapy) or those with disseminated zoster. Oral therapy may be used for mild cases in moderately immunocompromised patients. Longer treatment courses may be needed; treat until all lesions have crusted. Consult infectious disease as appropriate.</div>'
+                );
+
+                // 3. Adjunctive Ophthalmic Management
+                html += buildHerpesSection('adjunctive', 'ph-first-aid-kit', 'Adjunctive Ophthalmic Management', 'Topical treatment for ocular manifestations',
+                    '<div style="font-size:13px;line-height:1.7;color:var(--ink);">'
+                    + '<p style="margin:8px 0;"><strong>Keratitis (pseudodendrites / nummular):</strong> Topical corticosteroid (e.g., prednisolone acetate 1%) with slow taper. No topical antiviral needed if on systemic therapy.</p>'
+                    + '<p style="margin:8px 0;"><strong>Anterior uveitis:</strong> Cycloplegic (e.g., cyclopentolate 1% BID\u2013TID) + topical corticosteroid. Monitor IOP closely.</p>'
+                    + '<p style="margin:8px 0;"><strong>Elevated IOP:</strong> Aqueous suppressants preferred (timolol, dorzolamide). Avoid prostaglandin analogs (may worsen inflammation).</p>'
+                    + '<p style="margin:8px 0;"><strong>Neurotrophic keratopathy:</strong> Preservative-free artificial tears, autologous serum tears, or ' + herpesMedLink('med_033','Zirgan') + ' may be considered. Avoid further epithelial toxicity. Consider amniotic membrane or tarsorrhaphy for persistent epithelial defects.</p>'
+                    + '</div>'
+                );
+            }
+
+            // --- Shared: Renal Dosing ---
+            html += buildHerpesSection('renal', 'ph-kidneys', 'Renal Dosing Adjustments', 'Dose modifications for impaired creatinine clearance',
+                herpesDoseTable(['Drug','CrCl 25\u201350 mL/min','CrCl 10\u201325 mL/min','CrCl < 10 mL/min'], [
+                    [herpesMedLink('med_035','Valacyclovir'),'1 g (1000 mg) q12h (HZO) / no change (HSV)','1 g (1000 mg) q24h (HZO) / 500 mg q24h (HSV)','500 mg q24h'],
+                    [herpesMedLink('med_082','Acyclovir oral'),'Normal dose','Normal dose q12h','200\u2013800 mg q12h'],
+                    [herpesMedLink('med_083','Famciclovir'),'500 mg q12h (HZO)','500 mg q24h (HZO)','250 mg q24h (HZO)']
+                ])
+                + '<div class="de-note">Ensure adequate hydration with all antiviral agents to reduce risk of crystalline nephropathy. Acyclovir and valacyclovir carry the highest risk of renal toxicity. Dose adjust based on creatinine clearance (Cockcroft-Gault). Always verify current prescribing information.</div>'
+            );
+
+            // References
+            html += '<div class="ref-toggle-wrap" style="margin-top:14px;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + '<div style="font-size:11.5px;color:var(--ink-secondary);line-height:1.6;">'
+                + 'White ML, Chodosh J. Herpes Simplex Virus Keratitis: A Treatment Guideline \u2013 2014. <em>AAO Preferred Practice Pattern.</em> American Academy of Ophthalmology; 2014.<br>'
+                + 'Wilhelmus KR. Antiviral treatment and other therapeutic interventions for herpes simplex virus epithelial keratitis. <em>Cochrane Database Syst Rev.</em> 2015;1:CD002898.<br>'
+                + 'HEDS Group. Acyclovir for the prevention of recurrent herpes simplex virus eye disease. <em>N Engl J Med.</em> 1998;339(5):300\u2013306.<br>'
+                + 'Liesegang TJ. Herpes zoster ophthalmicus: natural history, risk factors, clinical presentation, and morbidity. <em>Ophthalmology.</em> 2008;115(2 Suppl):S3\u2013S12.<br>'
+                + 'Dworkin RH, Johnson RW, Breuer J, et al. Recommendations for the management of herpes zoster. <em>Clin Infect Dis.</em> 2007;44(Suppl 1):S1\u2013S26.<br>'
+                + 'Valeant Pharmaceuticals. Valtrex (valacyclovir) prescribing information. 2023.<br>'
+                + 'Bausch + Lomb. Zirgan (ganciclovir ophthalmic gel 0.15%) prescribing information. 2023.'
+                + '</div></div></div>';
+
+            el.innerHTML = html;
+        }
+
         // ===== MEDICATIONS TAB =====
 
         function renderMeds() {
@@ -16206,6 +16403,11 @@
                     }
                 });
                 html += `</div></div>`;
+            }
+
+            // Herpes dosing guide button (antivirals only)
+            if (group.id === 'antivirals') {
+                html += `<button class="med-dropdown-btn has-selection" onclick="event.stopPropagation();herpesToolFromMeds=true;switchTab('tools');openTool('herpes');" style="gap:5px;"><i class="ph-duotone ph-dna" style="font-size:14px;"></i> Dosing Guide <i class="ph-bold ph-arrow-square-out" style="font-size:9px;opacity:0.5;"></i></button>`;
             }
 
             html += `</div>`;
