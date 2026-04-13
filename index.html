@@ -3210,6 +3210,9 @@
         .browse-filter-btn.bf-mftoric { color: #7c3aed; border-color: rgba(124,58,237,0.3); }
         .browse-filter-btn.bf-mftoric:hover { background: rgba(124,58,237,0.08); border-color: #7c3aed; color: #7c3aed; }
         .browse-filter-btn.bf-mftoric.active { background: #7c3aed; border-color: #7c3aed; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(124,58,237,0.35); }
+        .browse-filter-btn.bf-mat { color: #64748b; border-color: rgba(100,116,139,0.3); }
+        .browse-filter-btn.bf-mat:hover { background: rgba(100,116,139,0.08); border-color: #64748b; color: #64748b; }
+        .browse-filter-btn.bf-mat.active { background: #64748b; border-color: #64748b; color: #fff; font-weight: 800; box-shadow: 0 2px 6px rgba(100,116,139,0.35); }
         .browse-table th.browse-th-active {
             color: var(--accent);
         }
@@ -4434,7 +4437,7 @@
             ] },
             { name:"Precision7", brand:"Alcon", type:"sphere", modality:"weekly", dk:149, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"12", price:"$62 (12pk)", wear:"EW", material:"Serafilcon A (SiHy)", sph50start:6 },
             { name:"Precision7 for Astigmatism", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"12", price:"$75 (12pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:6, stabilization:"Precision Balance 8|4\u00B0" },
-            { name:"Total30", brand:"Alcon", type:"sphere", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$75 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)", sph50start:6 },
+            { name:"Total30", brand:"Alcon", type:"sphere", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$75 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)", sph50start:8, sph50startPlus:6 },
             { name:"Total30 for Astigmatism", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$85", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, stabilization:"Precision Balance 8|4\u00B0", axisRestrictions: [
               { cyls: [-2.75], axes: [10,20,30,70,80,90,100,110,150,160,170,180], sphMax:4, sph50all:true }
             ] },
@@ -6081,6 +6084,21 @@
             if (e.key === 'Enter' && e.target.id === 'pasteRxInput') { e.preventDefault(); parsePastedRx(); }
         });
 
+        function addScrollStep(el, callback) {
+            el.addEventListener("wheel", function(e) {
+                if (document.activeElement !== el && !el.matches(":hover")) return;
+                e.preventDefault();
+                var dir = e.deltaY < 0 ? -1 : 1;
+                if (el.tagName === "SELECT") {
+                    var i = el.selectedIndex + dir;
+                    if (i >= 0 && i < el.options.length) {
+                        el.selectedIndex = i;
+                        el.dispatchEvent(new Event("change"));
+                    }
+                } else { callback && callback(dir); }
+            }, { passive: false });
+        }
+
         function bindEyeInputs(prefix, eye, onAddChange) {
             const otherEye = eye === state.od ? state.os : state.od;
             const sphNeg = document.getElementById(`${prefix}_sphNeg`);
@@ -6094,10 +6112,10 @@
             if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; if (!otherEye.cylAbs) otherEye.cylSign = '+'; rerender(); });
 
             const sphEl = document.getElementById(`${prefix}_inSph`);
-            if (sphEl) sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); });
+            if (sphEl) { sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); }); addScrollStep(sphEl); }
 
             const cylEl = document.getElementById(`${prefix}_inCyl`);
-            if (cylEl) cylEl.addEventListener("change", (e) => { eye.cylAbs = e.target.value; rerender(); });
+            if (cylEl) { cylEl.addEventListener("change", (e) => { eye.cylAbs = e.target.value; rerender(); }); addScrollStep(cylEl); }
 
             const axis90 = document.getElementById(`${prefix}_axis90`);
             const axis180 = document.getElementById(`${prefix}_axis180`);
@@ -6108,14 +6126,15 @@
             if (axisEl) {
                 axisEl.addEventListener("blur", (e) => { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); rerender(); });
                 axisEl.addEventListener("keydown", (e) => { if (e.key === "Enter") { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); rerender(); } });
+                addScrollStep(axisEl, function(dir) { var cur = parseInt(eye.axis) || 90; var nv = cur + dir; if (nv < 1) nv = 180; else if (nv > 180) nv = 1; eye.axis = String(nv); rerender(); });
             }
 
             const addEl = document.getElementById(`${prefix}_inAdd`);
-            if (addEl) addEl.addEventListener("change", (e) => {
+            if (addEl) { addScrollStep(addEl); addEl.addEventListener("change", (e) => {
                 eye.addAbs = e.target.value;
                 if (onAddChange) onAddChange(e.target.value);
                 rerender();
-            });
+            }); }
         }
 
         function bindRxInputs() {
@@ -6471,7 +6490,7 @@
                     }
                 }
             }
-            var threshold = lens.sph50start || 6;
+            var threshold = (val >= 0 && lens.sph50startPlus !== undefined) ? lens.sph50startPlus : (lens.sph50start || 6);
             if (Math.abs(val) < threshold) return snapTo025(val);
             // Snap to 0.50D, rounding toward most plus (least minus)
             return Math.ceil(val * 2) / 2;
@@ -13044,6 +13063,7 @@
             browseState.search = "";
             browseState.typeFilter = null;
             browseState.modalityFilter = null;
+            browseState.materialFilter = null;
             browseState.sortDk = null;
             browseState.sortBc = null;
             browseState.sortDia = null;
@@ -17064,7 +17084,7 @@
         }
 
         // ===== BROWSE ALL TAB =====
-        const browseState = { search: "", typeFilter: null, modalityFilter: null, sortDk: null, sortBc: null, sortDia: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
+        const browseState = { search: "", typeFilter: null, modalityFilter: null, materialFilter: null, sortDk: null, sortBc: null, sortDia: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
 
         function toggleBrowseType(type) {
             browseState.typeFilter = browseState.typeFilter === type ? null : type;
@@ -17073,6 +17093,11 @@
 
         function toggleBrowseModality(mod) {
             browseState.modalityFilter = browseState.modalityFilter === mod ? null : mod;
+            renderBrowse();
+        }
+
+        function toggleBrowseMaterial(mat) {
+            browseState.materialFilter = browseState.materialFilter === mat ? null : mat;
             renderBrowse();
         }
 
@@ -17177,12 +17202,14 @@
             const yearlyCost = formatYearlyCost(lens);
 
             const sph50t = lens.sph50start || 6;
+            const sph50tPlus = lens.sph50startPlus !== undefined ? lens.sph50startPlus : sph50t;
             const sphMaxAbs = Math.max(Math.abs(lens.sphMin), Math.abs(lens.sphMax));
             const axesMatch = lens.axes ? lens.axes.match(/^(.+°)\s*\((.+)\)$/) : null;
+            const sphNote = sphMaxAbs <= Math.min(sph50t, sph50tPlus) ? '(0.25 steps)' : sph50t !== sph50tPlus ? `(0.50 steps beyond \u2212${sph50t.toFixed(2)} / +${sph50tPlus.toFixed(2)})` : `(0.50 steps beyond \u00B1${sph50t.toFixed(2)})`;
             const specs = [
                 { label: "Base Curve", value: bcs.length > 1 ? bcs.join(" / ") : lens.bc },
                 { label: "Diameter", value: lens.diam },
-                { label: "Sph Range", value: `${lens.sphMin.toFixed(2)} to ${lens.sphMax > 0 ? "+" : ""}${lens.sphMax.toFixed(2)}`, wide:true, note: sphMaxAbs > sph50t ? `(0.50 steps beyond \u00B1${sph50t.toFixed(2)})` : '(0.25 steps)' },
+                { label: "Sph Range", value: `${lens.sphMin.toFixed(2)} to ${lens.sphMax > 0 ? "+" : ""}${lens.sphMax.toFixed(2)}`, wide:true, note: sphNote },
                 ...(hasCyl ? [{ label: "Cyl Range", value: `${lens.cylMin.toFixed(2)} to ${lens.cylMax.toFixed(2)}`, wide:true, note: '(\u22120.50 steps)' }] : []),
                 ...(lens.axes ? [{ label: "Axes", value: axesMatch ? axesMatch[1] : lens.axes, wide:true, note: axesMatch ? `(${axesMatch[2]})` : null }] : []),
                 ...(lens.addTypes && lens.addTypes.length ? [{ label: "Add Types", value: lens.addTypes.join(", "), wide:true }] : []),
@@ -17283,7 +17310,7 @@
 
             let html = `<div class="browse-search-wrap">
                 <span class="browse-search-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
-                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search by name, manufacturer, or private label" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
+                <input type="text" class="browse-search-input" id="browseSearchInput" placeholder="Search by name, manufacturer, material, or private label" value="${browseState.search}" oninput="browseState.search=this.value;renderBrowse()">
                 <span class="browse-search-hint" style="position:absolute;left:36px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-muted);opacity:0.35;pointer-events:none;font-family:var(--sans);font-weight:400;display:none;"></span>
             </div>`;
 
@@ -17298,14 +17325,22 @@
                 `<button class="browse-filter-btn bf-mod${(mf === m.key) ? ' active' : ''}" onclick="toggleBrowseModality(${m.key ? "'" + m.key + "'" : 'null'})">${m.label}</button>`
             ).join('');
 
-            const allActive = !tf && !mf;
+            const matf = browseState.materialFilter;
+            const matBtns = [
+                { key: "SiHy", label: "SiHy" },
+                { key: "Hydrogel", label: "Hydrogel" },
+            ].map(m =>
+                `<button class="browse-filter-btn bf-mat${matf === m.key ? ' active' : ''}" onclick="toggleBrowseMaterial('${m.key}')">${m.label}</button>`
+            ).join('');
+
+            const allActive = !tf && !mf && !matf;
             const allBtn = `<button class="browse-filter-btn bf-all${allActive ? ' active' : ''}" onclick="resetBrowseState();renderBrowse()">ALL</button>`;
             const typeBtns = typeFilters.map(f =>
                 `<button class="browse-filter-btn bf-${f.cls}${tf === f.key ? ' active' : ''}" onclick="toggleBrowseType('${f.key}')">${f.label}</button>`
             ).join('');
 
             const divider = `<span style="width:1px;align-self:stretch;background:var(--border);margin:0 4px"></span>`;
-            html += `<div class="browse-filters" style="margin-bottom:10px">${allBtn}${typeBtns}${divider}${modBtns}</div>`;
+            html += `<div class="browse-filters" style="margin-bottom:10px">${allBtn}${typeBtns}${divider}${modBtns}${divider}${matBtns}</div>`;
 
             const anySort = browseState.sortDk || browseState.sortBc || browseState.sortDia || browseState.sortSph || browseState.sortCyl || browseState.sortCost;
             const mkArrow = (s) => s === "desc" ? " &#9660;" : s === "asc" ? " &#9650;" : ' <span style="opacity:0.3">&#9650;</span>';
@@ -17327,7 +17362,8 @@
                 let allLenses = [...LENSES];
                 if (tf) allLenses = allLenses.filter(l => l.type === tf);
                 if (mf) allLenses = allLenses.filter(l => l.modality === mf);
-                if (search) { var searchNorm = search.replace(/[-]/g,' '); allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(searchNorm) || pl.retailer.toLowerCase().includes(search)))); }
+                if (matf) allLenses = allLenses.filter(l => l.material && (matf === 'SiHy' ? l.material.includes('SiHy') : !l.material.includes('SiHy')));
+                if (search) { var searchNorm = search.replace(/[-]/g,' '); allLenses = allLenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.material && l.material.toLowerCase().includes(search)) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(searchNorm) || pl.retailer.toLowerCase().includes(search)))); }
                 if (browseState.sortDk) allLenses.sort((a, b) => browseState.sortDk === "desc" ? b.dk - a.dk : a.dk - b.dk);
                 else if (browseState.sortBc) allLenses.sort((a, b) => browseState.sortBc === "desc" ? parseFloat(b.bc) - parseFloat(a.bc) : parseFloat(a.bc) - parseFloat(b.bc));
                 else if (browseState.sortDia) allLenses.sort((a, b) => browseState.sortDia === "desc" ? parseFloat(b.diam) - parseFloat(a.diam) : parseFloat(a.diam) - parseFloat(b.diam));
@@ -17359,7 +17395,8 @@
                 let lenses = LENSES.filter(l => l.brand === brand);
                 if (tf) lenses = lenses.filter(l => l.type === tf);
                 if (mf) lenses = lenses.filter(l => l.modality === mf);
-                if (search) { var searchNorm = search.replace(/[-]/g,' '); lenses = lenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(searchNorm) || pl.retailer.toLowerCase().includes(search)))); }
+                if (matf) lenses = lenses.filter(l => l.material && (matf === 'SiHy' ? l.material.includes('SiHy') : !l.material.includes('SiHy')));
+                if (search) { var searchNorm = search.replace(/[-]/g,' '); lenses = lenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.material && l.material.toLowerCase().includes(search)) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(searchNorm) || pl.retailer.toLowerCase().includes(search)))); }
                 if (lenses.length === 0) return;
                 lenses.sort((a, b) => a.name.localeCompare(b.name));
                 const color = brandColorMap[brand] || "var(--accent)";
