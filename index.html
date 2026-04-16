@@ -6084,21 +6084,6 @@
             if (e.key === 'Enter' && e.target.id === 'pasteRxInput') { e.preventDefault(); parsePastedRx(); }
         });
 
-        function addScrollStep(el, callback) {
-            el.addEventListener("wheel", function(e) {
-                if (document.activeElement !== el && !el.matches(":hover")) return;
-                e.preventDefault();
-                var dir = e.deltaY < 0 ? -1 : 1;
-                if (el.tagName === "SELECT") {
-                    var i = el.selectedIndex + dir;
-                    if (i >= 0 && i < el.options.length) {
-                        el.selectedIndex = i;
-                        el.dispatchEvent(new Event("change"));
-                    }
-                } else { callback && callback(dir); }
-            }, { passive: false });
-        }
-
         function bindEyeInputs(prefix, eye, onAddChange) {
             const otherEye = eye === state.od ? state.os : state.od;
             const sphNeg = document.getElementById(`${prefix}_sphNeg`);
@@ -6112,10 +6097,10 @@
             if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; if (!otherEye.cylAbs) otherEye.cylSign = '+'; rerender(); });
 
             const sphEl = document.getElementById(`${prefix}_inSph`);
-            if (sphEl) { sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); }); addScrollStep(sphEl); }
+            if (sphEl) sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); });
 
             const cylEl = document.getElementById(`${prefix}_inCyl`);
-            if (cylEl) { cylEl.addEventListener("change", (e) => { eye.cylAbs = e.target.value; rerender(); }); addScrollStep(cylEl); }
+            if (cylEl) cylEl.addEventListener("change", (e) => { eye.cylAbs = e.target.value; rerender(); });
 
             const axis90 = document.getElementById(`${prefix}_axis90`);
             const axis180 = document.getElementById(`${prefix}_axis180`);
@@ -6126,15 +6111,14 @@
             if (axisEl) {
                 axisEl.addEventListener("blur", (e) => { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); rerender(); });
                 axisEl.addEventListener("keydown", (e) => { if (e.key === "Enter") { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); rerender(); } });
-                addScrollStep(axisEl, function(dir) { var cur = parseInt(eye.axis) || 90; var nv = cur + dir; if (nv < 1) nv = 180; else if (nv > 180) nv = 1; eye.axis = String(nv); rerender(); });
             }
 
             const addEl = document.getElementById(`${prefix}_inAdd`);
-            if (addEl) { addScrollStep(addEl); addEl.addEventListener("change", (e) => {
+            if (addEl) addEl.addEventListener("change", (e) => {
                 eye.addAbs = e.target.value;
                 if (onAddChange) onAddChange(e.target.value);
                 rerender();
-            }); }
+            });
         }
 
         function bindRxInputs() {
