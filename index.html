@@ -1151,12 +1151,9 @@
         }
 
         .order-param.highlight {
-            background: rgba(13,148,136,0.06);
-            border-color: rgba(13,148,136,0.2);
         }
 
         .order-param.highlight .order-param-value {
-            color: var(--accent);
         }
 
         .order-note-box {
@@ -4519,9 +4516,11 @@
             // BAUSCH + LOMB
             { name:"Biotrue ONEday", brand:"Bausch + Lomb", type:"sphere", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$80 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", privateLabels:[{name:"eureka!",retailer:"Walmart"}], sph50start:6 },
             { name:"Biotrue ONEday for Astigmatism", brand:"Bausch + Lomb", type:"toric", modality:"daily", dk:42, bc:"8.4", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$86 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", privateLabels:[{name:"eureka! for Astigmatism",retailer:"Walmart"}], sph50start:6, stabilization:"Peri-Ballast", axisRestrictions: [
-              { cyls: [-2.25], sphRange: [-6, 4], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25], sphRange: [0.25, 4], axes: [10,20,80,90,100,160,170,180] },
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [10,20,90,160,170,180] },
-              { cyls: [-2.75], axes: [10,20,90,160,170,180] }
+              { cyls: [-2.75], sphRange: [-9, 0], axes: [10,20,90,160,170,180] },
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
             { name:"Biotrue ONEday for Presbyopia", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"30, 90", price:"$94 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", fittingGuide: {
                 addTable: [
@@ -4536,7 +4535,7 @@
               { cyls: [-2.25, -2.75], sphRange: [-9, -6.25], axes: [] },
               { cyls: [-2.25, -2.75], sphRange: [0.25, 6], axes: [] }
             ] },
-            { name:"INFUSE Multifocal", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-12, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"10, 90", price:"$152 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", fittingGuide: {
+            { name:"INFUSE Multifocal", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:134, bc:"8.6", diam:"14.2", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"10, 90", price:"$152 (90pk)", wear:"DW", material:"Kalifilcon A (SiHy)", fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.50, clAdd:"Low", dominant:"Low", nonDominant:"Low" },
                     { specAddMin:1.75, specAddMax:2.50, clAdd:"High", dominant:"High", nonDominant:"High" },
@@ -4690,12 +4689,18 @@
             { name:"Acuvue Oasys 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$120 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", sph50start:6 },
             { name:"Acuvue Oasys Max 1-Day", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$141 (90pk)", wear:"DW", material:"Senofilcon A HVO (SiHy)", sph50start:6 },
             { name:"Acuvue Oasys 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$144 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Blink Stabilized Design", axisRestrictions: [
-              { cyls: [-2.25], axes: [10,20,70,80,90,100,110,160,170,180] }
+              { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
+              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] },
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [-9, -6.25], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
             { name:"Acuvue Oasys Max 1-Day for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30", price:"$65 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Cylinder Optimized Blink Stabilized", axisRestrictions: [
               { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
-              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] }
+              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] },
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [-9, -6.25], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
             { name:"Acuvue Oasys Max 1-Day Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:147, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$180 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", cylAbsorb:0.75, fittingGuide: {
                 addTable: [
@@ -4780,7 +4785,8 @@
             { name:"1-Day Acuvue Moist for Astigmatism", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:33, bc:"8.5", diam:"14.5", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$135 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Blink Stabilized Design", axisRestrictions: [
               { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
-              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] }
+              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] },
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
             { name:"1-Day Acuvue Moist Multifocal", brand:"J&J Acuvue", type:"multifocal", modality:"daily", dk:33, bc:"8.4", diam:"14.3", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","Mid","High"], qty:"30, 90", price:"$149 (90pk)", wear:"DW", material:"Etafilcon A (Hydrogel)", fittingGuide: {
                 addTable: [
