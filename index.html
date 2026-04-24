@@ -4279,7 +4279,8 @@
             clparam:'clparametercalculator', anisocoria:'anisocoreadecisiontree',
             uveitislab:'uveitislabguide', eggers:'eggerschart',
             bruckner:'brucknerscreeningexamples', slaboff:'slaboffcalculator',
-            herpes:'herpesantiviraldosing'
+            herpes:'herpesantiviraldosing',
+            peddose:'pediatricdosecalculator'
         };
         var _hashToTool = {};
         for (var k in _toolToHash) _hashToTool[_toolToHash[k]] = k;
@@ -5993,7 +5994,7 @@
                 </div>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
-                <button type="button" class="copy-od-btn" onclick="copyOdToOs()">&#x2193; Copy OD to OS</button>
+                <button type="button" class="copy-od-btn" onmousedown="event.preventDefault();copyOdToOs()" ontouchstart="event.preventDefault();copyOdToOs()">&#x2193; Copy OD to OS</button>
                 ${buildEyeForm("os", state.os, "OS — Left Eye")}
 
                 <div class="form-grid" style="margin-top:14px">
@@ -9785,6 +9786,9 @@
         }
 
         function copyOdToOs() {
+            // Flush any pending axis value from the OD input before copying
+            var odAxis = document.getElementById('od_inAxis');
+            if (odAxis) { var v = parseInt(odAxis.value.replace(/[^0-9]/g, '')); state.od.axis = isNaN(v) || v < 1 ? '' : String(Math.min(180, v)); }
             Object.assign(state.os, JSON.parse(JSON.stringify(state.od)));
             rerender();
         }
@@ -10091,6 +10095,10 @@
             herpesMode = 'hsv';
             herpesExpanded = { epithelial:true, stromal:false, necrotizing:false, endotheliitis:false, prophylaxis:false, acute:true, immunocomp:false, adjunctive:false, renal:false };
             herpesToolFromMeds = false;
+            // Pediatric Dosing
+            pedDoseState.mode = 'generic'; pedDoseState.method = 'weight'; pedDoseState.weight = ''; pedDoseState.weightUnit = 'kg';
+            pedDoseState.age = ''; pedDoseState.bsa = ''; pedDoseState.frequency = 'qd'; pedDoseState.dosePerKg = '';
+            pedDoseState.adultDose = ''; pedDoseState.concentration = ''; pedDoseState.selectedMed = null;
         }
 
         function renderTools() {
@@ -10159,6 +10167,8 @@
                 renderSlabOffTool(el);
             } else if (toolsActiveTool === 'herpes') {
                 renderHerpesTool(el);
+            } else if (toolsActiveTool === 'peddose') {
+                renderPedDoseTool(el);
             }
         }
 
@@ -10167,7 +10177,7 @@
 
         var TOOLS_CATEGORIES = [
             { id:'glaucoma', label:'Glaucoma', tools:['iop','glaucoma','hvf'] },
-            { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx','bruckner'] },
+            { id:'pediatrics', label:'Pediatrics', shortLabel:'Peds', tools:['myopia','amblyopia','colorvision','bv','bvdx','bruckner','peddose'] },
             { id:'bv', label:'BV', tools:['bv','bvdx','parks','prentice','hofstetter','slaboff'] },
             { id:'neuro', label:'Neuro', tools:['bv','bvdx','vfindex','pupilcn','anisocoria','rapd','parks','hvf'] },
             { id:'oculardz', label:'Ocular Disease', shortLabel:'Disease', tools:['dr','amd','uveitislab','keratoconus','vanherick','gonio','iop','glaucoma','opticnerve','hvf','herpes'] }
@@ -10206,6 +10216,8 @@
               keywords:'binocular vision bv norms morgan vergence phoria tropia npc nra pra accommodation facility' },
             { id:'bvdx', icon:'ph-intersect', title:'BV Disorder Calculator', desc:'Step-wise binocular vision disorder identifier',
               keywords:'binocular vision disorder bv convergence insufficiency excess divergence accommodative esophoria exophoria diagnosis calculator profile' },
+            { id:'peddose', icon:'ph-baby', title:'Pediatric Dosing', desc:'Weight-based dose calculator with ophthalmic presets',
+              keywords:'pediatric dose calculator weight child baby infant kid mg kg young clark bsa amoxicillin augmentin cephalexin prednisolone atropine cyclopentolate preseptal cellulitis dosing' },
             { id:'parks', icon:'ph-path', title:'Park\u2019s 3-Step Test', desc:'Identify paretic cyclovertical muscle',
               keywords:'parks 3 step three step cranial nerve palsy strabismus hypertropia oblique rectus cn iv trochlear cyclovertical muscle' },
             { id:'herpes', icon:'ph-dna', title:'Herpes Antiviral Dosing',
@@ -10304,7 +10316,7 @@
                 dr:'#b45309', amd:'#b45309', uveitislab:'#b45309', keratoconus:'#b45309',
                 plaquenil:'#7c3aed', dryeye:'#0284c7',
                 va:'#475569', iol:'#475569', clparam:'#0d9488', eggers:'#475569', bruckner:'#16a34a',
-                hvf:'#64748b', slaboff:'#2563eb', herpes:'#b45309'
+                hvf:'#64748b', slaboff:'#2563eb', herpes:'#b45309', peddose:'#16a34a'
             };
             var cards = '';
             for (var i = 0; i < filtered.length; i++) {
@@ -16028,6 +16040,13 @@
         var herpesExpanded = { epithelial:true, stromal:false, necrotizing:false, endotheliitis:false, prophylaxis:false, acute:true, immunocomp:false, adjunctive:false, renal:false };
         var herpesToolFromMeds = false;
 
+        // === Pediatric Dose Calculator State ===
+        var pedDoseState = {
+            mode: 'generic', method: 'weight', weight: '', weightUnit: 'kg',
+            age: '', bsa: '', frequency: 'qd', dosePerKg: '',
+            adultDose: '', concentration: '', selectedMed: null
+        };
+
         function toggleHerpesMode(mode) {
             herpesMode = mode;
             var el = document.getElementById('toolsContent');
@@ -16207,6 +16226,388 @@
                 + '</div></div></div>';
 
             el.innerHTML = html;
+        }
+
+        // === Pediatric Dose Calculator ===
+
+        var PED_MEDS = [
+            { id:'amoxicillin', name:'Amoxicillin', indication:'Preseptal cellulitis', doseMin:25, doseMax:45, unit:'mg/kg/day', freq:'TID', maxDose:1500, formulations:'250 mg/5 mL, 400 mg/5 mL', notes:'Standard first-line for preseptal cellulitis' },
+            { id:'augmentin', name:'Augmentin (Amoxicillin/Clavulanate)', indication:'Preseptal / orbital cellulitis', doseMin:25, doseMax:45, unit:'mg/kg/day', freq:'BID', maxDose:1750, formulations:'250 mg/5 mL, 400 mg/5 mL, 600 mg/5 mL (ES)', notes:'Amoxicillin component dosing; use ES formulation for high-dose' },
+            { id:'cephalexin', name:'Cephalexin (Keflex)', indication:'Preseptal cellulitis / hordeolum', doseMin:25, doseMax:50, unit:'mg/kg/day', freq:'QID', maxDose:2000, formulations:'250 mg/5 mL', notes:'First-gen cephalosporin; good staph/strep coverage' },
+            { id:'bactrim', name:'Bactrim (TMP/SMX)', indication:'MRSA preseptal cellulitis', doseMin:8, doseMax:12, unit:'mg/kg/day (TMP)', freq:'BID', maxDose:320, formulations:'40 mg TMP/5 mL', notes:'Dose based on TMP component; good MRSA coverage' },
+            { id:'clindamycin', name:'Clindamycin', indication:'MRSA preseptal cellulitis', doseMin:10, doseMax:30, unit:'mg/kg/day', freq:'TID', maxDose:1800, formulations:'75 mg/5 mL', notes:'Alternative for MRSA or penicillin-allergic patients' },
+            { id:'prednisolone', name:'Prednisolone (oral)', indication:'Orbital inflammation / optic neuritis', doseMin:1, doseMax:2, unit:'mg/kg/day', freq:'QD', maxDose:60, formulations:'15 mg/5 mL', notes:'Usually given as single morning dose; taper over weeks' },
+            { id:'ibuprofen', name:'Ibuprofen', indication:'Pain / inflammation', doseMin:5, doseMax:10, unit:'mg/kg/dose', freq:'Q6-8H', maxDose:400, formulations:'100 mg/5 mL', notes:'Per-dose dosing (not daily); max 40 mg/kg/day' },
+            { id:'acetaminophen', name:'Acetaminophen', indication:'Pain / fever', doseMin:10, doseMax:15, unit:'mg/kg/dose', freq:'Q4-6H', maxDose:1000, formulations:'160 mg/5 mL', notes:'Per-dose dosing (not daily); max 75 mg/kg/day or 4 g/day' },
+            { id:'valacyclovir', name:'Valacyclovir', indication:'HSV keratitis / HZO', doseMin:20, doseMax:20, unit:'mg/kg/dose', freq:'TID', maxDose:1000, formulations:'500 mg, 1 g tablets', notes:'Per-dose dosing; max 1 g per dose TID' },
+            { id:'acyclovir', name:'Acyclovir (oral)', indication:'HSV keratitis', doseMin:20, doseMax:20, unit:'mg/kg/dose', freq:'QID', maxDose:800, formulations:'200 mg/5 mL, 200 mg & 400 mg capsules', notes:'Per-dose dosing; max 800 mg per dose' },
+            { id:'atropine_oral', name:'Atropine 1% (topical ophthalmic)', indication:'Cycloplegia / amblyopia penalization', doseMin:0, doseMax:0, unit:'topical', freq:'BID-QD', maxDose:0, formulations:'1% ophthalmic solution', notes:'1 gtt affected eye; weight-independent topical dosing. BID for cycloplegia, QD-weekend for penalization.' },
+            { id:'cyclopentolate', name:'Cyclopentolate 0.5%/1%', indication:'Cycloplegic refraction', doseMin:0, doseMax:0, unit:'topical', freq:'Per exam', maxDose:0, formulations:'0.5%, 1% ophthalmic solution', notes:'1 gtt per eye; use 0.5% for infants < 1 year, 1% for older children. Weight-independent topical dosing.' }
+        ];
+
+        function onPedDoseMode(mode) {
+            pedDoseState.mode = mode;
+            pedDoseState.selectedMed = null;
+            var el = document.getElementById('toolsContent');
+            if (el) renderPedDoseTool(el);
+        }
+        function onPedDoseMethod(method) {
+            pedDoseState.method = method;
+            var el = document.getElementById('toolsContent');
+            if (el) renderPedDoseTool(el);
+        }
+        function onPedDoseInput(field, val) {
+            pedDoseState[field] = val;
+            updatePedDoseResult();
+        }
+        function onPedDoseWeightUnit(u) {
+            pedDoseState.weightUnit = u;
+            updatePedDoseResult();
+        }
+        function selectPedMed(medId) {
+            pedDoseState.selectedMed = medId;
+            var el = document.getElementById('toolsContent');
+            if (el) renderPedDoseTool(el);
+        }
+        function pedDoseBack() {
+            pedDoseState.selectedMed = null;
+            var el = document.getElementById('toolsContent');
+            if (el) renderPedDoseTool(el);
+        }
+
+        function getPedWeightKg() {
+            var w = parseFloat(pedDoseState.weight);
+            if (isNaN(w) || w <= 0) return null;
+            return pedDoseState.weightUnit === 'lbs' ? w / 2.205 : w;
+        }
+
+        function calcPedPresetDose(med) {
+            if (med.unit === 'topical') return null;
+            var wKg = getPedWeightKg();
+            if (!wKg) return null;
+            var freqDiv = 1;
+            if (med.freq === 'BID') freqDiv = 2;
+            else if (med.freq === 'TID') freqDiv = 3;
+            else if (med.freq === 'QID' || med.freq === 'Q6-8H') freqDiv = 4;
+            else if (med.freq === 'Q4-6H') freqDiv = 5;
+
+            var isPerDose = med.unit.includes('/dose');
+            var minTotal, maxTotal, minSingle, maxSingle;
+            if (isPerDose) {
+                minSingle = med.doseMin * wKg;
+                maxSingle = med.doseMax * wKg;
+                if (med.maxDose > 0) {
+                    minSingle = Math.min(minSingle, med.maxDose);
+                    maxSingle = Math.min(maxSingle, med.maxDose);
+                }
+                minTotal = minSingle * freqDiv;
+                maxTotal = maxSingle * freqDiv;
+            } else {
+                minTotal = med.doseMin * wKg;
+                maxTotal = med.doseMax * wKg;
+                if (med.maxDose > 0) {
+                    minTotal = Math.min(minTotal, med.maxDose);
+                    maxTotal = Math.min(maxTotal, med.maxDose);
+                }
+                minSingle = minTotal / freqDiv;
+                maxSingle = maxTotal / freqDiv;
+            }
+            return { minSingle: minSingle, maxSingle: maxSingle, minTotal: minTotal, maxTotal: maxTotal, freqDiv: freqDiv, isPerDose: isPerDose };
+        }
+
+        function fmtPedDose(val) {
+            return val < 10 ? val.toFixed(1) : Math.round(val).toString();
+        }
+
+        function calcPedVolume(doseMg, formStr) {
+            var match = formStr.match(/([\d.]+)\s*mg\s*\/\s*5\s*mL/i);
+            if (!match) return null;
+            var concPer5 = parseFloat(match[1]);
+            if (isNaN(concPer5) || concPer5 <= 0) return null;
+            return (doseMg / concPer5) * 5;
+        }
+
+        function updatePedDoseResult() {
+            if (pedDoseState.mode === 'presets') {
+                var box = document.getElementById('pedPresetResult');
+                if (!box) return;
+                if (!pedDoseState.selectedMed) return;
+                var med = PED_MEDS.find(function(m) { return m.id === pedDoseState.selectedMed; });
+                if (!med) return;
+                if (med.unit === 'topical') {
+                    box.innerHTML = '<div style="color:var(--ink-secondary);font-size:13px;">Topical dosing is weight-independent. See notes above.</div>';
+                    return;
+                }
+                var r = calcPedPresetDose(med);
+                if (!r) {
+                    box.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter weight above to calculate dose</div>';
+                    return;
+                }
+                var html = '<div class="iop-result-label">Calculated Dose</div>';
+                if (r.isPerDose) {
+                    html += '<div class="iop-result-value">' + fmtPedDose(r.minSingle);
+                    if (r.minSingle !== r.maxSingle) html += ' \u2013 ' + fmtPedDose(r.maxSingle);
+                    html += ' <span class="unit">mg/dose</span></div>';
+                    html += '<div class="iop-result-detail" style="margin-top:6px;">Frequency: ' + med.freq + '</div>';
+                    html += '<div class="iop-result-detail">Daily total: ' + fmtPedDose(r.minTotal);
+                    if (r.minTotal !== r.maxTotal) html += ' \u2013 ' + fmtPedDose(r.maxTotal);
+                    html += ' mg/day</div>';
+                } else {
+                    html += '<div class="iop-result-value">' + fmtPedDose(r.minTotal);
+                    if (r.minTotal !== r.maxTotal) html += ' \u2013 ' + fmtPedDose(r.maxTotal);
+                    html += ' <span class="unit">mg/day</span></div>';
+                    html += '<div class="iop-result-detail" style="margin-top:6px;">Frequency: ' + med.freq + ' (' + r.freqDiv + '\u00d7/day)</div>';
+                    html += '<div class="iop-result-detail">Per dose: ' + fmtPedDose(r.minSingle);
+                    if (r.minSingle !== r.maxSingle) html += ' \u2013 ' + fmtPedDose(r.maxSingle);
+                    html += ' mg</div>';
+                }
+                if (med.maxDose > 0) {
+                    html += '<div class="iop-result-detail">Max: ' + med.maxDose + (r.isPerDose ? ' mg/dose' : ' mg/day') + '</div>';
+                }
+                // Volume calculation from first liquid formulation
+                var vol = calcPedVolume(r.isPerDose ? r.maxSingle : r.maxSingle, med.formulations);
+                if (vol) {
+                    html += '<div class="iop-result-detail" style="margin-top:6px;border-top:1px solid rgba(13,148,136,0.15);padding-top:6px;">'
+                        + '<strong>Volume per dose:</strong> ' + vol.toFixed(1) + ' mL (' + med.formulations.split(',')[0].trim() + ')</div>';
+                }
+                box.innerHTML = html;
+            } else {
+                var box = document.getElementById('pedGenericResult');
+                if (!box) return;
+                var method = pedDoseState.method;
+                var dose = null;
+                if (method === 'weight') {
+                    var dpk = parseFloat(pedDoseState.dosePerKg);
+                    var wKg = getPedWeightKg();
+                    if (!isNaN(dpk) && dpk > 0 && wKg) dose = dpk * wKg;
+                } else if (method === 'bsa') {
+                    var dpm = parseFloat(pedDoseState.dosePerKg); // reused field for dose/m²
+                    var bsa = parseFloat(pedDoseState.bsa);
+                    if (!isNaN(dpm) && dpm > 0 && !isNaN(bsa) && bsa > 0) dose = dpm * bsa;
+                } else if (method === 'youngs') {
+                    var ad = parseFloat(pedDoseState.adultDose);
+                    var age = parseFloat(pedDoseState.age);
+                    if (!isNaN(ad) && ad > 0 && !isNaN(age) && age > 0) dose = ad * (age / (age + 12));
+                } else if (method === 'clarks') {
+                    var ad = parseFloat(pedDoseState.adultDose);
+                    var w = parseFloat(pedDoseState.weight);
+                    var wLbs = pedDoseState.weightUnit === 'kg' ? w * 2.205 : w;
+                    if (!isNaN(ad) && ad > 0 && !isNaN(wLbs) && wLbs > 0) dose = ad * (wLbs / 150);
+                }
+                if (dose === null || dose <= 0) {
+                    box.innerHTML = '<div style="color:var(--ink-muted);font-size:13px;">Enter values above to calculate dose</div>';
+                    return;
+                }
+                var freqMap = { qd:1, bid:2, tid:3, qid:4 };
+                var freqN = freqMap[pedDoseState.frequency] || 1;
+                var freqLabel = pedDoseState.frequency.toUpperCase();
+                var daily = dose * freqN;
+                var html = '<div class="iop-result-label">Calculated Dose</div>';
+                html += '<div class="iop-result-value">' + fmtPedDose(dose) + ' <span class="unit">mg</span></div>';
+                html += '<div class="iop-result-detail" style="margin-top:6px;">Single dose: ' + fmtPedDose(dose) + ' mg ' + freqLabel + '</div>';
+                if (freqN > 1) {
+                    html += '<div class="iop-result-detail">Daily total: ' + fmtPedDose(daily) + ' mg/day</div>';
+                }
+                var conc = parseFloat(pedDoseState.concentration);
+                if (!isNaN(conc) && conc > 0) {
+                    var vol = dose / conc;
+                    html += '<div class="iop-result-detail" style="margin-top:6px;border-top:1px solid rgba(13,148,136,0.15);padding-top:6px;">'
+                        + '<strong>Volume per dose:</strong> ' + vol.toFixed(2) + ' mL</div>';
+                }
+                box.innerHTML = html;
+            }
+        }
+
+        function renderPedDoseTool(el) {
+            var html = '<div style="margin-bottom:14px;">'
+                + '<button onclick="toolsBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:4px;">'
+                + '<i class="ph-bold ph-caret-left" style="font-size:14px;"></i> All Tools'
+                + '</button></div>';
+
+            html += '<div class="tools-card">';
+            html += '<div class="tools-card-title"><i class="ph-duotone ph-baby"></i> Pediatric Dose Calculator</div>';
+            html += '<div class="tools-card-desc">Calculate pediatric medication doses by weight, BSA, Young\u2019s rule, or Clark\u2019s rule. Includes preset ophthalmic medications with known pediatric dosing.</div>';
+
+            // Mode toggle
+            html += '<div style="display:flex;gap:8px;margin-bottom:18px;">'
+                + '<button class="bv-opt-btn' + (pedDoseState.mode === 'generic' ? ' selected' : '') + '" onclick="onPedDoseMode(\'generic\')" style="flex:1;padding:10px 14px;font-size:14px;font-weight:700;border:2px solid ' + (pedDoseState.mode === 'generic' ? 'var(--accent)' : 'var(--border)') + ';"><i class="ph ph-calculator" style="margin-right:5px;"></i>Generic Calculator</button>'
+                + '<button class="bv-opt-btn' + (pedDoseState.mode === 'presets' ? ' selected' : '') + '" onclick="onPedDoseMode(\'presets\')" style="flex:1;padding:10px 14px;font-size:14px;font-weight:700;border:2px solid ' + (pedDoseState.mode === 'presets' ? 'var(--accent)' : 'var(--border)') + ';"><i class="ph ph-list-bullets" style="margin-right:5px;"></i>Preset Medications</button>'
+                + '</div>';
+
+            if (pedDoseState.mode === 'presets') {
+                html += renderPedPresets();
+            } else {
+                html += renderPedGeneric();
+            }
+
+            // Disclaimer
+            html += '<div style="margin-top:18px;padding:12px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.25);border-radius:var(--radius);font-size:11.5px;color:#b91c1c;line-height:1.5;font-weight:700;">'
+                + '<strong>Clinical Disclaimer:</strong> All doses are estimates and should be verified against current formulary references. Always confirm weight, allergies, renal/hepatic function, and clinical appropriateness before prescribing. Young\u2019s and Clark\u2019s rules are approximations and should not replace evidence-based weight-based dosing when available.'
+                + '</div>';
+
+            // References
+            html += '<div class="ref-toggle-wrap" style="margin-top:14px;">'
+                + '<button class="ref-toggle-btn" onclick="this.parentElement.classList.toggle(\'ref-open\')"><i class="ph ph-caret-right"></i> References</button>'
+                + '<div class="ref-toggle-content">'
+                + '<div style="font-size:11.5px;color:var(--ink-secondary);line-height:1.6;">'
+                + 'Kimberlin DW, Brady MT, Jackson MA, Long SS, eds. <em>Red Book: 2021\u20132024 Report of the Committee on Infectious Diseases.</em> 32nd ed. AAP; 2021.<br>'
+                + 'Lexicomp Online. Pediatric & Neonatal Dosage Handbook. Wolters Kluwer; 2024.<br>'
+                + 'Taketomo CK, Hodding JH, Kraus DM. <em>Pediatric & Neonatal Dosage Handbook.</em> 29th ed. Lexicomp; 2022.<br>'
+                + 'American Academy of Ophthalmology. Preferred Practice Patterns. 2023\u20132024.<br>'
+                + 'Young\u2019s Rule: dose = adult dose \u00d7 [age / (age + 12)]. Clark\u2019s Rule: dose = adult dose \u00d7 [weight(lbs) / 150].'
+                + '</div></div></div>';
+
+            html += '</div>'; // close tools-card
+            el.innerHTML = html;
+        }
+
+        function renderPedPresets() {
+            var html = '';
+            if (pedDoseState.selectedMed) {
+                var med = PED_MEDS.find(function(m) { return m.id === pedDoseState.selectedMed; });
+                if (!med) return '';
+                html += '<div style="margin-bottom:12px;">'
+                    + '<button onclick="pedDoseBack()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;padding:0;display:inline-flex;align-items:center;gap:3px;">'
+                    + '<i class="ph-bold ph-caret-left" style="font-size:12px;"></i> All Presets</button></div>';
+
+                html += '<div style="padding:14px;background:var(--surface-2);border-radius:var(--radius);margin-bottom:14px;">'
+                    + '<div style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:4px;">' + med.name + '</div>'
+                    + '<div style="font-size:12.5px;color:var(--accent);font-weight:600;margin-bottom:6px;">' + med.indication + '</div>';
+
+                if (med.unit === 'topical') {
+                    html += '<div style="font-size:13px;color:var(--ink-secondary);line-height:1.5;">' + med.notes + '</div>';
+                    html += '<div style="margin-top:8px;font-size:12px;color:var(--ink-muted);">Formulations: ' + med.formulations + '</div>';
+                } else {
+                    html += '<div style="font-size:13px;color:var(--ink-secondary);margin-bottom:2px;">Dose range: <strong>' + med.doseMin;
+                    if (med.doseMin !== med.doseMax) html += '\u2013' + med.doseMax;
+                    html += ' ' + med.unit + '</strong></div>';
+                    html += '<div style="font-size:13px;color:var(--ink-secondary);margin-bottom:2px;">Frequency: <strong>' + med.freq + '</strong></div>';
+                    if (med.maxDose > 0) {
+                        html += '<div style="font-size:13px;color:var(--ink-secondary);margin-bottom:2px;">Max dose: <strong>' + med.maxDose + (med.unit.includes('/dose') ? ' mg/dose' : ' mg/day') + '</strong></div>';
+                    }
+                    html += '<div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Formulations: ' + med.formulations + '</div>';
+                    if (med.notes) html += '<div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">' + med.notes + '</div>';
+                }
+                html += '</div>';
+
+                // Weight input for non-topical meds
+                if (med.unit !== 'topical') {
+                    html += '<div class="iop-form-grid"><div class="iop-form-group">'
+                        + '<label>Patient Weight</label>'
+                        + '<div style="display:flex;gap:6px;align-items:center;">'
+                        + '<input type="number" id="pedWeight" placeholder="e.g. 20" min="0.5" max="200" step="0.1" value="' + pedDoseState.weight + '" oninput="onPedDoseInput(\'weight\',this.value)" style="flex:1;">'
+                        + '<select onchange="onPedDoseWeightUnit(this.value)" style="width:70px;">'
+                        + '<option value="kg"' + (pedDoseState.weightUnit === 'kg' ? ' selected' : '') + '>kg</option>'
+                        + '<option value="lbs"' + (pedDoseState.weightUnit === 'lbs' ? ' selected' : '') + '>lbs</option>'
+                        + '</select></div></div></div>';
+
+                    html += '<div class="iop-result-box" id="pedPresetResult">'
+                        + '<div style="color:var(--ink-muted);font-size:13px;">Enter weight above to calculate dose</div></div>';
+                } else {
+                    html += '<div class="iop-result-box" id="pedPresetResult">'
+                        + '<div style="color:var(--ink-secondary);font-size:13px;">Topical dosing is weight-independent. See notes above.</div></div>';
+                }
+            } else {
+                // Medication list
+                html += '<div style="font-size:12px;font-weight:600;color:var(--ink-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Select a Medication</div>';
+                // Group: systemic vs topical
+                var systemic = PED_MEDS.filter(function(m) { return m.unit !== 'topical'; });
+                var topical = PED_MEDS.filter(function(m) { return m.unit === 'topical'; });
+
+                html += '<div style="font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Systemic Medications</div>';
+                for (var i = 0; i < systemic.length; i++) {
+                    var m = systemic[i];
+                    html += '<button onclick="selectPedMed(\'' + m.id + '\')" style="display:block;width:100%;text-align:left;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:6px;cursor:pointer;font-family:var(--sans);transition:border-color 0.15s;"'
+                        + ' onmouseenter="this.style.borderColor=\'var(--accent)\'" onmouseleave="this.style.borderColor=\'var(--border)\'">'
+                        + '<div style="font-weight:600;font-size:13.5px;color:var(--ink);">' + m.name + '</div>'
+                        + '<div style="font-size:12px;color:var(--ink-secondary);margin-top:2px;">' + m.indication + ' \u2022 ' + m.doseMin;
+                    if (m.doseMin !== m.doseMax) html += '\u2013' + m.doseMax;
+                    html += ' ' + m.unit + '</div></button>';
+                }
+
+                html += '<div style="font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.8px;margin:14px 0 6px;">Topical Ophthalmic</div>';
+                for (var i = 0; i < topical.length; i++) {
+                    var m = topical[i];
+                    html += '<button onclick="selectPedMed(\'' + m.id + '\')" style="display:block;width:100%;text-align:left;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:6px;cursor:pointer;font-family:var(--sans);transition:border-color 0.15s;"'
+                        + ' onmouseenter="this.style.borderColor=\'var(--accent)\'" onmouseleave="this.style.borderColor=\'var(--border)\'">'
+                        + '<div style="font-weight:600;font-size:13.5px;color:var(--ink);">' + m.name + '</div>'
+                        + '<div style="font-size:12px;color:var(--ink-secondary);margin-top:2px;">' + m.indication + '</div></button>';
+                }
+            }
+            return html;
+        }
+
+        function renderPedGeneric() {
+            var html = '';
+            // Method tabs
+            html += '<div style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;">'
+                + '<button class="bv-opt-btn' + (pedDoseState.method === 'weight' ? ' selected' : '') + '" onclick="onPedDoseMethod(\'weight\')" style="font-size:12px;padding:6px 12px;">Weight-Based</button>'
+                + '<button class="bv-opt-btn' + (pedDoseState.method === 'bsa' ? ' selected' : '') + '" onclick="onPedDoseMethod(\'bsa\')" style="font-size:12px;padding:6px 12px;">BSA</button>'
+                + '<button class="bv-opt-btn' + (pedDoseState.method === 'youngs' ? ' selected' : '') + '" onclick="onPedDoseMethod(\'youngs\')" style="font-size:12px;padding:6px 12px;">Young\u2019s Rule</button>'
+                + '<button class="bv-opt-btn' + (pedDoseState.method === 'clarks' ? ' selected' : '') + '" onclick="onPedDoseMethod(\'clarks\')" style="font-size:12px;padding:6px 12px;">Clark\u2019s Rule</button>'
+                + '</div>';
+
+            // Formula display
+            var formulaText = '';
+            if (pedDoseState.method === 'weight') formulaText = 'Dose = (mg/kg) \u00d7 weight (kg)';
+            else if (pedDoseState.method === 'bsa') formulaText = 'Dose = (mg/m\u00b2) \u00d7 BSA (m\u00b2)';
+            else if (pedDoseState.method === 'youngs') formulaText = 'Dose = Adult Dose \u00d7 [Age / (Age + 12)]';
+            else if (pedDoseState.method === 'clarks') formulaText = 'Dose = Adult Dose \u00d7 [Weight (lbs) / 150]';
+            html += '<div style="font-size:12px;color:var(--ink-muted);margin-bottom:14px;font-style:italic;">' + formulaText + '</div>';
+
+            html += '<div class="iop-form-grid">';
+
+            if (pedDoseState.method === 'weight') {
+                html += '<div class="iop-form-group"><label>Dose (mg/kg)</label>'
+                    + '<input type="number" placeholder="e.g. 25" min="0" step="0.1" value="' + pedDoseState.dosePerKg + '" oninput="onPedDoseInput(\'dosePerKg\',this.value)"></div>';
+                html += '<div class="iop-form-group"><label>Weight</label>'
+                    + '<div style="display:flex;gap:6px;align-items:center;">'
+                    + '<input type="number" placeholder="e.g. 20" min="0.5" max="200" step="0.1" value="' + pedDoseState.weight + '" oninput="onPedDoseInput(\'weight\',this.value)" style="flex:1;">'
+                    + '<select onchange="onPedDoseWeightUnit(this.value)" style="width:70px;">'
+                    + '<option value="kg"' + (pedDoseState.weightUnit === 'kg' ? ' selected' : '') + '>kg</option>'
+                    + '<option value="lbs"' + (pedDoseState.weightUnit === 'lbs' ? ' selected' : '') + '>lbs</option>'
+                    + '</select></div></div>';
+            } else if (pedDoseState.method === 'bsa') {
+                html += '<div class="iop-form-group"><label>Dose (mg/m\u00b2)</label>'
+                    + '<input type="number" placeholder="e.g. 200" min="0" step="0.1" value="' + pedDoseState.dosePerKg + '" oninput="onPedDoseInput(\'dosePerKg\',this.value)"></div>';
+                html += '<div class="iop-form-group"><label>BSA (m\u00b2)</label>'
+                    + '<input type="number" placeholder="e.g. 0.8" min="0.1" max="3" step="0.01" value="' + pedDoseState.bsa + '" oninput="onPedDoseInput(\'bsa\',this.value)"></div>';
+            } else if (pedDoseState.method === 'youngs') {
+                html += '<div class="iop-form-group"><label>Adult Dose (mg)</label>'
+                    + '<input type="number" placeholder="e.g. 500" min="0" step="1" value="' + pedDoseState.adultDose + '" oninput="onPedDoseInput(\'adultDose\',this.value)"></div>';
+                html += '<div class="iop-form-group"><label>Child\u2019s Age (years)</label>'
+                    + '<input type="number" placeholder="e.g. 6" min="0.5" max="18" step="0.5" value="' + pedDoseState.age + '" oninput="onPedDoseInput(\'age\',this.value)"></div>';
+            } else if (pedDoseState.method === 'clarks') {
+                html += '<div class="iop-form-group"><label>Adult Dose (mg)</label>'
+                    + '<input type="number" placeholder="e.g. 500" min="0" step="1" value="' + pedDoseState.adultDose + '" oninput="onPedDoseInput(\'adultDose\',this.value)"></div>';
+                html += '<div class="iop-form-group"><label>Child\u2019s Weight</label>'
+                    + '<div style="display:flex;gap:6px;align-items:center;">'
+                    + '<input type="number" placeholder="e.g. 44" min="0.5" max="300" step="0.1" value="' + pedDoseState.weight + '" oninput="onPedDoseInput(\'weight\',this.value)" style="flex:1;">'
+                    + '<select onchange="onPedDoseWeightUnit(this.value)" style="width:70px;">'
+                    + '<option value="lbs"' + (pedDoseState.weightUnit === 'lbs' ? ' selected' : '') + '>lbs</option>'
+                    + '<option value="kg"' + (pedDoseState.weightUnit === 'kg' ? ' selected' : '') + '>kg</option>'
+                    + '</select></div></div>';
+            }
+
+            // Frequency selector (all methods)
+            html += '<div class="iop-form-group"><label>Frequency</label>'
+                + '<select onchange="onPedDoseInput(\'frequency\',this.value)">'
+                + '<option value="qd"' + (pedDoseState.frequency === 'qd' ? ' selected' : '') + '>QD (once daily)</option>'
+                + '<option value="bid"' + (pedDoseState.frequency === 'bid' ? ' selected' : '') + '>BID (twice daily)</option>'
+                + '<option value="tid"' + (pedDoseState.frequency === 'tid' ? ' selected' : '') + '>TID (three times daily)</option>'
+                + '<option value="qid"' + (pedDoseState.frequency === 'qid' ? ' selected' : '') + '>QID (four times daily)</option>'
+                + '</select></div>';
+
+            // Optional concentration
+            html += '<div class="iop-form-group"><label>Concentration (mg/mL) <span style="font-weight:400;color:var(--ink-muted);">optional</span></label>'
+                + '<input type="number" placeholder="e.g. 50" min="0" step="0.1" value="' + pedDoseState.concentration + '" oninput="onPedDoseInput(\'concentration\',this.value)"></div>';
+
+            html += '</div>'; // close form-grid
+
+            html += '<div class="iop-result-box" id="pedGenericResult">'
+                + '<div style="color:var(--ink-muted);font-size:13px;">Enter values above to calculate dose</div></div>';
+
+            return html;
         }
 
         // ===== MEDICATIONS TAB =====
