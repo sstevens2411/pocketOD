@@ -230,10 +230,34 @@
             text-decoration: underline;
         }
 
+        /* HERO CTA */
+        .hero-cta {
+            margin-bottom: 48px;
+        }
+        .hero-cta-label {
+            font-size: 13px;
+            color: var(--ink-muted);
+            margin-bottom: 10px;
+        }
+        .hero-cta-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--sans);
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: var(--radius);
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+        .hero-cta-btn:hover { opacity: 0.88; }
+
         @media (max-width: 600px) {
             .mfr-section { padding: 22px 20px 20px; }
             .bottom-cta { padding: 28px 20px; }
             .mfr-section .cta-btn { display: block; }
+            .hero-cta-btn { display: block; text-align: center; }
         }
     </style>
 </head>
@@ -263,6 +287,11 @@
 
     <h1>Toric Contact Lens Fitting Guide for Optometrists</h1>
     <p class="intro">Toric contact lenses correct astigmatism by delivering a cylindrical power at a precise axis, maintained on the eye through a stabilization mechanism built into the lens design. Successful fitting requires matching cylinder power and axis to the patient's refraction, selecting an appropriate base curve and diameter for the cornea, and confirming stable lens orientation at the slit lamp. Pocket OD includes built-in toric fitting workflows, automatic vertex conversion, and complete parameter tables for all major brands — so you can go from spectacle Rx to order parameters in seconds.</p>
+
+    <div class="hero-cta">
+        <p class="hero-cta-label">Ready to fit? Jump straight into the calculator.</p>
+        <a class="hero-cta-btn" href="https://pocketod.com/#contactlenscalculator">Open Toric Fitting Calculator &rarr;</a>
+    </div>
 
     <!-- HOW TORIC LENSES WORK -->
     <section class="mfr-section" style="border-left-color:var(--accent)">

@@ -226,10 +226,34 @@
             text-decoration: underline;
         }
 
+        /* HERO CTA */
+        .hero-cta {
+            margin-bottom: 48px;
+        }
+        .hero-cta-label {
+            font-size: 13px;
+            color: var(--ink-muted);
+            margin-bottom: 10px;
+        }
+        .hero-cta-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--sans);
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: var(--radius);
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+        .hero-cta-btn:hover { opacity: 0.88; }
+
         @media (max-width: 600px) {
             .mfr-section { padding: 22px 20px 20px; }
             .bottom-cta { padding: 28px 20px; }
             .mfr-section .cta-btn { display: block; }
+            .hero-cta-btn { display: block; text-align: center; }
         }
     </style>
 </head>
@@ -259,6 +283,11 @@
 
     <h1>Contact Lens Parameters for Optometrists</h1>
     <p class="intro">A reference guide to soft contact lens specifications from Alcon, Bausch + Lomb, CooperVision, and Johnson &amp; Johnson Acuvue — covering base curves, diameters, sphere and cylinder ranges, modalities, and materials. Use the interactive database on Pocket OD to filter, compare, and fit directly from parameters.</p>
+
+    <div class="hero-cta">
+        <p class="hero-cta-label">Ready to browse? Jump straight into the database.</p>
+        <a class="hero-cta-btn" href="https://pocketod.com/#contactlensdatabase">Browse Full Contact Lens Database &rarr;</a>
+    </div>
 
     <!-- ALCON -->
     <section class="mfr-section" style="border-left-color:var(--alcon)">
