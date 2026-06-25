@@ -1,0 +1,356 @@
+<!-- © 2026 Pocket OD. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toric Contact Lens Fitting Guide for Optometrists | Pocket OD</title>
+    <meta name="description" content="Complete toric contact lens fitting guide for optometrists. Covers LARS rule, axis rotation, over-refraction, and toric parameters for Alcon, Bausch + Lomb, CooperVision, and Acuvue.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pocket OD">
+    <meta name="theme-color" content="#1a2332">
+    <link rel="canonical" href="https://pocketod.com/toric-contact-lens-fitting">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pocketod.com/toric-contact-lens-fitting">
+    <meta property="og:title" content="Toric Contact Lens Fitting Guide for Optometrists | Pocket OD">
+    <meta property="og:description" content="Complete toric contact lens fitting guide for optometrists. Covers LARS rule, axis rotation, over-refraction, and toric parameters for Alcon, Bausch + Lomb, CooperVision, and Acuvue.">
+    <meta property="og:image" content="https://pocketod.com/og-logo.png">
+    <meta property="og:site_name" content="Pocket OD">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ede6de;
+            --surface: rgba(0,0,0,0.03);
+            --surface-solid: #ffffff;
+            --ink: #1a2332;
+            --ink-secondary: #475569;
+            --ink-muted: #64748b;
+            --border: rgba(0,0,0,0.12);
+            --accent: #0d9488;
+            --accent-light: rgba(13,148,136,0.10);
+            --radius: 10px;
+            --radius-lg: 14px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.07);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.09);
+            --mono: 'IBM Plex Mono', 'SF Mono', monospace;
+            --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --alcon: #2563eb;
+            --alcon-bg: rgba(37,99,235,0.07);
+            --bl: #d97706;
+            --bl-bg: rgba(217,119,6,0.07);
+            --cv: #0d9488;
+            --cv-bg: rgba(13,148,136,0.07);
+            --jj: #7c3aed;
+            --jj-bg: rgba(124,58,237,0.07);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body { color-scheme: light; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection { background: var(--accent); color: #fff; }
+
+        /* HEADER */
+        .header {
+            background: #1a2332;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .header-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            height: 56px;
+        }
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        @keyframes blink {
+            0%, 30% { transform: scaleY(1); }
+            40% { transform: scaleY(0.05); }
+            50% { transform: scaleY(1); }
+            70% { transform: scaleY(0.05); }
+            80%, 100% { transform: scaleY(1); }
+        }
+        .logo-group:hover .logo-eye-blink {
+            animation: blink 0.6s ease-in-out;
+        }
+        .logo-text {
+            color: #fff;
+            font-family: 'Michroma', sans-serif;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(13,148,136,0.5), 0 0 24px rgba(13,148,136,0.25);
+        }
+
+        /* MAIN CONTENT */
+        .page {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 48px 24px 72px;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            color: var(--ink-muted);
+            margin-bottom: 24px;
+        }
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        h1 {
+            font-size: clamp(24px, 4vw, 34px);
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .intro {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--ink);
+            max-width: 680px;
+            margin-bottom: 52px;
+        }
+
+        /* SECTIONS */
+        .mfr-section {
+            background: var(--surface-solid);
+            border: 1px solid var(--border);
+            border-left-width: 3px;
+            border-radius: var(--radius-lg);
+            padding: 28px 32px 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .mfr-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .mfr-body {
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--ink-secondary);
+            margin-bottom: 20px;
+        }
+
+        .mfr-body strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .mfr-body p + p {
+            margin-top: 12px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius);
+            text-decoration: none;
+            transition: opacity 0.15s;
+            text-align: center;
+        }
+        .cta-btn:hover { opacity: 0.88; }
+
+        /* BOTTOM CTA */
+        .bottom-cta {
+            margin-top: 52px;
+            background: #1a2332;
+            border-radius: var(--radius-lg);
+            border-top: 3px solid var(--accent);
+            padding: 36px 32px;
+            color: #fff;
+        }
+        .bottom-cta h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .bottom-cta p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.72);
+            max-width: 600px;
+            margin-bottom: 24px;
+        }
+        .bottom-cta .cta-btn {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 32px 16px 24px;
+            font-size: 12px;
+            color: var(--ink-muted);
+        }
+        footer a {
+            color: var(--ink-muted);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .mfr-section { padding: 22px 20px 20px; }
+            .bottom-cta { padding: 28px 20px; }
+            .mfr-section .cta-btn { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="https://pocketod.com" class="logo-group">
+            <svg class="logo-eye-svg" width="44" height="44" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 55 L25 90 Q25 100 35 100 L85 100 Q95 100 95 90 L95 55" stroke="#0d9488" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <g class="logo-eye-blink" style="transform-origin:60px 55px">
+                    <path d="M33 55 Q60 28 87 55 Q60 82 33 55Z" stroke="#0d9488" stroke-width="5" fill="rgba(13,148,136,0.1)" stroke-linejoin="round"/>
+                    <circle cx="60" cy="55" r="9" fill="#0d9488"/>
+                    <circle cx="63.5" cy="52.5" r="2.8" fill="#1a2332"/>
+                </g>
+            </svg>
+            <span class="logo-text">Pocket OD</span>
+        </a>
+    </div>
+</header>
+
+<main class="page">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="https://pocketod.com">Pocket OD</a> &rsaquo; Toric Contact Lens Fitting
+    </nav>
+
+    <h1>Toric Contact Lens Fitting Guide for Optometrists</h1>
+    <p class="intro">Toric contact lenses correct astigmatism by delivering a cylindrical power at a precise axis, maintained on the eye through a stabilization mechanism built into the lens design. Successful fitting requires matching cylinder power and axis to the patient's refraction, selecting an appropriate base curve and diameter for the cornea, and confirming stable lens orientation at the slit lamp. Pocket OD includes built-in toric fitting workflows, automatic vertex conversion, and complete parameter tables for all major brands — so you can go from spectacle Rx to order parameters in seconds.</p>
+
+    <!-- HOW TORIC LENSES WORK -->
+    <section class="mfr-section" style="border-left-color:var(--accent)">
+        <div class="mfr-header">
+            <h2 style="color:var(--accent)">How Toric Contact Lenses Work</h2>
+        </div>
+        <div class="mfr-body">
+            <p>Soft toric lenses incorporate a stabilization zone that prevents the lens from rotating freely on the eye. The two most common designs are <strong>prism ballast</strong>, which adds a wedge of prism to the inferior lens to weight it downward, and <strong>accelerated stabilization design</strong> (ASD), which uses thinner zones at 3 and 9 o'clock to interact with the eyelids during blinking and hold the lens in place. J&amp;J Acuvue uses a Blink Stabilized Design that similarly relies on lid interaction rather than gravity.</p>
+            <p>Most soft torics are marked at the 6 o'clock position — a small dot, line, or series of dots indicating the inferior lens edge. At the slit lamp, the position of this mark relative to the limbus tells you how far the lens has rotated from its intended position. A mark sitting precisely at 6 o'clock indicates no rotation; a mark displaced toward the patient's right indicates leftward (counterclockwise) rotation, and vice versa.</p>
+            <p>Cylinder axis on the eye is maintained by the lens stabilization zone working against the eyelid margins. Lid tension, blink rate, corneal toricity, and gravity all influence where a toric lens settles. Allowing the lens to equilibrate for 10–15 minutes before assessing rotation gives a more representative picture of on-eye behavior than immediately post-insertion assessment.</p>
+        </div>
+        <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Use the Toric Fitting Calculator &rarr;</a>
+    </section>
+
+    <!-- LARS RULE -->
+    <section class="mfr-section" style="border-left-color:var(--accent)">
+        <div class="mfr-header">
+            <h2 style="color:var(--accent)">Axis Rotation &amp; the LARS Rule</h2>
+        </div>
+        <div class="mfr-body">
+            <p>When a toric lens rotates on the eye, the cylinder axis it delivers shifts accordingly — reducing visual acuity and requiring a compensated axis on the replacement lens. The <strong>LARS rule</strong> provides a simple mnemonic for this correction: <strong>Left Add, Right Subtract</strong>. If the lens rotates to the patient's left (counterclockwise as viewed from the front), add the degrees of rotation to the spectacle axis when ordering. If the lens rotates to the patient's right (clockwise), subtract.</p>
+            <p>For example: a patient with a spectacle axis of 180° is trialed in a toric lens, and the inferior lens mark is displaced 10° to the patient's left (counterclockwise rotation). Applying LARS — Left Add — the ordered axis becomes 180° + 10° = 190°, which wraps to 010°. If the axis were 015° and the lens rotated 10° clockwise (right), the corrected order axis would be 015° &minus; 10° = 005°.</p>
+            <p>LARS applies reliably when lens rotation is stable and consistent across blinks. If the lens shows variable or excessive rotation (&gt;15–20°), consider a lens with a different stabilization design, adjusting base curve, or switching to a different modality before applying the correction. Pocket OD's toric troubleshooting workflow applies LARS automatically once you enter the observed rotation and flags when rotation exceeds a reliable threshold.</p>
+        </div>
+        <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open Toric Troubleshooting &rarr;</a>
+    </section>
+
+    <!-- ALCON -->
+    <section class="mfr-section" style="border-left-color:var(--alcon)">
+        <div class="mfr-header">
+            <h2 style="color:var(--alcon)">Alcon Toric Contact Lens Parameters</h2>
+        </div>
+        <div class="mfr-body">
+            <p>Alcon's toric lineup spans all major modalities. The monthly <strong>Air Optix plus HydraGlyde for Astigmatism</strong> (Lotrafilcon B, Dk 108) covers cylinder &minus;0.75 to &minus;2.25 in 10&deg; axis steps, with a base curve of 8.7 mm and diameter of 14.5 mm — using Precision Balance 8|4° stabilization. The <strong>Total30 for Astigmatism</strong> (Lehfilcon A, Dk 123) extends to cyl &minus;0.75 to &minus;2.75, with axis restrictions at higher cylinder powers. Both monthly lenses are FDA-cleared for extended wear.</p>
+            <p>In the daily category, <strong>Dailies Total 1 for Astigmatism</strong> (Delefilcon A, Dk 127) offers cyl &minus;0.75 to &minus;2.25 with axis restrictions for the &minus;2.25 D cylinder at higher sphere powers. <strong>Precision1 for Astigmatism</strong> (Verofilcon A, Dk 90) provides a silicone hydrogel daily toric with cyl &minus;0.75 to &minus;2.25 and 10&deg; axis availability across most sphere powers. Full axis restriction tables for each lens are accessible in the Pocket OD database.</p>
+        </div>
+        <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Alcon Toric Parameters &rarr;</a>
+    </section>
+
+    <!-- BAUSCH + LOMB -->
+    <section class="mfr-section" style="border-left-color:var(--bl)">
+        <div class="mfr-header">
+            <h2 style="color:var(--bl)">Bausch + Lomb Toric Contact Lens Parameters</h2>
+        </div>
+        <div class="mfr-body">
+            <p>Bausch + Lomb offers toric options across daily and monthly platforms. The monthly <strong>Ultra for Astigmatism</strong> (Samfilcon A, Dk 91) covers cyl &minus;0.75 to &minus;2.25 with full 10&deg; axis availability across the standard sphere range, using a 14.5 mm diameter and MoistureSeal technology for all-day comfort. <strong>PureVision2 for Astigmatism</strong> (Balafilcon A) provides a silicone hydrogel monthly toric with EW approval, covering cyl &minus;0.75 to &minus;2.25.</p>
+            <p>In the daily category, <strong>INFUSE One-Day for Astigmatism</strong> (Kalifilcon A, Dk 107) delivers a premium silicone hydrogel daily toric with cyl &minus;0.75 to &minus;2.25. <strong>Biotrue ONEday for Astigmatism</strong> (Nesofilcon A, 78% water) provides a hydrogel daily option in the same cylinder range with its distinctive biomimetic moisture design. Full axis availability and sphere range details for each lens are in the Pocket OD parameter database.</p>
+        </div>
+        <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Bausch + Lomb Toric Parameters &rarr;</a>
+    </section>
+
+    <!-- COOPERVISION -->
+    <section class="mfr-section" style="border-left-color:var(--cv)">
+        <div class="mfr-header">
+            <h2 style="color:var(--cv)">CooperVision Toric Contact Lens Parameters</h2>
+        </div>
+        <div class="mfr-body">
+            <p>CooperVision's toric portfolio is notable for its extended range options. The monthly <strong>Biofinity Toric</strong> (Comfilcon A, Dk 116) covers cyl &minus;0.75 to &minus;2.25 in full 10&deg; axis steps across the standard sphere range, while <strong>Biofinity Toric XR</strong> extends to higher cylinder powers for patients with significant astigmatism. The biweekly <strong>Avaira Vitality Toric</strong> (Fanfilcon A, Dk 90) offers cyl &minus;0.75 to &minus;2.25 as an affordable silicone hydrogel option with full axis availability.</p>
+            <p>For daily wear, <strong>MyDay Toric</strong> (Stenfilcon A, Dk 86) provides a silicone hydrogel daily toric with cyl &minus;0.75 to &minus;2.25 in 10&deg; axis steps. <strong>Clariti 1 Day Toric</strong> (Somofilcon A, Dk 86) covers the same cylinder range and is Plastic Neutral certified, making it a sustainable daily option. CooperVision's Optimised Toric Lens Geometry (OTL) uses a consistent stabilization zone across the power range, helping maintain predictable on-eye orientation.</p>
+        </div>
+        <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View CooperVision Toric Parameters &rarr;</a>
+    </section>
+
+    <!-- J&J ACUVUE -->
+    <section class="mfr-section" style="border-left-color:var(--jj)">
+        <div class="mfr-header">
+            <h2 style="color:var(--jj)">Acuvue Toric Contact Lens Parameters</h2>
+        </div>
+        <div class="mfr-body">
+            <p>Johnson &amp; Johnson Acuvue's toric lenses use Blink Stabilized Design, which relies on the interaction of the eyelid with thin zones at 3 and 9 o'clock — rather than prism ballast — for rapid, consistent orientation. The two-week <strong>Acuvue Oasys for Astigmatism</strong> (Senofilcon A, Dk 129, EW approved) covers cyl &minus;0.75 to &minus;2.75 with full 10&deg; axis availability across the entire sphere range, BC 8.6, diameter 14.5 mm. The monthly <strong>Acuvue Vita for Astigmatism</strong> (Senofilcon C, Dk 129) covers the same cylinder range with a 14.5 mm diameter.</p>
+            <p>In the daily category, <strong>Acuvue Oasys Max 1-Day for Astigmatism</strong> (Senofilcon A) covers cyl &minus;0.75 to &minus;2.25 with axis restrictions at higher sphere powers and for the &minus;2.25 D cylinder. <strong>1-Day Acuvue Moist for Astigmatism</strong> (Etafilcon A) provides a hydrogel daily toric with cyl &minus;0.75 to &minus;2.25. All axis restrictions and sphere range limits for each Acuvue toric are built into Pocket OD's fitting calculator and displayed in the parameter database.</p>
+        </div>
+        <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Acuvue Toric Parameters &rarr;</a>
+    </section>
+
+    <!-- BOTTOM CTA -->
+    <div class="bottom-cta">
+        <h2>Fit a Toric Lens in Seconds</h2>
+        <p>Pocket OD's toric fitting calculator converts spectacle Rx to contact lens parameters automatically — applying vertex conversion, snapping cylinder to available powers, and selecting the closest axis. Troubleshooting workflows for rotation and over-refraction are built in for all major brands.</p>
+        <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open Toric Fitting Calculator &rarr;</a>
+    </div>
+
+</main>
+
+<footer>
+    <div>&copy; 2026 Pocket OD</div>
+    <div style="margin-top:4px;"><a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer">Send Feedback</a> &middot; <a href="mailto:contact@pocketod.com">contact@pocketod.com</a></div>
+</footer>
+
+</body>
+</html>
