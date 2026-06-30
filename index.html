@@ -3096,21 +3096,23 @@
             color: var(--ink);
         }
         .browse-table th:nth-child(5),
-        .browse-table td:nth-child(5) { min-width: 120px; } /* Sph Range */
+        .browse-table td:nth-child(5) { min-width: 70px; }  /* CT */
         .browse-table th:nth-child(6),
-        .browse-table td:nth-child(6) { min-width: 100px; } /* Cyl Range */
+        .browse-table td:nth-child(6) { min-width: 120px; } /* Sph Range */
         .browse-table th:nth-child(7),
-        .browse-table td:nth-child(7) { min-width: 140px; } /* Axes */
+        .browse-table td:nth-child(7) { min-width: 100px; } /* Cyl Range */
+        .browse-table th:nth-child(8),
+        .browse-table td:nth-child(8) { min-width: 140px; } /* Axes */
         @media (max-width: 767px) {
-            .browse-no-cyl th:nth-child(6),
-            .browse-no-cyl td:nth-child(6),
             .browse-no-cyl th:nth-child(7),
-            .browse-no-cyl td:nth-child(7) { display: none; }
+            .browse-no-cyl td:nth-child(7),
+            .browse-no-cyl th:nth-child(8),
+            .browse-no-cyl td:nth-child(8) { display: none; }
             .browse-no-cyl th:nth-child(1),
             .browse-no-cyl td:nth-child(1) { width: 140px; max-width: 140px; }
         }
-        .browse-table th:nth-child(8),
-        .browse-table td:nth-child(8) { min-width: 80px; }  /* Cost/Yr */
+        .browse-table th:nth-child(9),
+        .browse-table td:nth-child(9) { min-width: 80px; }  /* Cost/Yr */
         .browse-name {
             font-weight: 500;
         }
@@ -17745,7 +17747,7 @@
             html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view, or scroll right.</div>`;
             const hideCyl = (tf === 'sphere' || tf === 'multifocal');
             html += `<div class="browse-scroll-wrap"><table class="browse-table${hideCyl ? ' browse-no-cyl' : ''}"><thead><tr>
-                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk/t${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
+                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk/t${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th>CT</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
 
             let totalShown = 0;
@@ -17777,6 +17779,7 @@
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
+                        <td class="browse-muted">${l.ct ? l.ct.split(' @')[0] : '\u2014'}</td>
                         <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
                         <td class="browse-muted">${cylStr}</td>
                         <td class="browse-muted">${axStr}</td>
@@ -17796,7 +17799,7 @@
                 lenses.sort((a, b) => a.name.localeCompare(b.name));
                 const color = brandColorMap[brand] || "var(--accent)";
                 const bg = brandBgMap[brand] || "rgba(13,148,136,0.08)";
-                html += `<tr class="browse-brand-row"><td colspan="8" style="border-left-color:${color};color:${color};background:${bg}">${brand}</td></tr>`;
+                html += `<tr class="browse-brand-row"><td colspan="9" style="border-left-color:${color};color:${color};background:${bg}">${brand}</td></tr>`;
                 lenses.forEach(l => {
                     const tb = typeLabel[l.type] || "";
                     const sb = schedLabel[l.modality] || "";
@@ -17808,6 +17811,7 @@
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
+                        <td class="browse-muted">${l.ct ? l.ct.split(' @')[0] : '\u2014'}</td>
                         <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
                         <td class="browse-muted">${cylStr}</td>
                         <td class="browse-muted">${axStr}</td>
