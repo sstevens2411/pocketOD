@@ -3096,13 +3096,13 @@
             color: var(--ink);
         }
         .browse-table th:nth-child(5),
-        .browse-table td:nth-child(5) { min-width: 70px; }  /* CT */
+        .browse-table td:nth-child(5) { min-width: 50px; }  /* CT */
         .browse-table th:nth-child(6),
-        .browse-table td:nth-child(6) { min-width: 120px; } /* Sph Range */
+        .browse-table td:nth-child(6) { min-width: 90px; }  /* Sph Range */
         .browse-table th:nth-child(7),
-        .browse-table td:nth-child(7) { min-width: 100px; } /* Cyl Range */
+        .browse-table td:nth-child(7) { min-width: 75px; }  /* Cyl Range */
         .browse-table th:nth-child(8),
-        .browse-table td:nth-child(8) { min-width: 140px; } /* Axes */
+        .browse-table td:nth-child(8) { min-width: 80px; }  /* Axes */
         @media (max-width: 767px) {
             .browse-no-cyl th:nth-child(7),
             .browse-no-cyl td:nth-child(7),
@@ -13075,6 +13075,7 @@
             browseState.sortBc = null;
             browseState.sortDia = null;
             browseState.sortSph = null;
+            browseState.sortCt = null;
             browseState.sortCyl = null;
             browseState.sortCost = null;
             browseState.selectedLens = null;
@@ -17480,7 +17481,7 @@
         }
 
         // ===== BROWSE ALL TAB =====
-        const browseState = { search: "", typeFilter: null, modalityFilter: null, materialFilter: null, sortDk: null, sortBc: null, sortDia: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
+        const browseState = { search: "", typeFilter: null, modalityFilter: null, materialFilter: null, sortDk: null, sortBc: null, sortDia: null, sortCt: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
 
         function toggleBrowseType(type) {
             browseState.typeFilter = browseState.typeFilter === type ? null : type;
@@ -17516,7 +17517,7 @@
         }
 
         function toggleBrowseSort(key) {
-            const keys = ['sortDk', 'sortBc', 'sortDia', 'sortSph', 'sortCyl', 'sortCost'];
+            const keys = ['sortDk', 'sortBc', 'sortDia', 'sortCt', 'sortSph', 'sortCyl', 'sortCost'];
             const stateKey = 'sort' + key;
             if (!browseState[stateKey]) browseState[stateKey] = "desc";
             else if (browseState[stateKey] === "desc") browseState[stateKey] = "asc";
@@ -17739,15 +17740,15 @@
             const divider = `<span style="width:1px;align-self:stretch;background:var(--border);margin:0 4px"></span>`;
             html += `<div class="browse-filters" style="margin-bottom:10px">${allBtn}${typeBtns}${divider}${modBtns}${divider}${matBtns}</div>`;
 
-            const anySort = browseState.sortDk || browseState.sortBc || browseState.sortDia || browseState.sortSph || browseState.sortCyl || browseState.sortCost;
+            const anySort = browseState.sortDk || browseState.sortBc || browseState.sortDia || browseState.sortCt || browseState.sortSph || browseState.sortCyl || browseState.sortCost;
             const mkArrow = (s) => s === "desc" ? " &#9660;" : s === "asc" ? " &#9650;" : ' <span style="opacity:0.3">&#9650;</span>';
             const mkClass = (s) => s ? ' class="browse-th-active"' : '';
-            const clearSort = "browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;browseState.sortSph=null;browseState.sortCyl=null;browseState.sortCost=null;renderBrowse()";
+            const clearSort = "browseState.sortDk=null;browseState.sortBc=null;browseState.sortDia=null;browseState.sortCt=null;browseState.sortSph=null;browseState.sortCyl=null;browseState.sortCost=null;renderBrowse()";
 
             html += `<div class="rotate-hint"><i class="ph-duotone ph-device-rotate"></i> Rotate phone for full table view, or scroll right.</div>`;
             const hideCyl = (tf === 'sphere' || tf === 'multifocal');
             html += `<div class="browse-scroll-wrap"><table class="browse-table${hideCyl ? ' browse-no-cyl' : ''}"><thead><tr>
-                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk/t${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th>CT</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
+                <th${!anySort ? ' class="browse-th-active"' : ''} style="cursor:pointer" onclick="${clearSort}">Name</th><th${mkClass(browseState.sortDk)} style="cursor:pointer" onclick="toggleBrowseSort('Dk')">Dk/t${mkArrow(browseState.sortDk)}</th><th${mkClass(browseState.sortBc)} style="cursor:pointer" onclick="toggleBrowseSort('Bc')">BC${mkArrow(browseState.sortBc)}</th><th${mkClass(browseState.sortDia)} style="cursor:pointer" onclick="toggleBrowseSort('Dia')">Dia${mkArrow(browseState.sortDia)}</th><th${mkClass(browseState.sortCt)} style="cursor:pointer" onclick="toggleBrowseSort('Ct')">CT${mkArrow(browseState.sortCt)}</th><th${mkClass(browseState.sortSph)} style="cursor:pointer" onclick="toggleBrowseSort('Sph')">Sph Range${mkArrow(browseState.sortSph)}</th><th${mkClass(browseState.sortCyl)} style="cursor:pointer" onclick="toggleBrowseSort('Cyl')">Cyl Range${mkArrow(browseState.sortCyl)}</th><th>Axes</th><th${mkClass(browseState.sortCost)} style="cursor:pointer" onclick="toggleBrowseSort('Cost')">Cost/Yr${mkArrow(browseState.sortCost)}</th>
             </tr></thead><tbody>`;
 
             let totalShown = 0;
@@ -17765,6 +17766,7 @@
                 else if (browseState.sortBc) allLenses.sort((a, b) => browseState.sortBc === "desc" ? parseFloat(b.bc) - parseFloat(a.bc) : parseFloat(a.bc) - parseFloat(b.bc));
                 else if (browseState.sortDia) allLenses.sort((a, b) => browseState.sortDia === "desc" ? parseFloat(b.diam) - parseFloat(a.diam) : parseFloat(a.diam) - parseFloat(b.diam));
                 else if (browseState.sortSph) allLenses.sort((a, b) => browseState.sortSph === "desc" ? (b.sphMax - b.sphMin) - (a.sphMax - a.sphMin) : (a.sphMax - a.sphMin) - (b.sphMax - b.sphMin));
+                else if (browseState.sortCt) allLenses.sort((a, b) => { var ac = parseFloat(a.ct) || 0, bc = parseFloat(b.ct) || 0; return browseState.sortCt === "desc" ? bc - ac : ac - bc; });
                 else if (browseState.sortCyl) allLenses.sort((a, b) => { var ac = Math.abs(a.cylMin) + Math.abs(a.cylMax), bc = Math.abs(b.cylMin) + Math.abs(b.cylMax); return browseState.sortCyl === "desc" ? bc - ac : ac - bc; });
                 else if (browseState.sortCost) allLenses.sort((a, b) => { var ac = calcLensAnnualCost(a) || 0, bc = calcLensAnnualCost(b) || 0; return browseState.sortCost === "desc" ? bc - ac : ac - bc; });
                 allLenses.forEach(l => {
@@ -17779,7 +17781,7 @@
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
-                        <td class="browse-muted">${l.ct ? l.ct.split(' @')[0] : '\u2014'}</td>
+                        <td class="browse-muted">${l.ct ? l.ct.split(' ')[0] : '\u2014'}</td>
                         <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
                         <td class="browse-muted">${cylStr}</td>
                         <td class="browse-muted">${axStr}</td>
@@ -17811,7 +17813,7 @@
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
-                        <td class="browse-muted">${l.ct ? l.ct.split(' @')[0] : '\u2014'}</td>
+                        <td class="browse-muted">${l.ct ? l.ct.split(' ')[0] : '\u2014'}</td>
                         <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
                         <td class="browse-muted">${cylStr}</td>
                         <td class="browse-muted">${axStr}</td>
