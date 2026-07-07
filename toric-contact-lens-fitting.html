@@ -178,18 +178,27 @@
 
         .cta-btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 13px 24px;
             background: var(--accent);
             color: #fff;
             font-family: var(--sans);
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: var(--radius);
             text-decoration: none;
-            transition: opacity 0.15s;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(13,148,136,0.25);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
         }
-        .cta-btn:hover { opacity: 0.88; }
+        .cta-btn:hover {
+            background: #0b8077;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13,148,136,0.38);
+        }
+        .cta-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(13,148,136,0.25);
+        }
 
         /* BOTTOM CTA */
         .bottom-cta {
