@@ -5971,11 +5971,24 @@
                 const osCyl = parseFloat(state.os.cylinder) || 0;
                 const wasVertexed = Math.abs(odSph) >= 4 || Math.abs(odSph + odCyl) >= 4 || Math.abs(osSph) >= 4 || Math.abs(osSph + osCyl) >= 4;
                 const vertexLabel = "Contact Lens Rx" + (wasVertexed && transposed ? " (Vertexed & Transposed)" : wasVertexed ? " (Vertexed)" : transposed ? " (Transposed)" : "");
+                const odHasCyl = Math.abs(odCyl) > 0.50;
+                const osHasCyl = Math.abs(osCyl) > 0.50;
+                let seSubHtml = "";
+                if (odHasCyl || osHasCyl) {
+                    const seParts = [];
+                    if (odHasCyl) { const se = vertexSE(odSph, odCyl); seParts.push(`<span><strong>OD:</strong> ${se >= 0 ? "+" : ""}${se.toFixed(2)}</span>`); }
+                    if (osHasCyl) { const se = vertexSE(osSph, osCyl); seParts.push(`<span><strong>OS:</strong> ${se >= 0 ? "+" : ""}${se.toFixed(2)}</span>`); }
+                    seSubHtml = `<div style="margin-top:8px;padding:6px 10px;background:var(--bg);border:1px solid var(--border);border-radius:7px;font-size:13px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span style="font-size:10px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap">SPH EQUIV</span>
+                        ${seParts.join('<span style="color:var(--border-strong,var(--border))">·</span>')}
+                    </div>`;
+                }
                 vertexHtml = `<div class="vertex-box fade-in">
                     <div class="vertex-label">${vertexLabel}</div>
                     <div class="vertex-values" style="flex-direction:column;gap:8px">
                         ${odSummary}${osSummary}
                     </div>
+                    ${seSubHtml}
                 </div>`;
             }
 
