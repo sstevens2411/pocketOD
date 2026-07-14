@@ -1126,6 +1126,10 @@
             padding: 12px;
         }
 
+        .order-param.wide {
+            flex: 1 1 100%;
+        }
+
         .order-param-label {
 
             font-size: 9.5px;
@@ -1361,6 +1365,9 @@
             .order-param {
                 min-width: 0;
             }
+            .order-param.wide {
+                grid-column: 1 / -1;
+            }
             .order-param-value {
                 font-size: 16px;
             }
@@ -1455,6 +1462,10 @@
             .order-param {
                 flex: 1 1 calc(50% - 10px);
                 min-width: calc(50% - 10px);
+            }
+            .order-param.wide {
+                flex: 1 1 100%;
+                min-width: 100%;
             }
             .order-param-value {
                 font-size: 15px;
@@ -2714,6 +2725,11 @@
                 flex: 0 1 calc(50% - 4px);
                 min-width: calc(50% - 4px);
                 max-width: calc(50% - 4px);
+            }
+            .order-grid .order-param.wide {
+                flex: 0 1 100%;
+                min-width: 100%;
+                max-width: 100%;
             }
             .order-param {
                 padding: 10px;
