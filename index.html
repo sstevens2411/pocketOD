@@ -225,6 +225,9 @@
             margin: 0 auto;
             padding: 12px 16px 80px;
         }
+        .main.browse-wide {
+            max-width: 1140px;
+        }
 
         /* STEPS */
         .steps-bar {
@@ -1033,6 +1036,7 @@
             gap: 5px;
             padding: 6px 14px;
             border-radius: 6px;
+            margin-top: 14px;
             margin-bottom: 16px;
             border: 1px solid var(--border);
             background: var(--surface);
@@ -3065,7 +3069,7 @@
             color: var(--ink-muted);
         }
         .browse-table {
-            width: 100%;
+            width: auto;
             border-collapse: separate;
             border-spacing: 0;
             font-size: 13px;
@@ -3080,6 +3084,7 @@
         .browse-table th:first-child,
         .browse-table td:first-child {
             min-width: 220px;
+            max-width: 320px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -3091,13 +3096,13 @@
             font-weight: 700;
             letter-spacing: 0.3px;
             text-align: left;
-            padding: 8px 10px;
+            padding: 8px 7px;
             border-bottom: 2px solid var(--border);
             z-index: 1;
             white-space: nowrap;
         }
         .browse-brand-row td {
-            padding: 10px 10px 6px;
+            padding: 10px 7px 6px;
             font-weight: 700;
             font-size: 14px;
             border-left: 3px solid var(--accent);
@@ -3105,20 +3110,20 @@
             border-radius: 6px;
         }
         .browse-table td {
-            padding: 6px 10px;
+            padding: 6px 7px;
             border-bottom: 1px solid var(--border);
             white-space: nowrap;
             vertical-align: middle;
             color: var(--ink);
         }
         .browse-table th:nth-child(5),
-        .browse-table td:nth-child(5) { min-width: 50px; }  /* CT */
+        .browse-table td:nth-child(5) { min-width: 44px; }  /* CT */
         .browse-table th:nth-child(6),
-        .browse-table td:nth-child(6) { min-width: 90px; }  /* Sph Range */
+        .browse-table td:nth-child(6) { min-width: 80px; }  /* Sph Range */
         .browse-table th:nth-child(7),
-        .browse-table td:nth-child(7) { min-width: 75px; }  /* Cyl Range */
+        .browse-table td:nth-child(7) { min-width: 70px; }  /* Cyl Range */
         .browse-table th:nth-child(8),
-        .browse-table td:nth-child(8) { min-width: 80px; }  /* Axes */
+        .browse-table td:nth-child(8) { min-width: 70px; }  /* Axes */
         @media (max-width: 767px) {
             .browse-no-cyl th:nth-child(7),
             .browse-no-cyl td:nth-child(7),
@@ -3128,7 +3133,7 @@
             .browse-no-cyl td:nth-child(1) { width: 140px; max-width: 140px; }
         }
         .browse-table th:nth-child(9),
-        .browse-table td:nth-child(9) { min-width: 80px; }  /* Cost/Yr */
+        .browse-table td:nth-child(9) { min-width: 70px; }  /* Cost/Yr */
         .browse-name {
             font-weight: 500;
         }
@@ -4443,16 +4448,19 @@
                 }
             }, sph50start:6 },
             { name:"Precision1", ct:"0.09 mm @ −3.00 D", brand:"Alcon", type:"sphere", modality:"daily", dk:100, bc:"8.3", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$90 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", sph50start:6 },
-            { name:"Precision1 for Astigmatism", ct:"0.10 mm @ −3.00 D", brand:"Alcon", type:"toric", modality:"daily", dk:90, bc:"8.5", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$112 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Precision Balance 8|4\u00B0", axisRestrictions: [
+            { name:"Precision1 for Astigmatism", ct:"0.10 mm @ −3.00 D", brand:"Alcon", type:"toric", modality:"daily", dk:90, bc:"8.5", diam:"14.5", sphMin:-8, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$112 (90pk)", wear:"DW", material:"Verofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Precision Balance 8|4\u00B0", axisRestrictions: [
                 { cyls:[-0.75,-1.25,-1.75], sphRange:[-6,0], axes:[10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180] },
                 { cyls:[-2.25], sphRange:[-6,0], axes:[10,20,70,80,90,100,110,160,170,180] },
+                { cyls:[-2.75], sphRange:[-6,0], axes:[10,20,70,80,90,100,110,160,170,180] },
                 { cyls:[-0.75,-1.25,-1.75], sphRange:[-8,-6.25], axes:[10,20,70,80,90,100,110,160,170,180] },
                 { cyls:[-2.25], sphRange:[-8,-6.25], axes:[10,20,160,170,180] },
+                { cyls:[-2.75], sphRange:[-8,-6.25], axes:[10,20,160,170,180] },
                 { cyls:[-0.75,-1.25,-1.75], sphRange:[0.25,4], axes:[10,20,70,80,90,100,110,160,170,180] },
-                { cyls:[-2.25], sphRange:[0.25,4], axes:[10,20,160,170,180] }
+                { cyls:[-2.25], sphRange:[0.25,4], axes:[10,20,160,170,180] },
+                { cyls:[-2.75], sphRange:[0.25,4], axes:[10,20,160,170,180] }
             ] },
             { name:"Precision7", ct:"0.08 mm @ −3.00 D", brand:"Alcon", type:"sphere", modality:"weekly", dk:149, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"12", price:"$62 (12pk)", wear:"EW", material:"Serafilcon A (SiHy)", sph50start:6 },
-            { name:"Precision7 for Astigmatism", ct:"0.10 mm @ −3.00 D", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"12", price:"$75 (12pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:6, stabilization:"Precision Balance 8|4\u00B0" },
+            { name:"Precision7 for Astigmatism", ct:"0.10 mm @ −3.00 D", brand:"Alcon", type:"toric", modality:"weekly", dk:149, bc:"8.6", diam:"14.5", sphMin:-10, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"12", price:"$75 (12pk)", wear:"EW", material:"Serafilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 full)", sph50start:6, stabilization:"Precision Balance 8|4\u00B0" },
             { name:"Total30", ct:"0.08 mm @ −3.00 D", brand:"Alcon", type:"sphere", modality:"monthly", dk:154, bc:"8.4", diam:"14.2", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"6, 12", price:"$75 (6pk)", wear:"DW", material:"Lehfilcon A (SiHy)", sph50start:8, sph50startPlus:6 },
             { name:"Total30 for Astigmatism", ct:"0.10 mm @ −3.00 D", brand:"Alcon", type:"toric", modality:"monthly", dk:123, bc:"8.6", diam:"14.5", sphMin:-6, sphMax:8, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"6", price:"$85", wear:"DW", material:"Lehfilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, stabilization:"Precision Balance 8|4\u00B0", axisRestrictions: [
               { cyls: [-2.75], axes: [10,20,30,70,80,90,100,110,150,160,170,180], sphMax:4, sph50all:true }
@@ -4538,7 +4546,9 @@
               { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
               { cyls: [-2.25], sphRange: [0.25, 4], axes: [10,20,80,90,100,160,170,180] },
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [10,20,90,160,170,180] },
-              { cyls: [-2.75], sphRange: [-9, 0], axes: [10,20,90,160,170,180], sph50all: true },
+              { cyls: [-2.75], sphRange: [-6, 0], axes: [10,20,90,160,170,180] },
+              { cyls: [-2.75], sphRange: [-9, -6.25], axes: [] },
+              { cyls: [-2.75], sphRange: [0.25, 4], axes: [10,20,90,160,170,180] },
               { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
             { name:"Biotrue ONEday for Presbyopia", ct:"0.10 mm @ −3.00 D", brand:"Bausch + Lomb", type:"multifocal", modality:"daily", dk:42, bc:"8.6", diam:"14.2", sphMin:-9, sphMax:6, cylMin:0, cylMax:0, addTypes:["Low","High"], qty:"30, 90", price:"$94 (90pk)", wear:"DW", material:"Nesofilcon A (HyperGel)", fittingGuide: {
@@ -4709,10 +4719,13 @@
             // J&J ACUVUE
             { name:"Acuvue Oasys 1-Day", ct:"0.085 mm @ −3.00 D", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$120 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", sph50start:6 },
             { name:"Acuvue Oasys Max 1-Day", ct:"0.085 mm @ −3.00 D", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$141 (90pk)", wear:"DW", material:"Senofilcon A HVO (SiHy)", sph50start:6 },
-            { name:"Acuvue Oasys 1-Day for Astigmatism", ct:"0.08 mm @ −3.00 D", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30, 90", price:"$144 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Blink Stabilized Design", axisRestrictions: [
+            { name:"Acuvue Oasys 1-Day for Astigmatism", ct:"0.08 mm @ −3.00 D", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$144 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Blink Stabilized Design", axisRestrictions: [
               { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
               { cyls: [-2.25], sphRange: [0.25, 4], axes: [] },
+              { cyls: [-2.75], sphRange: [-6.5, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.75], sphRange: [-9, -7], axes: [] },
+              { cyls: [-2.75], sphRange: [0.25, 4], axes: [] },
               { cyls: [-0.75,-1.25,-1.75], sphRange: [-9, -6.25], axes: [10,20,70,80,90,100,110,160,170,180] },
               { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
@@ -13133,6 +13146,7 @@
             document.getElementById('vertexPage').style.display = sub === 'vertex' ? '' : 'none';
             document.getElementById('radiusPage').style.display = sub === 'radius' ? '' : 'none';
             document.querySelector('main.main').style.paddingBottom = sub === 'prescribe' ? '' : '0';
+            document.querySelector('main.main').classList.toggle('browse-wide', sub === 'browse');
             if (sub === 'prescribe') { resetAll(); render(); window.scrollTo(0, 0); }
             if (sub === 'browse') renderBrowse();
             if (sub === 'vertex') renderVertexChart();
