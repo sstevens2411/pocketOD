@@ -3644,6 +3644,24 @@
                 color: var(--ink-secondary);
             }
         }
+        @media (min-width: 768px) {
+            #medsPage,
+            #toolsPage {
+                max-width: 1100px;
+            }
+            .med-condition-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            #toolsContent .option-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+            #toolsContent .option-btn,
+            #medsContent .option-btn {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+        }
 
         /* Myopia: desktop inputs, mobile selects */
         .myop-mobile-only { display: none !important; }
@@ -17905,8 +17923,9 @@
         window.addEventListener('resize', positionTabIndicator);
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:var(--bg);">
+        <div style="margin-bottom:6px;"><a href="https://instagram.com/pocket_OD" target="_blank" rel="noopener" style="color:#555;text-decoration:none;"><i class="ph-duotone ph-instagram-logo" style="font-size:28px;vertical-align:middle;"></i></a></div>
         <div>&copy; 2026 Pocket OD</div>
-        <div style="margin-top:4px;"><a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a> &middot; <a href="javascript:void(0)" onclick="document.getElementById('homescreenModal').style.display='flex'" style="color:#555;text-decoration:underline;">Add to iPhone Home Screen</a> &middot; <a href="https://instagram.com/pocket_OD" target="_blank" rel="noopener" style="color:#555;text-decoration:underline;white-space:nowrap;"><i class="ph-duotone ph-instagram-logo" style="vertical-align:-2px;margin-right:2px;"></i>@pocket_OD</a></div>
+        <div style="margin-top:4px;"><a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a> &middot; <a href="javascript:void(0)" onclick="document.getElementById('homescreenModal').style.display='flex'" style="color:#555;text-decoration:underline;">Add to iPhone Home Screen</a></div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
         <div style="margin-top:4px;">If you find an error, please let me know.</div>
     </footer>
