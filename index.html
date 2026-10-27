@@ -4241,6 +4241,7 @@
                 <div id="stepContent"></div>
                 <div class="nav-row" id="navRow">
                     <button class="nav-btn nav-btn-back" id="btnBack" onclick="goBack()">&larr; Back</button>
+                    <button class="nav-btn clear-rx-btn" id="clearRx" style="display:none;margin-top:0" onclick="clearRxFn()">Reset</button>
                     <button class="nav-btn nav-btn-next cta-btn" id="btnNext" onclick="goNext()"><span class="arrow-left">&rarr;</span> Next <span class="arrow-right">&rarr;</span></button>
                 </div>
             </div>
@@ -4719,15 +4720,16 @@
             // J&J ACUVUE
             { name:"Acuvue Oasys 1-Day", ct:"0.085 mm @ −3.00 D", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$120 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", sph50start:6 },
             { name:"Acuvue Oasys Max 1-Day", ct:"0.085 mm @ −3.00 D", brand:"J&J Acuvue", type:"sphere", modality:"daily", dk:121, bc:"8.5 / 9.0", diam:"14.3", sphMin:-12, sphMax:8, cylMin:0, cylMax:0, addTypes:[], qty:"30, 90", price:"$141 (90pk)", wear:"DW", material:"Senofilcon A HVO (SiHy)", sph50start:6 },
-            { name:"Acuvue Oasys 1-Day for Astigmatism", ct:"0.08 mm @ −3.00 D", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$144 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Blink Stabilized Design", axisRestrictions: [
+            { name:"Acuvue Oasys 1-Day for Astigmatism", ct:"0.08 mm @ −3.00 D", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:6, cylMin:-0.75, cylMax:-2.75, addTypes:[], qty:"30, 90", price:"$144 (90pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Blink Stabilized Design", axisRestrictions: [
               { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
               { cyls: [-2.25], sphRange: [-9, -6.25], axes: [] },
-              { cyls: [-2.25], sphRange: [0.25, 4], axes: [] },
-              { cyls: [-2.75], sphRange: [-6.5, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
-              { cyls: [-2.75], sphRange: [-9, -7], axes: [] },
-              { cyls: [-2.75], sphRange: [0.25, 4], axes: [] },
+              { cyls: [-2.25], sphRange: [0.25, 6], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.75], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.75], sphRange: [-9, -6.25], axes: [] },
+              { cyls: [-2.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] },
+              { cyls: [-2.75], sphRange: [4.25, 6], axes: [] },
               { cyls: [-0.75,-1.25,-1.75], sphRange: [-9, -6.25], axes: [10,20,70,80,90,100,110,160,170,180] },
-              { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 4], axes: [10,20,70,80,90,100,110,160,170,180] }
+              { cyls: [-0.75,-1.25,-1.75], sphRange: [0.25, 6], axes: [10,20,70,80,90,100,110,160,170,180] }
             ] },
             { name:"Acuvue Oasys Max 1-Day for Astigmatism", ct:"0.08 mm @ −3.00 D", brand:"J&J Acuvue", type:"toric", modality:"daily", dk:129, bc:"8.5", diam:"14.3", sphMin:-9, sphMax:4, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"30", price:"$65 (30pk)", wear:"DW", material:"Senofilcon A (SiHy)", axes:"10\u2013180\u00B0 (10\u00B0 steps)", sph50start:6, hasPlano:true, stabilization:"Cylinder Optimized Blink Stabilized", axisRestrictions: [
               { cyls: [-2.25], sphRange: [-6, 0], axes: [10,20,70,80,90,100,110,160,170,180] },
@@ -5830,9 +5832,18 @@
             }
         }
 
+        function clearRxFn() {
+            state.od = newEye();
+            state.os = newEye();
+            state.dominantEye = null;
+            state.brands = [...BRANDS];
+            rerender();
+        }
+
         function renderNav() {
             const back = document.getElementById("btnBack");
             const next = document.getElementById("btnNext");
+            const clearRx = document.getElementById("clearRx");
             const navRow = back.parentElement;
 
             if (state.step === 3 && (state.selectedLens || state.troubleshoot !== null)) {
@@ -5841,8 +5852,15 @@
             }
 
             navRow.style.display = "flex";
+            if (state.step === 0) {
+                back.style.display = "none";
+                clearRx.style.display = "";
+            } else {
+                back.style.display = "";
+                back.style.visibility = "visible";
+                clearRx.style.display = "none";
+            }
             back.disabled = state.step === 0;
-            back.style.visibility = state.step === 0 ? "hidden" : "visible";
 
             if (state.step === 3) {
                 next.innerHTML = '\u27F3 New Search';
@@ -6060,7 +6078,6 @@
 
                 ${vertexHtml}
 
-                <button type="button" class="clear-rx-btn" id="clearRx">Reset</button>
             </div>`;
         }
 
@@ -6196,14 +6213,6 @@
             if (domLeft) domLeft.addEventListener("click", () => { state.dominantEye = state.dominantEye === 'left' ? null : 'left'; rerender(); });
             if (domRight) domRight.addEventListener("click", () => { state.dominantEye = state.dominantEye === 'right' ? null : 'right'; rerender(); });
 
-            const clearBtn = document.getElementById("clearRx");
-            if (clearBtn) clearBtn.addEventListener("click", () => {
-                state.od = newEye();
-                state.os = newEye();
-                state.dominantEye = null;
-                state.brands = [...BRANDS];
-                rerender();
-            });
         }
 
         // STEP 2: Modality
@@ -17897,7 +17906,7 @@
     </script>
     <footer style="text-align:center;padding:32px 16px 24px;font-size:12px;color:#475569;background:var(--bg);">
         <div>&copy; 2026 Pocket OD</div>
-        <div style="margin-top:4px;"><a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a> &middot; <a href="javascript:void(0)" onclick="document.getElementById('homescreenModal').style.display='flex'" style="color:#555;text-decoration:underline;">Add to iPhone Home Screen</a></div>
+        <div style="margin-top:4px;"><a href="javascript:void(0)" onclick="document.getElementById('disclaimerModal').style.display='flex'" style="color:#555;text-decoration:underline;">Disclaimer</a> &middot; <a href="https://tally.so/r/44jb1Y" target="_blank" rel="noopener noreferrer" style="color:#555;text-decoration:underline;">Send Feedback</a> &middot; <a href="javascript:void(0)" onclick="document.getElementById('homescreenModal').style.display='flex'" style="color:#555;text-decoration:underline;">Add to iPhone Home Screen</a> &middot; <a href="https://instagram.com/pocket_OD" target="_blank" rel="noopener" style="color:#555;text-decoration:underline;white-space:nowrap;"><i class="ph-duotone ph-instagram-logo" style="vertical-align:-2px;margin-right:2px;"></i>@pocket_OD</a></div>
         <div style="margin-top:4px;"><a href="mailto:contact@pocketod.com" style="color:#555;text-decoration:none;">contact@pocketod.com</a></div>
         <div style="margin-top:4px;">If you find an error, please let me know.</div>
     </footer>
