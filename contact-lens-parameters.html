@@ -264,6 +264,66 @@
             .mfr-section .cta-btn { display: block; }
             .hero-cta-btn { display: block; text-align: center; }
         }
+
+        /* KEY POINTS BOX */
+        .key-points {
+            background: var(--accent-light);
+            border: 1px solid rgba(13,148,136,0.25);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            margin-bottom: 36px;
+        }
+        .key-points-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .key-points ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+        .key-points ul li + li { margin-top: 5px; }
+        .key-points a { color: var(--accent); text-decoration: none; }
+        .key-points a:hover { text-decoration: underline; }
+
+        /* PARAMETER TABLE */
+        .table-wrap { overflow-x: auto; margin-bottom: 20px; -webkit-overflow-scrolling: touch; }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 520px;
+        }
+        .param-table th {
+            background: var(--surface);
+            color: var(--ink-muted);
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        .param-table td {
+            padding: 7px 10px;
+            color: var(--ink-secondary);
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        .param-table tr:last-child td { border-bottom: none; }
+        .param-table td strong { color: var(--ink); font-weight: 600; }
+        .param-table td small { font-size: 11.5px; color: var(--ink-muted); display: block; margin-top: 1px; }
+        .param-table .footnote { font-size: 11.5px; color: var(--ink-muted); margin-top: 6px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -291,11 +351,22 @@
     </nav>
 
     <h1>Contact Lens Parameters for Optometrists</h1>
-    <p class="intro">A reference guide to soft contact lens specifications from Alcon, Bausch + Lomb, CooperVision, and Johnson &amp; Johnson Acuvue — covering base curves, diameters, sphere and cylinder ranges, modalities, and materials. Use the interactive database on Pocket OD to filter, compare, and fit directly from parameters.</p>
+    <p class="intro">Soft contact lens specifications from Alcon, Bausch + Lomb, CooperVision, and Johnson &amp; Johnson Acuvue — covering base curves, diameters, sphere and cylinder ranges, and materials. Use Pocket OD to filter, compare, and fit directly from parameters.</p>
 
     <div class="hero-cta">
         <p class="hero-cta-label">Ready to browse? Jump straight into the database.</p>
         <a class="hero-cta-btn" href="https://pocketod.com/#contactlensdatabase">Browse Full Contact Lens Database &rarr;</a>
+    </div>
+
+    <div class="key-points">
+        <div class="key-points-title">Key Points</div>
+        <ul>
+            <li>Most soft lens families offer a single base curve and diameter — fitting flexibility is limited</li>
+            <li>Standard sphere ranges: &minus;12 to +6/+8&nbsp;D for most dailies; CooperVision Biofinity XR extends to &minus;20/+15&nbsp;D</li>
+            <li>Toric cylinder: &minus;0.75 to &minus;2.25 or &minus;2.75&nbsp;D in most families; axis availability restricted above &minus;6&nbsp;D at higher cylinders</li>
+            <li>Apply vertex conversion when spectacle Rx exceeds &plusmn;4.00&nbsp;D</li>
+            <li>Also see: <a href="toric-contact-lens-fitting.html">Toric Contact Lens Fitting Guide</a></li>
+        </ul>
     </div>
 
     <!-- ALCON -->
@@ -304,9 +375,21 @@
             <h2 style="color:var(--alcon)">Alcon Contact Lens Parameters</h2>
         </div>
         <div class="mfr-body">
-            <p>Alcon's monthly silicone hydrogel lineup centers on the <strong>Air Optix plus HydraGlyde</strong> family — available in sphere (BC 8.6 / 14.2 mm, &minus;12.00 to +8.00 D), toric (cyl &minus;0.75 to &minus;2.25 in 10&deg; axis steps), and multifocal — alongside the extended-wear <strong>Air Optix Night &amp; Day Aqua</strong> (Dk 175, 30-night continuous wear). The <strong>Total30</strong> series offers a water-gradient monthly platform in sphere, toric (cyl &minus;0.75 to &minus;2.75), and multifocal, as well as a combined <strong>Total30 Multifocal for Astigmatism</strong>. The weekly <strong>Precision7 for Astigmatism</strong> (Serafilcon A, Dk 149, cyl &minus;0.75 to &minus;2.75) rounds out the reusable options.</p>
-            <br>
-            <p>In the daily category, <strong>Dailies Total 1</strong> (Delefilcon A, Dk 156) covers sphere (&minus;12.00 to +6.00 D), toric, and multifocal. <strong>Precision1</strong> (Verofilcon A, Dk 100) extends to &minus;12.00 to +8.00 D sphere and a toric variant (cyl &minus;0.75 to &minus;2.75). The hydrogel <strong>DAILIES AquaComfort Plus</strong> line — sphere (&minus;15.00 to +8.00 D), toric, and multifocal — remains widely available.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Lens Family</th><th>Modality</th><th>Types</th><th>Sphere Range¹</th><th>Toric Cyl</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Air Optix plus HydraGlyde</strong><small>Lotrafilcon B · Dk 138</small></td><td>Monthly</td><td>Sph · Toric · MF</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>Air Optix Night &amp; Day Aqua</strong><small>Lotrafilcon A · Dk 175 · 30-night EW</small></td><td>Monthly</td><td>Sphere</td><td>&minus;10 to +6 D</td><td>—</td></tr>
+        <tr><td><strong>Total30</strong><small>Lehfilcon A · Dk 154</small></td><td>Monthly</td><td>Sph · Toric · MF · MF+T</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>Precision7 for Astigmatism</strong><small>Serafilcon A · Dk 149 · Weekly EW</small></td><td>Weekly</td><td>Sphere · Toric</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>Dailies Total 1</strong><small>Delefilcon A · Dk 156</small></td><td>Daily</td><td>Sph · Toric · MF</td><td>&minus;12 to +6 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>Precision1</strong><small>Verofilcon A · Dk 100</small></td><td>Daily</td><td>Sph · Toric</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>DAILIES AquaComfort Plus</strong><small>Nelfilcon A · Hydrogel · Dk 26</small></td><td>Daily</td><td>Sph · Toric · MF</td><td>&minus;15 to +8 D</td><td>&minus;0.75 to &minus;1.75</td></tr>
+        </tbody>
+        </table>
+        </div>
+        <p class="footnote">¹ Toric and MF sphere ranges may differ. View complete specs in Pocket OD.</p>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Full Parameters &amp; Fit &rarr;</a>
     </section>
@@ -317,9 +400,18 @@
             <h2 style="color:var(--bl)">Bausch + Lomb Contact Lens Parameters</h2>
         </div>
         <div class="mfr-body">
-            <p>Bausch + Lomb's premium daily platform is <strong>INFUSE One-Day</strong> (Kalifilcon A, Dk 134), available in sphere, toric, and multifocal. <strong>Biotrue ONEday</strong> (Nesofilcon A, 78% water content matching the corneal epithelium) offers sphere (&minus;9.00 to +6.00 D), toric (cyl &minus;0.75 to &minus;2.25), and presbyopia options. The monthly <strong>Ultra</strong> family (Samfilcon A, Dk 163 for sphere) covers sphere, toric (cyl &minus;0.75 to &minus;2.25), multifocal for presbyopia, and a combined <strong>Ultra Multifocal for Astigmatism</strong>.</p>
-            <br>
-            <p><strong>PureVision2</strong> (Balafilcon A) is a monthly silicone hydrogel available in sphere (&minus;12.00 to +8.00 D) and toric, offering an EW-approved option for patients who benefit from extended wear. All Bausch + Lomb parameter tables — including axis availability, add type options, and pack sizes — are searchable and filterable in the Pocket OD database.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Lens Family</th><th>Modality</th><th>Types</th><th>Sphere Range¹</th><th>Toric Cyl</th></tr></thead>
+        <tbody>
+        <tr><td><strong>INFUSE One-Day</strong><small>Kalifilcon A · Dk 134</small></td><td>Daily</td><td>Sph · Toric · MF</td><td>&minus;12 to +6 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>Biotrue ONEday</strong><small>Nesofilcon A · 78% H₂O</small></td><td>Daily</td><td>Sph · Toric · Presbyopia</td><td>&minus;12 to +6 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>Ultra</strong><small>Samfilcon A · Dk 163</small></td><td>Monthly</td><td>Sph · Toric · MF · MF+T</td><td>&minus;12 to +6 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>PureVision2</strong><small>Balafilcon A · Dk 130 · EW ok</small></td><td>Monthly</td><td>Sph · Toric</td><td>&minus;12 to +6 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        </tbody>
+        </table>
+        </div>
+        <p class="footnote">¹ Toric and MF sphere ranges may differ. View complete specs in Pocket OD.</p>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Full Parameters &amp; Fit &rarr;</a>
     </section>
@@ -330,9 +422,21 @@
             <h2 style="color:var(--cv)">CooperVision Contact Lens Parameters</h2>
         </div>
         <div class="mfr-body">
-            <p>CooperVision's monthly platform is anchored by <strong>Biofinity</strong> (Comfilcon A, Dk 160) in sphere, toric, multifocal, energys, toric multifocal, and a toric XR variant — with sphere coverage extending to &minus;20.00 / +15.00 D including XR powers. The <strong>Proclear</strong> range includes toric, toric XR, multifocal XR (adds to +4.00 D, sphere to &plusmn;20.00 D), and multifocal toric options using Omafilcon A or B. The biweekly <strong>Avaira Vitality</strong> (Fanfilcon A, Dk 110) covers sphere and toric.</p>
-            <br>
-            <p>For daily lenses, <strong>MyDay</strong> (Stenfilcon A, Dk 100) is available in sphere, toric, multifocal, and energys. <strong>Clariti 1 Day</strong> (Somofilcon A, Dk 86) offers sphere, toric, and a three-add multifocal. The hydrogel <strong>Proclear 1 Day</strong> and <strong>Proclear 1 Day Multifocal</strong> complete the daily lineup. <strong>MiSight 1 day</strong> (Omafilcon A) is CooperVision's myopia-control daily, FDA-approved for slowing myopia progression in children.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Lens Family</th><th>Modality</th><th>Types</th><th>Sphere Range¹</th><th>Toric Cyl</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Biofinity</strong><small>Comfilcon A · Dk 160 · EW ok</small></td><td>Monthly</td><td>Sph · Toric · Toric XR · Energys · MF · MF+T</td><td>&minus;20 to +15 D (XR)</td><td>&minus;0.75 to &minus;2.25 (std) / &minus;0.75 to &minus;5.75 (XR)</td></tr>
+        <tr><td><strong>Proclear</strong><small>Omafilcon A/B · Hydrogel</small></td><td>Monthly</td><td>Toric · Toric XR · MF XR · MF+T</td><td>&minus;8 to +6 D (Toric)</td><td>&minus;0.75 to &minus;2.25 (std) / up to &minus;5.75 (XR)</td></tr>
+        <tr><td><strong>Avaira Vitality</strong><small>Fanfilcon A · Dk 110</small></td><td>Biweekly</td><td>Sphere · Toric</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>MyDay</strong><small>Stenfilcon A · Dk 100</small></td><td>Daily</td><td>Sph · Toric · MF · Energys</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>Clariti 1 Day</strong><small>Somofilcon A · Dk 86</small></td><td>Daily</td><td>Sph · Toric · MF</td><td>&minus;10 to +8 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>Proclear 1 Day</strong><small>Omafilcon A · Hydrogel</small></td><td>Daily</td><td>Sphere</td><td>&minus;12 to +8 D</td><td>—</td></tr>
+        <tr><td><strong>MiSight 1 day</strong><small>Omafilcon A · Myopia mgmt</small></td><td>Daily</td><td>Myopia management</td><td>&minus;7 to &minus;0.50 D</td><td>—</td></tr>
+        </tbody>
+        </table>
+        </div>
+        <p class="footnote">¹ Toric and MF sphere ranges may differ. Proclear XR variants discontinuing Nov 2026. View complete specs in Pocket OD.</p>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Full Parameters &amp; Fit &rarr;</a>
     </section>
@@ -343,12 +447,26 @@
             <h2 style="color:var(--jj)">Johnson &amp; Johnson Acuvue Contact Lens Parameters</h2>
         </div>
         <div class="mfr-body">
-            <p>The daily Acuvue silicone hydrogel lineup includes <strong>Acuvue Oasys 1-Day</strong> (Senofilcon A, Dk 121, &minus;12.00 to +8.00 D) and the newer <strong>Acuvue Oasys Max 1-Day</strong> with TearStable technology, both available with toric and multifocal variants. The <strong>Acuvue Oasys 1-Day for Astigmatism</strong> now covers cyl &minus;0.75 to &minus;2.75 (expanded 2026), while the <strong>Acuvue Oasys Max 1-Day for Astigmatism</strong> covers cyl &minus;0.75 to &minus;2.25 — both with axis restrictions at higher powers, while the <strong>Acuvue Oasys Max 1-Day Multifocal</strong> offers Low, Mid, and High add powers. <strong>1-Day Acuvue Moist</strong> (Etafilcon A) provides an affordable daily hydrogel in sphere, toric, and multifocal.</p>
-            <br>
-            <p>The two-week <strong>Acuvue Oasys</strong> (Senofilcon A, Dk 147, EW approved) is available in sphere, toric (cyl &minus;0.75 to &minus;2.75, full 10&deg; axis steps), and multifocal. The monthly <strong>Acuvue Vita</strong> (Senofilcon C, Dk 147) and <strong>Acuvue Vita for Astigmatism</strong> (cyl &minus;0.75 to &minus;2.75) round out the reusable options. All Acuvue fitting guides, add selection tables, and axis restrictions are built into the Pocket OD fitting calculator.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Lens Family</th><th>Modality</th><th>Types</th><th>Sphere Range¹</th><th>Toric Cyl</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Acuvue Oasys 1-Day</strong><small>Senofilcon A · Dk 121</small></td><td>Daily</td><td>Sphere · Toric</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>Acuvue Oasys Max 1-Day</strong><small>Senofilcon A HVO · Dk 121 · TearStable</small></td><td>Daily</td><td>Sph · Toric · MF</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>1-Day Acuvue Moist</strong><small>Etafilcon A · Hydrogel · Dk 33</small></td><td>Daily</td><td>Sph · Toric · MF</td><td>&minus;12 to +6 D</td><td>&minus;0.75 to &minus;2.25</td></tr>
+        <tr><td><strong>Acuvue Oasys (2-week)</strong><small>Senofilcon A · EW ok</small></td><td>Biweekly</td><td>Sph · Toric · MF</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        <tr><td><strong>Acuvue Vita</strong><small>Senofilcon C · Dk 147</small></td><td>Monthly</td><td>Sphere · Toric</td><td>&minus;12 to +8 D</td><td>&minus;0.75 to &minus;2.75</td></tr>
+        </tbody>
+        </table>
+        </div>
+        <p class="footnote">¹ Toric and MF sphere ranges may differ. View complete specs in Pocket OD.</p>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlensdatabase">View Full Parameters &amp; Fit &rarr;</a>
     </section>
+
+    <p style="font-size:14px; color:var(--ink-muted); margin-bottom:0; text-align:center;">
+        Also see: <a href="toric-contact-lens-fitting.html" style="color:var(--accent);">Toric Contact Lens Fitting Guide &rarr;</a>
+    </p>
 
     <!-- BOTTOM CTA -->
     <div class="bottom-cta">

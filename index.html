@@ -16760,8 +16760,8 @@
                     const condLabel = (MED_CONDITIONS[m.condition] && MED_CONDITIONS[m.condition].label) || '';
                     const indications = MED_INDICATIONS[m.id] || '';
                     return m.brand_name.toLowerCase().includes(q) ||
-                        m.generic_name.toLowerCase().includes(q) ||
-                        m.drug_class.toLowerCase().includes(q) ||
+                        (m.generic_name || '').toLowerCase().includes(q) ||
+                        (m.drug_class || '').toLowerCase().includes(q) ||
                         (m.notes && m.notes.toLowerCase().includes(q)) ||
                         condLabel.toLowerCase().includes(q) ||
                         indications.toLowerCase().includes(q);
@@ -16777,7 +16777,7 @@
                 const condLabel = (MED_CONDITIONS[m.condition] && MED_CONDITIONS[m.condition].label) || '';
                 const indications = MED_INDICATIONS[m.id] || '';
                 return m.brand_name.toLowerCase().includes(q) ||
-                    m.generic_name.toLowerCase().includes(q) ||
+                    (m.generic_name || '').toLowerCase().includes(q) ||
                     (m.notes && m.notes.toLowerCase().includes(q)) ||
                     condLabel.toLowerCase().includes(q) ||
                     indications.toLowerCase().includes(q);

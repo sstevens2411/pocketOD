@@ -325,6 +325,66 @@
             .mfr-section .cta-btn { display: block; }
             .hero-cta-btn { display: block; text-align: center; }
         }
+
+        /* KEY POINTS BOX */
+        .key-points {
+            background: var(--accent-light);
+            border: 1px solid rgba(13,148,136,0.25);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            margin-bottom: 36px;
+        }
+        .key-points-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .key-points ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+        .key-points ul li + li { margin-top: 5px; }
+        .key-points a { color: var(--accent); text-decoration: none; }
+        .key-points a:hover { text-decoration: underline; }
+
+        /* PARAMETER TABLE */
+        .table-wrap { overflow-x: auto; margin-bottom: 20px; -webkit-overflow-scrolling: touch; }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 520px;
+        }
+        .param-table th {
+            background: var(--surface);
+            color: var(--ink-muted);
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 7px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        .param-table td {
+            padding: 7px 10px;
+            color: var(--ink-secondary);
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        .param-table tr:last-child td { border-bottom: none; }
+        .param-table td strong { color: var(--ink); font-weight: 600; }
+        .param-table td small { font-size: 11.5px; color: var(--ink-muted); display: block; margin-top: 1px; }
+        .param-table .footnote { font-size: 11.5px; color: var(--ink-muted); margin-top: 6px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -352,11 +412,22 @@
     </nav>
 
     <h1>Toric Contact Lens Fitting Guide for Optometrists</h1>
-    <p class="intro">Toric contact lenses correct astigmatism by delivering a cylindrical power at a precise axis, held in place on the eye by a built-in stabilization mechanism. Successful fitting requires matching cylinder power and axis to the patient's refraction, assessing on-eye orientation at the slit lamp, and applying a compensated axis when rotation is present. This guide covers the key clinical steps — from patient selection through troubleshooting — with Pocket OD's toric fitting calculator available at every stage.</p>
+    <p class="intro">Toric contact lenses correct astigmatism by delivering a cylindrical power at a precise axis, held in place by a built-in stabilization mechanism. Successful fitting requires matching cylinder power and axis, assessing on-eye orientation at the slit lamp, and applying a compensated axis when rotation is present.</p>
 
     <div class="hero-cta">
         <p class="hero-cta-label">Ready to fit? Jump straight into the calculator.</p>
         <a class="hero-cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
+    </div>
+
+    <div class="key-points">
+        <div class="key-points-title">Key Points</div>
+        <ul>
+            <li>Fit toric when cylinder is <strong>&ge;0.75 D</strong>; consider at 0.50 D for symptomatic patients dissatisfied with spherical correction</li>
+            <li>Apply vertex conversion before selecting sphere when spectacle Rx exceeds &plusmn;4.00 D</li>
+            <li><strong>LARS</strong> — Left Add, Right Subtract — compensates for on-eye axis rotation; reliable only when rotation is stable</li>
+            <li>Wait <strong>10–15 min</strong> after insertion before assessing lens orientation</li>
+            <li>Unstable rotation usually means a flat fit — steepen BC or switch stabilization design</li>
+        </ul>
     </div>
 
     <!-- WHEN TO FIT A TORIC -->
@@ -365,9 +436,11 @@
             <h2 style="color:var(--accent)">When to Fit a Toric Contact Lens</h2>
         </div>
         <div class="mfr-body">
-            <p>The clinical threshold for prescribing a toric lens is generally <strong>0.75 D of refractive cylinder or more</strong>. Below that level, a spherical lens fit at the spherical equivalent usually provides acceptable acuity — the residual astigmatism is simply corrected by the tear lens. Patients with higher visual demands (prolonged screen work, critical distance vision tasks) may benefit from toric correction even at 0.50 D of cylinder, particularly if they are symptomatic with their current spherical lens.</p>
-            <p>Before selecting a toric lens, confirm that the astigmatism is <strong>refractive rather than purely lenticular</strong>. Corneal toricity and refractive cylinder tend to align in most patients, but a significant discrepancy between the two warrants scrutiny — lenticular astigmatism alone does not benefit from a corneal toric lens. Keratometry or corneal topography helps clarify the source. Irregular corneal astigmatism (from early keratoconus, Salzmann's nodular degeneration, or corneal scarring) is not reliably corrected by soft torics; a rigid or scleral lens is usually more appropriate in those cases.</p>
-            <p>Axis stability matters as much as magnitude. A patient with oblique, moderate astigmatism and a well-defined subjective axis is a better toric candidate than a patient whose cylinder axis varies significantly between refractions, since axis instability makes it difficult to settle on a reliable ordered axis.</p>
+        <ul style="padding-left:20px; color:var(--ink-secondary); font-size:15px; line-height:1.75;">
+            <li>Fit toric when refractive cylinder is <strong>&ge;0.75 D</strong>. Below this, a spherical lens at the spherical equivalent usually suffices. Consider toric at 0.50 D for symptomatic patients with higher visual demands.</li>
+            <li>Confirm astigmatism is <strong>refractive, not purely lenticular</strong>. A significant discrepancy between corneal toricity and refractive cylinder warrants further evaluation — a corneal toric lens does not correct lenticular astigmatism.</li>
+            <li>Irregular corneal astigmatism (keratoconus, Salzmann's nodular degeneration, corneal scarring) is not reliably corrected by soft torics — a rigid or scleral lens is usually more appropriate.</li>
+        </ul>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
     </section>
@@ -378,10 +451,17 @@
             <h2 style="color:var(--accent)">Selecting the Starting Lens</h2>
         </div>
         <div class="mfr-body">
-            <p><strong>Sphere power:</strong> Apply vertex conversion to the spectacle sphere when the spectacle power exceeds ±4.00 D — the difference between spectacle and contact lens plane becomes clinically significant above this range. For lower powers, the spectacle sphere can be used as the starting contact lens sphere. Most fitting guides recommend selecting the nearest available sphere power on the more minus (or less plus) side, then refining with over-refraction if needed.</p>
-            <p><strong>Cylinder power:</strong> Soft torics are available in standard cylinder steps — commonly &minus;0.75, &minus;1.25, &minus;1.75, and &minus;2.25 D, with some lenses extending to &minus;2.75 D or beyond. When the patient's cylinder falls between available steps, round to the nearest available power. If halfway between steps, rounding to the more minus cylinder is generally preferred, since under-correcting cylinder can leave residual blur. For patients with cylinder at &minus;0.50 D, a spherical lens at SE is usually trialed first; for &minus;0.75 D, a toric is almost always worth the effort in symptomatic patients.</p>
-            <p><strong>Axis:</strong> Most soft torics offer axis in 10° steps (180°, 170°, 160°, 090°, etc.). Select the closest available axis to the patient's spectacle axis. When the spectacle axis falls exactly halfway between two available steps (e.g., 035° with choices of 030° or 040°), choose the step that minimizes residual astigmatism; in practice, either option should be trialed and the result confirmed with over-refraction. Oblique axes (between 030° and 060°, and between 120° and 150°) can be less stable on-eye due to weaker lid interactions with the stabilization zone at those orientations — factor this in when counseling patients on expected consistency.</p>
-            <p><strong>Base curve and diameter:</strong> Start with the manufacturer's recommended trial parameters. Most soft torics come in a single base curve and diameter per lens family, so fitting flexibility is limited. If the lens shows excessive movement or decentration, consult the manufacturer's fitting guide for guidance on alternative base curves where available, or consider switching lens families.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Parameter</th><th>How to Select</th><th>Notes</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Sphere</strong></td><td>Apply vertex conversion if spectacle Rx &gt; &plusmn;4.00 D; round to nearest available power on the more minus side</td><td>Vertex conversion becomes clinically significant above &plusmn;4 D</td></tr>
+        <tr><td><strong>Cylinder</strong></td><td>Round to nearest available step; prefer more minus if between steps</td><td>Common steps: &minus;0.75, &minus;1.25, &minus;1.75, &minus;2.25, &minus;2.75 D</td></tr>
+        <tr><td><strong>Axis</strong></td><td>Select nearest available 10° step to spectacle axis</td><td>Oblique axes (030–060°, 120–150°) may be less stable on-eye due to lid interaction geometry</td></tr>
+        <tr><td><strong>Base curve / diameter</strong></td><td>Use manufacturer's recommended trial</td><td>Most families offer a single BC/diameter — fitting flexibility is limited</td></tr>
+        </tbody>
+        </table>
+        </div>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
     </section>
@@ -392,12 +472,19 @@
             <h2 style="color:var(--accent)">Rotation Assessment &amp; the LARS Rule</h2>
         </div>
         <div class="mfr-body">
-            <p>Most soft toric lenses carry a small orientation mark — typically a dot, line, or series of dots — near the inferior lens edge at the 6 o'clock position. After allowing the lens to equilibrate for <strong>10–15 minutes</strong>, assess the position of this mark under slit lamp illumination. A mark sitting precisely at 6 o'clock indicates no rotation. A mark displaced toward the patient's right indicates leftward (counterclockwise) rotation; toward the patient's left indicates rightward (clockwise) rotation.</p>
-            <p>When the lens has rotated, the cylinder it delivers is offset from the intended axis by the same number of degrees, reducing acuity. The <strong>LARS rule</strong> corrects for this: <strong>Left Add, Right Subtract</strong>.</p>
-            <p>If the lens rotates to the patient's <strong>left (counterclockwise)</strong>, <strong>add</strong> the degrees of rotation to the spectacle axis when ordering. If it rotates to the patient's <strong>right (clockwise)</strong>, <strong>subtract</strong>. The result is the compensated axis to order — wrapping within 0–180° as needed.</p>
-            <p><strong>Worked example:</strong> Spectacle Rx OD: &minus;2.00 &minus;1.25 &times; 165. Trialed in a &minus;2.00 &minus;1.25 toric, axis 160° (nearest available step). At slit lamp, the inferior mark is displaced 15° to the patient's left — counterclockwise rotation. Applying LARS: Left Add → 160° + 15° = 175°. The replacement lens should be ordered at axis 175°.</p>
-            <p>A second example: spectacle axis 015°, lens rotated 10° clockwise (to the patient's right). Right Subtract: 015° &minus; 10° = 005°. Order axis 005°.</p>
-            <p>LARS applies reliably only when rotation is <strong>stable and reproducible</strong> across multiple blinks. If the axis shifts by more than 10–15° between observations, the fitting problem must be addressed first — a different base curve, stabilization design, or lens family — before applying LARS. Pocket OD's toric troubleshooting workflow applies LARS automatically from the entered rotation and flags when rotation exceeds a reliable threshold.</p>
+        <p>Most soft torics carry an orientation mark near the inferior lens edge at 6 o'clock. After <strong>10–15 minutes</strong>, assess the mark under the slit lamp. A mark displaced toward the patient's right indicates leftward (counterclockwise) rotation; toward the left indicates rightward (clockwise) rotation.</p>
+
+        <p style="margin-top:12px;"><strong>LARS — Left Add, Right Subtract:</strong></p>
+        <div class="table-wrap" style="margin-top:8px;">
+        <table class="param-table">
+        <thead><tr><th>On-eye rotation</th><th>Rule</th><th>Example: spectacle axis 165°, trialed at 160°</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Left (counterclockwise)</strong></td><td>Add degrees of rotation to ordered axis</td><td>15° left → 160° + 15° = <strong>175°</strong></td></tr>
+        <tr><td><strong>Right (clockwise)</strong></td><td>Subtract degrees of rotation from ordered axis</td><td>10° right → 160° &minus; 10° = <strong>150°</strong></td></tr>
+        </tbody>
+        </table>
+        </div>
+        <p style="margin-top:10px;">LARS is reliable <strong>only when rotation is stable and reproducible</strong> across multiple blinks. If the axis shifts &gt;10–15° between observations, address the fitting problem first — a different base curve, stabilization design, or lens family — before applying LARS.</p>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
     </section>
@@ -408,11 +495,18 @@
             <h2 style="color:var(--accent)">Common Stabilization Designs</h2>
         </div>
         <div class="mfr-body">
-            <p><strong>Prism ballast</strong> is the traditional approach. A wedge of base-down prism is incorporated into the inferior lens, adding thickness and weight at the bottom. Gravity and the lower lid pull the thicker inferior zone downward, orienting the lens consistently. Prism ballast tends to work well in patients with lower lid tone and adequate palpebral aperture, but can be less effective in patients with elevated inferior lid positions or tight lids that override the prism zone.</p>
-            <p><strong>Thin-zone (lid interaction) designs</strong> use thinned zones at the 3 and 9 o'clock positions rather than added inferior mass. The upper and lower lids engage the thicker superior and inferior arcs during blinking, exerting a centering and orienting force. These designs rely on blink dynamics rather than gravity, which can offer advantages in supine positions and for patients whose lid anatomy does not interact well with prism ballast. Rapid recovery after blink-induced displacement is a key performance characteristic of this design type.</p>
-            <p><strong>Accelerated stabilization / dual thin-zone designs</strong> combine features of both approaches — thin zones near the horizontal meridians for lid engagement, with a lower-zone mass contribution for additional gravitational stability. This hybrid approach aims to provide fast recovery from displacement across a wider range of lid anatomies.</p>
-            <p><strong>Double slab-off (slab-off front and back)</strong> designs create thin zones at both the superior and inferior lens edges, leaving a thicker equatorial band. The lid engages this thicker zone during each blink to reorient the lens. These designs are less common in current soft toric offerings but appear in some extended-range toric products.</p>
-            <p>No single stabilization design is universally superior. When one design fails to hold a consistent axis, switching lens families — and therefore stabilization technologies — is a productive first step before exhausting parameter modifications within a single line.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Design</th><th>Mechanism</th><th>Best suited for / notes</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Prism ballast</strong></td><td>Inferior prism adds weight; gravity + lower lid orient lens downward</td><td>Lower lid tone; adequate palpebral aperture; less effective with tight or elevated inferior lids</td></tr>
+        <tr><td><strong>Thin-zone (lid interaction)</strong></td><td>Thin zones at 3 &amp; 9 o'clock; lids engage thicker arcs during each blink</td><td>Works in supine positions; relies on blink dynamics rather than gravity</td></tr>
+        <tr><td><strong>Dual thin-zone / accelerated stabilization</strong></td><td>Combines lid engagement with inferior mass contribution</td><td>Wider range of lid anatomies; fast recovery after blink displacement</td></tr>
+        <tr><td><strong>Double slab-off</strong></td><td>Thicker equatorial band; lids reorient with each blink</td><td>Less common in current soft torics; found in some extended-range products</td></tr>
+        </tbody>
+        </table>
+        </div>
+        <p style="font-size:14px; color:var(--ink-muted); margin-top:4px;">When one design fails, switching lens families — and therefore stabilization technologies — is the most productive first step.</p>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
     </section>
@@ -423,10 +517,17 @@
             <h2 style="color:var(--accent)">Troubleshooting Toric Contact Lenses</h2>
         </div>
         <div class="mfr-body">
-            <p><strong>Unstable axis / excessive rotation:</strong> The most common cause is a flat fit — the lens moves too freely because it is not conforming closely enough to the corneal curvature. Steepening the base curve (if an alternative is available in the lens family) typically reduces movement and improves stability. If the lens is riding high or decentered, corneal topography can identify whether the eccentricity or irregular surface shape is contributing. Switching to a lens family with a different stabilization design is often effective when base curve is the only option within a line.</p>
-            <p><strong>Blurred vision with correct lens power:</strong> First confirm that the lens is fully settled (≥10–15 min) and that the orientation mark is at a stable position. If the axis is rotated, apply LARS and order a compensated axis. If the lens is on-axis but vision is still reduced, perform a sphero-cylindrical over-refraction to check whether residual astigmatism is uncorrected. A significant over-refraction cylinder on-axis may indicate that the lens cylinder is under-correcting the patient's astigmatism — try the next step of cylinder power. Tear film irregularity is another common cause; instilling lubricant drops and reassessing can reveal whether the blur is lens-related or ocular surface-related.</p>
-            <p><strong>Lens rotation after blinking:</strong> If the lens recovers to its resting position within 1–2 blinks, this is normal behavior for lid-interaction designs. If the lens consistently settles in a rotated position after each blink — and that position is stable — apply LARS to compensate. If the lens shows chaotic rotation that does not converge to a stable resting position, the lens is not fitting correctly; assess base curve, corneal shape, and lid anatomy before proceeding.</p>
-            <p><strong>Poor comfort:</strong> Soft toric lenses tend to be thicker than equivalent spherical lenses, particularly in the stabilization zone, which can contribute to awareness — especially with higher cylinder powers. Ensure the lens edge profile is not impinging on the limbus. Switching to a daily disposable toric eliminates solution-related discomfort. If end-of-day dryness is the primary complaint, consider a lens with higher water content or a water-gradient surface design. Reviewing lid hygiene and treating any concurrent blepharitis often improves lens tolerance independently of the toric selection.</p>
+        <div class="table-wrap">
+        <table class="param-table">
+        <thead><tr><th>Problem</th><th>Likely cause</th><th>First step</th></tr></thead>
+        <tbody>
+        <tr><td><strong>Unstable axis / excessive rotation</strong></td><td>Flat fit — lens moves too freely</td><td>Steepen BC (if available in the family) or switch to a different stabilization design</td></tr>
+        <tr><td><strong>Blurred vision, lens on-axis</strong></td><td>Undercorrected cylinder, or tear film irregularity</td><td>Over-refract; try next cylinder step up — or instill lubricant drops and reassess</td></tr>
+        <tr><td><strong>Consistent rotation to same position after blink</strong></td><td>Stable malrotation</td><td>Apply LARS to compensate ordered axis; verify stability across multiple blinks first</td></tr>
+        <tr><td><strong>Poor comfort / end-of-day dryness</strong></td><td>Lens thickness in stabilization zone; surface dryness</td><td>Consider daily disposable toric; try a higher-water-content or water-gradient design; rule out blepharitis</td></tr>
+        </tbody>
+        </table>
+        </div>
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
     </section>
@@ -454,6 +555,10 @@
         </div>
         <a class="cta-btn" href="https://pocketod.com/#contactlenscalculator">Open the Toric Fitting Guide in Pocket OD &rarr;</a>
     </section>
+
+    <p style="font-size:14px; color:var(--ink-muted); margin-top:24px; text-align:center;">
+        Also see: <a href="contact-lens-parameters.html" style="color:var(--accent);">Contact Lens Parameters Reference &rarr;</a>
+    </p>
 
     <!-- BOTTOM CTA -->
     <div class="bottom-cta">
