@@ -13340,7 +13340,7 @@
             var sign = rounded >= 0 ? '+' : '\u2212';
             res.style.display = '';
             resetWrap.style.display = '';
-            res.innerHTML = 'Spectacle <b>' + (spec >= 0 ? '+' : '\u2212') + val.toFixed(2) + 'D</b> &rarr; Contact Lens <b style="color:var(--accent)">' + sign + Math.abs(rounded).toFixed(2) + 'D</b>';
+            res.innerHTML = '<div style="font-size:12px;font-weight:600;opacity:0.65;margin-bottom:4px">Spectacle <span style="font-weight:700">' + (spec >= 0 ? '+' : '\u2212') + val.toFixed(2) + 'D</span> &rarr; Contact Lens</div><div style="font-size:22px;font-weight:700;color:var(--accent);line-height:1">' + sign + Math.abs(rounded).toFixed(2) + 'D</div>';
         }
 
         function renderRadiusChart() {
