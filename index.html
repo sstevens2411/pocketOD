@@ -946,6 +946,11 @@
             line-height: 1.3;
         }
 
+        .lens-discontinued {
+            text-decoration: line-through;
+            text-decoration-color: var(--danger);
+        }
+
         .lens-note {
             font-size: 11.5px;
             color: var(--ink-muted);
@@ -6546,7 +6551,7 @@
                             const odName = lens.companionForOD || lens.name;
                             const osName = lens.companionForOS || lens.name;
                             return `<div class="lens-name" style="font-size:15px;line-height:1.5">OD: ${odName}${lensAlias(odName)}, OS: ${osName}${lensAlias(osName)}</div>`;
-                        })() : `<div class="lens-name">${lens.name}${lensAlias(lens.name)}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;" title="Discontinuing"></i>' : ''}</div>`}
+                        })() : `<div class="lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}${lensAlias(lens.name)}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;" title="Discontinuing"></i>' : ''}</div>`}
                         ${lens.discontinuing ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-warning" style="margin-right:3px"></i>${lens.discontinuing}</div>` : ''}
                         ${lens.note ? `<div class="lens-note">${lens.note}</div>` : ""}
                         ${lens.infoBanner ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-info" style="margin-right:3px"></i>${lens.infoBanner}</div>` : ''}
@@ -7308,7 +7313,7 @@
                         return `<div class="order-lens-name" style="font-size:16px;line-height:1.5">OD: <span style="color:${brandColor}">${odName}</span><br>OS: <span style="color:${brandColor}">${osName}</span></div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`;
                     })()
-                    : `<div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
+                    : `<div class="order-lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                     <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`}
 
                 ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
@@ -9857,7 +9862,7 @@
 
             return `<div class="order-detail">
                 <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> ${(state.nonAdaptFrom || state.fullCylFrom) ? 'Back to Order' : 'Back to Results'}</button>
-                <div class="order-lens-name">${lens.name}</div>
+                <div class="order-lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${complaintHtml}
                 ${suggestionsHtml}
@@ -17797,7 +17802,7 @@
                 <button class="order-back-btn" onclick="closeBrowseLens()"><i class="ph-duotone ph-arrow-left"></i> Back to Browse</button>
                 <div class="order-header-row">
                     <div class="order-header-left">
-                        <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
+                        <div class="order-lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                     </div>
                     <div class="order-btns-col" style="display:flex;flex-direction:column;gap:8px;align-items:stretch;">
