@@ -946,10 +946,6 @@
             line-height: 1.3;
         }
 
-        .lens-discontinued {
-            text-decoration: line-through;
-            text-decoration-color: var(--danger);
-        }
 
         .lens-note {
             font-size: 11.5px;
@@ -4644,8 +4640,8 @@
             { name:"Biofinity Toric XR", ct:"0.11 mm @ −3.00 D", brand:"CooperVision", type:"toric", modality:"monthly", dk:116, bc:"8.7", diam:"14.5", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$162", wear:"EW", material:"Comfilcon A (SiHy)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Biofinity Toric", sph50start:6, stabilization:"Optimized Toric Lens Geometry" },
             { name:"Proclear Toric", ct:"0.10 mm @ −3.00 D", brand:"CooperVision", type:"toric", modality:"monthly", dk:25, bc:"8.8 / 8.4", diam:"14.4", sphMin:-8, sphMax:6, cylMin:-0.75, cylMax:-2.25, addTypes:[], qty:"6", price:"$110", wear:"DW", material:"Omafilcon B", axes:"10\u2013180\u00B0 (10\u00B0 full)", companion:"Proclear Toric XR", sph50start:6, stabilization:"Prism Ballast" },
             { name:"Proclear Toric XR", ct:"0.12 mm @ −3.00 D", brand:"CooperVision", type:"toric", modality:"monthly", dk:14, bc:"8.8 / 8.4", diam:"14.4", sphMin:-10, sphMax:10, cylMin:-0.75, cylMax:-5.75, addTypes:[], qty:"6", price:"$200", wear:"DW", material:"Omafilcon B", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Extended cylinder range", companion:"Proclear Toric", discontinuing:"Trial lenses discontinued 11/2025. Full discontinuation 11/2026. Patients can order until 11/2026.", sph50start:6, stabilization:"Prism Ballast" },
-            { name:"Proclear Multifocal XR", ct:"0.16 mm", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:17, bc:"8.4 / 8.7", diam:"14.4", sphMin:-20, sphMax:20, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$200", wear:"DW", material:"Omafilcon B (Hydrogel)", note:"D lens (center-distance) for dominant eye, N lens (center-near) for non-dominant. Extended range: sph to \u00B120.00, adds to +4.00. PC Technology for hydration.", discontinuing:"Discontinued 10/31/26. Existing patients can still order until supply runs out.", fittingGuide: { troubleshootSteps: { distance: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" } ], near: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" }, { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true } ] } }, sph50start:6 },
-            { name:"Proclear Multifocal Toric", ct:"0.11 mm @ −3.00 D", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:39, bc:"8.8 / 8.4", diam:"14.4", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$207", wear:"DW", material:"Omafilcon B (Hydrogel)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Combines toric correction with D/N multifocal design. PC Technology for hydration.", discontinuing:"Discontinued 10/31/26. Existing patients can still order until supply runs out.", stabilization:"Prism Ballast", fittingGuide: { troubleshootSteps: { distance: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" } ], near: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" }, { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true } ] } }, sph50start:6 },
+            { name:"Proclear Multifocal XR", ct:"0.16 mm", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:17, bc:"8.4 / 8.7", diam:"14.4", sphMin:-20, sphMax:20, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$200", wear:"DW", material:"Omafilcon B (Hydrogel)", note:"D lens (center-distance) for dominant eye, N lens (center-near) for non-dominant. Extended range: sph to \u00B120.00, adds to +4.00. PC Technology for hydration.", discontinued:true, discontinuing:"Discontinued 10/31/26.", fittingGuide: { troubleshootSteps: { distance: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" } ], near: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" }, { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true } ] } }, sph50start:6 },
+            { name:"Proclear Multifocal Toric", ct:"0.11 mm @ −3.00 D", brand:"CooperVision", type:"multifocal-toric", modality:"monthly", dk:39, bc:"8.8 / 8.4", diam:"14.4", sphMin:-20, sphMax:20, cylMin:-0.75, cylMax:-5.75, addTypes:["+1.00","+1.50","+2.00","+2.50","+3.00","+3.50","+4.00"], qty:"6", price:"$207", wear:"DW", material:"Omafilcon B (Hydrogel)", axes:"5\u2013180\u00B0 (5\u00B0 full)", note:"Combines toric correction with D/N multifocal design. PC Technology for hydration.", discontinued:true, discontinuing:"Discontinued 10/31/26.", stabilization:"Prism Ballast", fittingGuide: { troubleshootSteps: { distance: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of the eye that results in greatest improvement in distance vision (most likely dominant eye):" } ], near: [ { action:"acuvueNearRefine", rationale:"In normal room illumination, perform a <strong>monocular</strong> distance over-refraction using handheld lenses. Add +/- 0.25 to the SPH power of eye that results in greatest improvement in near vision (most likely non-dominant eye):" }, { action:"raiseAdd", eye:"nonDominant", title:"Adjust ADD", rationale:"Add +0.50 to the ADD power of the non-dominant eye (from {from} to {to}).", showMaxMessage:true } ] } }, sph50start:6 },
             { name:"Biofinity Multifocal", ct:"0.08 mm @ −3.00 D", brand:"CooperVision", type:"multifocal", modality:"monthly", dk:142, bc:"8.6", diam:"14.0", sphMin:-10, sphMax:6, cylMin:0, cylMax:0, addTypes:["+1.00","+1.50","+2.00","+2.50"], qty:"3, 6", price:"$104", wear:"EW", material:"Comfilcon A (SiHy)", privateLabels:[{name:"Aquaclear Multifocal",retailer:"Vision Source"},{name:"Voyant Monthly Multifocal",retailer:"Vision Source"},{name:"Ethos AquaTech Monthly Multifocal",retailer:"Visionworks"},{name:"Sofmed Breathables XW Multifocal",retailer:"America's Best"},{name:"LensCrafters Monthly Multifocal",retailer:"LensCrafters"},{name:"Pearle Vision Monthly Multifocal",retailer:"Pearle Vision"},{name:"Natural Eyes HydraWear XW Multifocal",retailer:"Eyeglass World"},], fittingGuide: {
                 addTable: [
                     { specAddMin:0.75, specAddMax:1.25, clAdd:"+1.00", dominant:"D", nonDominant:"D" },
@@ -5688,7 +5684,7 @@
         function getCompatibleLenses() {
             if (state.browseLensFilter) {
                 const target = LENSES.find(l => l.name === state.browseLensFilter);
-                if (!target) return [];
+                if (!target || target.discontinued) return [];
                 const odOk = isLensCompatibleWithEye(target, state.od);
                 const osOk = isLensCompatibleWithEye(target, state.os);
                 if (odOk || osOk) return [target];
@@ -5699,6 +5695,7 @@
             const seen = new Set();
 
             LENSES.forEach(lens => {
+                if (lens.discontinued) return;
                 if (state.modality.length > 0 && !state.modality.includes(lens.modality)) return;
                 if (!state.brands.includes(lens.brand)) return;
 
@@ -5726,12 +5723,12 @@
                 // Cross-type family pairing (e.g. Sphere ↔ Toric, MF ↔ MF-Toric)
                 if (!odOk && !companionForOD) {
                     const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
-                    const match = siblings.find(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.od));
+                    const match = siblings.find(s => s.name !== lens.name && !s.discontinued && isLensCompatibleWithEye(s, state.od));
                     if (match) companionForOD = match.name;
                 }
                 if (!osOk && !companionForOS) {
                     const siblings = _lensFamilyMap[getLensFamily(lens)] || [];
-                    const match = siblings.find(s => s.name !== lens.name && isLensCompatibleWithEye(s, state.os));
+                    const match = siblings.find(s => s.name !== lens.name && !s.discontinued && isLensCompatibleWithEye(s, state.os));
                     if (match) companionForOS = match.name;
                 }
 
@@ -6551,7 +6548,7 @@
                             const odName = lens.companionForOD || lens.name;
                             const osName = lens.companionForOS || lens.name;
                             return `<div class="lens-name" style="font-size:15px;line-height:1.5">OD: ${odName}${lensAlias(odName)}, OS: ${osName}${lensAlias(osName)}</div>`;
-                        })() : `<div class="lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}${lensAlias(lens.name)}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;" title="Discontinuing"></i>' : ''}</div>`}
+                        })() : `<div class="lens-name">${lens.name}${lensAlias(lens.name)}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;" title="Discontinuing"></i>' : ''}</div>`}
                         ${lens.discontinuing ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-warning" style="margin-right:3px"></i>${lens.discontinuing}</div>` : ''}
                         ${lens.note ? `<div class="lens-note">${lens.note}</div>` : ""}
                         ${lens.infoBanner ? `<div class="lens-note" style="color:#dc2626;font-weight:600;"><i class="ph-duotone ph-info" style="margin-right:3px"></i>${lens.infoBanner}</div>` : ''}
@@ -7313,7 +7310,7 @@
                         return `<div class="order-lens-name" style="font-size:16px;line-height:1.5">OD: <span style="color:${brandColor}">${odName}</span><br>OS: <span style="color:${brandColor}">${osName}</span></div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`;
                     })()
-                    : `<div class="order-lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
+                    : `<div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                     <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>`}
 
                 ${lens.discontinuing ? `<div class="order-note-box" style="background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2);color:#dc2626"><i class="ph-duotone ph-warning" style="margin-right:4px;"></i>${lens.discontinuing}</div>` : ''}
@@ -9862,7 +9859,7 @@
 
             return `<div class="order-detail">
                 <button class="order-back-btn" onclick="backFromTroubleshoot()"><i class="ph-duotone ph-arrow-left"></i> ${(state.nonAdaptFrom || state.fullCylFrom) ? 'Back to Order' : 'Back to Results'}</button>
-                <div class="order-lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}</div>
+                <div class="order-lens-name">${lens.name}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${complaintHtml}
                 ${suggestionsHtml}
@@ -17627,7 +17624,7 @@
         }
 
         // ===== BROWSE ALL TAB =====
-        const browseState = { search: "", typeFilter: null, modalityFilter: null, materialFilter: null, sortDk: null, sortBc: null, sortDia: null, sortCt: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null };
+        const browseState = { search: "", typeFilter: null, modalityFilter: null, materialFilter: null, sortDk: null, sortBc: null, sortDia: null, sortCt: null, sortSph: null, sortCyl: null, sortCost: null, selectedLens: null, discontinuedExpanded: false };
 
         function toggleBrowseType(type) {
             browseState.typeFilter = browseState.typeFilter === type ? null : type;
@@ -17802,11 +17799,11 @@
                 <button class="order-back-btn" onclick="closeBrowseLens()"><i class="ph-duotone ph-arrow-left"></i> Back to Browse</button>
                 <div class="order-header-row">
                     <div class="order-header-left">
-                        <div class="order-lens-name">${lens.discontinuing ? '<span class="lens-discontinued">' + lens.name + '</span>' : lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
+                        <div class="order-lens-name">${lens.name}${lens.discontinuing ? ' <i class="ph-fill ph-star" style="color:#dc2626;font-size:10px;vertical-align:2px;"></i>' : ''}</div>
                         <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                     </div>
                     <div class="order-btns-col" style="display:flex;flex-direction:column;gap:8px;align-items:stretch;">
-                        <button class="browse-calc-btn cta-btn" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><span class="arrow-left">\u2192</span> Fit This Lens <span class="arrow-right">\u2192</span></button>
+                        ${!lens.discontinued ? `<button class="browse-calc-btn cta-btn" onclick="browseStartCalc('${lens.name.replace(/'/g, "\\'")}')"><span class="arrow-left">\u2192</span> Fit This Lens <span class="arrow-right">\u2192</span></button>` : ''}
                         ${mfFittingGuideUrls[lens.name] ? `<a href="${mfFittingGuideUrls[lens.name]}" target="_blank" rel="noopener" class="fitting-guide-pill" style="justify-content:center;"><i class="ph-duotone ph-arrow-square-out"></i> Fitting Guide</a>` : ''}
                     </div>
                 </div>
@@ -17903,7 +17900,7 @@
 
             if (anySort) {
                 // Flat list sorted by selected column
-                let allLenses = [...LENSES];
+                let allLenses = LENSES.filter(l => !l.discontinued);
                 if (tf) allLenses = allLenses.filter(l => l.type === tf);
                 if (mf) allLenses = allLenses.filter(l => l.modality === mf);
                 if (matf) allLenses = allLenses.filter(l => l.material && (matf === 'SiHy' ? l.material.includes('SiHy') : !l.material.includes('SiHy')));
@@ -17923,7 +17920,7 @@
                     const axStr = l.axes || "\u2014";
                     const brandColor = brandColorMap[l.brand] || "var(--accent)";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.discontinuing ? '<span class="lens-discontinued">' + l.name + '</span>' : l.name}</span>${l.discontinuing ? '<i class="ph-fill ph-star" style="color:#dc2626;font-size:9px;vertical-align:2px;margin-left:3px" title="Discontinuing"></i>' : ''}<span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
+                        <td><span class="browse-name">${l.name}</span>${l.discontinuing ? '<i class="ph-fill ph-star" style="color:#dc2626;font-size:9px;vertical-align:2px;margin-left:3px" title="Discontinuing"></i>' : ''}<span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td style="font-weight:600">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -17938,7 +17935,7 @@
             } else {
 
             BRANDS.forEach(brand => {
-                let lenses = LENSES.filter(l => l.brand === brand);
+                let lenses = LENSES.filter(l => l.brand === brand && !l.discontinued);
                 if (tf) lenses = lenses.filter(l => l.type === tf);
                 if (mf) lenses = lenses.filter(l => l.modality === mf);
                 if (matf) lenses = lenses.filter(l => l.material && (matf === 'SiHy' ? l.material.includes('SiHy') : !l.material.includes('SiHy')));
@@ -17955,7 +17952,7 @@
                     const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "—";
                     const axStr = l.axes || "—";
                     html += `<tr style="cursor:pointer" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
-                        <td><span class="browse-name">${l.discontinuing ? '<span class="lens-discontinued">' + l.name + '</span>' : l.name}</span>${l.discontinuing ? '<i class="ph-fill ph-star" style="color:#dc2626;font-size:9px;vertical-align:2px;margin-left:3px" title="Discontinuing"></i>' : ''}<span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
+                        <td><span class="browse-name">${l.name}</span>${l.discontinuing ? '<i class="ph-fill ph-star" style="color:#dc2626;font-size:9px;vertical-align:2px;margin-left:3px" title="Discontinuing"></i>' : ''}<span class="browse-badges">${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}${l.name.startsWith('Clariti') ? '<i class="ph-duotone ph-recycle" style="color:#16a34a;font-size:12px;margin-left:2px" title="Plastic Neutral"></i>' : ""}${l.therapeutic ? `<span class="browse-therapeutic">Therapeutic</span>` : ""}</span></td>
                         <td class="browse-muted">${l.dk}</td>
                         <td class="browse-muted">${l.bc}</td>
                         <td class="browse-muted">${l.diam}</td>
@@ -17970,8 +17967,41 @@
             });
             } // end brand-grouped else
 
+            // Discontinued lenses section
+            let discLenses = LENSES.filter(l => l.discontinued);
+            if (tf) discLenses = discLenses.filter(l => l.type === tf);
+            if (mf) discLenses = discLenses.filter(l => l.modality === mf);
+            if (matf) discLenses = discLenses.filter(l => l.material && (matf === 'SiHy' ? l.material.includes('SiHy') : !l.material.includes('SiHy')));
+            if (search) { const sn = search.replace(/[-]/g,' '); discLenses = discLenses.filter(l => l.name.toLowerCase().includes(search) || l.brand.toLowerCase().includes(search) || (l.material && l.material.toLowerCase().includes(search)) || (l.privateLabels && l.privateLabels.some(pl => pl.name.toLowerCase().includes(search) || pl.name.toLowerCase().replace(/[-]/g,' ').includes(sn) || pl.retailer.toLowerCase().includes(search)))); }
+            if (discLenses.length > 0) {
+                const isExpanded = browseState.discontinuedExpanded || totalShown === 0;
+                const caretIcon = isExpanded ? 'ph-caret-down' : 'ph-caret-right';
+                html += `<tr style="cursor:pointer;user-select:none" onclick="browseState.discontinuedExpanded=!browseState.discontinuedExpanded;renderBrowse()"><td colspan="9" style="border-left:3px solid #dc2626;color:#dc2626;background:rgba(220,38,38,0.04);padding:7px 10px;font-size:12px;font-weight:600;letter-spacing:0.01em"><i class="ph-duotone ${caretIcon}" style="margin-right:5px;font-size:11px;vertical-align:-1px"></i>Discontinued (${discLenses.length})</td></tr>`;
+                if (isExpanded) {
+                    discLenses.forEach(l => {
+                        const tb = typeLabel[l.type] || "";
+                        const sb = schedLabel[l.modality] || "";
+                        const hasCyl = l.cylMin !== 0 || l.cylMax !== 0;
+                        const cylStr = hasCyl ? (l.cylMin.toFixed(2) + " to " + l.cylMax.toFixed(2)) : "\u2014";
+                        const axStr = l.axes || "\u2014";
+                        const brandColor = brandColorMap[l.brand] || "var(--accent)";
+                        const discNote = l.discontinuing ? `<span style="font-size:10px;color:#dc2626;font-weight:600;margin-left:5px">${l.discontinuing}</span>` : '';
+                        html += `<tr style="cursor:pointer;opacity:0.75" onclick="openBrowseLens('${l.name.replace(/'/g, "\\'")}')">
+                            <td><span class="browse-name">${l.name}</span>${discNote}<span class="browse-badges"> <span style="color:${brandColor};font-size:10px;font-weight:600">${l.brand}</span>${tb ? `<span class="browse-type" style="color:${typeColorMap[l.type]};background:${typeBgMap[l.type]}">${tb}</span>` : ""}${sb ? `<span class="browse-sched">${sb}</span>` : ""}</span></td>
+                            <td style="font-weight:600">${l.dk}</td>
+                            <td class="browse-muted">${l.bc}</td>
+                            <td class="browse-muted">${l.diam}</td>
+                            <td class="browse-muted">${l.ct ? l.ct.split('\u202f')[0] : '\u2014'}</td>
+                            <td class="browse-muted">${fmtSph(l.sphMin, l.sphMax)}</td>
+                            <td class="browse-muted">${cylStr}</td>
+                            <td class="browse-muted">${axStr}</td>
+                            <td class="browse-muted">${(() => { var c = calcLensAnnualCost(l); return c !== null ? '$' + c.toLocaleString() : '\u2014'; })()}</td>
+                        </tr>`;
+                    });
+                }
+            }
             html += `</tbody></table></div>`;
-            if (totalShown === 0) {
+            if (totalShown === 0 && discLenses.length === 0) {
                 html += `<div class="browse-empty">No lenses match your search.</div>`;
             }
 
