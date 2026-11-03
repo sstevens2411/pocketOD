@@ -6219,6 +6219,38 @@
             if (e.key === 'Enter' && e.target.id === 'pasteRxInput') { e.preventDefault(); parsePastedRx(); }
         });
 
+        // Track pointer-down state so blur/change handlers can defer re-render
+        // until after the triggering click has fired (avoids double-click bug).
+        let _ptrDown = false;
+        let _ptrDownTarget = null;
+        (function(){
+            document.addEventListener('pointerdown', (e) => { _ptrDown = true; _ptrDownTarget = e.target; }, true);
+            document.addEventListener('pointerup', () => { _ptrDown = false; }, true);
+            document.addEventListener('pointercancel', () => { _ptrDown = false; _ptrDownTarget = null; }, true);
+        })();
+
+        function deferRerender() {
+            if (!_ptrDown) { rerender(); return; }
+            const clickTarget = _ptrDownTarget;
+            let done = false;
+            function finish() {
+                if (done) return;
+                done = true;
+                document.removeEventListener('click', onClickCapture, true);
+                clearTimeout(fallback);
+                setTimeout(() => {
+                    rerender();
+                    if (clickTarget && clickTarget.id && (clickTarget.tagName === 'INPUT' || clickTarget.tagName === 'SELECT')) {
+                        const el = document.getElementById(clickTarget.id);
+                        if (el) el.focus();
+                    }
+                }, 0);
+            }
+            function onClickCapture() { finish(); }
+            document.addEventListener('click', onClickCapture, true);
+            const fallback = setTimeout(finish, 300);
+        }
+
         function bindEyeInputs(prefix, eye, onAddChange) {
             const otherEye = eye === state.od ? state.os : state.od;
             const sphNeg = document.getElementById(`${prefix}_sphNeg`);
@@ -6232,10 +6264,10 @@
             if (cylPos) cylPos.addEventListener("click", () => { eye.cylSign = '+'; if (!otherEye.cylAbs) otherEye.cylSign = '+'; rerender(); });
 
             const sphEl = document.getElementById(`${prefix}_inSph`);
-            if (sphEl) sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; rerender(); });
+            if (sphEl) sphEl.addEventListener("change", (e) => { eye.sphAbs = e.target.value; deferRerender(); });
 
             const cylEl = document.getElementById(`${prefix}_inCyl`);
-            if (cylEl) cylEl.addEventListener("change", (e) => { eye.cylAbs = e.target.value; rerender(); });
+            if (cylEl) cylEl.addEventListener("change", (e) => { eye.cylAbs = e.target.value; deferRerender(); });
 
             const axis90 = document.getElementById(`${prefix}_axis90`);
             const axis180 = document.getElementById(`${prefix}_axis180`);
@@ -6244,7 +6276,7 @@
 
             const axisEl = document.getElementById(`${prefix}_inAxis`);
             if (axisEl) {
-                axisEl.addEventListener("blur", (e) => { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); rerender(); });
+                axisEl.addEventListener("blur", (e) => { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); deferRerender(); });
                 axisEl.addEventListener("keydown", (e) => { if (e.key === "Enter") { let v = parseInt(e.target.value.replace(/[^0-9]/g, "")); eye.axis = isNaN(v) || v < 1 ? "" : String(Math.min(180, v)); rerender(); } });
             }
 
@@ -6252,7 +6284,7 @@
             if (addEl) addEl.addEventListener("change", (e) => {
                 eye.addAbs = e.target.value;
                 if (onAddChange) onAddChange(e.target.value);
-                rerender();
+                deferRerender();
             });
         }
 
