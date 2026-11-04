@@ -8064,6 +8064,18 @@
                 state.orRotation = null;
             }
             render();
+            if (state.troubleshoot !== 'select' && window.innerWidth < 768) {
+                requestAnimationFrame(function() {
+                    var el = document.getElementById('ts-suggestions-section');
+                    if (!el) return;
+                    var hdr = document.querySelector('.header');
+                    var headerH = hdr ? hdr.offsetHeight : 60;
+                    var rect = el.getBoundingClientRect();
+                    if (rect.top > window.innerHeight * 0.5) {
+                        window.scrollTo({ top: window.scrollY + rect.top - headerH - 8, behavior: 'smooth' });
+                    }
+                });
+            }
         }
 
         function setRotationDir(eyeLabel, dir) {
@@ -9862,7 +9874,7 @@
                 <div class="order-lens-name">${lens.name}</div>
                 <div class="order-lens-brand" style="color:${brandColor}">${lens.brand}</div>
                 ${complaintHtml}
-                ${suggestionsHtml}
+                ${suggestionsHtml ? `<div id="ts-suggestions-section">${suggestionsHtml}</div>` : ''}
                 ${clinicalTipsHtml}
             </div>`;
         }
