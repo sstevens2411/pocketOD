@@ -4183,9 +4183,29 @@
         }
 
         @media (min-width: 1024px) {
+            html { scrollbar-gutter: stable; }
             .header-inner {
                 max-width: 1100px;
             }
+            #clSubtabsWrap {
+                max-width: 1100px;
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+        }
+
+        /* CL sub-nav pill wrapper — consistent width on all sub-pages */
+        #clSubtabsWrap {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 12px 16px 0;
+        }
+        #clPrescribeMain { padding-top: 0; }
+        @media (max-width: 640px) {
+            #clSubtabsWrap { padding: 8px 12px 0; }
+        }
+        @media (max-width: 380px) {
+            #clSubtabsWrap { padding: 10px 8px 0; }
         }
 
     </style>
@@ -4249,7 +4269,7 @@
         </div>
     </header>
 
-    <main class="main">
+    <div id="clSubtabsWrap">
         <div class="cl-subtabs" id="clSubtabs">
             <div class="cl-subtabs-left">
                 <div class="cl-subtab active" id="clSubPrescribe" onclick="switchClSub('prescribe')">CL Calculator</div>
@@ -4260,6 +4280,8 @@
                 <div class="cl-subtab" id="clSubRadius" onclick="switchClSub('radius')"><span class="cl-label-full">Radius Conversion</span><span class="cl-label-short">Radius Conv.</span></div>
             </div>
         </div>
+    </div>
+    <main class="main" id="clPrescribeMain">
         <div id="lensesContent">
             <div class="steps-bar" id="stepsBar"></div>
             <div class="card">
@@ -10011,7 +10033,7 @@
             document.getElementById('subnavMeds').classList.toggle('active', tab === 'meds');
             document.getElementById('subnavTools').classList.toggle('active', tab === 'tools');
             positionTabIndicator();
-            document.getElementById('clSubtabs').style.display = tab === 'lenses' ? '' : 'none';
+            document.getElementById('clSubtabsWrap').style.display = tab === 'lenses' ? '' : 'none';
 
             // Reset meds state when navigating away
             if (tab !== 'meds') {
@@ -13252,8 +13274,7 @@
             document.getElementById('browsePage').style.display = sub === 'browse' ? '' : 'none';
             document.getElementById('vertexPage').style.display = sub === 'vertex' ? '' : 'none';
             document.getElementById('radiusPage').style.display = sub === 'radius' ? '' : 'none';
-            document.querySelector('main.main').style.paddingBottom = sub === 'prescribe' ? '' : '0';
-            document.querySelector('main.main').classList.toggle('browse-wide', sub === 'browse');
+            document.getElementById('clPrescribeMain').style.paddingBottom = sub === 'prescribe' ? '' : '0';
             if (sub === 'prescribe') { resetAll(); render(); window.scrollTo(0, 0); }
             if (sub === 'browse') renderBrowse();
             if (sub === 'vertex') renderVertexChart();
