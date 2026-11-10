@@ -4182,6 +4182,65 @@
             font-size: 12px; font-weight: 600; margin: 8px 0 0; transition: opacity 0.4s;
         }
 
+        /* Desktop paste Rx bar */
+        .paste-rx-bar { display: none; }
+        @media (min-width: 1024px) {
+            .paste-rx-bar {
+                display: block;
+                margin-bottom: 16px;
+            }
+            .paste-rx-bar-inner {
+                display: flex;
+                align-items: center;
+                border: 1.5px dashed var(--accent);
+                border-radius: var(--radius);
+                background: var(--surface-solid);
+                overflow: hidden;
+            }
+            .paste-rx-bar-icon {
+                color: var(--accent);
+                font-size: 16px;
+                padding: 0 6px 0 10px;
+                flex-shrink: 0;
+                opacity: 0.65;
+                pointer-events: none;
+            }
+            .paste-rx-bar-input {
+                flex: 1;
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 13px;
+                padding: 8px 8px 8px 2px;
+                border: none;
+                background: transparent;
+                color: var(--ink);
+                outline: none;
+            }
+            .paste-rx-bar-input::placeholder { color: var(--ink-secondary); opacity: 0.75; }
+            .paste-rx-bar-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+                font-weight: 600;
+                font-family: var(--sans, 'Plus Jakarta Sans', sans-serif);
+                border: none;
+                border-left: 1px solid var(--border);
+                border-radius: 0;
+                background: transparent;
+                color: var(--accent);
+                cursor: pointer;
+                white-space: nowrap;
+                transition: background 0.12s;
+                flex-shrink: 0;
+            }
+            .paste-rx-bar-btn:hover { background: rgba(13,148,136,0.07); }
+            .paste-rx-bar-msg {
+                font-size: 12px;
+                font-weight: 600;
+                margin: 4px 0 0 2px;
+                min-height: 16px;
+                transition: opacity 0.4s;
+            }
+        }
+
         @media (min-width: 1024px) {
             html { scrollbar-gutter: stable; }
             .header-inner {
@@ -4192,6 +4251,8 @@
                 padding-left: 24px;
                 padding-right: 24px;
             }
+            /* Hide old clipboard icon — bar replaces it on desktop */
+            .paste-rx-wrap { display: none !important; }
         }
 
         /* CL sub-nav pill wrapper — consistent width on all sub-pages */
@@ -6146,6 +6207,19 @@
                     </div>
                 </div>
 
+                <div class="paste-rx-bar">
+                    <div class="paste-rx-bar-inner">
+                        <i class="ph-duotone ph-clipboard-text paste-rx-bar-icon"></i>
+                        <input type="text" id="pasteRxBarInput" class="paste-rx-bar-input"
+                            placeholder="Paste Rx here, e.g. -3.00 -1.25 x 180 / -4.00 -0.75 x 165"
+                            autocomplete="off" spellcheck="false"
+                            onpaste="setTimeout(function(){parsePastedRxBar(true)},0)"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();parsePastedRxBar()}">
+                        <button type="button" class="paste-rx-bar-btn" onclick="parsePastedRxBar()">Apply</button>
+                    </div>
+                    <div class="paste-rx-bar-msg" id="pasteRxBarMsg"></div>
+                </div>
+
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
                 <button type="button" class="copy-od-btn" onmousedown="event.preventDefault();copyOdToOs()" ontouchstart="event.preventDefault();copyOdToOs()">&#x2193; Copy OD to OS</button>
                 ${buildEyeForm("os", state.os, "OS — Left Eye")}
@@ -6236,6 +6310,37 @@
             msgEl.textContent = '\u2713 Parsed'; msgEl.style.color = 'var(--accent)'; msgEl.style.opacity = '1';
             setTimeout(() => { msgEl.style.opacity = '0'; }, 2000);
             setTimeout(() => { closePasteRx(); }, 2200);
+        }
+
+        function parsePastedRxBar(fromPaste) {
+            const inp = document.getElementById('pasteRxBarInput');
+            if (!inp) return;
+            const raw = (inp.value || '').trim();
+            const msgEl = document.getElementById('pasteRxBarMsg');
+            if (!raw) return;
+            const parts = raw.split('/');
+            const odStr = parts[0];
+            const osStr = parts.length > 1 ? parts[1] : null;
+            const odP = parseOneEye(odStr);
+            if (!odP) {
+                msgEl.textContent = 'Could not parse — check format and try again';
+                msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1';
+                return;
+            }
+            applyParsedEye(state.od, odP);
+            if (osStr) {
+                const osP = parseOneEye(osStr);
+                if (!osP) {
+                    msgEl.textContent = 'Could not parse OS — check format and try again';
+                    msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1';
+                    return;
+                }
+                applyParsedEye(state.os, osP);
+            }
+            rerender();
+            inp.value = '';
+            msgEl.textContent = '\u2713 Rx applied'; msgEl.style.color = 'var(--accent)'; msgEl.style.opacity = '1';
+            setTimeout(function() { msgEl.style.opacity = '0'; }, 2000);
         }
 
         // allow Enter key inside paste input
