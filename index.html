@@ -4186,8 +4186,11 @@
         .paste-rx-bar { display: none; }
         @media (min-width: 1024px) {
             .paste-rx-bar {
-                display: block;
-                margin-bottom: 16px;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                flex: 1;
+                min-width: 0;
             }
             .paste-rx-bar-inner {
                 display: flex;
@@ -4199,26 +4202,32 @@
             }
             .paste-rx-bar-icon {
                 color: var(--accent);
-                font-size: 16px;
-                padding: 0 6px 0 10px;
+                font-size: 13px;
+                padding: 0 3px 0 7px;
                 flex-shrink: 0;
                 opacity: 0.65;
                 pointer-events: none;
+                line-height: 1;
             }
             .paste-rx-bar-input {
                 flex: 1;
+                min-width: 0;
                 font-family: var(--mono, 'IBM Plex Mono', monospace);
-                font-size: 13px;
-                padding: 8px 8px 8px 2px;
+                font-size: 12px;
+                line-height: 1;
+                height: 26px;
+                padding: 0 4px 0 2px;
                 border: none;
                 background: transparent;
                 color: var(--ink);
                 outline: none;
+                box-sizing: border-box;
             }
-            .paste-rx-bar-input::placeholder { color: var(--ink-secondary); opacity: 0.75; }
+            .paste-rx-bar-input::placeholder { color: #6b7685; }
             .paste-rx-bar-btn {
-                padding: 8px 14px;
-                font-size: 13px;
+                padding: 0 8px;
+                height: 26px;
+                font-size: 12px;
                 font-weight: 600;
                 font-family: var(--sans, 'Plus Jakarta Sans', sans-serif);
                 border: none;
@@ -4233,11 +4242,79 @@
             }
             .paste-rx-bar-btn:hover { background: rgba(13,148,136,0.07); }
             .paste-rx-bar-msg {
-                font-size: 12px;
+                position: absolute;
+                top: calc(100% + 2px);
+                left: 0;
+                font-size: 11px;
                 font-weight: 600;
-                margin: 4px 0 0 2px;
-                min-height: 16px;
+                white-space: nowrap;
+                pointer-events: none;
                 transition: opacity 0.4s;
+            }
+            /* Icon wrapper — receives hover/focus for popover */
+            .paste-rx-bar-icon-wrap {
+                display: inline-flex;
+                align-items: center;
+                flex-shrink: 0;
+                cursor: default;
+                outline: none;
+            }
+            /* Format hints popover — fixed to escape overflow: hidden */
+            .paste-rx-popover {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+                padding: 12px 14px;
+                max-width: 340px;
+                width: max-content;
+                font-family: var(--sans, 'Plus Jakarta Sans', sans-serif);
+                font-size: 12px;
+                color: var(--ink);
+            }
+            .paste-rx-popover.open { display: block; }
+            .prxp-title {
+                font-size: 10.5px;
+                font-weight: 700;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                margin-bottom: 8px;
+            }
+            .prxp-row {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                padding: 3px 5px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background 0.1s;
+            }
+            .prxp-row:hover { background: rgba(13,148,136,0.07); }
+            .prxp-code {
+                font-family: var(--mono, 'IBM Plex Mono', monospace);
+                font-size: 11.5px;
+                color: var(--ink);
+                white-space: nowrap;
+            }
+            .prxp-sep { font-size: 11px; color: var(--ink-secondary); }
+            .prxp-label {
+                font-size: 11px;
+                color: var(--ink-secondary);
+                margin-left: auto;
+                padding-left: 10px;
+                white-space: nowrap;
+            }
+            .prxp-hint {
+                font-size: 11px;
+                color: var(--ink-secondary);
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px solid var(--border);
+                line-height: 1.4;
             }
         }
 
@@ -4253,6 +4330,8 @@
             }
             /* Hide old clipboard icon — bar replaces it on desktop */
             .paste-rx-wrap { display: none !important; }
+            /* Align reset icon flush with right content edge */
+            .reset-btn { padding-right: 0; }
         }
 
         /* CL sub-nav pill wrapper — consistent width on all sub-pages */
@@ -6188,9 +6267,32 @@
         // STEP 1: Rx
         function renderRxStep() {
             return `<div class="fade-in">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-                    <h2 class="card-title" style="margin:0">Enter Prescription</h2>
-                    <div style="display:flex;align-items:center;gap:6px">
+                <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:16px">
+                    <h2 class="card-title" style="margin:0;flex-shrink:0">Enter Prescription</h2>
+                    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;width:calc(50% - 7px)">
+                        <div class="paste-rx-bar">
+                            <div class="paste-rx-bar-inner">
+                                <span class="paste-rx-bar-icon-wrap" id="pasteRxIconWrap" tabindex="0" aria-label="Show example Rx formats" aria-describedby="pasteRxPopover">
+                                    <i class="ph-duotone ph-clipboard-text paste-rx-bar-icon"></i>
+                                </span>
+                                <input type="text" id="pasteRxBarInput" class="paste-rx-bar-input"
+                                    placeholder="Paste or type Rx here"
+                                    autocomplete="off" spellcheck="false"
+                                    onpaste="setTimeout(function(){parsePastedRxBar(true)},0)"
+                                    onkeydown="if(event.key==='Enter'){event.preventDefault();parsePastedRxBar()}">
+                                <button type="button" class="paste-rx-bar-btn" onclick="parsePastedRxBar()">Apply</button>
+                            </div>
+                            <div class="paste-rx-popover" id="pasteRxPopover" role="tooltip">
+                                <div class="prxp-title">Accepted formats</div>
+                                <div class="prxp-row" data-rx="-3.00 -1.25 x 180"><span class="prxp-code">-3.00 -1.25 x 180</span><span class="prxp-label">Single eye</span></div>
+                                <div class="prxp-row" data-rx="-4.25 -1.25 x 180, +4.00 -0.75 x 90"><span class="prxp-code">-4.25 -1.25 x 180, +4.00 -0.75 x 90</span><span class="prxp-label">Both eyes</span></div>
+                                <div class="prxp-row" data-rx="OD -4.25 -1.25 x 180 OS +4.00 -0.75 x 90"><span class="prxp-code">OD -4.25 -1.25 x 180 OS +4.00 -0.75 x 90</span><span class="prxp-label">With labels</span></div>
+                                <div class="prxp-row" data-rx="-3.00"><span class="prxp-code">-3.00</span> <span class="prxp-sep">or</span> <span class="prxp-code">plano</span><span class="prxp-label">Sphere only</span></div>
+                                <div class="prxp-row" data-rx="-2.50 -0.75 x 10 add +2.00"><span class="prxp-code">-2.50 -0.75 x 10 add +2.00</span><span class="prxp-label">With ADD</span></div>
+                                <div class="prxp-hint">Paste to fill automatically, or type and press Enter.</div>
+                            </div>
+                            <div class="paste-rx-bar-msg" id="pasteRxBarMsg"></div>
+                        </div>
                         <div class="paste-rx-wrap">
                             <button type="button" class="paste-rx-btn" title="Paste Rx" onclick="togglePasteRx()"><i class="ph-duotone ph-clipboard-text"></i></button>
                             <div class="paste-rx-bubble" id="pasteRxBubble">
@@ -6205,19 +6307,6 @@
                         </div>
                         <button onclick="resetAll()" title="Reset" class="reset-btn"><i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
                     </div>
-                </div>
-
-                <div class="paste-rx-bar">
-                    <div class="paste-rx-bar-inner">
-                        <i class="ph-duotone ph-clipboard-text paste-rx-bar-icon"></i>
-                        <input type="text" id="pasteRxBarInput" class="paste-rx-bar-input"
-                            placeholder="Paste Rx here, e.g. -3.00 -1.25 x 180 / -4.00 -0.75 x 165"
-                            autocomplete="off" spellcheck="false"
-                            onpaste="setTimeout(function(){parsePastedRxBar(true)},0)"
-                            onkeydown="if(event.key==='Enter'){event.preventDefault();parsePastedRxBar()}">
-                        <button type="button" class="paste-rx-bar-btn" onclick="parsePastedRxBar()">Apply</button>
-                    </div>
-                    <div class="paste-rx-bar-msg" id="pasteRxBarMsg"></div>
                 </div>
 
                 ${buildEyeForm("od", state.od, "OD — Right Eye")}
@@ -6264,52 +6353,140 @@
         function parseOneEye(str) {
             str = str.trim();
             if (!str) return null;
-            // "plano" / "pl" → sph 0
-            if (/^(plano|pl)$/i.test(str)) return { sph: 0, cyl: null, axis: null };
-            // match e.g. -3.50 -1.25 x 180  or  +2.00  or  -4.00 -0.75 x 165
-            const m = str.match(/^([+\u2212-]?\d+(?:\.\d+)?)\s*(?:([+\u2212-]?\d+(?:\.\d+)?)\s*[x×]\s*(\d+))?$/i);
+            // Strip optional eye label prefix: OD / OS / RE / LE / R / L with optional colon
+            str = str.replace(/^(?:OD|OS|RE|LE|R|L):?\s*/i, '').trim();
+            if (!str) return null;
+            // plano / pl / PL
+            if (/^(?:plano|pl)$/i.test(str)) return { sph: 0, cyl: null, axis: null, add: null };
+            // Extract ADD: "… add +2.00" or "… +2.00 add" at end (ADD always positive)
+            let add = null;
+            str = str.replace(/\s+add\s+([+\u2212\-]?\d+(?:\.\d+)?)\s*$/i, function(_, v) {
+                add = Math.abs(parseFloat(v.replace('\u2212', '-')));
+                return '';
+            });
+            if (add === null) {
+                str = str.replace(/\s+([+\u2212\-]?\d+(?:\.\d+)?)\s+add\s*$/i, function(_, v) {
+                    add = Math.abs(parseFloat(v.replace('\u2212', '-')));
+                    return '';
+                });
+            }
+            str = str.trim();
+            // Strip trailing DS (diopters sphere notation)
+            str = str.replace(/\s+DS\s*$/i, '').trim();
+            // Normalise Unicode minus
+            str = str.replace(/\u2212/g, '-');
+            // Match: sph  [cyl  axis-marker  axis  °?]
+            // Axis markers: x X × *   Sphere without sign → positive   Cyl without sign → negative
+            const NUM = '[+\\-]?\\d+(?:\\.\\d+)?';
+            const m = str.match(new RegExp('^(' + NUM + ')(?:\\s*(' + NUM + ')\\s*[xX\xd7*]\\s*(\\d+)\\s*\u00b0?)?$'));
             if (!m) return null;
-            const sph = parseFloat(m[1].replace('\u2212', '-'));
+            const sph = parseFloat(m[1]);
             if (isNaN(sph)) return null;
             let cyl = null, axis = null;
             if (m[2] != null) {
-                cyl = parseFloat(m[2].replace('\u2212', '-'));
+                const hasSign = /^[+\-]/.test(m[2]);
+                cyl = parseFloat(m[2]);
+                if (isNaN(cyl)) return null;
+                if (!hasSign && cyl !== 0) cyl = -Math.abs(cyl); // unsigned → minus cyl
                 axis = m[3];
-                if (isNaN(cyl) || axis == null) return null;
             }
-            return { sph, cyl, axis };
+            return { sph, cyl, axis, add };
         }
 
         function applyParsedEye(eye, parsed) {
-            if (parsed.sph > 0) { eye.sphSign = '+'; eye.sphAbs = parsed.sph.toFixed(2); }
-            else if (parsed.sph === 0) { eye.sphSign = '\u2212'; eye.sphAbs = ''; }
-            else { eye.sphSign = '\u2212'; eye.sphAbs = Math.abs(parsed.sph).toFixed(2); }
+            const sph = snapTo025(parsed.sph);
+            if (sph > 0) { eye.sphSign = '+'; eye.sphAbs = sph.toFixed(2); }
+            else if (sph === 0) { eye.sphSign = '\u2212'; eye.sphAbs = ''; }
+            else { eye.sphSign = '\u2212'; eye.sphAbs = Math.abs(sph).toFixed(2); }
             if (parsed.cyl != null) {
-                if (parsed.cyl >= 0) { eye.cylSign = '+'; eye.cylAbs = parsed.cyl === 0 ? '' : parsed.cyl.toFixed(2); }
-                else { eye.cylSign = '\u2212'; eye.cylAbs = Math.abs(parsed.cyl).toFixed(2); }
+                const cyl = snapTo025(parsed.cyl);
+                if (cyl >= 0) { eye.cylSign = '+'; eye.cylAbs = cyl === 0 ? '' : cyl.toFixed(2); }
+                else { eye.cylSign = '\u2212'; eye.cylAbs = Math.abs(cyl).toFixed(2); }
             } else { eye.cylAbs = ''; }
             eye.axis = parsed.axis || '';
+            if (parsed.add != null && parsed.add > 0) {
+                eye.addAbs = snapTo025(parsed.add).toFixed(2);
+            }
+        }
+
+        // Split raw Rx string into { odStr, osStr } handling labels and all separators
+        function splitRxEyes(raw) {
+            // Check for explicit eye labels (OD/OS/RE/LE/R/L)
+            const LABEL_RE = /\b(OD|OS|RE|LE|R|L)\b:?\s*/gi;
+            const found = [];
+            let lm;
+            while ((lm = LABEL_RE.exec(raw)) !== null) {
+                found.push({ label: lm[1].toUpperCase(), pos: lm.index, end: lm.index + lm[0].length });
+            }
+            if (found.length >= 2) {
+                found.sort(function(a, b) { return a.pos - b.pos; });
+                const f = found[0], s = found[1];
+                const fContent = raw.slice(f.end, s.pos).trim().replace(/[,;\/|]\s*$/, '').trim();
+                const sContent = raw.slice(s.end).trim().replace(/[,;\/|]\s*$/, '').trim();
+                const isOd = function(l) { return /^(OD|RE|R)$/.test(l); };
+                if (isOd(f.label)) return { odStr: fContent, osStr: sContent };
+                return { odStr: sContent, osStr: fContent };
+            }
+            if (found.length === 1) {
+                const isOd = /^(OD|RE|R)$/.test(found[0].label);
+                const content = raw.slice(found[0].end).trim();
+                return isOd ? { odStr: content, osStr: null } : { odStr: null, osStr: content };
+            }
+            // No labels — try separators in priority order
+            var parts = raw.split(/\r?\n|\t|\s*[\/|;]\s*/);
+            if (parts.length >= 2) return { odStr: parts[0].trim(), osStr: parts.slice(1).join(' ').trim() };
+            parts = raw.split(/\s*,\s*/);
+            if (parts.length >= 2) return { odStr: parts[0].trim(), osStr: parts.slice(1).join(' ').trim() };
+            parts = raw.split(/\s{2,}/);
+            if (parts.length >= 2) return { odStr: parts[0].trim(), osStr: parts.slice(1).join(' ').trim() };
+            return { odStr: raw.trim(), osStr: null };
+        }
+
+        // Shared Rx apply logic used by both the mobile bubble and the desktop bar
+        function applyRxInput(raw, msgEl, onSuccess) {
+            raw = (raw || '').trim();
+            if (!raw) return;
+            const eyes = splitRxEyes(raw);
+            const odStr = eyes.odStr, osStr = eyes.osStr;
+            if (odStr) {
+                const odP = parseOneEye(odStr);
+                if (!odP) {
+                    msgEl.textContent = 'Could not read right eye: ' + odStr;
+                    msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1'; return;
+                }
+                const odErr = validateParsedRanges(odP, 'Right eye');
+                if (odErr) { msgEl.textContent = odErr; msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1'; return; }
+                applyParsedEye(state.od, odP);
+            }
+            if (osStr) {
+                const osP = parseOneEye(osStr);
+                if (!osP) {
+                    msgEl.textContent = 'Could not read left eye: ' + osStr;
+                    msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1'; return;
+                }
+                const osErr = validateParsedRanges(osP, 'Left eye');
+                if (osErr) { msgEl.textContent = osErr; msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1'; return; }
+                applyParsedEye(state.os, osP);
+            }
+            rerender();
+            msgEl.textContent = '\u2713 Rx applied'; msgEl.style.color = 'var(--accent)'; msgEl.style.opacity = '1';
+            setTimeout(function() { msgEl.style.opacity = '0'; }, 2000);
+            onSuccess && onSuccess();
+        }
+
+        function validateParsedRanges(p, label) {
+            if (Math.abs(snapTo025(p.sph)) > 30) return label + ': sphere ' + p.sph.toFixed(2) + ' is out of range (\u00b130.00 max)';
+            if (p.cyl != null && Math.abs(snapTo025(p.cyl)) > 8) return label + ': cylinder ' + p.cyl.toFixed(2) + ' is out of range (\u00b18.00 max)';
+            if (p.add != null && snapTo025(p.add) > 3) return label + ': ADD +' + p.add.toFixed(2) + ' is out of range (+3.00 max)';
+            return null;
         }
 
         function parsePastedRx() {
             const raw = (document.getElementById('pasteRxInput').value || '').trim();
             const msgEl = document.getElementById('pasteRxMsg');
-            // split by /
-            const parts = raw.split('/');
-            const odStr = parts[0];
-            const osStr = parts.length > 1 ? parts[1] : null;
-            const odP = parseOneEye(odStr);
-            if (!odP) { msgEl.textContent = 'Could not parse'; msgEl.style.color = '#ef4444'; return; }
-            applyParsedEye(state.od, odP);
-            if (osStr) {
-                const osP = parseOneEye(osStr);
-                if (!osP) { msgEl.textContent = 'Could not parse'; msgEl.style.color = '#ef4444'; return; }
-                applyParsedEye(state.os, osP);
-            }
-            rerender();
-            msgEl.textContent = '\u2713 Parsed'; msgEl.style.color = 'var(--accent)'; msgEl.style.opacity = '1';
-            setTimeout(() => { msgEl.style.opacity = '0'; }, 2000);
-            setTimeout(() => { closePasteRx(); }, 2200);
+            applyRxInput(raw, msgEl, function() {
+                setTimeout(function() { closePasteRx(); }, 2200);
+            });
         }
 
         function parsePastedRxBar(fromPaste) {
@@ -6318,35 +6495,73 @@
             const raw = (inp.value || '').trim();
             const msgEl = document.getElementById('pasteRxBarMsg');
             if (!raw) return;
-            const parts = raw.split('/');
-            const odStr = parts[0];
-            const osStr = parts.length > 1 ? parts[1] : null;
-            const odP = parseOneEye(odStr);
-            if (!odP) {
-                msgEl.textContent = 'Could not parse — check format and try again';
-                msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1';
-                return;
-            }
-            applyParsedEye(state.od, odP);
-            if (osStr) {
-                const osP = parseOneEye(osStr);
-                if (!osP) {
-                    msgEl.textContent = 'Could not parse OS — check format and try again';
-                    msgEl.style.color = '#ef4444'; msgEl.style.opacity = '1';
-                    return;
-                }
-                applyParsedEye(state.os, osP);
-            }
-            rerender();
-            inp.value = '';
-            msgEl.textContent = '\u2713 Rx applied'; msgEl.style.color = 'var(--accent)'; msgEl.style.opacity = '1';
-            setTimeout(function() { msgEl.style.opacity = '0'; }, 2000);
+            applyRxInput(raw, msgEl, function() {
+                inp.value = '';
+            });
         }
 
         // allow Enter key inside paste input
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && e.target.id === 'pasteRxInput') { e.preventDefault(); parsePastedRx(); }
         });
+
+        // Paste Rx bar format popover — desktop only, uses position:fixed to escape overflow:hidden
+        (function() {
+            var prxHideTimer = null;
+            function prxShow(wrapEl) {
+                if (window.innerWidth < 1024) return;
+                clearTimeout(prxHideTimer);
+                var pop = document.getElementById('pasteRxPopover');
+                if (!pop) return;
+                var rect = wrapEl.getBoundingClientRect();
+                pop.style.top = (rect.bottom + 4) + 'px';
+                pop.style.left = rect.left + 'px';
+                pop.style.right = 'auto';
+                pop.classList.add('open');
+                // Shift left if popover overflows right viewport edge
+                var pr = pop.getBoundingClientRect();
+                if (pr.right > window.innerWidth - 8) {
+                    var bar = document.querySelector('.paste-rx-bar-inner');
+                    var rightEdge = bar ? bar.getBoundingClientRect().right : (window.innerWidth - 8);
+                    pop.style.left = 'auto';
+                    pop.style.right = (window.innerWidth - rightEdge) + 'px';
+                }
+            }
+            function prxHide() {
+                prxHideTimer = setTimeout(function() {
+                    var pop = document.getElementById('pasteRxPopover');
+                    if (pop) pop.classList.remove('open');
+                }, 100);
+            }
+            document.addEventListener('mouseover', function(e) {
+                if (!e.target.closest) return;
+                var w = e.target.closest('#pasteRxIconWrap');
+                if (w) { prxShow(w); return; }
+                if (e.target.closest('#pasteRxPopover')) clearTimeout(prxHideTimer);
+            });
+            document.addEventListener('mouseout', function(e) {
+                if (!e.target.closest) return;
+                if (e.target.closest('#pasteRxIconWrap') || e.target.closest('#pasteRxPopover')) {
+                    var rel = e.relatedTarget;
+                    if (!rel || (!rel.closest('#pasteRxIconWrap') && !rel.closest('#pasteRxPopover'))) prxHide();
+                }
+            });
+            document.addEventListener('focus', function(e) {
+                if (e.target && e.target.id === 'pasteRxIconWrap') prxShow(e.target);
+            }, true);
+            document.addEventListener('blur', function(e) {
+                if (e.target && e.target.id === 'pasteRxIconWrap') prxHide();
+            }, true);
+            // Click example row → load into bar input without applying
+            document.addEventListener('click', function(e) {
+                var row = e.target.closest && e.target.closest('.prxp-row[data-rx]');
+                if (!row) return;
+                var inp = document.getElementById('pasteRxBarInput');
+                if (inp) { inp.value = row.getAttribute('data-rx'); inp.focus(); }
+                var pop = document.getElementById('pasteRxPopover');
+                if (pop) pop.classList.remove('open');
+            });
+        }());
 
         // Update only what depends on Sph/Cyl/Axis/Add entry without rebuilding the Rx form.
         // Refreshes the vertex/transpose summary box and axis control state in place.
